@@ -1,7 +1,7 @@
 ---
 layout: archive
 title: "CV"
-permalink: ../images/bio-photo.jpg
+permalink: ../papers/CV_Murray Kang.pdf
 author_profile: true
 redirect_from:
   - /resume
