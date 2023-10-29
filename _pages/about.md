@@ -22,5 +22,3 @@ My primary research interests lie at the challenges and deficiency of Large Lang
 - Reasoning ability of LLMs: My research also encompasses enhancing the reasoning capabilities of large language models. The goal is to develop models that not only "understand" or "generate" text but can "reason", "infer", and make logical conclusions, thereby simulating a more human-like understanding of language and context.
 
 As I continue this exciting journey in NLP, I am always eager to collaborate, share insights, and learn from others in this dynamic field. Feel free to reach out to me for collaborations, discussions, or even a casual chat about the future of NLP!
-
-google-site-verification: google14d63d51c15fb9dd.html
