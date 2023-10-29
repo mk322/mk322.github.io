@@ -81,7 +81,7 @@ analytics:
 # Site Author
 author:
   name             : "Murray Kang"
-  avatar           : "bio_pic.jpeg"
+  avatar           : "/images/bio_pic.png"
   bio              : "NLP student researcher"
   location         : "Seattle, WA"
   employer         :
@@ -109,7 +109,7 @@ author:
   stackoverflow    : # http://stackoverflow.com/users/123456/username
   steam            :
   tumblr           :
-  twitter          : "replacethistwitterhandle"
+  twitter          : "haoqik322"
   vine             :
   weibo            :
   xing             :
