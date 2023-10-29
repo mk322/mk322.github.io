@@ -81,7 +81,7 @@ analytics:
 # Site Author
 author:
   name             : "Murray Kang"
-  avatar           : "/images/bio_pic.png"
+  avatar           : "bio_pic.png"
   bio              : "NLP student researcher"
   location         : "Seattle, WA"
   employer         :
