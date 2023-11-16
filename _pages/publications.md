@@ -7,7 +7,6 @@ author_profile: true
 
 ### 2023
 
-## Preprints
 
 **Hallucination of Large Language Models in Finance: An Empirical Examination** \
 <u>Haoqiang Kang</u> and Xiao-Yang Liu  \
