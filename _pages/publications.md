@@ -15,12 +15,12 @@ Haoqiang Kang and Xiao-Yang Liu  \
 **<span style="font-variant: small-caps;">Ever</span>: Mitigating Hallucination in Large Language Models through Real-Time Verification and Rectification**\
 Haoqiang Kang, Juntong Ni, and Huaxiu Yao \
 *preprint 2023* \
-[[paper]](https://arxiv.org/abs/2311.09114](https://arxiv.org/abs/2311.09114)
+[[paper]](https://arxiv.org/abs/2311.09114)
 
 **Translate to Disambiguate: Zero-shot Multilingual Word Sense Disambiguation with Pretrained Language Models]** \
 Haoqiang Kang\*, Terra Blevins\*, and Luke Zettlemoyer \
 *preprint 2023* \
-[[paper]](https://arxiv.org/abs/2304.13803v1)
+[[paper]](https://arxiv.org/abs/2304.13803)
 
 
 More interesting papers are on the way:)
