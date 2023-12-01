@@ -1,12 +1,3 @@
----
-permalink: /
-title: ""
-excerpt: "About me"
-author_profile: true
-redirect_from: 
-  - /about/
-  - /about.html
----
 Hello! I'm a passionate researcher in the field of Natural Language Processing (NLP), currently working as a Research Assistant under the supervision of [Dr. Xiao-Yang Liu](https://scholar.google.com/citations?user=C83b8ncAAAAJ&hl=en) at Columbia University. I earned my Bachelor of Science degree from the prestigious [Paul G. Allen School of Computer Science at the University of Washington, Seattle](https://www.cs.washington.edu/). During my undergraduate time, I am forunated to to work closely with [Prof. Luke Zettlemoyer](https://www.cs.washington.edu/people/faculty/lsz) and [Terra Blevins](https://blvns.github.io/), who provided invaluable mentorship and guidance in my early research endeavors. After completing my undergraduate studies, I embarked on a research internship in the [Dr. Huaxiu Yao](https://www.huaxiuyao.io/)'s research lab at the University of North Carolina at Chapel Hill.
 
 I am actively applying for graduate programs in NLP/CS and am also interested in securing a summer research internship in the industry. If you know of any relevant openings or could provide an introduction, I would deeply appreciate your support.
