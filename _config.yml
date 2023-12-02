@@ -7,10 +7,10 @@
 
 # Site Settings
 locale                   : "en-US"
-title                    : "Haoqiang Kang's Personal Website-Murray Kang's Personal Website-Murray Kang-Haoqiang Kang"
+title                    : "Haoqiang Kang's Personal Website"
 title_separator          : "-"
-name                     : &name "Murray Kang"
-description              : &description "personal description"
+name                     : &name "Murray Kang" "Haoqiang Kang"
+description              : &description "A NLP student researcher who graduated from University of Washington (UW) as an undergraduate."
 url                      : https://mk322.github.io # the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
 baseurl                  : "" # the subpath of your site, e.g. "/blog"
 repository               : "mk322/mk322.github.io"
