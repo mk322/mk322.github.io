@@ -7,7 +7,7 @@
 
 # Site Settings
 locale                   : "en-US"
-title                    : "Haoqiang Kang's Personal Website"
+title                    : "Haoqiang (Murray) Kang"
 title_separator          : "-"
 name                     : &name "Murray Kang"
 description              : &description "A NLP student researcher who graduated from University of Washington (UW) as an undergraduate."
