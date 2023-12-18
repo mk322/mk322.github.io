@@ -18,7 +18,7 @@ author_profile: true
 *preprint 2023* \
 [[paper]](https://arxiv.org/abs/2311.09114)
 
-**Translate to Disambiguate: Zero-shot Multilingual Word Sense Disambiguation with Pretrained Language Models]** \
+**Translate to Disambiguate: Zero-shot Multilingual Word Sense Disambiguation with Pretrained Language Models** \
 <u>Haoqiang Kang</u>\*, Terra Blevins\*, and Luke Zettlemoyer \
 *preprint 2023* \
 [[paper]](https://arxiv.org/abs/2304.13803)
