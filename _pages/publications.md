@@ -13,7 +13,7 @@ author_profile: true
 *NeurIPS Workshop on I Can’t Believe It’s Not Better (ICBINB) 2023* \
 [[paper]](https://arxiv.org/abs/2311.15548)
 
-**<span style="font-variant: small-caps;">Ever</span>: Mitigating Hallucination in Large Language Models through Real-Time Verification and Rectification**\
+**<span style="font-variant: small-caps;">EVER</span>: Mitigating Hallucination in Large Language Models through Real-Time Verification and Rectification**\
 <u>Haoqiang Kang</u>, Juntong Ni, and Huaxiu Yao \
 *preprint 2023* \
 [[paper]](https://arxiv.org/abs/2311.09114)
