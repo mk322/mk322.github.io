@@ -20,7 +20,7 @@ author_profile: true
 
 **Translate to Disambiguate: Zero-shot Multilingual Word Sense Disambiguation with Pretrained Language Models** \
 <u>Haoqiang Kang</u>\*, Terra Blevins\*, and Luke Zettlemoyer \
-*preprint 2023* \
+*Proceedings of the 18th Conference of the European Chapter of the Association for Computational Linguistics (EACL), 2024* \
 [[paper]](https://arxiv.org/abs/2304.13803)
 
 
