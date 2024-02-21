@@ -7,7 +7,6 @@ author_profile: true
 
 ### 2023
 **The FinBen: An Holistic Financial Benchmark for Large Language Models** \
-Qianqian Xie, Weiguang Han,Zhengyu Chen,Ruoyu Xiang,Xiao Zhang,Yueru He,Mengxi Xiao,Dong Li,Yongfu Dai,Duanyu Feng,Yijing Xu,<u>Haoqiang Kang</u>,... \
 *Under Review at ACL, 2024.* \
 [[paper]](https://arxiv.org/abs/2402.12659)
 
@@ -24,7 +23,7 @@ Qianqian Xie, Weiguang Han,Zhengyu Chen,Ruoyu Xiang,Xiao Zhang,Yueru He,Mengxi X
 **<span style="font-variant: small-caps;">EVER</span>: Mitigating Hallucination in Large Language Models through Real-Time Verification and Rectification**\
 <u>Haoqiang Kang</u>, Juntong Ni, and Huaxiu Yao \
 *Under Review at ACL, 2024.* \
-[[paper]](./papers/KangEVER2024.pdf)
+[[paper]](../papers/KangEVER2024.pdf)
 
 **Translate to Disambiguate: Zero-shot Multilingual Word Sense Disambiguation with Pretrained Language Models** \
 <u>Haoqiang Kang</u>\*, Terra Blevins\*, and Luke Zettlemoyer \
