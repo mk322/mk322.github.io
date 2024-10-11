@@ -7,18 +7,20 @@ redirect_from:
   - /about/
   - /about.html
 ---
-Hello! I am an incoming Ph.D. Student at University of California San Diego (UCSD), working with Prof. [Lianhui Qin](https://sites.google.com/view/lianhuiqin/home). I am currently working as a Research Assistant under the supervision of [Dr. Xiao-Yang Liu](https://openfin.engineering.columbia.edu/people/xiao-yang-yanglet-liu) at Columbia University. I've earned my Bachelor of Science degree from the [Paul G. Allen School of Computer Science at the University of Washington (UW), Seattle](https://www.cs.washington.edu/). During my undergraduate time, I am forunated to work closely with [Prof. Luke Zettlemoyer](https://www.cs.washington.edu/people/faculty/lsz) and [Terra Blevins](https://blvns.github.io/), who provided invaluable mentorship and guidance in my early research endeavors. After completing my undergraduate studies, I have completed a research internship in the [Dr. Huaxiu Yao](https://www.huaxiuyao.io/)'s research lab at the University of North Carolina at Chapel Hill.
+Hello! I am a CS Ph.D. Student at University of California San Diego (UCSD). I am fortunate to be advised by Prof. [Lianhui Qin](https://sites.google.com/view/lianhuiqin/home). I obtained my Bachelor of Science degree from the [Paul G. Allen School of Computer Science at the University of Washington (UW), Seattle](https://www.cs.washington.edu/). During my undergraduate time, I was forunated to work closely with [Prof. Luke Zettlemoyer](https://www.cs.washington.edu/people/faculty/lsz) and [Terra Blevins](https://blvns.github.io/), who provided invaluable mentorship and guidance in my early research endeavors. 
 
-**I am actively applying for graduate programs in NLP/CS and am also interested in securing a summer research internship in the industry.** If you know of any relevant openings or could provide an introduction, I would deeply appreciate your support.
+[comment]: <> (-After completing my undergraduate studies, I w a research internship in the [Dr. Huaxiu Yao](https://www.huaxiuyao.io/)'s research lab at the University of North Carolina at Chapel Hill, and I was working as a Research Assistant under the supervision of [Dr. Xiao-Yang Liu](https://openfin.engineering.columbia.edu/people/xiao-yang-yanglet-liu) at Columbia University.)
+
+**I am interested in securing a summer research internship in the industry.** If you know of any relevant openings or could provide an introduction, I would deeply appreciate your support.
 
 Research Interests
 ======
-My primary research interests lie at the challenges and deficiency of Large Language Models, focusing on:
+My research focuses on *Machine Reasoning* in Large ML Models, including Large Language Models, Vision/Multimodal Language Models, and World Models. I am particularly interested in enhancing their reasoning and planning abilities to enable more robust problem-solving ability. I explore how these models can be utilized by separating the world model, which simulates the world, from the inference model, which takes actions coupled with a world model. Ultimately, I aim to solve practical real-world tasks with these large models, such as embodied AI and robotics.
 
-- Trustworthy NLP, Hallucination, Factuality: I am fascinated by the challenges of ensuring the reliability and truthfulness of NLP outputs. My work aims to mitigate issues like hallucination in generated text and enhance the factuality of LLMs.
+[comment]: <> (- Trustworthy NLP, Hallucination, Factuality: I am fascinated by the challenges of ensuring the reliability and truthfulness of NLP outputs. My work aims to mitigate issues like hallucination in generated text and enhance the factuality of LLMs.)
 
-- Multilingual NLP: With the digital world erasing geographical boundaries, I believe in the power of multilingual NLP to bridge communication gaps. I'm working on models that can understand and process multiple languages, bringing down linguistic barriers in information access.
+[comment]: <> (- Multilingual NLP: With the digital world erasing geographical boundaries, I believe in the power of multilingual NLP to bridge communication gaps. I'm working on models that can understand and process multiple languages, bringing down linguistic barriers in information access.)
 
-- Reasoning ability of LLMs: My research also encompasses enhancing the reasoning capabilities of large language models. The goal is to develop models that not only "understand" or "generate" text but can "reason", "infer", and make logical conclusions, thereby simulating a more human-like understanding of language and context.
+[comment]: <> (Reasoning ability of LLMs: My research also encompasses enhancing the reasoning capabilities of large language models. The goal is to develop models that not only "understand" or "generate" text but can "reason", "infer", and make logical conclusions, thereby simulating a more human-like understanding of language and context.)
 
-As I continue this exciting journey in NLP, I am always eager to collaborate, share insights, and learn from others in this dynamic field. Feel free to reach out to me for collaborations, discussions, or even a casual chat about the future of NLP!
+As I continue this exciting journey in research, I am always eager to collaborate, share insights, and learn from others in this dynamic field. Feel free to reach out to me for collaborations, discussions, or even a casual chat about research!
