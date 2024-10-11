@@ -15,7 +15,7 @@ Hello! I am a CS Ph.D. Student at University of California San Diego (UCSD). I a
 
 Research Interests
 ======
-My research focuses on *Machine Reasoning* in Large ML Models, including Large Language Models, Vision/Multimodal Language Models, and World Models. I am particularly interested in enhancing their reasoning and planning abilities to enable more robust problem-solving ability. I explore how these models can be utilized by separating the world model, which simulates the world, from the inference model, which takes actions coupled with a world model. Ultimately, I aim to solve practical real-world tasks with these large models, such as embodied AI and robotics.
+My research focuses on *Machine Reasoning* in Large ML Models, including Large Language Models, Vision/Multimodal Language Models, and World Models. I am particularly interested in enhancing their reasoning and planning abilities to enable more robust problem-solving. I explore how these models can be utilized by separating the world model, which simulates the world, from the inference model, which takes actions coupled with a world model. Ultimately, I aim to solve practical real-world tasks with these large models, such as embodied AI and robotics.
 
 [comment]: <> (- Trustworthy NLP, Hallucination, Factuality: I am fascinated by the challenges of ensuring the reliability and truthfulness of NLP outputs. My work aims to mitigate issues like hallucination in generated text and enhance the factuality of LLMs.)
 
