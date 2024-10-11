@@ -31,3 +31,7 @@ My research focuses on *Machine Reasoning* in Large ML Models, including Large L
 [comment]: <> (- Multilingual NLP: With the digital world erasing geographical boundaries, I believe in the power of multilingual NLP to bridge communication gaps. I'm working on models that can understand and process multiple languages, bringing down linguistic barriers in information access.)
 
 As I continue this exciting journey in research, I am always eager to collaborate, share insights, and learn from others in this dynamic field. Feel free to reach out to me for collaborations, discussions, or even a casual chat about research!
+
+
+Page View: [![Visits Badge](https://badges.pufler.dev/visits/pujux/badge-it)](https://badges.pufler.dev)
+
