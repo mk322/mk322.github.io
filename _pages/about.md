@@ -19,6 +19,15 @@ My research focuses on *Machine Reasoning* in Large ML Models, including Large L
 
 [comment]: <> (- Trustworthy NLP, Hallucination, Factuality: I am fascinated by the challenges of ensuring the reliability and truthfulness of NLP outputs. My work aims to mitigate issues like hallucination in generated text and enhance the factuality of LLMs.)
 
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-38STV3VNWK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-38STV3VNWK');
+</script>
 [comment]: <> (- Multilingual NLP: With the digital world erasing geographical boundaries, I believe in the power of multilingual NLP to bridge communication gaps. I'm working on models that can understand and process multiple languages, bringing down linguistic barriers in information access.)
 
 As I continue this exciting journey in research, I am always eager to collaborate, share insights, and learn from others in this dynamic field. Feel free to reach out to me for collaborations, discussions, or even a casual chat about research!
