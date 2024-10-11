@@ -4,20 +4,21 @@ title: "Publications"
 permalink: /publications/
 author_profile: true
 ---
+### 2024
 
-### 2023
 **The FinBen: An Holistic Financial Benchmark for Large Language Models** \
-*Under Review at ACL, 2024.* \
+*NeurIPS Datasets and Benchmarks Tracks, 2024* \
 [[paper]](https://arxiv.org/abs/2402.12659)
 
 **Comparing Hallucination Detection Metrics for Multilingual Generation** \
 <u>Haoqiang Kang</u>, Terra Blevins, and Luke Zettlemoyer \
-*Under Review at ACL, 2024.* \
+*Under Review at NAACL, 2024.* \
 [[paper]](https://arxiv.org/abs/2402.10496)
+
+### 2023
 
 **<span style="font-variant: small-caps;">EVER</span>: Mitigating Hallucination in Large Language Models through Real-Time Verification and Rectification**\
 <u>Haoqiang Kang</u>, Juntong Ni, and Huaxiu Yao \
-*Under Review at ACL, 2024.* \
 [[paper]](../papers/KangEVER2024.pdf)
 
 **Hallucination of Large Language Models in Finance: An Empirical Examination** \
@@ -29,6 +30,16 @@ author_profile: true
 <u>Haoqiang Kang</u>\*, Terra Blevins\*, and Luke Zettlemoyer \
 *Proceedings of the 18th Conference of the European Chapter of the Association for Computational Linguistics (EACL), 2024. <span style="color:red">(Oral)</span>* \
 [[paper]](https://arxiv.org/abs/2304.13803)
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-38STV3VNWK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-38STV3VNWK');
+</script>
 
 
 More interesting papers are on the way:)
