@@ -10,7 +10,7 @@ locale                   : "en-US"
 title                    : "Haoqiang (Murray) Kang"
 title_separator          : "-"
 name                     : &name "Murray Kang"
-description              : &description "A NLP student researcher who graduated from University of Washington (UW) as an undergraduate."
+description              : &description "A CS PhD student at UCSD."
 url                      : https://mk322.github.io # the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
 baseurl                  : "" # the subpath of your site, e.g. "/blog"
 repository               : "mk322/mk322.github.io"
@@ -82,12 +82,12 @@ analytics:
 author:
   name             : "Murray Kang"
   avatar           : "bio_pic.jpeg"
-  bio              : "NLP student researcher"
-  location         : "Seattle, WA"
+  bio              : "CS PhD Student"
+  location         : "Bellevue, WA"
   employer         :
   pubmed           : 
   googlescholar    : "https://scholar.google.ca/citations?hl=en-EN&pli=1&user=_v6VcfoAAAAJ"
-  email            :  "haoqik(at)uw(dot)edu"
+  email            :  "mukang(at)ucsd(dot)edu"
   researchgate     :  # example: "https://www.researchgate.net/profile/yourprofile"
   uri              :
   bitbucket        :
