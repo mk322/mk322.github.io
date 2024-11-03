@@ -6,6 +6,16 @@ author_profile: true
 ---
 ### 2024
 
+**Learning Structured Reasoning in Vision-Language Models via System 2 Inductive Bias** \
+<u>Haoqiang Kang</u>, Enna Sachdeva, Piyush Gupta, Sangjae Bae, and Kwonjoon Lee \
+*Under Review at CVPR, 2024.* \
+[paper]
+
+**Flow of Reasoning: Training LLMs for Divergent Problem Solving with Minimal Examples** \
+Fangxu Yu, Lai Jiang, <u>Haoqiang Kang</u>, Shibo Hao, and Lianhui Qin \
+*Under Review at ICLR, 2024.* \
+[[paper]](https://arxiv.org/abs/2406.05673)
+
 **The FinBen: An Holistic Financial Benchmark for Large Language Models** \
 *NeurIPS Datasets and Benchmarks Tracks, 2024* \
 [[paper]](https://arxiv.org/abs/2402.12659)
