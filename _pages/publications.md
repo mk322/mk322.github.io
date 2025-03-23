@@ -12,7 +12,7 @@ author_profile: true
 [[paper]](https://arxiv.org/abs/2503.06514)
 
 **Flow of Reasoning: Training LLMs for Divergent Problem Solving with Minimal Examples** \
-Fangxu Yu<sup>\*</sup>, Lai Jiang<sup>\*</sup>, <sup><span style="text-decoration: underline;">Haoqiang Kang*</span></sup>, Shibo Hao, and Lianhui Qin \
+Fangxu Yu<sup>\*</sup>, Lai Jiang<sup>\*</sup>, <span style="text-decoration: underline;">Haoqiang Kang</span><sup>*</sup>, Shibo Hao, and Lianhui Qin \
 *Under Review at ICML, 2025.* \
 [[paper]](https://arxiv.org/abs/2406.05673)
 
