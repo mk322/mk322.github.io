@@ -8,12 +8,12 @@ author_profile: true
 
 **Learning Structured Reasoning in Vision-Language Models via System 2 Inductive Bias** \
 <u>Haoqiang Kang</u>, Enna Sachdeva, Piyush Gupta, Sangjae Bae, and Kwonjoon Lee \
-*Under Review at CVPR, 2024.* \
-[paper]
+*Conference on Computer Vision and Pattern Recognition, 2025.* \
+[[paper]](https://arxiv.org/abs/2503.06514)
 
 **Flow of Reasoning: Training LLMs for Divergent Problem Solving with Minimal Examples** \
-Fangxu Yu, Lai Jiang, <u>Haoqiang Kang</u>, Shibo Hao, and Lianhui Qin \
-*Under Review at ICLR, 2024.* \
+Fangxu Yu<sup>\*</sup>, Lai Jiang<sup>\*</sup>, <u>Haoqiang Kang<sup>\*</sup></u>, Shibo Hao, and Lianhui Qin \
+*Under Review at ICML, 2025.* \
 [[paper]](https://arxiv.org/abs/2406.05673)
 
 **The FinBen: An Holistic Financial Benchmark for Large Language Models** \
@@ -22,7 +22,6 @@ Fangxu Yu, Lai Jiang, <u>Haoqiang Kang</u>, Shibo Hao, and Lianhui Qin \
 
 **Comparing Hallucination Detection Metrics for Multilingual Generation** \
 <u>Haoqiang Kang</u>, Terra Blevins, and Luke Zettlemoyer \
-*Under Review at NAACL, 2024.* \
 [[paper]](https://arxiv.org/abs/2402.10496)
 
 ### 2023
