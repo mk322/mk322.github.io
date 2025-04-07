@@ -13,7 +13,7 @@ author_profile: true
 
 **Flow of Reasoning: Training LLMs for Divergent Problem Solving with Minimal Examples** \
 Fangxu Yu, <u>Haoqiang Kang</u>, Lai Jian, Shibo Hao, and Lianhui Qin \
-*Under Review at ICML, 2025.* Substantial lead contribution. \
+*Under Review at ICML, 2025.* Substantial Lead Contribution. \
 [[paper]](https://arxiv.org/abs/2406.05673) 
 
 ### 2024
