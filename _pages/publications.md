@@ -12,9 +12,9 @@ author_profile: true
 [[paper]](https://arxiv.org/abs/2503.06514)
 
 **Flow of Reasoning: Training LLMs for Divergent Problem Solving with Minimal Examples** \
-Fangxu Yu<sup>\*</sup>, Lai Jiang<sup>\*</sup>, Haoqiang Kang<sup>\*</sup>, Shibo Hao, and Lianhui Qin \
+Fangxu Yu, <u>Haoqiang Kang</u>, Lai Jian, Shibo Hao, and Lianhui Qin \
 *Under Review at ICML, 2025.* \
-[[paper]](https://arxiv.org/abs/2406.05673)
+[[paper]](https://arxiv.org/abs/2406.05673) Substantial lead contribution.
 
 **The FinBen: An Holistic Financial Benchmark for Large Language Models** \
 *NeurIPS Datasets and Benchmarks Tracks, 2024* \
