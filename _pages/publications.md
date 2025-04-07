@@ -4,7 +4,7 @@ title: "Publications"
 permalink: /publications/
 author_profile: true
 ---
-### 2024
+### 2025
 
 **Learning Structured Reasoning in Vision-Language Models via System 2 Inductive Bias** \
 <u>Haoqiang Kang</u>, Enna Sachdeva, Piyush Gupta, Sangjae Bae, and Kwonjoon Lee \
@@ -13,8 +13,10 @@ author_profile: true
 
 **Flow of Reasoning: Training LLMs for Divergent Problem Solving with Minimal Examples** \
 Fangxu Yu, <u>Haoqiang Kang</u>, Lai Jian, Shibo Hao, and Lianhui Qin \
-*Under Review at ICML, 2025.* \
-[[paper]](https://arxiv.org/abs/2406.05673) Substantial lead contribution.
+*Under Review at ICML, 2025.* Substantial lead contribution. \
+[[paper]](https://arxiv.org/abs/2406.05673) 
+
+### 2024
 
 **The FinBen: An Holistic Financial Benchmark for Large Language Models** \
 *NeurIPS Datasets and Benchmarks Tracks, 2024* \
