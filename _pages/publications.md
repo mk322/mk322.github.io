@@ -6,7 +6,12 @@ author_profile: true
 ---
 ### 2025
 
-**Learning Structured Reasoning in Vision-Language Models via System 2 Inductive Bias** \
+**LaDiR: Latent Diffusion Enhances LLMs for Text Reasoning** \
+<u>Haoqiang Kang</u>, Yizhe Zhang, Nikki Lijing Kuang, Nicklas Majamaki, Navdeep Jaitly, Yi-An Ma, and Lianhui Qin \
+*Under Review at ICLR 2026.* \
+[[paper]](https://arxiv.org/abs/2510.04573)
+
+**GFlowVLM: Enhancing Multi-step Reasoning in Vision-Language Models with Generative Flow Networks** \
 <u>Haoqiang Kang</u>, Enna Sachdeva, Piyush Gupta, Sangjae Bae, and Kwonjoon Lee \
 *Conference on Computer Vision and Pattern Recognition, 2025.* \
 [[paper]](https://arxiv.org/abs/2503.06514)
