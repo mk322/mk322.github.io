@@ -21,14 +21,13 @@ My research focuses on developing scalable paradigms to improve the **Machine Re
 Experience
 ======
 
-![GDM Logo](/images/GDM_Logo.png "GDM Logo")Google DeepMind | Jun 2025 – Sep 2025    
-Topic: Latent Reasoning for Vision Language Models    
-Host: Yinpeng Chen
+<img src="/images/GDM_Logo.png" alt="GDM Logo" title="GDM Logo" height="20" style="vertical-align: middle;"/> Google DeepMind | Jun 2025 – Sep 2025  
+Topic: Latent Reasoning for Vision Language Models  
+Host: Yinpeng Chen  
 
-
-![HRI Logo](/images/hri_logo.png "HRI Logo")Honda Research Institute | May 2024 – Sep 2024   
-Topic: GFlowNets Post-Training for Reasoning in Vision-Language Models   
-Hosts: Kwonjoon Lee and Enna Sachdeva  
+<img src="/images/hri_logo.png" alt="HRI Logo" title="HRI Logo" height="20" style="vertical-align: middle;"/> Honda Research Institute, USA | May 2024 – Sep 2024  
+Topic: GFlowNets Post-Training for Reasoning in Vision-Language Models  
+Hosts: Kwonjoon Lee and Enna Sachdeva    
 
 [comment]: <> (- Trustworthy NLP, Hallucination, Factuality: I am fascinated by the challenges of ensuring the reliability and truthfulness of NLP outputs. My work aims to mitigate issues like hallucination in generated text and enhance the factuality of LLMs.)
 
@@ -42,5 +41,7 @@ Hosts: Kwonjoon Lee and Enna Sachdeva
   gtag('config', 'G-38STV3VNWK');
 </script>
 [comment]: <> (- Multilingual NLP: With the digital world erasing geographical boundaries, I believe in the power of multilingual NLP to bridge communication gaps. I'm working on models that can understand and process multiple languages, bringing down linguistic barriers in information access.)
+
+
 
 Feel free to reach out to me for collaborations, discussions, or even a casual chat about research!
