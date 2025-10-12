@@ -13,12 +13,12 @@ author_profile: true
 
 **GFlowVLM: Enhancing Multi-step Reasoning in Vision-Language Models with Generative Flow Networks** \
 <u>Haoqiang Kang</u>, Enna Sachdeva, Piyush Gupta, Sangjae Bae, and Kwonjoon Lee \
-*Conference on Computer Vision and Pattern Recognition, 2025.* \
+*Conference on Computer Vision and Pattern Recognition (CVPR), 2025.* \
 [[paper]](https://arxiv.org/abs/2503.06514)
 
 **Flow of Reasoning: Training LLMs for Divergent Problem Solving with Minimal Examples** \
-Fangxu Yu, <u>Haoqiang Kang</u>, Lai Jian, Shibo Hao, and Lianhui Qin \
-*Under Review at ICML, 2025.* Substantial Lead Contribution. \
+Fangxu Yu<sup>*<sup>, Lai Jiang<sup>*<sup>, <u>Haoqiang Kang<sup>*<sup></u>, Shibo Hao, and Lianhui Qin \
+*In International Conference on Machine Learning (ICML), 2025.* \
 [[paper]](https://arxiv.org/abs/2406.05673) 
 
 ### 2024
