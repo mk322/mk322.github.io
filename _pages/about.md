@@ -21,15 +21,22 @@ My research focuses on developing scalable paradigms to improve the **Machine Re
 Experience
 ======
 
-<img src="/images/GDM_Logo.png" alt="GDM Logo" title="GDM Logo" height="20" style="vertical-align: middle;"/> Google DeepMind | Jun 2025 – Sep 2025  
-Position: Student Researcher  
-Topic: Latent Reasoning for Vision Language Models  
-Host: Yinpeng Chen  
+<p>
+  <img src="/images/GDM_Logo.png" alt="GDM Logo" title="GDM Logo" height="20" style="vertical-align: middle; margin-right: 6px;">
+  <strong>Google DeepMind</strong> | Jun 2025 – Sep 2025<br>
+  Position: Student Researcher  
+  Topic: Latent Reasoning for Vision Language Models<br>
+  Host: Yinpeng Chen
+</p>
 
-<img src="/images/hri_logo.png" alt="HRI Logo" title="HRI Logo" height="20" style="vertical-align: middle;"/> Honda Research Institute, USA | May 2024 – Sep 2024  
-Position: Research Intern   
-Topic: GFlowNets Post-Training for Reasoning in Vision-Language Models  
-Hosts: Kwonjoon Lee and Enna Sachdeva    
+<p>
+  <img src="/images/hri_logo.png" alt="HRI Logo" title="HRI Logo" height="20" style="vertical-align: middle; margin-right: 6px;">
+  <strong>Honda Research Institute, USA</strong> | May 2024 – Sep 2024<br>
+  Position: Research Intern   
+  Topic: GFlowNets Post-Training for Reasoning in Vision-Language Models<br>
+  Hosts: Kwonjoon Lee and Enna Sachdeva
+</p>
+
 
 [comment]: <> (- Trustworthy NLP, Hallucination, Factuality: I am fascinated by the challenges of ensuring the reliability and truthfulness of NLP outputs. My work aims to mitigate issues like hallucination in generated text and enhance the factuality of LLMs.)
 
