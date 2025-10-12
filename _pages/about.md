@@ -22,10 +22,12 @@ Experience
 ======
 
 <img src="/images/GDM_Logo.png" alt="GDM Logo" title="GDM Logo" height="20" style="vertical-align: middle;"/> Google DeepMind | Jun 2025 – Sep 2025  
+Position: Student Researcher  
 Topic: Latent Reasoning for Vision Language Models  
 Host: Yinpeng Chen  
 
 <img src="/images/hri_logo.png" alt="HRI Logo" title="HRI Logo" height="20" style="vertical-align: middle;"/> Honda Research Institute, USA | May 2024 – Sep 2024  
+Position: Research Intern   
 Topic: GFlowNets Post-Training for Reasoning in Vision-Language Models  
 Hosts: Kwonjoon Lee and Enna Sachdeva    
 
