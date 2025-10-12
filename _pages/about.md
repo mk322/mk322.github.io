@@ -21,14 +21,14 @@ My research focuses on developing scalable paradigms to improve the **Machine Re
 Experience
 ======
 
-Google DeepMind | Jun 2025 – Sep 2025
-Topic: Latent Reasoning for Vision Language Models
+Google DeepMind | Jun 2025 – Sep 2025    
+Topic: Latent Reasoning for Vision Language Models    
 Host: Yinpeng Chen
 
 
-Honda Research Institute | May 2024 – Sep 2024
-Topic: GFlowNets Post-Training for Reasoning in Vision-Language Models
-Hosts: Kwonjoon Lee and Enna Sachdeva
+Honda Research Institute | May 2024 – Sep 2024   
+Topic: GFlowNets Post-Training for Reasoning in Vision-Language Models   
+Hosts: Kwonjoon Lee and Enna Sachdeva  
 
 [comment]: <> (- Trustworthy NLP, Hallucination, Factuality: I am fascinated by the challenges of ensuring the reliability and truthfulness of NLP outputs. My work aims to mitigate issues like hallucination in generated text and enhance the factuality of LLMs.)
 
