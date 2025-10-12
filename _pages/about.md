@@ -7,7 +7,7 @@ redirect_from:
   - /about/
   - /about.html
 ---
-Hello! I am a CS Ph.D. Student at University of California San Diego (UCSD). I am fortunate to be advised by [Lianhui Qin](https://sites.google.com/view/lianhuiqin/home). I obtained my Bachelor of Science degree from the [Paul G. Allen School of Computer Science at the University of Washington (UW), Seattle](https://www.cs.washington.edu/). During my undergraduate time, I was forunated to work closely with [Luke Zettlemoyer](https://www.cs.washington.edu/people/faculty/lsz) and [Terra Blevins](https://blvns.github.io/), who provided invaluable mentorship and guidance in my early research endeavors. 
+Hello! I am a CS Ph.D. Student at University of California San Diego (UCSD). I am fortunate to be advised by [Lianhui Qin](https://sites.google.com/view/lianhuiqin/home). I obtained my Bachelor of Science degree from the Paul G. Allen School of Computer Science at the University of Washington (UW), Seattle. During my undergraduate time, I was forunated to work closely with [Luke Zettlemoyer](https://www.cs.washington.edu/people/faculty/lsz) and [Terra Blevins](https://blvns.github.io/), who provided invaluable mentorship and guidance in my early research endeavors. 
 
 [comment]: <> (-After completing my undergraduate studies, I w a research internship in the [Huaxiu Yao](https://www.huaxiuyao.io/)'s research lab at the University of North Carolina at Chapel Hill, and I was working as a Research Assistant under the supervision of [Xiao-Yang Liu](https://openfin.engineering.columbia.edu/people/xiao-yang-yanglet-liu) at Columbia University.)
 
