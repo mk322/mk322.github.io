@@ -24,7 +24,7 @@ Experience
 <p>
   <img src="/images/GDM_Logo.png" alt="GDM Logo" title="GDM Logo" height="20" style="vertical-align: middle; margin-right: 6px;">
   <strong>Google DeepMind</strong> | Jun 2025 – Sep 2025<br>
-  Position: Student Researcher     
+  Position: Student Researcher<br>
   Topic: Latent Reasoning for Vision Language Models<br>
   Host: Yinpeng Chen
 </p>
@@ -32,7 +32,7 @@ Experience
 <p>
   <img src="/images/hri_logo.png" alt="HRI Logo" title="HRI Logo" height="20" style="vertical-align: middle; margin-right: 6px;">
   <strong>Honda Research Institute, USA</strong> | May 2024 – Sep 2024<br>
-  Position: Research Intern        
+  Position: Research Intern<br>   
   Topic: GFlowNets Post-Training for Reasoning in Vision-Language Models<br>
   Hosts: Kwonjoon Lee and Enna Sachdeva
 </p>
