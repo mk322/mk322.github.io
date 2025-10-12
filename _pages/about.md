@@ -21,12 +21,12 @@ My research focuses on developing scalable paradigms to improve the **Machine Re
 Experience
 ======
 
-Google DeepMind | Jun 2025 – Sep 2025    
+![GDM Logo](/images/GDM_Logo.png "GDM Logo")Google DeepMind | Jun 2025 – Sep 2025    
 Topic: Latent Reasoning for Vision Language Models    
 Host: Yinpeng Chen
 
 
-Honda Research Institute | May 2024 – Sep 2024   
+![HRI Logo](/images/hri_logo.png "HRI Logo")Honda Research Institute | May 2024 – Sep 2024   
 Topic: GFlowNets Post-Training for Reasoning in Vision-Language Models   
 Hosts: Kwonjoon Lee and Enna Sachdeva  
 
