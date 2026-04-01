@@ -42,6 +42,6 @@ Feel free to reach out to me for collaborations, discussions, or even a casual c
   <div style="display:flex; flex-direction:column; align-items:center; gap:16px;">
     <img src="https://visitor-badge.laobi.icu/badge?page_id=mk322.github.io&left_color=%232c3e50&right_color=%233498db&left_text=Page%20Views" alt="Visitor Count" style="border-radius:6px;">
     <!-- To add a visitor location map, register at https://clustrmaps.com/add and replace this comment with the embed code -->
-    <script type="text/javascript" id="clustrmaps" src="//clustrmaps.com/map_v2.js?cl=ffffff&w=300&t=tt&d=YOUR_WIDGET_ID&co=2c3e50&cmo=3498db&cmn=27ae60&ct=ffffff"></script>
+  <script type="text/javascript" id="mmvst_globe" src="//mapmyvisitors.com/globe.js?d=W90CuT7xBY38UlUxl7G12DETYVMObgmpNoH_ouZjjo8"></script>
   </div>
 </div>
