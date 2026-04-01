@@ -7,10 +7,15 @@ author_profile: true
 
 ### 2026
 
-**Beyond Mode Elicitation: Diversity-Preserving Reinforcement Learning via Latent Diffusion Reasoner** \
-<u>Haoqiang Kang</u>, Yizhe Zhang, Nikki Lijing Kuang, Yi-An Ma, and Lianhui Qin \
-*Preprint, 2026.* \
-[[paper]](https://arxiv.org/abs/2602.01705)
+<div style="display:flex; gap:16px; margin-bottom:1.5em; align-items:flex-start;">
+  <img src="/images/papers/ladirl.png" alt="LaDi-RL" style="width:180px; min-width:180px; border-radius:6px; box-shadow:0 2px 8px rgba(0,0,0,0.1); margin-top:4px;">
+  <div>
+    <strong>Beyond Mode Elicitation: Diversity-Preserving Reinforcement Learning via Latent Diffusion Reasoner</strong><br>
+    <u>Haoqiang Kang</u>, Yizhe Zhang, Nikki Lijing Kuang, Yi-An Ma, and Lianhui Qin<br>
+    <em>Preprint, 2026.</em><br>
+    <a href="https://arxiv.org/abs/2602.01705">[paper]</a>
+  </div>
+</div>
 
 **TSRBench: A Comprehensive Multi-task Multi-modal Time Series Reasoning Benchmark for Generalist Models** \
 Fangxu Yu, Xingming Guo, Linjie Yuan, <u>Haoqiang Kang</u>, Hongyu Zhao, Lianhui Qin, Furong Huang, Bin Hu, and Tianyi Zhou \
@@ -19,10 +24,15 @@ Fangxu Yu, Xingming Guo, Linjie Yuan, <u>Haoqiang Kang</u>, Hongyu Zhao, Lianhui
 
 ### 2025
 
-**LaDiR: Latent Diffusion Enhances LLMs for Text Reasoning** \
-<u>Haoqiang Kang</u>, Yizhe Zhang, Nikki Lijing Kuang, Nicklas Majamaki, Navdeep Jaitly, Yi-An Ma, and Lianhui Qin \
-*Under Review at ICLR 2026.* \
-[[paper]](https://arxiv.org/abs/2510.04573)
+<div style="display:flex; gap:16px; margin-bottom:1.5em; align-items:flex-start;">
+  <img src="/images/papers/ladir.png" alt="LaDiR" style="width:180px; min-width:180px; border-radius:6px; box-shadow:0 2px 8px rgba(0,0,0,0.1); margin-top:4px;">
+  <div>
+    <strong>LaDiR: Latent Diffusion Enhances LLMs for Text Reasoning</strong><br>
+    <u>Haoqiang Kang</u>, Yizhe Zhang, Nikki Lijing Kuang, Nicklas Majamaki, Navdeep Jaitly, Yi-An Ma, and Lianhui Qin<br>
+    <em>Under Review at ICLR 2026.</em><br>
+    <a href="https://arxiv.org/abs/2510.04573">[paper]</a>
+  </div>
+</div>
 
 **PAN: A World Model for General, Interactable, and Long-Horizon World Simulation** \
 Pan Xiang, Yi Gu, Zihan Liu, Zeyu Feng, Qiyue Gao, Yi Hu, Benhao Huang, Guangyi Liu, Yichi Yang, Kun Zhou, D. Abrahamyan, Arif Ahmad, Ganesh Bannur, Junrong Chen, K. Chen, Mingkai Deng, R. Han, Xinqi Huang, <u>Haoqiang Kang</u>, Zheqi Liu, Enze Ma, Hector Ren, Yashowardhan Shinde, Rohan Shingre, Ramsundar Tanikella, Kaiming Tao, Dequan Yang, Xinle Yu, Cong Zeng, Bing Zhou, Zhengzhong Liu, Zhiting Hu, and Eric P. Xing \
@@ -34,15 +44,25 @@ Lanxiang Hu, Abhilash Shankarampeta, Yixin Huang, Zilin Dai, Haoyang Yu, Yujie Z
 *Preprint, 2025.* \
 [[paper]](https://arxiv.org/abs/2512.02942)
 
-**GFlowVLM: Enhancing Multi-step Reasoning in Vision-Language Models with Generative Flow Networks** \
-<u>Haoqiang Kang</u>, Enna Sachdeva, Piyush Gupta, Sangjae Bae, and Kwonjoon Lee \
-*Conference on Computer Vision and Pattern Recognition (CVPR), 2025.* \
-[[paper]](https://arxiv.org/abs/2503.06514)
+<div style="display:flex; gap:16px; margin-bottom:1.5em; align-items:flex-start;">
+  <img src="/images/papers/gflowvlm.png" alt="GFlowVLM" style="width:180px; min-width:180px; border-radius:6px; box-shadow:0 2px 8px rgba(0,0,0,0.1); margin-top:4px;">
+  <div>
+    <strong>GFlowVLM: Enhancing Multi-step Reasoning in Vision-Language Models with Generative Flow Networks</strong><br>
+    <u>Haoqiang Kang</u>, Enna Sachdeva, Piyush Gupta, Sangjae Bae, and Kwonjoon Lee<br>
+    <em>Conference on Computer Vision and Pattern Recognition (CVPR), 2025.</em><br>
+    <a href="https://arxiv.org/abs/2503.06514">[paper]</a>
+  </div>
+</div>
 
-**Flow of Reasoning: Training LLMs for Divergent Problem Solving with Minimal Examples** \
-Fangxu Yu<sup>&dagger;</sup>, Lai Jiang<sup>&dagger;</sup>, <u>Haoqiang Kang</u><sup>&dagger;</sup>, Shibo Hao, and Lianhui Qin \
-*International Conference on Machine Learning (ICML), 2025.* \
-[[paper]](https://arxiv.org/abs/2406.05673)
+<div style="display:flex; gap:16px; margin-bottom:1.5em; align-items:flex-start;">
+  <img src="/images/papers/flowreasoning.png" alt="Flow of Reasoning" style="width:180px; min-width:180px; border-radius:6px; box-shadow:0 2px 8px rgba(0,0,0,0.1); margin-top:4px;">
+  <div>
+    <strong>Flow of Reasoning: Training LLMs for Divergent Problem Solving with Minimal Examples</strong><br>
+    Fangxu Yu<sup>&dagger;</sup>, Lai Jiang<sup>&dagger;</sup>, <u>Haoqiang Kang</u><sup>&dagger;</sup>, Shibo Hao, and Lianhui Qin<br>
+    <em>International Conference on Machine Learning (ICML), 2025.</em><br>
+    <a href="https://arxiv.org/abs/2406.05673">[paper]</a>
+  </div>
+</div>
 
 ### 2024
 

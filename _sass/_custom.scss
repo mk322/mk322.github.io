@@ -289,6 +289,54 @@ h2 {
   }
 }
 
+/* News section */
+.page__content ul[style*="list-style:none"] {
+  li {
+    padding: 6px 0;
+    border-bottom: 1px solid rgba($border-color, 0.5);
+    font-size: 0.92em;
+    line-height: 1.6;
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    strong {
+      color: $info-color;
+      font-size: 0.88em;
+      font-family: $monospace;
+    }
+  }
+}
+
+/* Paper thumbnail cards */
+.page__content div[style*="display:flex"] {
+  padding: 12px;
+  border-radius: 8px;
+  background: #f8f9fa;
+  border: 1px solid $border-color;
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+
+  &:hover {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+    transform: translateY(-1px);
+  }
+}
+
+/* Responsive paper thumbnails */
+@media (max-width: 600px) {
+  .page__content div[style*="display:flex"] {
+    flex-direction: column !important;
+
+    img {
+      width: 100% !important;
+      min-width: unset !important;
+      max-height: 200px;
+      object-fit: cover;
+    }
+  }
+}
+
 /* News/highlight badge */
 .badge {
   display: inline-block;

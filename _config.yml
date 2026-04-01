@@ -10,7 +10,7 @@ locale                   : "en-US"
 title                    : "Haoqiang (Murray) Kang"
 title_separator          : "-"
 name                     : &name "Murray Kang"
-description              : &description "A CS PhD student at UCSD."
+description              : &description "Haoqiang (Murray) Kang - CS PhD student at UCSD researching RL post-training, latent reasoning, and embodied coding agents for large AI models."
 url                      : https://mk322.github.io # the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
 baseurl                  : "" # the subpath of your site, e.g. "/blog"
 repository               : "mk322/mk322.github.io"
@@ -49,6 +49,7 @@ author:
   googlescholar    : "https://scholar.google.ca/citations?hl=en-EN&pli=1&user=_v6VcfoAAAAJ"
   email            : "mukang@ucsd.edu"
   github           : "mk322"
+  linkedin         : "haoqiang-kang-393648238"
   twitter          : "haoqik322"
 
 

@@ -1,7 +1,7 @@
 ---
 permalink: /
 title: ""
-excerpt: "Homepage"
+excerpt: "Haoqiang (Murray) Kang - CS PhD student at UCSD researching RL post-training, latent reasoning, and embodied coding agents."
 author_profile: true
 redirect_from:
   - /about/
@@ -10,6 +10,19 @@ redirect_from:
 Hello! I am a CS Ph.D. Student at University of California San Diego (UCSD). I am fortunate to be advised by [Lianhui Qin](https://sites.google.com/view/lianhuiqin/home). I obtained my Bachelor of Science degree from the Paul G. Allen School of Computer Science at the University of Washington (UW), Seattle. During my undergraduate time, I was fortunate to work closely with [Luke Zettlemoyer](https://www.cs.washington.edu/people/faculty/lsz) and [Terra Blevins](https://blvns.github.io/), who provided invaluable mentorship and guidance in my early research endeavors.
 
 **I am interested in securing a summer research internship in the industry.** If you know of any relevant openings or could provide an introduction, I would deeply appreciate your support.
+
+News
+======
+<ul style="list-style:none; padding-left:0;">
+  <li><strong>[2026.02]</strong> New preprint: <a href="https://arxiv.org/abs/2602.01705">Beyond Mode Elicitation</a> — diversity-preserving RL via latent diffusion reasoning.</li>
+  <li><strong>[2026.01]</strong> New preprint: <a href="https://arxiv.org/abs/2601.18744">TSRBench</a> — multi-task multi-modal time series reasoning benchmark.</li>
+  <li><strong>[2025.11]</strong> New preprint: <a href="https://arxiv.org/abs/2511.09057">PAN</a> — a world model for general, interactable, long-horizon simulation.</li>
+  <li><strong>[2025.06]</strong> Started as a <strong>Student Researcher</strong> at <strong>Google DeepMind</strong>, working on latent reasoning for vision-language models.</li>
+  <li><strong>[2025.03]</strong> <a href="https://arxiv.org/abs/2503.06514">GFlowVLM</a> accepted to <strong>CVPR 2025</strong>.</li>
+  <li><strong>[2025.01]</strong> <a href="https://arxiv.org/abs/2406.05673">Flow of Reasoning</a> accepted to <strong>ICML 2025</strong>.</li>
+  <li><strong>[2024.05]</strong> Started as a <strong>Research Intern</strong> at <strong>Honda Research Institute</strong>, working on GFlowNets for VLM reasoning.</li>
+  <li><strong>[2024.01]</strong> <a href="https://arxiv.org/abs/2304.13803">Translate to Disambiguate</a> accepted to <strong>EACL 2024</strong> as an <strong>Oral</strong> presentation.</li>
+</ul>
 
 Research Interests
 ======
