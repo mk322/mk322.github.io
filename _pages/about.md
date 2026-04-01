@@ -15,12 +15,12 @@ News
 ======
 <ul style="list-style:none; padding-left:0;">
   <li><strong>[2026.02]</strong> New preprint: <a href="https://arxiv.org/abs/2602.01705">Beyond Mode Elicitation</a> — diversity-preserving RL via latent diffusion reasoning.</li>
+  <li><strong>[2026.01]</strong> <a href="https://arxiv.org/abs/2510.04573">LaDiR</a> accepted to <strong>ICLR 2026</strong>.</li>
   <li><strong>[2026.01]</strong> New preprint: <a href="https://arxiv.org/abs/2601.18744">TSRBench</a> — multi-task multi-modal time series reasoning benchmark.</li>
   <li><strong>[2025.11]</strong> New preprint: <a href="https://arxiv.org/abs/2511.09057">PAN</a> — a world model for general, interactable, long-horizon simulation.</li>
   <li><strong>[2025.06]</strong> Started as a <strong>Student Researcher</strong> at <strong>Google DeepMind</strong>, working on latent reasoning for vision-language models.</li>
   <li><strong>[2025.03]</strong> <a href="https://arxiv.org/abs/2503.06514">GFlowVLM</a> accepted to <strong>CVPR 2025</strong>.</li>
   <li><strong>[2025.01]</strong> <a href="https://arxiv.org/abs/2406.05673">Flow of Reasoning</a> accepted to <strong>ICML 2025</strong>.</li>
-  <li><strong>[2025.01]</strong> <a href="https://arxiv.org/abs/2510.04573">LaDiR</a> accepted to <strong>ICLR 2026</strong>.</li>
   <li><strong>[2024.09]</strong> <a href="https://arxiv.org/abs/2402.12659">FinBen</a> accepted to <strong>NeurIPS 2024</strong> Datasets and Benchmarks Track.</li>
   <li><strong>[2024.05]</strong> Started as a <strong>Research Intern</strong> at <strong>Honda Research Institute</strong>, working on GFlowNets for VLM reasoning.</li>
   <li><strong>[2024.01]</strong> <a href="https://arxiv.org/abs/2304.13803">Translate to Disambiguate</a> accepted to <strong>EACL 2024</strong> as an <strong>Oral</strong> presentation.</li>
