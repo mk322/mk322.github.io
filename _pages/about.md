@@ -13,7 +13,9 @@ Hello! I am a CS Ph.D. Student at University of California San Diego (UCSD). I a
 
 Research Interests
 ======
-My research focuses on developing scalable paradigms to improve the **Machine Reasoning** ability in large AI Models, including Large Language Models, Vision/Multimodal Language Models, and World Models. I explore how these models can be utilized by separating the world model, which simulates the world, from the inference model, which takes actions coupled with a world model. Ultimately, I aim to solve practical real-world tasks with these large models, such as embodied AI and robotics.
+- **RL Post-Training**: Diversity and exploration in reinforcement learning for large model post-training
+- **Latent Reasoning**: Developing latent reasoning paradigms for language and vision-language models
+- **Embodied Coding Agent**: Building intelligent agents that solve practical real-world tasks
 
 
 Experience
@@ -42,6 +44,6 @@ Feel free to reach out to me for collaborations, discussions, or even a casual c
   <div style="display:flex; flex-direction:column; align-items:center; gap:16px;">
     <img src="https://visitor-badge.laobi.icu/badge?page_id=mk322.github.io&left_color=%232c3e50&right_color=%233498db&left_text=Page%20Views" alt="Visitor Count" style="border-radius:6px;">
     <!-- To add a visitor location map, register at https://clustrmaps.com/add and replace this comment with the embed code -->
-  <script type="text/javascript" id="mmvst_globe" src="//mapmyvisitors.com/globe.js?d=W90CuT7xBY38UlUxl7G12DETYVMObgmpNoH_ouZjjo8"></script>
+  <script type="text/javascript" id="mapmyvisitors" src="//mapmyvisitors.com/map.js?d=dXsIkeIL-GmjElNLWGQ9BO1vF4nmlWZz2OSMOOY8yx0&cl=ffffff&w=a"></script>
   </div>
 </div>
