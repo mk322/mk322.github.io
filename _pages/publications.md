@@ -29,7 +29,7 @@ Fangxu Yu, Xingming Guo, Linjie Yuan, <u>Haoqiang Kang</u>, Hongyu Zhao, Lianhui
   <div>
     <strong>LaDiR: Latent Diffusion Enhances LLMs for Text Reasoning</strong><br>
     <u>Haoqiang Kang</u>, Yizhe Zhang, Nikki Lijing Kuang, Nicklas Majamaki, Navdeep Jaitly, Yi-An Ma, and Lianhui Qin<br>
-    <em>Under Review at ICLR 2026.</em><br>
+    <em>International Conference on Learning Representations (ICLR), 2026.</em><br>
     <a href="https://arxiv.org/abs/2510.04573">[paper]</a>
   </div>
 </div>
