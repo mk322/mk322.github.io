@@ -1,0 +1,310 @@
+/* ==========================================================================
+   CUSTOM STYLES - Professional & Modern
+   ========================================================================== */
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Body refinements */
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  letter-spacing: -0.01em;
+}
+
+/* Headings */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: $primary-color;
+}
+
+h2 {
+  position: relative;
+  padding-bottom: 0.4em;
+
+  &::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 50px;
+    height: 3px;
+    background: linear-gradient(135deg, $info-color, lighten($info-color, 15%));
+    border-radius: 2px;
+  }
+}
+
+/* Masthead / Navigation */
+.masthead {
+  border-bottom: 2px solid $border-color;
+  background: #fff;
+  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.04);
+
+  &__inner-wrap {
+    padding: 1.2em 1em;
+  }
+}
+
+.greedy-nav {
+  .visible-links {
+    a {
+      font-weight: 500;
+      letter-spacing: 0.01em;
+      position: relative;
+      transition: color 0.3s ease;
+
+      &::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        width: 0;
+        height: 2px;
+        background: $info-color;
+        transition: all 0.3s ease;
+        transform: translateX(-50%);
+      }
+
+      &:hover {
+        color: $info-color;
+
+        &::after {
+          width: 80%;
+        }
+      }
+    }
+  }
+}
+
+/* Author Profile / Sidebar */
+.author__avatar {
+  img {
+    border-radius: 50% !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+    border: 3px solid #fff !important;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+    &:hover {
+      transform: scale(1.03);
+      box-shadow: 0 6px 25px rgba(0, 0, 0, 0.18);
+    }
+  }
+}
+
+.author__content {
+  .author__name {
+    font-size: 1.3em;
+    font-weight: 700;
+    color: $primary-color;
+    letter-spacing: -0.02em;
+  }
+
+  .author__bio {
+    font-size: 0.9em;
+    color: mix(#fff, $primary-color, 30%);
+    font-weight: 400;
+  }
+}
+
+.author__urls {
+  a {
+    font-size: 0.9em !important;
+    color: #555 !important;
+    transition: color 0.2s ease, transform 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+
+    &:hover {
+      color: $info-color !important;
+      text-decoration: none !important;
+      transform: translateX(2px);
+    }
+
+    i {
+      color: $info-color;
+      margin-right: 4px;
+      width: 20px;
+      text-align: center;
+    }
+  }
+}
+
+/* Page content */
+.page__content {
+  font-size: 1em;
+  line-height: 1.75;
+  color: #2d3436;
+
+  p {
+    margin-bottom: 1.2em;
+  }
+
+  a {
+    color: $link-color;
+    text-decoration: none;
+    border-bottom: 1px solid rgba($link-color, 0.3);
+    transition: border-color 0.2s ease, color 0.2s ease;
+
+    &:hover {
+      color: $link-color-hover;
+      border-bottom-color: $link-color-hover;
+      text-decoration: none;
+    }
+  }
+
+  /* Publication entry styling */
+  h3 {
+    color: $primary-color;
+    font-size: 1.15em;
+    font-weight: 600;
+    margin-top: 2em;
+    padding-bottom: 0.3em;
+    border-bottom: 2px solid $border-color;
+
+    &::after {
+      display: none;
+    }
+  }
+
+  /* Style paper links */
+  a[href*="arxiv"],
+  a[href*="papers/"],
+  a[href*="openreview"] {
+    display: inline-block;
+    padding: 2px 10px;
+    margin: 2px 3px;
+    background: linear-gradient(135deg, $info-color, lighten($info-color, 8%));
+    color: #fff !important;
+    border: none;
+    border-radius: 4px;
+    font-size: 0.82em;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background: linear-gradient(135deg, darken($info-color, 8%), $info-color);
+      transform: translateY(-1px);
+      box-shadow: 0 2px 8px rgba($info-color, 0.35);
+      color: #fff !important;
+      border: none;
+    }
+  }
+}
+
+/* Experience section cards */
+.page__content p strong:first-child {
+  color: $primary-color;
+}
+
+/* Section titles */
+.page__content h1 {
+  font-size: 1.6em;
+  color: $primary-color;
+  margin-top: 1.5em;
+  margin-bottom: 0.6em;
+}
+
+/* Footer */
+.page__footer {
+  background: $primary-color;
+  border-top: none;
+  color: rgba(255, 255, 255, 0.8);
+  padding: 1em 0;
+
+  a {
+    color: rgba(255, 255, 255, 0.9);
+
+    &:hover {
+      color: #fff;
+    }
+  }
+
+  .fas, .fab, .far, .fal, .fa {
+    color: rgba(255, 255, 255, 0.7);
+  }
+}
+
+.page__footer-copyright {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.75em;
+}
+
+.page__footer-follow {
+  li {
+    color: rgba(255, 255, 255, 0.8);
+  }
+}
+
+/* Intro animation */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+#main {
+  animation: fadeInUp 0.5s ease-out both;
+  animation-delay: 0.15s;
+}
+
+/* Selection highlight */
+::selection {
+  background: rgba($info-color, 0.2);
+  color: $primary-color;
+}
+
+/* Visitor tracker section */
+.visitor-tracker {
+  margin-top: 2em;
+  padding-top: 1.5em;
+  border-top: 2px solid $border-color;
+  text-align: center;
+
+  h2 {
+    font-size: 1.1em;
+    color: $primary-color;
+    margin-bottom: 1em;
+    text-align: center;
+
+    &::after {
+      left: 50%;
+      transform: translateX(-50%);
+    }
+  }
+}
+
+/* Responsive tweaks */
+@media (max-width: 768px) {
+  .author__avatar img {
+    max-width: 120px !important;
+  }
+}
+
+/* News/highlight badge */
+.badge {
+  display: inline-block;
+  padding: 2px 8px;
+  font-size: 0.75em;
+  font-weight: 600;
+  border-radius: 3px;
+  letter-spacing: 0.03em;
+
+  &--new {
+    background: rgba($success-color, 0.12);
+    color: $success-color;
+  }
+
+  &--oral {
+    background: rgba($danger-color, 0.12);
+    color: $danger-color;
+  }
+}
