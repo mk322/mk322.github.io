@@ -7,7 +7,7 @@ redirect_from:
   - /about/
   - /about.html
 ---
-Hello! I am a CS Ph.D. Student at University of California San Diego (UCSD). I am fortunate to be advised by [Lianhui Qin](https://sites.google.com/view/lianhuiqin/home). I obtained my Bachelor of Science degree from the Paul G. Allen School of Computer Science at the University of Washington (UW), Seattle. During my undergraduate time, I was fortunate to work closely with [Luke Zettlemoyer](https://www.cs.washington.edu/people/faculty/lsz) and [Terra Blevins](https://blvns.github.io/), who provided invaluable mentorship and guidance in my early research endeavors.
+Hello! I am a CS Ph.D. Student at University of California San Diego (UCSD). I am fortunate to be advised by [Lianhui Qin](https://lianhui.ucsd.edu/). I obtained my Bachelor of Science degree from the Paul G. Allen School of Computer Science at the University of Washington (UW), Seattle. During my undergraduate time, I was fortunate to work closely with [Luke Zettlemoyer](https://www.cs.washington.edu/people/faculty/lsz) and [Terra Blevins](https://blvns.github.io/), who provided invaluable mentorship and guidance in my early research endeavors.
 
 **I am interested in securing a summer research internship in the industry.** If you know of any relevant openings or could provide an introduction, I would deeply appreciate your support.
 
