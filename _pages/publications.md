@@ -101,10 +101,15 @@ author_profile: true
   </div>
 </div>
 
-**Translate to Disambiguate: Zero-shot Multilingual Word Sense Disambiguation with Pretrained Language Models** \
-<u>Haoqiang Kang</u>\*, Terra Blevins\*, and Luke Zettlemoyer \
-*Proceedings of the 18th Conference of the European Chapter of the Association for Computational Linguistics (EACL), 2024.* <span style="color:red; font-weight:600;">(Oral)</span> \
-[[paper]](https://arxiv.org/abs/2304.13803)
+<div style="display:flex; gap:16px; margin-bottom:1.5em; align-items:flex-start;">
+  <img src="/images/papers/wsd.png" alt="Translate to Disambiguate" style="width:180px; min-width:180px; border-radius:6px; box-shadow:0 2px 8px rgba(0,0,0,0.1); margin-top:4px;">
+  <div>
+    <strong>Translate to Disambiguate: Zero-shot Multilingual Word Sense Disambiguation with Pretrained Language Models</strong><br>
+    <u>Haoqiang Kang</u>*, Terra Blevins*, and Luke Zettlemoyer<br>
+    <em>Proceedings of the 18th Conference of the European Chapter of the Association for Computational Linguistics (EACL), 2024.</em> <span style="color:red; font-weight:600;">(Oral)</span><br>
+    <a href="https://arxiv.org/abs/2304.13803">[paper]</a>
+  </div>
+</div>
 
 ### 2023
 

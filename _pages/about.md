@@ -14,7 +14,7 @@ Hello! I am a CS Ph.D. Student at University of California San Diego (UCSD). I a
 News
 ======
 <ul style="list-style:none; padding-left:0;">
-  <li><strong>[2026.02]</strong> New preprint: <a href="https://arxiv.org/abs/2602.01705">Beyond Mode Elicitation</a> — diversity-preserving RL via latent diffusion reasoning.</li>
+  <li><strong>[2026.02]</strong> New preprint: <a href="https://arxiv.org/abs/2602.01705">LaDi-RL</a> — diversity-preserving RL via latent diffusion reasoning.</li>
   <li><strong>[2026.01]</strong> <a href="https://arxiv.org/abs/2510.04573">LaDiR</a> accepted to <strong>ICLR 2026</strong>.</li>
   <li><strong>[2026.01]</strong> New preprint: <a href="https://arxiv.org/abs/2601.18744">TSRBench</a> — multi-task multi-modal time series reasoning benchmark.</li>
   <li><strong>[2025.11]</strong> New preprint: <a href="https://arxiv.org/abs/2511.09057">PAN</a> — a world model for general, interactable, long-horizon simulation.</li>
