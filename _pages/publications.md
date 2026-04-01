@@ -124,7 +124,7 @@ author_profile: true
 </div>
 
 <div style="display:flex; gap:16px; margin-bottom:1.5em; align-items:flex-start;">
-  <img src="/images/papers/finhallu.png" alt="Finance Hallucination" style="width:450px; min-width:450px; border-radius:6px; box-shadow:0 2px 8px rgba(0,0,0,0.1); margin-top:4px;">
+  <img src="/images/papers/fin_hallu.png" alt="Finance Hallucination" style="width:450px; min-width:450px; border-radius:6px; box-shadow:0 2px 8px rgba(0,0,0,0.1); margin-top:4px;">
   <div>
     <strong>Hallucination of Large Language Models in Finance: An Empirical Examination</strong><br>
     <u>Haoqiang Kang</u> and Xiao-Yang Liu<br>
