@@ -123,7 +123,12 @@ author_profile: true
   </div>
 </div>
 
-**Hallucination of Large Language Models in Finance: An Empirical Examination** \
-<u>Haoqiang Kang</u> and Xiao-Yang Liu \
-*NeurIPS Workshop on I Can't Believe It's Not Better (ICBINB), 2023.* \
-[[paper]](https://openreview.net/pdf?id=SGiQxu8zFL)
+<div style="display:flex; gap:16px; margin-bottom:1.5em; align-items:flex-start;">
+  <img src="/images/papers/finhallu.png" alt="Finance Hallucination" style="width:180px; min-width:180px; border-radius:6px; box-shadow:0 2px 8px rgba(0,0,0,0.1); margin-top:4px;">
+  <div>
+    <strong>Hallucination of Large Language Models in Finance: An Empirical Examination</strong><br>
+    <u>Haoqiang Kang</u> and Xiao-Yang Liu<br>
+    <em>NeurIPS Workshop on I Can't Believe It's Not Better (ICBINB), 2023.</em><br>
+    <a href="https://openreview.net/pdf?id=SGiQxu8zFL">[paper]</a>
+  </div>
+</div>
