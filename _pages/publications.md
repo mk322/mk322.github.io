@@ -17,10 +17,15 @@ author_profile: true
   </div>
 </div>
 
-**TSRBench: A Comprehensive Multi-task Multi-modal Time Series Reasoning Benchmark for Generalist Models** \
-Fangxu Yu, Xingming Guo, Linjie Yuan, <u>Haoqiang Kang</u>, Hongyu Zhao, Lianhui Qin, Furong Huang, Bin Hu, and Tianyi Zhou \
-*Preprint, 2026.* \
-[[paper]](https://arxiv.org/abs/2601.18744)
+<div style="display:flex; gap:16px; margin-bottom:1.5em; align-items:flex-start;">
+  <img src="/images/papers/tsrbench.png" alt="TSRBench" style="width:180px; min-width:180px; border-radius:6px; box-shadow:0 2px 8px rgba(0,0,0,0.1); margin-top:4px;">
+  <div>
+    <strong>TSRBench: A Comprehensive Multi-task Multi-modal Time Series Reasoning Benchmark for Generalist Models</strong><br>
+    Fangxu Yu, Xingming Guo, Linjie Yuan, <u>Haoqiang Kang</u>, Hongyu Zhao, Lianhui Qin, Furong Huang, Bin Hu, and Tianyi Zhou<br>
+    <em>Preprint, 2026.</em><br>
+    <a href="https://arxiv.org/abs/2601.18744">[paper]</a>
+  </div>
+</div>
 
 ### 2025
 
@@ -34,15 +39,25 @@ Fangxu Yu, Xingming Guo, Linjie Yuan, <u>Haoqiang Kang</u>, Hongyu Zhao, Lianhui
   </div>
 </div>
 
-**PAN: A World Model for General, Interactable, and Long-Horizon World Simulation** \
-Pan Xiang, Yi Gu, Zihan Liu, Zeyu Feng, Qiyue Gao, Yi Hu, Benhao Huang, Guangyi Liu, Yichi Yang, Kun Zhou, D. Abrahamyan, Arif Ahmad, Ganesh Bannur, Junrong Chen, K. Chen, Mingkai Deng, R. Han, Xinqi Huang, <u>Haoqiang Kang</u>, Zheqi Liu, Enze Ma, Hector Ren, Yashowardhan Shinde, Rohan Shingre, Ramsundar Tanikella, Kaiming Tao, Dequan Yang, Xinle Yu, Cong Zeng, Bing Zhou, Zhengzhong Liu, Zhiting Hu, and Eric P. Xing \
-*Preprint, 2025.* \
-[[paper]](https://arxiv.org/abs/2511.09057)
+<div style="display:flex; gap:16px; margin-bottom:1.5em; align-items:flex-start;">
+  <img src="/images/papers/pan.png" alt="PAN" style="width:180px; min-width:180px; border-radius:6px; box-shadow:0 2px 8px rgba(0,0,0,0.1); margin-top:4px;">
+  <div>
+    <strong>PAN: A World Model for General, Interactable, and Long-Horizon World Simulation</strong><br>
+    Pan Xiang, Yi Gu, Zihan Liu, Zeyu Feng, Qiyue Gao, Yi Hu, Benhao Huang, Guangyi Liu, Yichi Yang, Kun Zhou, D. Abrahamyan, Arif Ahmad, Ganesh Bannur, Junrong Chen, K. Chen, Mingkai Deng, R. Han, Xinqi Huang, <u>Haoqiang Kang</u>, Zheqi Liu, Enze Ma, Hector Ren, Yashowardhan Shinde, Rohan Shingre, Ramsundar Tanikella, Kaiming Tao, Dequan Yang, Xinle Yu, Cong Zeng, Bing Zhou, Zhengzhong Liu, Zhiting Hu, and Eric P. Xing<br>
+    <em>Preprint, 2025.</em><br>
+    <a href="https://arxiv.org/abs/2511.09057">[paper]</a>
+  </div>
+</div>
 
-**Benchmarking Scientific Understanding and Reasoning for Video Generation using VideoScience-Bench** \
-Lanxiang Hu, Abhilash Shankarampeta, Yixin Huang, Zilin Dai, Haoyang Yu, Yujie Zhao, <u>Haoqiang Kang</u>, Daniel Zhao, Tajana Rosing, and Hao Zhang \
-*Preprint, 2025.* \
-[[paper]](https://arxiv.org/abs/2512.02942)
+<div style="display:flex; gap:16px; margin-bottom:1.5em; align-items:flex-start;">
+  <img src="/images/papers/videoscience.png" alt="VideoScience-Bench" style="width:180px; min-width:180px; border-radius:6px; box-shadow:0 2px 8px rgba(0,0,0,0.1); margin-top:4px;">
+  <div>
+    <strong>Benchmarking Scientific Understanding and Reasoning for Video Generation using VideoScience-Bench</strong><br>
+    Lanxiang Hu, Abhilash Shankarampeta, Yixin Huang, Zilin Dai, Haoyang Yu, Yujie Zhao, <u>Haoqiang Kang</u>, Daniel Zhao, Tajana Rosing, and Hao Zhang<br>
+    <em>Preprint, 2025.</em><br>
+    <a href="https://arxiv.org/abs/2512.02942">[paper]</a>
+  </div>
+</div>
 
 <div style="display:flex; gap:16px; margin-bottom:1.5em; align-items:flex-start;">
   <img src="/images/papers/gflowvlm.png" alt="GFlowVLM" style="width:180px; min-width:180px; border-radius:6px; box-shadow:0 2px 8px rgba(0,0,0,0.1); margin-top:4px;">
@@ -66,15 +81,25 @@ Lanxiang Hu, Abhilash Shankarampeta, Yixin Huang, Zilin Dai, Haoyang Yu, Yujie Z
 
 ### 2024
 
-**The FinBen: An Holistic Financial Benchmark for Large Language Models** \
-Qianqian Xie, Weiguang Han, Zhengyu Chen, Ruoyu Xiang, Xiao Zhang, Yueru He, Mengxi Xiao, Dong Li, Yongfu Dai, Duanyu Feng, Yijing Xu, <u>Haoqiang Kang</u>, Ziyan Kuang, Chenhan Yuan, Kailai Yang, Zheheng Luo, Tianlin Zhang, Zhiwei Liu, Guojun Xiong, Zhiyang Deng, Yuechen Jiang, Zhiyuan Yao, Haohang Li, Yangyang Yu, Gang Hu, Jiajia Huang, Xiao-Yang Liu, Alejandro Lopez-Lira, Benyou Wang, Yanzhao Lai, Hao Wang, Min Peng, Sophia Ananiadou, and Jimin Huang \
-*NeurIPS Datasets and Benchmarks Track, 2024.* \
-[[paper]](https://arxiv.org/abs/2402.12659)
+<div style="display:flex; gap:16px; margin-bottom:1.5em; align-items:flex-start;">
+  <img src="/images/papers/finben.png" alt="FinBen" style="width:180px; min-width:180px; border-radius:6px; box-shadow:0 2px 8px rgba(0,0,0,0.1); margin-top:4px;">
+  <div>
+    <strong>The FinBen: An Holistic Financial Benchmark for Large Language Models</strong><br>
+    Qianqian Xie, Weiguang Han, Zhengyu Chen, Ruoyu Xiang, Xiao Zhang, Yueru He, Mengxi Xiao, Dong Li, Yongfu Dai, Duanyu Feng, Yijing Xu, <u>Haoqiang Kang</u>, Ziyan Kuang, Chenhan Yuan, Kailai Yang, Zheheng Luo, Tianlin Zhang, Zhiwei Liu, Guojun Xiong, Zhiyang Deng, Yuechen Jiang, Zhiyuan Yao, Haohang Li, Yangyang Yu, Gang Hu, Jiajia Huang, Xiao-Yang Liu, Alejandro Lopez-Lira, Benyou Wang, Yanzhao Lai, Hao Wang, Min Peng, Sophia Ananiadou, and Jimin Huang<br>
+    <em>NeurIPS Datasets and Benchmarks Track, 2024.</em><br>
+    <a href="https://arxiv.org/abs/2402.12659">[paper]</a>
+  </div>
+</div>
 
-**Comparing Hallucination Detection Metrics for Multilingual Generation** \
-<u>Haoqiang Kang</u>, Terra Blevins, and Luke Zettlemoyer \
-*Preprint, 2024.* \
-[[paper]](https://arxiv.org/abs/2402.10496)
+<div style="display:flex; gap:16px; margin-bottom:1.5em; align-items:flex-start;">
+  <img src="/images/papers/multihallu.png" alt="Multilingual Hallucination" style="width:180px; min-width:180px; border-radius:6px; box-shadow:0 2px 8px rgba(0,0,0,0.1); margin-top:4px;">
+  <div>
+    <strong>Comparing Hallucination Detection Metrics for Multilingual Generation</strong><br>
+    <u>Haoqiang Kang</u>, Terra Blevins, and Luke Zettlemoyer<br>
+    <em>Preprint, 2024.</em><br>
+    <a href="https://arxiv.org/abs/2402.10496">[paper]</a>
+  </div>
+</div>
 
 **Translate to Disambiguate: Zero-shot Multilingual Word Sense Disambiguation with Pretrained Language Models** \
 <u>Haoqiang Kang</u>\*, Terra Blevins\*, and Luke Zettlemoyer \
@@ -83,10 +108,15 @@ Qianqian Xie, Weiguang Han, Zhengyu Chen, Ruoyu Xiang, Xiao Zhang, Yueru He, Men
 
 ### 2023
 
-**<span style="font-variant: small-caps;">EVER</span>: Mitigating Hallucination in Large Language Models through Real-Time Verification and Rectification** \
-<u>Haoqiang Kang</u>, Juntong Ni, and Huaxiu Yao \
-*Preprint, 2023.* \
-[[paper]](../papers/KangEVER2024.pdf)
+<div style="display:flex; gap:16px; margin-bottom:1.5em; align-items:flex-start;">
+  <img src="/images/papers/ever.png" alt="EVER" style="width:180px; min-width:180px; border-radius:6px; box-shadow:0 2px 8px rgba(0,0,0,0.1); margin-top:4px;">
+  <div>
+    <strong><span style="font-variant: small-caps;">EVER</span>: Mitigating Hallucination in Large Language Models through Real-Time Verification and Rectification</strong><br>
+    <u>Haoqiang Kang</u>, Juntong Ni, and Huaxiu Yao<br>
+    <em>Preprint, 2023.</em><br>
+    <a href="../papers/KangEVER2024.pdf">[paper]</a>
+  </div>
+</div>
 
 **Hallucination of Large Language Models in Finance: An Empirical Examination** \
 <u>Haoqiang Kang</u> and Xiao-Yang Liu \
