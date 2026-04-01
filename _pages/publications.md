@@ -8,7 +8,7 @@ author_profile: true
 ### 2026
 
 <div style="display:flex; gap:16px; margin-bottom:1.5em; align-items:flex-start;">
-  <img src="/images/papers/ladirl.png" alt="LaDi-RL" style="width:300px; min-width:300px; border-radius:6px; box-shadow:0 2px 8px rgba(0,0,0,0.1); margin-top:4px;">
+  <img src="/images/papers/ladirl.png" alt="LaDi-RL" style="width:500px; min-width:500px; border-radius:6px; box-shadow:0 2px 8px rgba(0,0,0,0.1); margin-top:4px;">
   <div>
     <strong>Beyond Mode Elicitation: Diversity-Preserving Reinforcement Learning via Latent Diffusion Reasoner</strong><br>
     <u>Haoqiang Kang</u>, Yizhe Zhang, Nikki Lijing Kuang, Yi-An Ma, and Lianhui Qin<br>
@@ -18,7 +18,7 @@ author_profile: true
 </div>
 
 <div style="display:flex; gap:16px; margin-bottom:1.5em; align-items:flex-start;">
-  <img src="/images/papers/tsrbench.png" alt="TSRBench" style="width:300px; min-width:300px; border-radius:6px; box-shadow:0 2px 8px rgba(0,0,0,0.1); margin-top:4px;">
+  <img src="/images/papers/tsrbench.png" alt="TSRBench" style="width:500px; min-width:500px; border-radius:6px; box-shadow:0 2px 8px rgba(0,0,0,0.1); margin-top:4px;">
   <div>
     <strong>TSRBench: A Comprehensive Multi-task Multi-modal Time Series Reasoning Benchmark for Generalist Models</strong><br>
     Fangxu Yu, Xingming Guo, Linjie Yuan, <u>Haoqiang Kang</u>, Hongyu Zhao, Lianhui Qin, Furong Huang, Bin Hu, and Tianyi Zhou<br>
@@ -30,7 +30,7 @@ author_profile: true
 ### 2025
 
 <div style="display:flex; gap:16px; margin-bottom:1.5em; align-items:flex-start;">
-  <img src="/images/papers/ladir.png" alt="LaDiR" style="width:300px; min-width:300px; border-radius:6px; box-shadow:0 2px 8px rgba(0,0,0,0.1); margin-top:4px;">
+  <img src="/images/papers/ladir.png" alt="LaDiR" style="width:500px; min-width:500px; border-radius:6px; box-shadow:0 2px 8px rgba(0,0,0,0.1); margin-top:4px;">
   <div>
     <strong>LaDiR: Latent Diffusion Enhances LLMs for Text Reasoning</strong><br>
     <u>Haoqiang Kang</u>, Yizhe Zhang, Nikki Lijing Kuang, Nicklas Majamaki, Navdeep Jaitly, Yi-An Ma, and Lianhui Qin<br>
@@ -40,7 +40,7 @@ author_profile: true
 </div>
 
 <div style="display:flex; gap:16px; margin-bottom:1.5em; align-items:flex-start;">
-  <img src="/images/papers/pan.png" alt="PAN" style="width:300px; min-width:300px; border-radius:6px; box-shadow:0 2px 8px rgba(0,0,0,0.1); margin-top:4px;">
+  <img src="/images/papers/pan.png" alt="PAN" style="width:500px; min-width:500px; border-radius:6px; box-shadow:0 2px 8px rgba(0,0,0,0.1); margin-top:4px;">
   <div>
     <strong>PAN: A World Model for General, Interactable, and Long-Horizon World Simulation</strong><br>
     Pan Xiang, Yi Gu, Zihan Liu, Zeyu Feng, Qiyue Gao, Yi Hu, Benhao Huang, Guangyi Liu, Yichi Yang, Kun Zhou, D. Abrahamyan, Arif Ahmad, Ganesh Bannur, Junrong Chen, K. Chen, Mingkai Deng, R. Han, Xinqi Huang, <u>Haoqiang Kang</u>, Zheqi Liu, Enze Ma, Hector Ren, Yashowardhan Shinde, Rohan Shingre, Ramsundar Tanikella, Kaiming Tao, Dequan Yang, Xinle Yu, Cong Zeng, Bing Zhou, Zhengzhong Liu, Zhiting Hu, and Eric P. Xing<br>
@@ -50,7 +50,7 @@ author_profile: true
 </div>
 
 <div style="display:flex; gap:16px; margin-bottom:1.5em; align-items:flex-start;">
-  <img src="/images/papers/sci_thumbrail.png" alt="VideoScience-Bench" style="width:300px; min-width:300px; border-radius:6px; box-shadow:0 2px 8px rgba(0,0,0,0.1); margin-top:4px;">
+  <img src="/images/papers/sci_thumbrail.png" alt="VideoScience-Bench" style="width:500px; min-width:500px; border-radius:6px; box-shadow:0 2px 8px rgba(0,0,0,0.1); margin-top:4px;">
   <div>
     <strong>Benchmarking Scientific Understanding and Reasoning for Video Generation using VideoScience-Bench</strong><br>
     Lanxiang Hu, Abhilash Shankarampeta, Yixin Huang, Zilin Dai, Haoyang Yu, Yujie Zhao, <u>Haoqiang Kang</u>, Daniel Zhao, Tajana Rosing, and Hao Zhang<br>
@@ -60,7 +60,7 @@ author_profile: true
 </div>
 
 <div style="display:flex; gap:16px; margin-bottom:1.5em; align-items:flex-start;">
-  <img src="/images/papers/gflowvlm.png" alt="GFlowVLM" style="width:300px; min-width:300px; border-radius:6px; box-shadow:0 2px 8px rgba(0,0,0,0.1); margin-top:4px;">
+  <img src="/images/papers/gflowvlm.png" alt="GFlowVLM" style="width:500px; min-width:500px; border-radius:6px; box-shadow:0 2px 8px rgba(0,0,0,0.1); margin-top:4px;">
   <div>
     <strong>GFlowVLM: Enhancing Multi-step Reasoning in Vision-Language Models with Generative Flow Networks</strong><br>
     <u>Haoqiang Kang</u>, Enna Sachdeva, Piyush Gupta, Sangjae Bae, and Kwonjoon Lee<br>
@@ -70,7 +70,7 @@ author_profile: true
 </div>
 
 <div style="display:flex; gap:16px; margin-bottom:1.5em; align-items:flex-start;">
-  <img src="/images/papers/flowreasoning.png" alt="Flow of Reasoning" style="width:300px; min-width:300px; border-radius:6px; box-shadow:0 2px 8px rgba(0,0,0,0.1); margin-top:4px;">
+  <img src="/images/papers/flowreasoning.png" alt="Flow of Reasoning" style="width:500px; min-width:500px; border-radius:6px; box-shadow:0 2px 8px rgba(0,0,0,0.1); margin-top:4px;">
   <div>
     <strong>Flow of Reasoning: Training LLMs for Divergent Problem Solving with Minimal Examples</strong><br>
     Fangxu Yu<sup>&dagger;</sup>, Lai Jiang<sup>&dagger;</sup>, <u>Haoqiang Kang</u><sup>&dagger;</sup>, Shibo Hao, and Lianhui Qin<br>
@@ -82,7 +82,7 @@ author_profile: true
 ### 2024
 
 <div style="display:flex; gap:16px; margin-bottom:1.5em; align-items:flex-start;">
-  <img src="/images/papers/finben.png" alt="FinBen" style="width:300px; min-width:300px; border-radius:6px; box-shadow:0 2px 8px rgba(0,0,0,0.1); margin-top:4px;">
+  <img src="/images/papers/finben.png" alt="FinBen" style="width:500px; min-width:500px; border-radius:6px; box-shadow:0 2px 8px rgba(0,0,0,0.1); margin-top:4px;">
   <div>
     <strong>The FinBen: An Holistic Financial Benchmark for Large Language Models</strong><br>
     Qianqian Xie, Weiguang Han, Zhengyu Chen, Ruoyu Xiang, Xiao Zhang, Yueru He, Mengxi Xiao, Dong Li, Yongfu Dai, Duanyu Feng, Yijing Xu, <u>Haoqiang Kang</u>, Ziyan Kuang, Chenhan Yuan, Kailai Yang, Zheheng Luo, Tianlin Zhang, Zhiwei Liu, Guojun Xiong, Zhiyang Deng, Yuechen Jiang, Zhiyuan Yao, Haohang Li, Yangyang Yu, Gang Hu, Jiajia Huang, Xiao-Yang Liu, Alejandro Lopez-Lira, Benyou Wang, Yanzhao Lai, Hao Wang, Min Peng, Sophia Ananiadou, and Jimin Huang<br>
@@ -92,7 +92,7 @@ author_profile: true
 </div>
 
 <div style="display:flex; gap:16px; margin-bottom:1.5em; align-items:flex-start;">
-  <img src="/images/papers/multihallu.png" alt="Multilingual Hallucination" style="width:300px; min-width:300px; border-radius:6px; box-shadow:0 2px 8px rgba(0,0,0,0.1); margin-top:4px;">
+  <img src="/images/papers/multihallu.png" alt="Multilingual Hallucination" style="width:500px; min-width:500px; border-radius:6px; box-shadow:0 2px 8px rgba(0,0,0,0.1); margin-top:4px;">
   <div>
     <strong>Comparing Hallucination Detection Metrics for Multilingual Generation</strong><br>
     <u>Haoqiang Kang</u>, Terra Blevins, and Luke Zettlemoyer<br>
@@ -102,7 +102,7 @@ author_profile: true
 </div>
 
 <div style="display:flex; gap:16px; margin-bottom:1.5em; align-items:flex-start;">
-  <img src="/images/papers/wsd.png" alt="Translate to Disambiguate" style="width:300px; min-width:300px; border-radius:6px; box-shadow:0 2px 8px rgba(0,0,0,0.1); margin-top:4px;">
+  <img src="/images/papers/wsd.png" alt="Translate to Disambiguate" style="width:500px; min-width:500px; border-radius:6px; box-shadow:0 2px 8px rgba(0,0,0,0.1); margin-top:4px;">
   <div>
     <strong>Translate to Disambiguate: Zero-shot Multilingual Word Sense Disambiguation with Pretrained Language Models</strong><br>
     <u>Haoqiang Kang</u>*, Terra Blevins*, and Luke Zettlemoyer<br>
@@ -114,7 +114,7 @@ author_profile: true
 ### 2023
 
 <div style="display:flex; gap:16px; margin-bottom:1.5em; align-items:flex-start;">
-  <img src="/images/papers/ever.png" alt="EVER" style="width:300px; min-width:300px; border-radius:6px; box-shadow:0 2px 8px rgba(0,0,0,0.1); margin-top:4px;">
+  <img src="/images/papers/ever.png" alt="EVER" style="width:500px; min-width:500px; border-radius:6px; box-shadow:0 2px 8px rgba(0,0,0,0.1); margin-top:4px;">
   <div>
     <strong><span style="font-variant: small-caps;">EVER</span>: Mitigating Hallucination in Large Language Models through Real-Time Verification and Rectification</strong><br>
     <u>Haoqiang Kang</u>, Juntong Ni, and Huaxiu Yao<br>
@@ -124,7 +124,7 @@ author_profile: true
 </div>
 
 <div style="display:flex; gap:16px; margin-bottom:1.5em; align-items:flex-start;">
-  <img src="/images/papers/finhallu.png" alt="Finance Hallucination" style="width:300px; min-width:300px; border-radius:6px; box-shadow:0 2px 8px rgba(0,0,0,0.1); margin-top:4px;">
+  <img src="/images/papers/finhallu.png" alt="Finance Hallucination" style="width:500px; min-width:500px; border-radius:6px; box-shadow:0 2px 8px rgba(0,0,0,0.1); margin-top:4px;">
   <div>
     <strong>Hallucination of Large Language Models in Finance: An Empirical Examination</strong><br>
     <u>Haoqiang Kang</u> and Xiao-Yang Liu<br>
