@@ -12,7 +12,7 @@ author_profile: true
   <div>
     <strong>Beyond Mode Elicitation: Diversity-Preserving Reinforcement Learning via Latent Diffusion Reasoner</strong><br>
     <u>Haoqiang Kang</u>, Yizhe Zhang, Nikki Lijing Kuang, Yi-An Ma, and Lianhui Qin<br>
-    <em>Preprint, 2026.</em><br>
+    <em>arXiv, 2026.</em><br>
     <a href="https://arxiv.org/abs/2602.01705">[paper]</a>
   </div>
 </div>
@@ -22,7 +22,7 @@ author_profile: true
   <div>
     <strong>TSRBench: A Comprehensive Multi-task Multi-modal Time Series Reasoning Benchmark for Generalist Models</strong><br>
     Fangxu Yu, Xingming Guo, Linjie Yuan, <u>Haoqiang Kang</u>, Hongyu Zhao, Lianhui Qin, Furong Huang, Bin Hu, and Tianyi Zhou<br>
-    <em>Preprint, 2026.</em><br>
+    <em>arXiv, 2026.</em><br>
     <a href="https://arxiv.org/abs/2601.18744">[paper]</a>
   </div>
 </div>
@@ -44,17 +44,17 @@ author_profile: true
   <div>
     <strong>PAN: A World Model for General, Interactable, and Long-Horizon World Simulation</strong><br>
     Pan Xiang, Yi Gu, Zihan Liu, Zeyu Feng, Qiyue Gao, Yi Hu, Benhao Huang, Guangyi Liu, Yichi Yang, Kun Zhou, D. Abrahamyan, Arif Ahmad, Ganesh Bannur, Junrong Chen, K. Chen, Mingkai Deng, R. Han, Xinqi Huang, <u>Haoqiang Kang</u>, Zheqi Liu, Enze Ma, Hector Ren, Yashowardhan Shinde, Rohan Shingre, Ramsundar Tanikella, Kaiming Tao, Dequan Yang, Xinle Yu, Cong Zeng, Bing Zhou, Zhengzhong Liu, Zhiting Hu, and Eric P. Xing<br>
-    <em>Preprint, 2025.</em><br>
+    <em>arXiv, 2025.</em><br>
     <a href="https://arxiv.org/abs/2511.09057">[paper]</a>
   </div>
 </div>
 
 <div style="display:flex; gap:16px; margin-bottom:1.5em; align-items:flex-start;">
-  <img src="/images/papers/videoscience.png" alt="VideoScience-Bench" style="width:180px; min-width:180px; border-radius:6px; box-shadow:0 2px 8px rgba(0,0,0,0.1); margin-top:4px;">
+  <img src="/images/papers/sci_thumbrail.png" alt="VideoScience-Bench" style="width:180px; min-width:180px; border-radius:6px; box-shadow:0 2px 8px rgba(0,0,0,0.1); margin-top:4px;">
   <div>
     <strong>Benchmarking Scientific Understanding and Reasoning for Video Generation using VideoScience-Bench</strong><br>
     Lanxiang Hu, Abhilash Shankarampeta, Yixin Huang, Zilin Dai, Haoyang Yu, Yujie Zhao, <u>Haoqiang Kang</u>, Daniel Zhao, Tajana Rosing, and Hao Zhang<br>
-    <em>Preprint, 2025.</em><br>
+    <em>arXiv, 2025.</em><br>
     <a href="https://arxiv.org/abs/2512.02942">[paper]</a>
   </div>
 </div>
@@ -96,7 +96,7 @@ author_profile: true
   <div>
     <strong>Comparing Hallucination Detection Metrics for Multilingual Generation</strong><br>
     <u>Haoqiang Kang</u>, Terra Blevins, and Luke Zettlemoyer<br>
-    <em>Preprint, 2024.</em><br>
+    <em>arXiv, 2024.</em><br>
     <a href="https://arxiv.org/abs/2402.10496">[paper]</a>
   </div>
 </div>
@@ -118,7 +118,7 @@ author_profile: true
   <div>
     <strong><span style="font-variant: small-caps;">EVER</span>: Mitigating Hallucination in Large Language Models through Real-Time Verification and Rectification</strong><br>
     <u>Haoqiang Kang</u>, Juntong Ni, and Huaxiu Yao<br>
-    <em>Preprint, 2023.</em><br>
+    <em>arXiv, 2023.</em><br>
     <a href="../papers/KangEVER2024.pdf">[paper]</a>
   </div>
 </div>
