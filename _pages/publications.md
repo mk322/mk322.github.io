@@ -102,7 +102,7 @@ author_profile: true
 </div>
 
 <div style="display:flex; gap:16px; margin-bottom:1.5em; align-items:flex-start;">
-  <img src="/images/papers/wsd.png" alt="Translate to Disambiguate" style="width:450px; min-width:450px; border-radius:6px; box-shadow:0 2px 8px rgba(0,0,0,0.1); margin-top:4px;">
+  <img src="/images/papers/translate.png" alt="Translate to Disambiguate" style="width:450px; min-width:450px; border-radius:6px; box-shadow:0 2px 8px rgba(0,0,0,0.1); margin-top:4px;">
   <div>
     <strong>Translate to Disambiguate: Zero-shot Multilingual Word Sense Disambiguation with Pretrained Language Models</strong><br>
     <u>Haoqiang Kang</u>*, Terra Blevins*, and Luke Zettlemoyer<br>
