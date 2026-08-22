@@ -8,6 +8,36 @@ author_profile: true
 ### 2026
 
 <div style="display:flex; gap:16px; margin-bottom:1.5em; align-items:flex-start;">
+  <img src="/images/papers/scaffoldingminds.png" alt="Scaffolding Minds" style="width:450px; min-width:450px; border-radius:6px; box-shadow:0 2px 8px rgba(0,0,0,0.1); margin-top:4px;">
+  <div>
+    <strong>Scaffolding Minds: Optimizing Latent Visual Target Representations for Multimodal Reasoning</strong><br>
+    <u>Haoqiang Kang</u>, Yinpeng Chen, Luyang Liu, Jesper Sparre Andersen, Abhijit Ogale, Baochen Sun, Lichan Hong, and Ed H. Chi<br>
+    <em>arXiv, 2026.</em><br>
+    <a href="https://arxiv.org/abs/2608.19669">[paper]</a>
+  </div>
+</div>
+
+<div style="display:flex; gap:16px; margin-bottom:1.5em; align-items:flex-start;">
+  <img src="/images/papers/nfcot.png" alt="NF-CoT" style="width:450px; min-width:450px; border-radius:6px; box-shadow:0 2px 8px rgba(0,0,0,0.1); margin-top:4px;">
+  <div>
+    <strong>Latent Reasoning with Normalizing Flows</strong><br>
+    Guancheng Tu<sup>*</sup>, Xiangjun Fu<sup>*</sup>, Suhao Yu, Yao Tang, <u>Haoqiang Kang</u>, Lianhui Qin, Yizhe Zhang, and Jiatao Gu<br>
+    <em>arXiv, 2026.</em><br>
+    <a href="https://arxiv.org/abs/2606.06447">[paper]</a>
+  </div>
+</div>
+
+<div style="display:flex; gap:16px; margin-bottom:1.5em; align-items:flex-start;">
+  <img src="/images/papers/simworldstudio.png" alt="SimWorld Studio" style="width:450px; min-width:450px; border-radius:6px; box-shadow:0 2px 8px rgba(0,0,0,0.1); margin-top:4px;">
+  <div>
+    <strong>SimWorld Studio: Automatic Environment Generation with Evolving Coding Agent for Embodied Agent Learning</strong><br>
+    <u>Haoqiang Kang</u><sup>*</sup>, Xiaokang Ye<sup>*</sup>, Yuhan Liu, Siddhant Hitesh Mantri, Lingjun Mao, James Fleming, Drishti Regmi, and Lianhui Qin<br>
+    <em>arXiv, 2026.</em><br>
+    <a href="https://arxiv.org/abs/2605.09423">[paper]</a>
+  </div>
+</div>
+
+<div style="display:flex; gap:16px; margin-bottom:1.5em; align-items:flex-start;">
   <img src="/images/papers/ladirl.png" alt="LaDi-RL" style="width:450px; min-width:450px; border-radius:6px; box-shadow:0 2px 8px rgba(0,0,0,0.1); margin-top:4px;">
   <div>
     <strong>Beyond Mode Elicitation: Diversity-Preserving Reinforcement Learning via Latent Diffusion Reasoner</strong><br>
