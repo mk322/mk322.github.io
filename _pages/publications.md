@@ -52,7 +52,7 @@ author_profile: true
   <div>
     <strong>TSRBench: A Comprehensive Multi-task Multi-modal Time Series Reasoning Benchmark for Generalist Models</strong><br>
     Fangxu Yu, Xingming Guo, Linjie Yuan, <u>Haoqiang Kang</u>, Hongyu Zhao, Lianhui Qin, Furong Huang, Bin Hu, and Tianyi Zhou<br>
-    <em>arXiv, 2026.</em><br>
+    <em>International Conference on Machine Learning (ICML), 2026.</em><br>
     <a href="https://arxiv.org/abs/2601.18744">[paper]</a>
   </div>
 </div>
@@ -84,7 +84,7 @@ author_profile: true
   <div>
     <strong>Benchmarking Scientific Understanding and Reasoning for Video Generation using VideoScience-Bench</strong><br>
     Lanxiang Hu, Abhilash Shankarampeta, Yixin Huang, Zilin Dai, Haoyang Yu, Yujie Zhao, <u>Haoqiang Kang</u>, Daniel Zhao, Tajana Rosing, and Hao Zhang<br>
-    <em>arXiv, 2025.</em><br>
+    <em>European Conference on Computer Vision (ECCV), 2026.</em><br>
     <a href="https://arxiv.org/abs/2512.02942">[paper]</a>
   </div>
 </div>
