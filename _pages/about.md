@@ -16,7 +16,7 @@ Previously, I was a Student Researcher in Google DeepMind's GenAI organization d
 Research Topics
 ======
 
-My long-term goal is to build generalist AI systems that can reason, act, and continually improve through interaction with complex environments.
+My research goal is to build agentic AI systems that reason, act, and learn through interaction, using experience to develop better intuition and continually improve.
 
 - **Model Architecture and Latent Reasoning:** [LaDiR](https://arxiv.org/abs/2510.04573) (ICLR 2026), [LaDi-RL](https://arxiv.org/abs/2602.01705) (arXiv 2026), [NF-CoT](https://arxiv.org/abs/2606.06447) (arXiv 2026), [Scaffolding Minds](https://arxiv.org/abs/2608.19669) (arXiv 2026), and mmLaDiR (release very soon).
 - **RL Algorithm and Agentic Environment:** [Flow of Reasoning](https://arxiv.org/abs/2406.05673) (ICML 2025), [GFlowVLM](https://arxiv.org/abs/2503.06514) (CVPR 2025), [LaDi-RL](https://arxiv.org/abs/2602.01705) (arXiv 2026), and DeliveryGym (release very soon).
@@ -28,27 +28,27 @@ News
 ======
 
 <ul style="list-style:none; padding-left:0;">
-  <li><strong>[2026.08]</strong> <strong>First-author paper:</strong> New preprint, <a href="https://arxiv.org/abs/2608.19669">Scaffolding Minds</a> — optimized latent visual target representations for multimodal reasoning.</li>
-  <li><strong>[2026.06]</strong> <a href="https://arxiv.org/abs/2512.02942">VideoScience-Bench</a> accepted to <strong>ECCV 2026</strong>.</li>
-  <li><strong>[2026.06]</strong> Started my second <strong>Student Researcher</strong> appointment at <strong>Google DeepMind</strong>, working on embodied foundation models with the Gemini Robotics team.</li>
+  <li><strong>[2026.08]</strong> We released <a href="https://arxiv.org/abs/2608.19669">Scaffolding Minds</a>, my first-author paper on optimizing latent visual target representations for multimodal reasoning.</li>
+  <li><strong>[2026.06]</strong> Our <a href="https://arxiv.org/abs/2512.02942">VideoScience-Bench</a> paper was accepted to <strong>ECCV 2026</strong>.</li>
+  <li><strong>[2026.06]</strong> I started my second <strong>Student Researcher</strong> appointment at <strong>Google DeepMind</strong>, working on embodied foundation models with the Gemini Robotics team.</li>
   </ul>
 
 <details class="news-disclosure">
   <summary>More news</summary>
   <ul style="list-style:none; padding-left:0;">
-  <li><strong>[2026.06]</strong> New preprint: <a href="https://arxiv.org/abs/2606.14674">AgentSpec</a> — controlled composition for understanding embodied agent scaffolds.</li>
-  <li><strong>[2026.06]</strong> New preprint: <a href="https://arxiv.org/abs/2606.06447">NF-CoT</a> — latent reasoning with normalizing flows.</li>
-  <li><strong>[2026.05]</strong> <strong>First-author paper:</strong> New preprint, <a href="https://arxiv.org/abs/2605.09423">SimWorld Studio</a> — automatic embodied environment generation with an evolving coding agent.</li>
-  <li><strong>[2026.04]</strong> <a href="https://arxiv.org/abs/2601.18744">TSRBench</a> accepted to <strong>ICML 2026</strong>.</li>
-  <li><strong>[2026.02]</strong> <strong>First-author paper:</strong> New preprint, <a href="https://arxiv.org/abs/2602.01705">LaDi-RL</a> — diversity-preserving RL via latent diffusion reasoning.</li>
-  <li><strong>[2026.01]</strong> <strong>First-author paper:</strong> <a href="https://arxiv.org/abs/2510.04573">LaDiR</a> accepted to <strong>ICLR 2026</strong>.</li>
-  <li><strong>[2025.11]</strong> New preprint: <a href="https://arxiv.org/abs/2511.09057">PAN</a> — a world model for general, interactable, long-horizon simulation.</li>
-  <li><strong>[2025.06]</strong> Started as a <strong>Student Researcher</strong> at <strong>Google DeepMind</strong>, working on latent reasoning for vision-language models.</li>
-  <li><strong>[2025.05]</strong> <strong>First-author paper:</strong> <a href="https://arxiv.org/abs/2406.05673">Flow of Reasoning</a> accepted to <strong>ICML 2025</strong>.</li>
-  <li><strong>[2025.02]</strong> <strong>First-author paper:</strong> <a href="https://arxiv.org/abs/2503.06514">GFlowVLM</a> accepted to <strong>CVPR 2025</strong>.</li>
-  <li><strong>[2024.09]</strong> <a href="https://arxiv.org/abs/2402.12659">FinBen</a> accepted to <strong>NeurIPS 2024</strong> Datasets and Benchmarks Track.</li>
-  <li><strong>[2024.05]</strong> Started as a <strong>Research Intern</strong> at <strong>Honda Research Institute</strong>, working on GFlowNets for VLM reasoning.</li>
-  <li><strong>[2024.01]</strong> <strong>First-author paper:</strong> <a href="https://arxiv.org/abs/2304.13803">Translate to Disambiguate</a> accepted to <strong>EACL 2024</strong> as an <strong>Oral</strong> presentation.</li>
+  <li><strong>[2026.06]</strong> We released <a href="https://arxiv.org/abs/2606.14674">AgentSpec</a>, a new preprint on understanding embodied agent scaffolds through controlled composition.</li>
+  <li><strong>[2026.06]</strong> We released <a href="https://arxiv.org/abs/2606.06447">NF-CoT</a>, a new preprint on latent reasoning with normalizing flows.</li>
+  <li><strong>[2026.05]</strong> We released <a href="https://arxiv.org/abs/2605.09423">SimWorld Studio</a>, my first-author paper on automatic environment generation with an evolving coding agent for embodied agent learning.</li>
+  <li><strong>[2026.04]</strong> Our <a href="https://arxiv.org/abs/2601.18744">TSRBench</a> paper was accepted to <strong>ICML 2026</strong>.</li>
+  <li><strong>[2026.02]</strong> We released <a href="https://arxiv.org/abs/2602.01705">LaDi-RL</a>, my first-author paper on diversity-preserving reinforcement learning via a latent diffusion reasoner.</li>
+  <li><strong>[2026.01]</strong> My first-author paper <a href="https://arxiv.org/abs/2510.04573">LaDiR</a> was accepted to <strong>ICLR 2026</strong>.</li>
+  <li><strong>[2025.11]</strong> We released <a href="https://arxiv.org/abs/2511.09057">PAN</a>, a world model for general, interactable, and long-horizon simulation.</li>
+  <li><strong>[2025.06]</strong> I joined <strong>Google DeepMind</strong>'s GenAI organization as a <strong>Student Researcher</strong>, working on latent reasoning for vision-language models.</li>
+  <li><strong>[2025.05]</strong> My first-author paper <a href="https://arxiv.org/abs/2406.05673">Flow of Reasoning</a> was accepted to <strong>ICML 2025</strong>.</li>
+  <li><strong>[2025.02]</strong> My first-author paper <a href="https://arxiv.org/abs/2503.06514">GFlowVLM</a> was accepted to <strong>CVPR 2025</strong>.</li>
+  <li><strong>[2024.09]</strong> Our <a href="https://arxiv.org/abs/2402.12659">FinBen</a> paper was accepted to the <strong>NeurIPS 2024 Datasets and Benchmarks Track</strong>.</li>
+  <li><strong>[2024.05]</strong> I joined <strong>Honda Research Institute</strong> as a <strong>Research Intern</strong>, working on GFlowNets for vision-language model reasoning.</li>
+  <li><strong>[2024.01]</strong> My first-author paper <a href="https://arxiv.org/abs/2304.13803">Translate to Disambiguate</a> was accepted to <strong>EACL 2024</strong> as an <strong>Oral</strong> presentation.</li>
   </ul>
 </details>
 
