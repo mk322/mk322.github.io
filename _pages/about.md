@@ -29,13 +29,14 @@ News
 
 <ul style="list-style:none; padding-left:0;">
   <li><strong>[2026.08]</strong> We released <a href="https://arxiv.org/abs/2608.19669">Scaffolding Minds</a>, my first-author paper on multimodal latent reasoning with Google DeepMind.</li>
+  <li><strong>[2026.07]</strong> I gave an invited talk at <strong>Apple</strong> about my <a href="https://arxiv.org/abs/2510.04573">LaDiR</a> paper.</li>
   <li><strong>[2026.06]</strong> Our <a href="https://arxiv.org/abs/2512.02942">VideoScience-Bench</a> paper was accepted to <strong>ECCV 2026</strong>.</li>
-  <li><strong>[2026.06]</strong> I started my second <strong>Student Researcher</strong> role at <strong>Google DeepMind</strong>, working on embodied foundation models with the Gemini Robotics team.</li>
   </ul>
 
 <details class="news-disclosure">
   <summary>More news</summary>
   <ul style="list-style:none; padding-left:0;">
+  <li><strong>[2026.06]</strong> I started my second <strong>Student Researcher</strong> role at <strong>Google DeepMind</strong>, working on embodied foundation models with the Gemini Robotics team.</li>
   <li><strong>[2026.06]</strong> We released <a href="https://arxiv.org/abs/2606.14674">AgentSpec</a> on understanding embodied agent scaffolds through controlled composition.</li>
   <li><strong>[2026.06]</strong> We released <a href="https://arxiv.org/abs/2606.06447">NF-CoT</a> on latent reasoning with normalizing flows.</li>
   <li><strong>[2026.05]</strong> We released <a href="https://arxiv.org/abs/2605.09423">SimWorld Studio</a>, my first-author paper on automatic environment generation with an evolving coding agent for embodied agent learning.</li>
