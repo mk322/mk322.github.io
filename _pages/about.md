@@ -9,7 +9,7 @@ redirect_from:
 ---
 Hello! I am a Ph.D. candidate advised by [Lianhui Qin](https://lianhui.ucsd.edu/) at the University of California San Diego (UCSD). I am currently a Student Researcher at Google DeepMind, working on embodied foundation models in collaboration with the Gemini Robotics team.
 
-Previously, I was a Student Researcher in Google DeepMind's GenAI organization during summer 2025. Before joining UCSD, I completed my undergraduate degree in computer science at the University of Washington (UW), where I worked with [Luke Zettlemoyer](https://www.cs.washington.edu/people/faculty/lsz) and [Terra Blevins](https://blvns.github.io/).
+Previously, I was a Student Researcher on Google DeepMind's GenAI Team during summer 2025. Before joining UCSD, I completed my undergraduate degree in computer science at the University of Washington (UW), where I worked with [Luke Zettlemoyer](https://www.cs.washington.edu/people/faculty/lsz) and [Terra Blevins](https://blvns.github.io/).
 
 <!-- **I am interested in securing a summer research internship in the industry.** If you know of any relevant openings or could provide an introduction, I would deeply appreciate your support. -->
 
@@ -28,22 +28,22 @@ News
 ======
 
 <ul style="list-style:none; padding-left:0;">
-  <li><strong>[2026.08]</strong> We released <a href="https://arxiv.org/abs/2608.19669">Scaffolding Minds</a>, my first-author paper on optimizing latent visual target representations for multimodal reasoning.</li>
+  <li><strong>[2026.08]</strong> We released <a href="https://arxiv.org/abs/2608.19669">Scaffolding Minds</a>, my first-author paper on multimodal latent reasoning with Google DeepMind.</li>
   <li><strong>[2026.06]</strong> Our <a href="https://arxiv.org/abs/2512.02942">VideoScience-Bench</a> paper was accepted to <strong>ECCV 2026</strong>.</li>
-  <li><strong>[2026.06]</strong> I started my second <strong>Student Researcher</strong> appointment at <strong>Google DeepMind</strong>, working on embodied foundation models with the Gemini Robotics team.</li>
+  <li><strong>[2026.06]</strong> I started my second <strong>Student Researcher</strong> role at <strong>Google DeepMind</strong>, working on embodied foundation models with the Gemini Robotics team.</li>
   </ul>
 
 <details class="news-disclosure">
   <summary>More news</summary>
   <ul style="list-style:none; padding-left:0;">
-  <li><strong>[2026.06]</strong> We released <a href="https://arxiv.org/abs/2606.14674">AgentSpec</a>, a new preprint on understanding embodied agent scaffolds through controlled composition.</li>
-  <li><strong>[2026.06]</strong> We released <a href="https://arxiv.org/abs/2606.06447">NF-CoT</a>, a new preprint on latent reasoning with normalizing flows.</li>
+  <li><strong>[2026.06]</strong> We released <a href="https://arxiv.org/abs/2606.14674">AgentSpec</a> on understanding embodied agent scaffolds through controlled composition.</li>
+  <li><strong>[2026.06]</strong> We released <a href="https://arxiv.org/abs/2606.06447">NF-CoT</a> on latent reasoning with normalizing flows.</li>
   <li><strong>[2026.05]</strong> We released <a href="https://arxiv.org/abs/2605.09423">SimWorld Studio</a>, my first-author paper on automatic environment generation with an evolving coding agent for embodied agent learning.</li>
   <li><strong>[2026.04]</strong> Our <a href="https://arxiv.org/abs/2601.18744">TSRBench</a> paper was accepted to <strong>ICML 2026</strong>.</li>
-  <li><strong>[2026.02]</strong> We released <a href="https://arxiv.org/abs/2602.01705">LaDi-RL</a>, my first-author paper on diversity-preserving reinforcement learning via a latent diffusion reasoner.</li>
+  <li><strong>[2026.02]</strong> We released <a href="https://arxiv.org/abs/2602.01705">LaDi-RL</a>, my first-author paper on diversity-preserving reinforcement learning with latent diffusion.</li>
   <li><strong>[2026.01]</strong> My first-author paper <a href="https://arxiv.org/abs/2510.04573">LaDiR</a> was accepted to <strong>ICLR 2026</strong>.</li>
   <li><strong>[2025.11]</strong> We released <a href="https://arxiv.org/abs/2511.09057">PAN</a>, a world model for general, interactable, and long-horizon simulation.</li>
-  <li><strong>[2025.06]</strong> I joined <strong>Google DeepMind</strong>'s GenAI organization as a <strong>Student Researcher</strong>, working on latent reasoning for vision-language models.</li>
+  <li><strong>[2025.06]</strong> I joined <strong>Google DeepMind</strong>'s GenAI Team as a <strong>Student Researcher</strong>, working on latent reasoning for vision-language models.</li>
   <li><strong>[2025.05]</strong> My first-author paper <a href="https://arxiv.org/abs/2406.05673">Flow of Reasoning</a> was accepted to <strong>ICML 2025</strong>.</li>
   <li><strong>[2025.02]</strong> My first-author paper <a href="https://arxiv.org/abs/2503.06514">GFlowVLM</a> was accepted to <strong>CVPR 2025</strong>.</li>
   <li><strong>[2024.09]</strong> Our <a href="https://arxiv.org/abs/2402.12659">FinBen</a> paper was accepted to the <strong>NeurIPS 2024 Datasets and Benchmarks Track</strong>.</li>
