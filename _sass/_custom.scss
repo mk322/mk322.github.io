@@ -117,8 +117,12 @@ h2 {
 }
 
 .author__urls {
+  li {
+    font-size: 0.9em;
+  }
+
   a {
-    font-size: 0.9em !important;
+    font-size: 1em !important;
     color: #555 !important;
     transition: color 0.2s ease, transform 0.2s ease;
     display: inline-flex;
