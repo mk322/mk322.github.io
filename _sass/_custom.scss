@@ -315,6 +315,11 @@ h2 {
   }
 }
 
+.first-author-note {
+  font-weight: 600;
+  background: linear-gradient(to top, rgba($info-color, 0.16) 32%, transparent 32%);
+}
+
 .news-disclosure {
   display: flex;
   flex-direction: column;
