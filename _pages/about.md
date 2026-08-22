@@ -16,7 +16,7 @@ Previously, I was a Student Researcher at Google DeepMind in 2025, working on la
 Research Topics
 ======
 
-My research focuses on model architecture and latent reasoning, RL algorithms and agentic environments, embodied foundation models and agents, and recursive self-improvement.
+My long-term goal is to build generalist AI systems that can reason, act, and continually improve through interaction with complex environments.
 
 - **Model Architecture and Latent Reasoning:** [LaDiR](https://arxiv.org/abs/2510.04573) (ICLR 2026), [LaDi-RL](https://arxiv.org/abs/2602.01705) (arXiv 2026), [NF-CoT](https://arxiv.org/abs/2606.06447) (arXiv 2026), [Scaffolding Minds](https://arxiv.org/abs/2608.19669) (arXiv 2026), and mmLaDiR (release very soon).
 - **RL Algorithm and Agentic Environment:** [Flow of Reasoning](https://arxiv.org/abs/2406.05673) (ICML 2025), [GFlowVLM](https://arxiv.org/abs/2503.06514) (CVPR 2025), [LaDi-RL](https://arxiv.org/abs/2602.01705) (arXiv 2026), and DeliveryGym (release very soon).
