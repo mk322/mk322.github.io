@@ -9,7 +9,7 @@ redirect_from:
 ---
 Hello! I am a Ph.D. candidate advised by [Lianhui Qin](https://lianhui.ucsd.edu/) at the University of California San Diego (UCSD). I am currently a Student Researcher at Google DeepMind, working on embodied foundation models in collaboration with the Gemini Robotics team.
 
-Previously, I was a Student Researcher at Google DeepMind in 2025, working on latent reasoning for vision-language models. Before starting my Ph.D., I earned my Bachelor of Science from the Paul G. Allen School of Computer Science & Engineering at the University of Washington (UW), where I worked closely with [Luke Zettlemoyer](https://www.cs.washington.edu/people/faculty/lsz) and [Terra Blevins](https://blvns.github.io/).
+Previously, I was a Student Researcher at Google DeepMind, working on latent reasoning for vision-language models. Before joining UCSD, I completed my undergraduate degree in computer science at the University of Washington (UW), where I worked with [Luke Zettlemoyer](https://www.cs.washington.edu/people/faculty/lsz) and [Terra Blevins](https://blvns.github.io/).
 
 <!-- **I am interested in securing a summer research internship in the industry.** If you know of any relevant openings or could provide an introduction, I would deeply appreciate your support. -->
 
