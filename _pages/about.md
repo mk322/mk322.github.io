@@ -1,22 +1,26 @@
 ---
 permalink: /
 title: ""
-excerpt: "Haoqiang (Murray) Kang - CS PhD student at UCSD researching RL post-training, latent reasoning, and embodied coding agents."
+excerpt: "Haoqiang (Murray) Kang - CS PhD candidate at UCSD researching RL post-training, latent reasoning, and embodied foundation models."
 author_profile: true
 redirect_from:
   - /about/
   - /about.html
 ---
-Hello! I am a CS Ph.D. Student at University of California San Diego (UCSD). I am fortunate to be advised by [Lianhui Qin](https://lianhui.ucsd.edu/). I obtained my Bachelor of Science degree from the Paul G. Allen School of Computer Science at the University of Washington (UW), Seattle. During my undergraduate time, I was fortunate to work closely with [Luke Zettlemoyer](https://www.cs.washington.edu/people/faculty/lsz) and [Terra Blevins](https://blvns.github.io/), who provided invaluable mentorship and guidance in my early research endeavors.
+Hello! I am a Ph.D. candidate advised by [Lianhui Qin](https://lianhui.ucsd.edu/) at the University of California San Diego (UCSD). I am currently a Student Researcher at Google DeepMind, working on embodied foundation models in collaboration with the Gemini Robotics team.
 
-**I am interested in securing a summer research internship in the industry.** If you know of any relevant openings or could provide an introduction, I would deeply appreciate your support.
+Previously, I was a Student Researcher at Google DeepMind in 2025, working on latent reasoning for vision-language models. Before starting my Ph.D., I earned my Bachelor of Science from the Paul G. Allen School of Computer Science & Engineering at the University of Washington (UW), where I worked closely with [Luke Zettlemoyer](https://www.cs.washington.edu/people/faculty/lsz) and [Terra Blevins](https://blvns.github.io/).
+
+<!-- **I am interested in securing a summer research internship in the industry.** If you know of any relevant openings or could provide an introduction, I would deeply appreciate your support. -->
 
 Research Topics
 ======
 
-- **Latent Reasoning and Multimodal Model Architectures:** [LaDiR](https://arxiv.org/abs/2510.04573) (**ICLR 2026**), [LaDi-RL](https://arxiv.org/abs/2602.01705) (**arXiv 2026**), [NF-CoT](https://arxiv.org/abs/2606.06447) (**arXiv 2026**), [Scaffolding Minds](https://arxiv.org/abs/2608.19669) (**arXiv 2026**), and **mmLaDiR** (**ongoing work**).
-- **LLM Post-Training Algorithms and Scalable Training Infrastructure:** [Flow of Reasoning](https://arxiv.org/abs/2406.05673) (**ICML 2025**), [GFlowVLM](https://arxiv.org/abs/2503.06514) (**CVPR 2025**), [LaDi-RL](https://arxiv.org/abs/2602.01705) (**arXiv 2026**), and **DeliveryGym** (**ongoing infrastructure project**).
-- **Embodied Foundation Models, Agents, and Interactive Environments:** [PAN World Model](https://arxiv.org/abs/2511.09057) (**Technical Report, 2025**), **Google DeepMind 2026 internship project** (**ongoing**, with Gemini Robotics), [SimWorld Studio](https://arxiv.org/abs/2605.09423) (**arXiv 2026**), **DeliveryGym** (**ongoing infrastructure project**), and [AgentSpec](https://arxiv.org/abs/2606.14674) (**arXiv 2026**).
+My research focuses on latent reasoning and multimodal model architectures, LLM post-training algorithms and scalable training infrastructure, and embodied foundation models, agents, and interactive environments.
+
+- **Latent Reasoning and Multimodal Model Architectures:** [LaDiR](https://arxiv.org/abs/2510.04573) (ICLR 2026), [LaDi-RL](https://arxiv.org/abs/2602.01705) (arXiv 2026), [NF-CoT](https://arxiv.org/abs/2606.06447) (arXiv 2026), [Scaffolding Minds](https://arxiv.org/abs/2608.19669) (arXiv 2026), and mmLaDiR (release very soon).
+- **LLM Post-Training Algorithms and Scalable Training Infrastructure:** [Flow of Reasoning](https://arxiv.org/abs/2406.05673) (ICML 2025), [GFlowVLM](https://arxiv.org/abs/2503.06514) (CVPR 2025), [LaDi-RL](https://arxiv.org/abs/2602.01705) (arXiv 2026), and DeliveryGym (release very soon).
+- **Embodied Foundation Models, Agents, and Interactive Environments:** [PAN World Model](https://arxiv.org/abs/2511.09057) (Technical Report, 2025), Google DeepMind 2026 internship project with Gemini Robotics (release very soon), [SimWorld Studio](https://arxiv.org/abs/2605.09423) (arXiv 2026), DeliveryGym (release very soon), and [AgentSpec](https://arxiv.org/abs/2606.14674) (arXiv 2026).
 {: .research-topics}
 
 News
