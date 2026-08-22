@@ -11,20 +11,31 @@ Hello! I am a CS Ph.D. Student at University of California San Diego (UCSD). I a
 
 **I am interested in securing a summer research internship in the industry.** If you know of any relevant openings or could provide an introduction, I would deeply appreciate your support.
 
-<details class="news-disclosure">
-  <summary>
-    <span class="news-disclosure__title" role="heading" aria-level="2">News</span>
-  </summary>
-  <ul style="list-style:none; padding-left:0;">
+Research Topics
+======
+
+- **Latent Reasoning and Multimodal Model Architectures:** [LaDiR](https://arxiv.org/abs/2510.04573) (**ICLR 2026**), [LaDi-RL](https://arxiv.org/abs/2602.01705) (**arXiv 2026**), [NF-CoT](https://arxiv.org/abs/2606.06447) (**arXiv 2026**), [Scaffolding Minds](https://arxiv.org/abs/2608.19669) (**arXiv 2026**), and **mmLaDiR** (**ongoing work**).
+- **LLM Post-Training Algorithms and Scalable Training Infrastructure:** [Flow of Reasoning](https://arxiv.org/abs/2406.05673) (**ICML 2025**), [GFlowVLM](https://arxiv.org/abs/2503.06514) (**CVPR 2025**), [LaDi-RL](https://arxiv.org/abs/2602.01705) (**arXiv 2026**), and **DeliveryGym** (**ongoing infrastructure project**).
+- **Embodied Foundation Models, Agents, and Interactive Environments:** [PAN World Model](https://arxiv.org/abs/2511.09057) (**Technical Report, 2025**), **Google DeepMind 2026 internship project** (**ongoing**, with Gemini Robotics), [SimWorld Studio](https://arxiv.org/abs/2605.09423) (**arXiv 2026**), **DeliveryGym** (**ongoing infrastructure project**), and [AgentSpec](https://arxiv.org/abs/2606.14674) (**arXiv 2026**).
+{: .research-topics}
+
+News
+======
+
+<ul style="list-style:none; padding-left:0;">
   <li><strong>[2026.08]</strong> <strong>First-author paper:</strong> New preprint, <a href="https://arxiv.org/abs/2608.19669">Scaffolding Minds</a> — optimized latent visual target representations for multimodal reasoning.</li>
   <li><strong>[2026.06]</strong> <a href="https://arxiv.org/abs/2512.02942">VideoScience-Bench</a> accepted to <strong>ECCV 2026</strong>.</li>
   <li><strong>[2026.06]</strong> New preprint: <a href="https://arxiv.org/abs/2606.14674">AgentSpec</a> — controlled composition for understanding embodied agent scaffolds.</li>
+  </ul>
+
+<details class="news-disclosure">
+  <summary>More news</summary>
+  <ul style="list-style:none; padding-left:0;">
   <li><strong>[2026.06]</strong> New preprint: <a href="https://arxiv.org/abs/2606.06447">NF-CoT</a> — latent reasoning with normalizing flows.</li>
   <li><strong>[2026.05]</strong> <strong>Co-first-author paper:</strong> New preprint, <a href="https://arxiv.org/abs/2605.09423">SimWorld Studio</a> — automatic embodied environment generation with an evolving coding agent.</li>
   <li><strong>[2026.04]</strong> <a href="https://arxiv.org/abs/2601.18744">TSRBench</a> accepted to <strong>ICML 2026</strong>.</li>
   <li><strong>[2026.02]</strong> <strong>First-author paper:</strong> New preprint, <a href="https://arxiv.org/abs/2602.01705">LaDi-RL</a> — diversity-preserving RL via latent diffusion reasoning.</li>
   <li><strong>[2026.01]</strong> <strong>First-author paper:</strong> <a href="https://arxiv.org/abs/2510.04573">LaDiR</a> accepted to <strong>ICLR 2026</strong>.</li>
-  <li><strong>[2026.01]</strong> New preprint: <a href="https://arxiv.org/abs/2601.18744">TSRBench</a> — multi-task multi-modal time series reasoning benchmark.</li>
   <li><strong>[2025.11]</strong> New preprint: <a href="https://arxiv.org/abs/2511.09057">PAN</a> — a world model for general, interactable, long-horizon simulation.</li>
   <li><strong>[2025.06]</strong> Started as a <strong>Student Researcher</strong> at <strong>Google DeepMind</strong>, working on latent reasoning for vision-language models.</li>
   <li><strong>[2025.05]</strong> <strong>Co-first-author paper:</strong> <a href="https://arxiv.org/abs/2406.05673">Flow of Reasoning</a> accepted to <strong>ICML 2025</strong>.</li>
@@ -34,13 +45,6 @@ Hello! I am a CS Ph.D. Student at University of California San Diego (UCSD). I a
   <li><strong>[2024.01]</strong> <strong>Co-first-author paper:</strong> <a href="https://arxiv.org/abs/2304.13803">Translate to Disambiguate</a> accepted to <strong>EACL 2024</strong> as an <strong>Oral</strong> presentation.</li>
   </ul>
 </details>
-
-Research Interests
-======
-- **RL Post-Training**: Diversity and exploration in reinforcement learning for large model post-training
-- **Latent Reasoning**: Developing latent reasoning paradigms for language and vision-language models
-- **Embodied Coding Agent**: Building intelligent agents that solve practical real-world tasks
-
 
 Experience
 ======
