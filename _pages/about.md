@@ -34,7 +34,10 @@ News
   </ul>
 
 <details class="news-disclosure">
-  <summary>More news</summary>
+  <summary>
+    <span class="news-disclosure__show">Show more</span>
+    <span class="news-disclosure__hide">Hide</span>
+  </summary>
   <ul style="list-style:none; padding-left:0;">
   <li><strong>[2026.06]</strong> I started my second <strong>Student Researcher</strong> role at <strong>Google DeepMind</strong>, working on embodied foundation models with the Gemini Robotics team.</li>
   <li><strong>[2026.06]</strong> We released <a href="https://arxiv.org/abs/2606.14674">AgentSpec</a> on understanding embodied agent scaffolds through controlled composition.</li>

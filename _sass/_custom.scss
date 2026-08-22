@@ -318,6 +318,10 @@ h2 {
 .news-disclosure {
   margin-top: 0.35em;
 
+  &__hide {
+    display: none;
+  }
+
   > summary {
     display: inline-flex;
     align-items: center;
@@ -363,6 +367,14 @@ h2 {
 
   &[open] > summary {
     margin-bottom: 0.35em;
+  }
+
+  &[open] &__show {
+    display: none;
+  }
+
+  &[open] &__hide {
+    display: inline;
   }
 
   &[open] > summary::after {
