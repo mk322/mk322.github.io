@@ -20,7 +20,7 @@ My research focuses on model architecture and latent reasoning, RL algorithms an
 
 - **Model Architecture and Latent Reasoning:** [LaDiR](https://arxiv.org/abs/2510.04573) (ICLR 2026), [LaDi-RL](https://arxiv.org/abs/2602.01705) (arXiv 2026), [NF-CoT](https://arxiv.org/abs/2606.06447) (arXiv 2026), [Scaffolding Minds](https://arxiv.org/abs/2608.19669) (arXiv 2026), and mmLaDiR (release very soon).
 - **RL Algorithm and Agentic Environment:** [Flow of Reasoning](https://arxiv.org/abs/2406.05673) (ICML 2025), [GFlowVLM](https://arxiv.org/abs/2503.06514) (CVPR 2025), [LaDi-RL](https://arxiv.org/abs/2602.01705) (arXiv 2026), and DeliveryGym (release very soon).
-- **Embodied Foundation Models, Agents, and Interactive Environments:** [PAN World Model](https://arxiv.org/abs/2511.09057) (Technical Report, 2025), [AgentSpec](https://arxiv.org/abs/2606.14674) (arXiv 2026), [SimWorld Studio](https://arxiv.org/abs/2605.09423) (arXiv 2026), DeliveryGym (release very soon), and Google DeepMind 2026 internship project with Gemini Robotics (release very soon).
+- **Embodied Foundation Models, Agents, and Interactive Environments:** [PAN World Model](https://arxiv.org/abs/2511.09057) (Technical Report, 2025), [AgentSpec](https://arxiv.org/abs/2606.14674) (arXiv 2026), [SimWorld Studio](https://arxiv.org/abs/2605.09423) (arXiv 2026), DeliveryGym (release very soon), and Google DeepMind 2026 project with Gemini Robotics (internal).
 - **Recursive Self-Improvement (RSI):** [SimWorld Studio](https://arxiv.org/abs/2605.09423) (arXiv 2026) and DeliveryGym (release very soon).
 {: .research-topics}
 
