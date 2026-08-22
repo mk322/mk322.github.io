@@ -11,9 +11,11 @@ Hello! I am a CS Ph.D. Student at University of California San Diego (UCSD). I a
 
 **I am interested in securing a summer research internship in the industry.** If you know of any relevant openings or could provide an introduction, I would deeply appreciate your support.
 
-News
-======
-<ul style="list-style:none; padding-left:0;">
+<details class="news-disclosure">
+  <summary>
+    <span class="news-disclosure__title" role="heading" aria-level="2">News</span>
+  </summary>
+  <ul style="list-style:none; padding-left:0;">
   <li><strong>[2026.08]</strong> <strong>First-author paper:</strong> New preprint, <a href="https://arxiv.org/abs/2608.19669">Scaffolding Minds</a> — optimized latent visual target representations for multimodal reasoning.</li>
   <li><strong>[2026.06]</strong> <a href="https://arxiv.org/abs/2512.02942">VideoScience-Bench</a> accepted to <strong>ECCV 2026</strong>.</li>
   <li><strong>[2026.06]</strong> New preprint: <a href="https://arxiv.org/abs/2606.14674">AgentSpec</a> — controlled composition for understanding embodied agent scaffolds.</li>
@@ -30,7 +32,8 @@ News
   <li><strong>[2024.09]</strong> <a href="https://arxiv.org/abs/2402.12659">FinBen</a> accepted to <strong>NeurIPS 2024</strong> Datasets and Benchmarks Track.</li>
   <li><strong>[2024.05]</strong> Started as a <strong>Research Intern</strong> at <strong>Honda Research Institute</strong>, working on GFlowNets for VLM reasoning.</li>
   <li><strong>[2024.01]</strong> <strong>Co-first-author paper:</strong> <a href="https://arxiv.org/abs/2304.13803">Translate to Disambiguate</a> accepted to <strong>EACL 2024</strong> as an <strong>Oral</strong> presentation.</li>
-</ul>
+  </ul>
+</details>
 
 Research Interests
 ======
@@ -41,6 +44,15 @@ Research Interests
 
 Experience
 ======
+
+<p>
+  <img src="/images/GDM_Logo.png" alt="Google DeepMind" style="height:20px; vertical-align:middle; margin-right:6px;">
+  <strong>Google DeepMind</strong> | Jun 2026 – Nov 2026<br>
+  Position: Student Researcher<br>
+  Topic: Embodied Foundation Models<br>
+  Collaboration: Gemini Robotics Team<br>
+  Hosts: Abhijit Ogale and Priyank Jaini
+</p>
 
 <p>
   <img src="/images/GDM_Logo.png" alt="Google DeepMind" style="height:20px; vertical-align:middle; margin-right:6px;">
