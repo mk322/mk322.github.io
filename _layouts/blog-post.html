@@ -1,0 +1,25 @@
+---
+layout: default
+---
+<main class="blog-shell blog-article" id="main">
+  <article>
+    <header class="blog-header">
+      <a class="blog-back" href="{{ '/blog/' | relative_url }}">← All posts</a>
+      <h1>{{ page.title | escape }}</h1>
+      {% include blog-meta.html post=page %}
+      {% if page.last_modified_at %}<p class="blog-meta">Updated {{ page.last_modified_at | date: "%B %-d, %Y" }}</p>{% endif %}
+      {% if page.tags.size > 0 %}<ul class="blog-tags" aria-label="Topics">{% for tag in page.tags %}<li><a href="{{ '/blog/' | relative_url }}?tag={{ tag | url_encode }}">{{ tag | escape }}</a></li>{% endfor %}</ul>{% endif %}
+    </header>
+    {% if page.tldr %}
+    <details class="blog-tldr" open>
+      <summary><strong>TL;DR</strong><span class="blog-tldr__hint">Quick summary</span></summary>
+      <div class="blog-tldr__content">{{ page.tldr | markdownify }}</div>
+    </details>
+    {% endif %}
+    <div class="blog-content">{{ content }}</div>
+    <nav class="blog-pagination" aria-label="Adjacent posts">
+      {% if page.previous %}<a href="{{ page.previous.url | relative_url }}"><span>← Older post</span>{{ page.previous.title | escape }}</a>{% endif %}
+      {% if page.next %}<a href="{{ page.next.url | relative_url }}"><span>Newer post →</span>{{ page.next.title | escape }}</a>{% endif %}
+    </nav>
+  </article>
+</main>

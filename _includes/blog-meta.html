@@ -1,0 +1,3 @@
+{% assign blog_words = include.post.content | strip_html | number_of_words %}
+{% assign blog_minutes = blog_words | plus: 159 | divided_by: 160 | at_least: 1 %}
+<p class="blog-meta"><time datetime="{{ include.post.date | date_to_xmlschema }}">{{ include.post.date | date: "%B %-d, %Y" }}</time><span aria-hidden="true"> · </span>{{ include.post.reading_time | default: blog_minutes }} min read<span aria-hidden="true"> · </span>{{ include.post.author | default: site.author.name | escape }}</p>

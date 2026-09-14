@@ -126,6 +126,15 @@ defaults:
     values:
       layout: single
       author_profile: true
+  # Blog posts
+  - scope:
+      path: ""
+      type: posts
+    values:
+      layout: blog-post
+      permalink: /blog/:title/
+      author_profile: false
+      comments: false
   # _publications
   - scope:
       path: ""

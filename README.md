@@ -30,3 +30,29 @@ See more info at https://academicpages.github.io/
 There is one logistical issue with a ready-to-fork template theme like academic pages that makes it a little tricky to get bug fixes and updates to the core theme. If you fork this repository, customize it, then pull again, you'll probably get merge conflicts. If you want to save your various .yml configuration files and markdown files, you can delete the repository and fork it again. Or you can manually patch. 
 
 To support this, all changes to the underlying code appear as a closed issue with the tag 'code change' -- get the list [here](https://github.com/academicpages/academicpages.github.io/issues?q=is%3Aclosed%20is%3Aissue%20label%3A%22code%20change%22%20). Each issue thread includes a comment linking to the single commit or a diff across multiple commits, so those with forked repositories can easily identify what they need to patch.
+
+
+## Publishing blog posts
+
+The blog lives at `/blog/`, with a year archive at `/blog/archive/` and RSS at
+`/feed.xml`. Posts use a reading-focused layout with dates, reading time, tags,
+math, code highlighting, and previous/next navigation. Search matches titles,
+summaries, and topics; it combines with the topic filter.
+
+1. Copy `_drafts/blog-template.md` to `_posts/YYYY-MM-DD-your-post-slug.md`.
+2. Set `title`, `excerpt`, and `tags` in the front matter, then write in Markdown.
+   The filename sets the publication date and `/blog/your-post-slug/` URL.
+3. Keep the table-of-contents block for long articles, or remove it for short notes.
+   Put figures in `images/blog/your-post-slug/` and use the image example in the template.
+4. Preview with `bundle exec jekyll serve --config _config.yml,_config.dev.yml`.
+   To preview unpublished drafts, add `--drafts`. Drafts are excluded from normal builds.
+5. Publish through the repository's usual GitHub Pages workflow. The list, tags,
+   archive, and RSS update automatically; no manual index edits are needed.
+
+Add `tldr: |` followed by an indented Markdown summary to show a collapsible
+**TL;DR** at the start of a post (expanded by default). Omit it to hide the panel.
+
+Optional front matter: `reading_time: 10` (minutes, recommended for Chinese text),
+`last_modified_at: YYYY-MM-DD`, and `author: Name`. To keep a file in `_posts`
+unpublished, set `published: false`. This site currently sets `future: true`, so
+future-dated files in `_posts` are published too; use `_drafts` for unfinished work.

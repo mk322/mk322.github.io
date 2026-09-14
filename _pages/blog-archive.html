@@ -1,0 +1,26 @@
+---
+layout: default
+title: "Blog Archive"
+permalink: /blog/archive/
+excerpt: "All essays and research notes, organized by year."
+---
+<main class="blog-shell" id="main">
+  <header class="blog-header">
+    <p class="blog-eyebrow">All writing</p>
+    <h1>Archive</h1>
+    <nav class="blog-nav" aria-label="Blog navigation">
+      <a href="{{ '/blog/' | relative_url }}">Posts</a>
+      <a href="{{ '/blog/archive/' | relative_url }}" aria-current="page">Archive</a>
+      <a href="{{ '/feed.xml' | relative_url }}">RSS</a>
+    </nav>
+  </header>
+  {% assign years = site.posts | group_by_exp: "post", "post.date | date: '%Y'" %}
+  {% for year in years %}
+  <section class="blog-year">
+    <h2>{{ year.name }} <span class="blog-meta">{{ year.items.size }} {% if year.items.size == 1 %}post{% else %}posts{% endif %}</span></h2>
+    <ul>{% for post in year.items %}<li><time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%b %d" }}</time><a href="{{ post.url | relative_url }}">{{ post.title | escape }}</a></li>{% endfor %}</ul>
+  </section>
+  {% else %}
+  <div class="blog-empty"><h2>More soon.</h2><p>Published posts will be collected here by year.</p></div>
+  {% endfor %}
+</main>
