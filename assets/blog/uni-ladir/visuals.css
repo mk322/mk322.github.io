@@ -19,3 +19,5 @@
 .blog-content .uni-result-takeaway{border-left:3px solid #6356a5;padding:12px 18px;background:#f7f5fa;font-size:.94em}
 @media(max-width:600px){.uni-wide{width:100%;left:auto;transform:none}.uni-pan-hint{display:inline}.uni-walk-controls{gap:6px}.uni-walk-controls button{font-size:13px;padding:8px 10px}.blog-content .uni-paper-figure figcaption{font-size:.75em}.blog-content .uni-method-explanation{min-height:0}.uni-paper-figure picture img{width:100%;height:auto}}
 @media(prefers-reduced-motion:reduce){.uni-stage-highlight{transition:none}}
+
+.uni-cite{font-size:.72em;white-space:nowrap;margin-left:.12em}.uni-cite a{text-decoration:none}.blog-content .uni-references{font-size:.82em;line-height:1.75;padding-left:1.6em}.uni-references li{margin-bottom:14px;scroll-margin-top:32px}.uni-references li:target{background:#f2eff8;outline:4px solid #f2eff8;border-radius:2px}
