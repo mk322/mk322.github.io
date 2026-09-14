@@ -1,17 +1,18 @@
-<figure class="uni-figure" data-uni="grounding">
-  <div class="uni-kicker">02 / Learning what to carry forward</div>
-  <div class="uni-title">A common shape needs a purpose.</div>
-  <div class="uni-controls" hidden aria-label="Compare latent objectives">
-    <button type="button" data-objective="ground" aria-pressed="true">Downstream grounding</button>
-    <button type="button" data-objective="reconstruct" aria-pressed="false">Source reconstruction</button>
+<figure class="uni-paper-figure uni-wide" data-walkthrough>
+  <div class="uni-walk-controls" hidden aria-label="Walk through the paper method">
+    <button type="button" data-stage="all" aria-pressed="true">Full method</button>
+    <button type="button" data-stage="0" aria-pressed="false">1. Construct</button>
+    <button type="button" data-stage="1" aria-pressed="false">2. Ground</button>
+    <button type="button" data-stage="2" aria-pressed="false">3. Learn diffusion</button>
+    <button type="button" data-stage="3" aria-pressed="false">4. Inference</button>
+    <button type="button" data-play aria-pressed="false">Play walkthrough</button>
   </div>
-  <div class="uni-flow">
-    <div class="uni-node"><small>Training teacher</small><b>One intermediate step</b><span>Text, image features, 3D, or state</span></div>
-    <div class="uni-arrow" aria-hidden="true">↓</div>
-    <div class="uni-node uni-latent"><small>Shared constructor</small><b>Latent block z<sub>i</sub>*</b><span>One block size · one output interface</span></div>
-    <div class="uni-arrow" aria-hidden="true">↓</div>
-    <div class="uni-node" data-target><small>With input and the available latent prefix</small><b>Predict later steps + answer / action</b><span>Earlier raw teacher steps are hidden.</span></div>
+  <div class="uni-figure-scroll" tabindex="0" role="region" aria-label="Paper Figure 2; scroll horizontally on small screens">
+    <div class="uni-method-canvas">
+      <a href="{{ '/assets/blog/uni-ladir/fig2.svg' | relative_url }}" target="_blank" rel="noopener"><img class="uni-diagram" src="{{ '/assets/blog/uni-ladir/fig2.svg' | relative_url }}" width="1400" height="995" alt="Paper Figure 2. Construction: local queries read teacher features through a shared backbone and produce latent blocks; the attention mask restricts each query to its own step. Grounding: an input and latent prefix predict later steps and the output. Diffusion: input, detached clean prefix, and a noisy block train denoising with detached targets. Inference: generate latent blocks sequentially, then the output."></a>
+      <span class="uni-stage-highlight" hidden aria-hidden="true"></span>
+    </div>
   </div>
-  <div class="uni-insight" data-status aria-live="polite">Keep information because it helps the computation that follows. Grounding trains both the latent constructor and its consumer.</div>
-  <figcaption>Training schematic. Each constructed block reads only its own teacher step; later predictions use the available prefix. The alternate objective is the reconstruction ablation.</figcaption>
+  <p class="uni-method-explanation" data-explanation aria-live="polite"><strong>One backbone, three training views.</strong> Construction defines the interface; grounding makes its contents useful; diffusion learns to generate them. The bottom row shows what runs at inference.</p>
+  <figcaption><strong>Figure 2. Construct, ground, and generate.</strong> Original paper method diagram. Snowflakes mark stop-gradient; outlined targets mark supervision. The diffusion panel summarizes flow-matching training; it is not an unrolled sampler. <a href="{{ '/assets/blog/uni-ladir/source/fig2.pdf' | relative_url }}">Vector PDF</a><span class="uni-pan-hint"> · Swipe to inspect; tap to enlarge.</span></figcaption>
 </figure>

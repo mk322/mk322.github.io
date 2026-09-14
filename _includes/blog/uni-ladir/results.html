@@ -1,25 +1,4 @@
-<figure class="uni-figure" data-uni="results">
-  <div class="uni-kicker">04 / A controlled test of sharing</div>
-  <div class="uni-title">Same teachers. Different sharing.</div>
-  <div class="uni-controls" hidden aria-label="Select experiment">
-    <button type="button" data-result="visual" aria-pressed="true">Visual reasoning</button><button type="button" data-result="robot" aria-pressed="false">Robot control</button>
-  </div>
-  <div data-chart="visual">
-    <p class="uni-chart-label">Mean accuracy (%) · four visual-reasoning benchmarks</p>
-    <div class="uni-bar-row"><span>Separate spaces</span><div class="uni-bar-track"><i style="width:62.97%"></i></div><b>62.97</b></div>
-    <div class="uni-bar-row uni-shared"><span>Text + image</span><div class="uni-bar-track"><i style="width:67.66%"></i></div><b>67.66</b></div>
-    <div class="uni-axis"><span>0</span><span>50</span><span>100%</span></div>
-    <div class="uni-result-note">+4.69 percentage points <span>· +7.4% relative</span></div>
-  </div>
-  <div data-chart="robot">
-    <p class="uni-chart-label">Mean success (%) · LIBERO and RLBench</p>
-    <div class="uni-bar-row"><span>Separate spaces</span><div class="uni-bar-track"><i style="width:90.05%"></i></div><b>90.05</b></div>
-    <div class="uni-bar-row"><span>Visual + 3D</span><div class="uni-bar-track"><i style="width:90.60%"></i></div><b>90.60</b></div>
-    <div class="uni-bar-row"><span>Visual + state</span><div class="uni-bar-track"><i style="width:90.25%"></i></div><b>90.25</b></div>
-    <div class="uni-bar-row"><span>3D + state</span><div class="uni-bar-track"><i style="width:91.25%"></i></div><b>91.25</b></div>
-    <div class="uni-bar-row uni-shared"><span>All three shared</span><div class="uni-bar-track"><i style="width:93.08%"></i></div><b>93.08</b></div>
-    <div class="uni-axis"><span>0</span><span>50</span><span>100%</span></div>
-    <div class="uni-result-note">+3.03 percentage points <span>· +3.4% relative</span></div>
-  </div>
-  <figcaption>Measured results: manuscript Figure 3 and supplementary sharing tables. All configurations within a setting receive the same teachers and matched budgets. Visual: V*, MMVP, MathVista, EMMA. Robot: unweighted mean of LIBERO and RLBench. Values are rounded; uncertainty is not supplied for these means.</figcaption>
+<figure class="uni-paper-figure uni-wide">
+  <picture><source media="(max-width: 600px)" srcset="{{ '/assets/blog/uni-ladir/sharing-mobile.svg' | relative_url }}"><img src="{{ '/assets/blog/uni-ladir/sharing.svg' | relative_url }}" width="1400" height="480" loading="lazy" alt="Controlled sharing study. Text-image accuracy increases from 62.97 to 67.66. Robot teacher sharing yields 90.05 for separate spaces, 90.60 for visual plus 3D, 90.25 for visual plus state, 91.25 for 3D plus state, and 93.08 when all three share."></picture>
+  <figcaption><strong>Figure 4. Sharing helps with the same teachers and budgets.</strong> Values from the paper's sharing ablations. Left: mean accuracy on V*, MMVP, MathVista, and EMMA. Right: mean success across LIBERO and RLBench. Teachers, backbone, total latent budget, trainable parameters, training schedule, and inference compute are fixed within each study. All axes start at zero; uncertainty for these means is not supplied.</figcaption>
 </figure>

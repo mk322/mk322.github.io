@@ -1,0 +1,77 @@
+{
+  "main": [
+    {
+      "title": "Visual reasoning",
+      "metric": "8-benchmark mean accuracy (%)",
+      "labels": [
+        "Qwen2.5-VL\nmatched base",
+        "Uni-LaDiR"
+      ],
+      "values": [
+        63.55,
+        75.55
+      ],
+      "gain": "+18.9% relative"
+    },
+    {
+      "title": "Visual math & logic",
+      "metric": "4-benchmark mean accuracy (%)",
+      "labels": [
+        "ILVR\nreported baseline",
+        "Uni-LaDiR"
+      ],
+      "values": [
+        45.68,
+        49.03
+      ],
+      "gain": "+7.3% relative"
+    },
+    {
+      "title": "Robot manipulation",
+      "metric": "RLBench mean success (%)",
+      "labels": [
+        "LaST\u2080",
+        "Uni-LaDiR"
+      ],
+      "values": [
+        82,
+        87
+      ],
+      "gain": "+6.1% relative"
+    }
+  ],
+  "sharing": [
+    {
+      "title": "Text + image teachers",
+      "metric": "4-benchmark mean accuracy (%)",
+      "labels": [
+        "Separate\nspaces",
+        "Text + image\nshared"
+      ],
+      "values": [
+        62.97,
+        67.66
+      ],
+      "gain": "+7.4% relative"
+    },
+    {
+      "title": "Visual + 3D + state teachers",
+      "metric": "LIBERO / RLBench mean success (%)",
+      "labels": [
+        "Separate",
+        "Visual\n+ 3D",
+        "Visual\n+ state",
+        "3D\n+ state",
+        "All three"
+      ],
+      "values": [
+        90.05,
+        90.6,
+        90.25,
+        91.25,
+        93.08
+      ],
+      "gain": "+3.4% relative"
+    }
+  ]
+}
