@@ -1,7 +1,7 @@
 ---
 title: "Your post title"
 excerpt: "A short summary of the question, the main idea, and why it matters."
-tags: [Reasoning, Reinforcement Learning]
+tags: ["Model Architecture and Latent Reasoning"]
 tldr: |
   Write a short **TL;DR** here. It appears in an expandable summary above the article.
 # Optional: override the estimated reading time (useful for Chinese posts).

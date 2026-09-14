@@ -9,11 +9,6 @@ excerpt: "Notes on reasoning, learning, and building AI systems."
     <p class="blog-eyebrow">Notes &amp; essays</p>
     <h1>Blog</h1>
     <p class="blog-intro">Notes on reasoning, learning, and building AI systems.</p>
-    <nav class="blog-nav" aria-label="Blog navigation">
-      <a href="{{ '/blog/' | relative_url }}" aria-current="page">Posts</a>
-      <a href="{{ '/blog/archive/' | relative_url }}">Archive</a>
-      <a href="{{ '/feed.xml' | relative_url }}">RSS</a>
-    </nav>
   </header>
   {% if site.posts.size > 0 %}
   <div class="blog-filters" hidden>
@@ -22,8 +17,7 @@ excerpt: "Notes on reasoning, learning, and building AI systems."
     <label for="blog-tag">Topic</label>
     <select id="blog-tag">
       <option value="">All topics</option>
-      {% assign sorted_tags = site.tags | sort %}
-      {% for tag in sorted_tags %}<option value="{{ tag[0] | escape }}">{{ tag[0] | escape }}</option>{% endfor %}
+      {% for topic in site.data.blog_topics %}<option value="{{ topic | escape }}">{{ topic | escape }}</option>{% endfor %}
     </select>
     <p id="blog-results" class="blog-meta" role="status" aria-live="polite"></p>
   </div>

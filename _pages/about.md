@@ -18,10 +18,10 @@ Research Topics
 
 My research goal is to build agentic AI systems that reason, act, and learn through interaction, using experience to develop better intuition and continually improve.
 
-- **Model Architecture and Latent Reasoning:** [LaDiR](https://arxiv.org/abs/2510.04573) (ICLR 2026), [LaDi-RL](https://arxiv.org/abs/2602.01705) (arXiv 2026), [NF-CoT](https://arxiv.org/abs/2606.06447) (arXiv 2026), [Scaffolding Minds](https://arxiv.org/abs/2608.19669) (arXiv 2026), and mmLaDiR (release very soon).
-- **RL Algorithm and Agentic Environment:** [Flow of Reasoning](https://arxiv.org/abs/2406.05673) (ICML 2025), [GFlowVLM](https://arxiv.org/abs/2503.06514) (CVPR 2025), [LaDi-RL](https://arxiv.org/abs/2602.01705) (arXiv 2026), and DeliveryGym (release very soon).
-- **Embodied Foundation Models, Agents, and Simulation Environments:** [PAN World Model](https://arxiv.org/abs/2511.09057) (Technical Report, 2025), [AgentSpec](https://arxiv.org/abs/2606.14674) (arXiv 2026), [SimWorld Studio](https://arxiv.org/abs/2605.09423) (arXiv 2026), DeliveryGym (release very soon), and Google DeepMind 2026 project with Gemini Robotics (internal).
-- **Recursive Self-Improvement (RSI):** [SimWorld Studio](https://arxiv.org/abs/2605.09423) (arXiv 2026) and DeliveryGym (release very soon).
+- **{{ site.data.blog_topics[0] }}:** [LaDiR](https://arxiv.org/abs/2510.04573) (ICLR 2026), [LaDi-RL](https://arxiv.org/abs/2602.01705) (arXiv 2026), [NF-CoT](https://arxiv.org/abs/2606.06447) (arXiv 2026), [Scaffolding Minds](https://arxiv.org/abs/2608.19669) (arXiv 2026), and mmLaDiR (release very soon).
+- **{{ site.data.blog_topics[1] }}:** [Flow of Reasoning](https://arxiv.org/abs/2406.05673) (ICML 2025), [GFlowVLM](https://arxiv.org/abs/2503.06514) (CVPR 2025), [LaDi-RL](https://arxiv.org/abs/2602.01705) (arXiv 2026), and DeliveryGym (release very soon).
+- **{{ site.data.blog_topics[2] }}:** [PAN World Model](https://arxiv.org/abs/2511.09057) (Technical Report, 2025), [AgentSpec](https://arxiv.org/abs/2606.14674) (arXiv 2026), [SimWorld Studio](https://arxiv.org/abs/2605.09423) (arXiv 2026), DeliveryGym (release very soon), and Google DeepMind 2026 project with Gemini Robotics (internal).
+- **{{ site.data.blog_topics[3] }}:** [SimWorld Studio](https://arxiv.org/abs/2605.09423) (arXiv 2026) and DeliveryGym (release very soon).
 {: .research-topics}
 
 News

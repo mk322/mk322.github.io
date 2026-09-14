@@ -34,20 +34,19 @@ To support this, all changes to the underlying code appear as a closed issue wit
 
 ## Publishing blog posts
 
-The blog lives at `/blog/`, with a year archive at `/blog/archive/` and RSS at
-`/feed.xml`. Posts use a reading-focused layout with dates, reading time, tags,
+The blog lives at `/blog/`. Posts use a reading-focused layout with dates, reading time, tags,
 math, code highlighting, and previous/next navigation. Search matches titles,
 summaries, and topics; it combines with the topic filter.
 
 1. Copy `_drafts/blog-template.md` to `_posts/YYYY-MM-DD-your-post-slug.md`.
 2. Set `title`, `excerpt`, and `tags` in the front matter, then write in Markdown.
+   Choose tags from `_data/blog_topics.yml`, shared with the homepage Research Topics.
    The filename sets the publication date and `/blog/your-post-slug/` URL.
 3. Keep the table-of-contents block for long articles, or remove it for short notes.
    Put figures in `images/blog/your-post-slug/` and use the image example in the template.
 4. Preview with `bundle exec jekyll serve --config _config.yml,_config.dev.yml`.
    To preview unpublished drafts, add `--drafts`. Drafts are excluded from normal builds.
-5. Publish through the repository's usual GitHub Pages workflow. The list, tags,
-   archive, and RSS update automatically; no manual index edits are needed.
+5. Publish through the repository's usual GitHub Pages workflow. The post list updates automatically; no manual index edits are needed.
 
 Add `tldr: |` followed by an indented Markdown summary to show a collapsible
 **TL;DR** at the start of a post (expanded by default). Omit it to hide the panel.
