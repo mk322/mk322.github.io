@@ -59,3 +59,7 @@ def mobile(key):
  fig.savefig(OUT/(key+'-mobile.svg'));fig.savefig(OUT/(key+'-mobile.png'),dpi=150);plt.close(fig)
 for key in ['main','sharing']:
  plot(key);plot(key,True)
+
+# Normalize generator whitespace for stable source diffs.
+for svg in OUT.glob("*.svg"):
+ svg.write_text("\n".join(line.rstrip() for line in svg.read_text().splitlines())+"\n")
