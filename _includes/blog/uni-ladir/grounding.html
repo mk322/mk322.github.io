@@ -1,0 +1,17 @@
+<figure class="uni-figure" data-uni="grounding">
+  <div class="uni-kicker">02 / Learning what to carry forward</div>
+  <div class="uni-title">A common shape needs a purpose.</div>
+  <div class="uni-controls" hidden aria-label="Compare latent objectives">
+    <button type="button" data-objective="ground" aria-pressed="true">Downstream grounding</button>
+    <button type="button" data-objective="reconstruct" aria-pressed="false">Source reconstruction</button>
+  </div>
+  <div class="uni-flow">
+    <div class="uni-node"><small>Training teacher</small><b>One intermediate step</b><span>Text, image features, 3D, or state</span></div>
+    <div class="uni-arrow" aria-hidden="true">↓</div>
+    <div class="uni-node uni-latent"><small>Shared constructor</small><b>Latent block z<sub>i</sub>*</b><span>One block size · one output interface</span></div>
+    <div class="uni-arrow" aria-hidden="true">↓</div>
+    <div class="uni-node" data-target><small>With input and the available latent prefix</small><b>Predict later steps + answer / action</b><span>Earlier raw teacher steps are hidden.</span></div>
+  </div>
+  <div class="uni-insight" data-status aria-live="polite">Keep information because it helps the computation that follows. Grounding trains both the latent constructor and its consumer.</div>
+  <figcaption>Training schematic. Each constructed block reads only its own teacher step; later predictions use the available prefix. The alternate objective is the reconstruction ablation.</figcaption>
+</figure>

@@ -1,0 +1,36 @@
+<figure class="uni-figure" data-uni="world">
+  <div class="uni-kicker">01 / The modeling question</div>
+  <div class="uni-title">One situation. Complementary evidence.</div>
+  <div class="uni-world">
+    <svg viewBox="0 0 320 220" role="img" aria-labelledby="uni-world-title uni-world-desc">
+      <title id="uni-world-title">A mug, a book, and an open gripper</title>
+      <desc id="uni-world-desc">An illustrative scene. The mug is beside the book; the gripper approaches from above. Appearance, geometry, and robot state provide different evidence about a possible grasp.</desc>
+      <rect x="16" y="158" width="288" height="38" rx="9" fill="#F4EFE7" stroke="#BA8B51"/>
+      <path d="M184 155l67-19 34 29-66 20z" fill="#D8E5F1" stroke="#3E73A8" stroke-width="2"/>
+      <path d="M184 155v10l35 29 66-20v-9" fill="none" stroke="#3E73A8" stroke-width="2"/>
+      <path d="M122 119c40-16 41 36 0 24" fill="none" stroke="#BF656A" stroke-width="8"/>
+      <path d="M74 110v47c0 20 51 20 51 0v-47" fill="#F1D9DC" stroke="#BF656A" stroke-width="2"/>
+      <ellipse cx="99.5" cy="110" rx="25.5" ry="9" fill="#FFF" stroke="#BF656A" stroke-width="2"/>
+      <path d="M101 24v25m-27 0h54M74 49v36h11m43-36v36h-11" stroke="#81739E" stroke-width="9" fill="none" stroke-linecap="round"/>
+      <path d="M153 102v45m-6-45h12m-12 45h12" stroke="#2B8B88" stroke-width="2"/>
+      <text x="174" y="72" fill="#525A65" font-size="16">Approach</text>
+      <path d="M166 78l-21 18" stroke="#525A65" stroke-width="1.5"/>
+      <text x="27" y="215" fill="#525A65" font-size="15">Illustrative scene · time held fixed</text>
+    </svg>
+    <div class="uni-views">
+      <div class="uni-view uni-text"><b>Language</b><span>Which object? The mug beside the book.</span></div>
+      <div class="uni-view uni-image"><b>Image</b><span>What is visible? Mug, handle, fingers.</span></div>
+      <div class="uni-view uni-geometry"><b>3D geometry</b><span>What fits? Shape, pose, clearance.</span></div>
+      <div class="uni-view uni-state"><b>Robot state</b><span>How configured? Gripper open, approaching.</span></div>
+    </div>
+  </div>
+  <div class="uni-controls" hidden aria-label="Observation focus">
+    <button type="button" data-view="all" aria-pressed="true">Together</button>
+    <button type="button" data-view="text" aria-pressed="false">Language</button>
+    <button type="button" data-view="image" aria-pressed="false">Image</button>
+    <button type="button" data-view="geometry" aria-pressed="false">3D</button>
+    <button type="button" data-view="state" aria-pressed="false">State</button>
+  </div>
+  <div class="uni-insight" data-status aria-live="polite">A grasp depends on how the object, clearance, and fingers relate. Each observation constrains a different part of that decision.</div>
+  <figcaption>Changing the observation does not change the scene. These descriptions illustrate complementary information; they are not model predictions.</figcaption>
+</figure>
