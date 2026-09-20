@@ -18,19 +18,19 @@ Research Topics
 
 My research goal is to build agentic AI systems that reason, act, and learn through interaction, using experience to develop better intuition and continually improve.
 
-- **{{ site.data.blog_topics[0] }}:** [LaDiR](https://arxiv.org/abs/2510.04573) (ICLR 2026), [LaDi-RL](https://arxiv.org/abs/2602.01705) (arXiv 2026), [NF-CoT](https://arxiv.org/abs/2606.06447) (arXiv 2026), [Scaffolding Minds](https://arxiv.org/abs/2608.19669) (arXiv 2026), and mmLaDiR (release very soon).
-- **{{ site.data.blog_topics[1] }}:** [Flow of Reasoning](https://arxiv.org/abs/2406.05673) (ICML 2025), [GFlowVLM](https://arxiv.org/abs/2503.06514) (CVPR 2025), [LaDi-RL](https://arxiv.org/abs/2602.01705) (arXiv 2026), and DeliveryGym (release very soon).
-- **{{ site.data.blog_topics[2] }}:** [PAN World Model](https://arxiv.org/abs/2511.09057) (Technical Report, 2025), [AgentSpec](https://arxiv.org/abs/2606.14674) (arXiv 2026), [SimWorld Studio](https://arxiv.org/abs/2605.09423) (arXiv 2026), DeliveryGym (release very soon), and Google DeepMind 2026 project with Gemini Robotics (internal).
-- **{{ site.data.blog_topics[3] }}:** [SimWorld Studio](https://arxiv.org/abs/2605.09423) (arXiv 2026) and DeliveryGym (release very soon).
+- **{{ site.data.blog_topics[0] }}:** [LaDiR](https://arxiv.org/abs/2510.04573) (ICLR 2026), [LaDi-RL](https://arxiv.org/abs/2602.01705) (arXiv 2026), [NF-CoT](https://arxiv.org/abs/2606.06447) (arXiv 2026), [Scaffolding Minds](https://arxiv.org/abs/2608.19669) (arXiv 2026), and [Uni-LaDiR](https://arxiv.org/abs/2609.19878) (arXiv 2026).
+- **{{ site.data.blog_topics[1] }}:** [Flow of Reasoning](https://arxiv.org/abs/2406.05673) (ICML 2025), [GFlowVLM](https://arxiv.org/abs/2503.06514) (CVPR 2025), [LaDi-RL](https://arxiv.org/abs/2602.01705) (arXiv 2026), and [DeliveryGym](https://arxiv.org/abs/2609.19801) (arXiv 2026).
+- **{{ site.data.blog_topics[2] }}:** [PAN World Model](https://arxiv.org/abs/2511.09057) (Technical Report, 2025), [AgentSpec](https://arxiv.org/abs/2606.14674) (arXiv 2026), [SimWorld Studio](https://arxiv.org/abs/2605.09423) (arXiv 2026), [DeliveryGym](https://arxiv.org/abs/2609.19801) (arXiv 2026), and Google DeepMind 2026 project with Gemini Robotics (internal).
+- **{{ site.data.blog_topics[3] }}:** [SimWorld Studio](https://arxiv.org/abs/2605.09423) (arXiv 2026) and [DeliveryGym](https://arxiv.org/abs/2609.19801) (arXiv 2026).
 {: .research-topics}
 
 News
 ======
 
 <ul style="list-style:none; padding-left:0;">
+  <li><strong>[2026.09]</strong> We released <a href="https://arxiv.org/abs/2609.19878">Uni-LaDiR</a>, <span class="first-author-note">my first-author paper</span> on unified latent diffusion for multimodal reasoning.</li>
+  <li><strong>[2026.09]</strong> We released <a href="https://arxiv.org/abs/2609.19801">DeliveryGym</a>, <span class="first-author-note">my first-author paper</span> on long-horizon embodied agent planning with adaptive curriculum.</li>
   <li><strong>[2026.08]</strong> We released <a href="https://arxiv.org/abs/2608.19669">Scaffolding Minds</a>, <span class="first-author-note">my first-author paper</span> on multimodal latent reasoning with Google DeepMind.</li>
-  <li><strong>[2026.07]</strong> I gave an invited talk at <strong>Apple</strong> on my <a href="https://arxiv.org/abs/2510.04573">LaDiR</a> paper.</li>
-  <li><strong>[2026.06]</strong> Our <a href="https://arxiv.org/abs/2512.02942">VideoScience-Bench</a> paper was accepted to <strong>ECCV 2026</strong>.</li>
   </ul>
 
 <details class="news-disclosure">
@@ -39,6 +39,8 @@ News
     <span class="news-disclosure__hide">↑ HIDE ↑</span>
   </summary>
   <ul style="list-style:none; padding-left:0;">
+  <li><strong>[2026.07]</strong> I gave an invited talk at <strong>Apple</strong> on my <a href="https://arxiv.org/abs/2510.04573">LaDiR</a> paper.</li>
+  <li><strong>[2026.06]</strong> Our <a href="https://arxiv.org/abs/2512.02942">VideoScience-Bench</a> paper was accepted to <strong>ECCV 2026</strong>.</li>
   <li><strong>[2026.06]</strong> I started my second <strong>Student Researcher</strong> role at <strong>Google DeepMind</strong>, working on embodied foundation models with the Gemini Robotics team.</li>
   <li><strong>[2026.06]</strong> We released <a href="https://arxiv.org/abs/2606.14674">AgentSpec</a> on understanding embodied agent scaffolds through controlled composition.</li>
   <li><strong>[2026.06]</strong> We released <a href="https://arxiv.org/abs/2606.06447">NF-CoT</a> on latent reasoning with normalizing flows.</li>

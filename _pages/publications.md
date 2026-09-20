@@ -8,6 +8,26 @@ author_profile: true
 ### 2026
 
 <div style="display:flex; gap:16px; margin-bottom:1.5em; align-items:flex-start;">
+  <img src="/assets/blog/uni-ladir/fig1.png" alt="Uni-LaDiR" style="width:450px; min-width:450px; border-radius:6px; box-shadow:0 2px 8px rgba(0,0,0,0.1); margin-top:4px;">
+  <div>
+    <strong>Uni-LaDiR: Latent Diffusion Unifies Multimodal Reasoning</strong><br>
+    <u>Haoqiang Kang</u>, Yizhe Zhang, Nikki Lijing Kuang, Yian Ma, and Lianhui Qin<br>
+    <em>arXiv, 2026.</em><br>
+    <a href="https://arxiv.org/abs/2609.19878">[paper]</a>
+  </div>
+</div>
+
+<div style="display:flex; gap:16px; margin-bottom:1.5em; align-items:flex-start;">
+  <img src="/images/papers/deliverygym.jpg" alt="DeliveryGym" style="width:450px; min-width:450px; border-radius:6px; box-shadow:0 2px 8px rgba(0,0,0,0.1); margin-top:4px;">
+  <div>
+    <strong>DeliveryGym: An RL Environment for Long-Horizon Embodied Agent Planning with Adaptive Curriculum</strong><br>
+    <u>Haoqiang Kang</u>, Yiming Zhang, Yiyang Guo, Chuying Li, Jianzhi Shen, Tianruo Rose Xu, Xiaokang Ye, and Lianhui Qin<br>
+    <em>arXiv, 2026.</em><br>
+    <a href="https://arxiv.org/abs/2609.19801">[paper]</a>
+  </div>
+</div>
+
+<div style="display:flex; gap:16px; margin-bottom:1.5em; align-items:flex-start;">
   <img src="/images/papers/scaffoldingminds.png" alt="Scaffolding Minds" style="width:450px; min-width:450px; border-radius:6px; box-shadow:0 2px 8px rgba(0,0,0,0.1); margin-top:4px;">
   <div>
     <strong>Scaffolding Minds: Optimizing Latent Visual Target Representations for Multimodal Reasoning</strong><br>
