@@ -4,40 +4,58 @@
       "title": "Visual reasoning",
       "metric": "7-benchmark mean accuracy (%)",
       "labels": [
-        "Qwen2.5-VL\nbase model",
+        "Qwen2.5-VL-7B",
+        "Mirage",
         "Uni-LaDiR"
+      ],
+      "roles": [
+        "Base model",
+        "Modality-specific",
+        "Unified"
       ],
       "values": [
         64.6,
+        72.2,
         78.5
-      ],
-      "gain": "+21.4% relative"
+      ]
     },
     {
       "title": "Visual math & logic",
       "metric": "4-benchmark mean accuracy (%)",
       "labels": [
-        "ILVR\nreported baseline",
+        "Qwen2.5-VL-7B",
+        "Mirage",
         "Uni-LaDiR"
       ],
-      "values": [
-        45.7,
-        49.0
+      "roles": [
+        "Base model",
+        "Modality-specific",
+        "Unified"
       ],
-      "gain": "+7.3% relative"
+      "values": [
+        36.4,
+        40.7,
+        49.0
+      ]
     },
     {
       "title": "Robot manipulation",
       "metric": "RLBench mean success (%)",
       "labels": [
-        "LaST₀",
-        "Uni-LaDiR"
+        "OpenVLA (7B)",
+        "LaST₀ (3.3B)",
+        "Uni-LaDiR (3.3B)"
+      ],
+      "roles": [
+        "Direct policy",
+        "Modality-specific",
+        "Unified"
       ],
       "values": [
-        82,
-        87
-      ],
-      "gain": "+6.1% relative"
+        40.0,
+        82.0,
+        87.0
+      ]
     }
   ],
   "sharing": [
@@ -78,7 +96,7 @@
     "version": "arXiv:2609.19878v3",
     "date": "2026-09-29",
     "url": "https://arxiv.org/abs/2609.19878v3",
-    "main": "Tables 1–2 (rounded scores; reported relative gains use unrounded scores)",
+    "main": "Tables 1–2: three named methods per panel. Mirage is the same modality-specific baseline in both VLM groups. OpenVLA is a direct-policy comparator, not an ablation of the Uni-LaDiR backbone. All numbers are reported table values.",
     "sharing": "Figure 3 (rounded scores)",
     "protocol": "Section 4.3 and Appendix B.3: fixed backbone, data, teacher supervision and thought-token dimensions; encoder parameter counts are not matched"
   },

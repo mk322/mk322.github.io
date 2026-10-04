@@ -58,8 +58,8 @@ def mobile(key):
   ax.text(0,1.03,p['gain'],transform=ax.transAxes,fontsize=13,fontweight='bold',color='#6356A5')
  fig.subplots_adjust(left=.06,right=.95,top=.86 if n==2 else .91,bottom=.035,hspace=.7)
  fig.savefig(OUT/(key+'-mobile.svg'));fig.savefig(OUT/(key+'-mobile.png'),dpi=150);plt.close(fig)
-for key in ['main']:
- plot(key);plot(key,True)
+# Main and intervention charts are rendered by render-results.py.
+# This renderer retains the original paper exports and sharing replot.
 
 # Mobile sharing replot uses the same v3 values, with zero-based axes.
 mobile('sharing')

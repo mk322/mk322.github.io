@@ -1,8 +1,50 @@
-<figure class="uni-paper-figure uni-wide">
-  <div class="uni-figure-scroll" tabindex="0" role="region" aria-label="Paper Figure 2; scroll horizontally on small screens">
-    <div class="uni-method-canvas">
-      <a href="{{ '/assets/blog/uni-ladir/fig2.svg' | relative_url }}?v=6a8b48e38b59" target="_blank" rel="noopener"><img class="uni-diagram" src="{{ '/assets/blog/uni-ladir/fig2.svg' | relative_url }}?v=6a8b48e38b59" width="1400" height="945" alt="Paper Figure 2. Construction: local queries read teacher features through a shared backbone and produce latent blocks; the attention mask restricts each query to its own step. Grounding: an input and latent prefix predict later steps and the output. Diffusion: input, detached clean prefix, and a noisy block train denoising with detached targets. Inference: generate latent blocks sequentially, then the output."></a>
-    </div>
+<figure class="uni-paper-figure uni-wide uni-fig2-animation" data-fig2-animation>
+  <div class="uni-fig2-controls" hidden>
+    <label class="uni-fig2-select-label">Explore Figure 2
+      <select data-fig2-select aria-label="Figure 2 animation stage">
+        <option value="0">Overview</option>
+        <option value="1">1. Latent Encoding</option>
+        <option value="2">2. Continuation Prediction</option>
+        <option value="3">3. Diffusion Training</option>
+        <option value="4">4. Generate at inference</option>
+        <option value="5">5. Continuation gradients</option>
+        <option value="6">6. Diffusion gradients</option>
+        <option value="7">7. Joint Training</option>
+      </select>
+    </label>
+    <button type="button" data-fig2-prev aria-label="Previous stage">← Previous</button>
+    <button type="button" data-fig2-next>Next →</button>
+    <button type="button" data-fig2-play aria-pressed="false">Play</button>
+    <button type="button" data-fig2-reset>Overview</button>
+    <label class="uni-fig2-zoom"><input type="checkbox" data-fig2-zoom> Enlarge active stage</label>
   </div>
-  <figcaption><strong>Figure 2. Encode, predict what follows, and generate.</strong> Original method diagram <a href="#ref-1">[1, Fig. 2]</a>. Snowflakes mark stop-gradient; outlined targets mark supervision. The diffusion panel summarizes flow-matching training; it is not an unrolled sampler. <a href="{{ '/assets/blog/uni-ladir/source/fig2.pdf' | relative_url }}">Vector PDF</a><span class="uni-pan-hint"> · Swipe to inspect; tap to enlarge.</span></figcaption>
+  <p class="uni-fig2-swipe">Swipe across the diagram to see the full stage →</p>
+  <div class="uni-figure-scroll uni-fig2-viewport" tabindex="0" role="region" aria-label="Figure 2; swipe to inspect a wide stage on a small screen">
+    <svg class="uni-fig2-svg" viewBox="0 0 1800 1215" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" role="img" aria-labelledby="uni-fig2-title uni-fig2-desc">
+      <title id="uni-fig2-title">Encode, predict what follows, and generate</title>
+      <desc id="uni-fig2-desc">Original Uni-LaDiR method figure. Teacher steps are encoded into thought blocks, used to predict later steps and outputs, and learned as diffusion targets. Continuation gradients reach the encoder through the thoughts; diffusion gradients stop at the clean targets. Both objectives update the shared backbone.</desc>
+      <defs>
+        {% include blog/uni-ladir/fig2-art.html %}
+        <clipPath id="uni-fig2-focus"><path data-fig2-clip d="M0 0H1800V1215H0Z"/></clipPath>
+        <marker id="uni-fig2-blue-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="4" markerHeight="4" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#397DBB"/></marker>
+        <marker id="uni-fig2-orange-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="4" markerHeight="4" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#CB884D"/></marker>
+      </defs>
+      <use href="#uni-fig2-art" class="uni-fig2-context"/>
+      <use href="#uni-fig2-art" clip-path="url(#uni-fig2-focus)"/>
+      <g class="uni-fig2-gradient" data-fig2-gradient="continuation" fill="none" stroke="#397DBB" stroke-width="3.2" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#uni-fig2-blue-arrow)">
+        <path d="M1237 616H1168"/>
+        <path d="M910 616H837Q827 616 827 626V666Q827 676 817 676H740"/>
+        <path d="M658 676H590"/>
+      </g>
+      <g class="uni-fig2-gradient" data-fig2-gradient="diffusion" fill="none" stroke="#CB884D" stroke-width="3.2" stroke-linecap="round" marker-end="url(#uni-fig2-orange-arrow)">
+        <path d="M1237 756H1168"/>
+      </g>
+      <rect class="uni-fig2-stop" x="840" y="722" width="45" height="45" rx="9" fill="none" stroke="#2585CC" stroke-width="3" hidden/>
+    </svg>
+  </div>
+  <div class="uni-fig2-note" data-fig2-note aria-live="polite">
+    <p class="uni-fig2-stage-title" data-fig2-heading>One backbone learns the thoughts and how to generate them.</p>
+    <p data-fig2-explanation>Teacher steps supply training examples of reasoning. The shared backbone encodes them into thought blocks, learns to use the blocks for later predictions, and learns to generate them from noise. At inference, only the task input is needed. Solid arrows carry information; dashed arrows show gradients; snowflakes stop gradients.</p>
+  </div>
+  <figcaption><strong>Figure 2. Encode, predict what follows, and generate.</strong> The paper's original diagram, animated one component at a time <a href="#ref-1">[1, Fig. 2]</a>. The final stages trace each loss back to the modules it trains. These are views of one jointly trained model, not separate training phases. <a href="{{ '/assets/blog/uni-ladir/fig2.svg' | relative_url }}?v=6a8b48e38b59" target="_blank" rel="noopener">Full diagram</a> · <a href="{{ '/assets/blog/uni-ladir/source/fig2.pdf' | relative_url }}">Vector PDF</a><span class="uni-pan-hint"> · Swipe to inspect a wide stage.</span></figcaption>
 </figure>

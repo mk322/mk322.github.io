@@ -83,23 +83,37 @@
 .uni-toc-method{margin-left:10px;border-left:1px solid #e6e1f1}
 .uni-toc-method a{padding-left:10px}
 
-.uni-training-svg{display:block;width:100%;min-width:940px;height:auto}
-.uni-training-controls{display:flex;align-items:end;gap:9px;flex-wrap:wrap;margin-bottom:16px;font-size:14px}
-.uni-training-controls label{display:flex;flex-direction:column;gap:4px;font-weight:600}
-.uni-training-controls select,.uni-training-controls button{font:inherit;border:1px solid #c7ccd5;border-radius:6px;background:white;color:#20252c;padding:10px 12px;min-height:44px}
-.uni-training-controls button[aria-pressed=true]{background:#e6e1f1;color:#493b80}
-.uni-training-controls button:disabled{opacity:.4}
-.uni-training-controls :focus-visible{outline:2px solid #6356a5;outline-offset:3px}
-.uni-gradient{stroke-dasharray:7 5}
-.uni-training-flow.is-interactive .uni-flow-node,.uni-training-flow.is-interactive .uni-flow-edge{opacity:.23;transition:opacity .2s}
-.uni-training-flow.is-interactive .is-active{opacity:1}
-.uni-training-flow [data-node=stop-bar]{opacity:.4}
-.uni-training-flow [data-node=stop-bar].is-active{opacity:1}
-.uni-training-flow[data-running=true] .uni-flow-edge.is-active{stroke-dasharray:7 5;animation:uni-route 1.1s linear infinite}
-@keyframes uni-route{to{stroke-dashoffset:-24}}
-.uni-training-flow .uni-method-explanation{min-height:100px}
-.uni-flow-math{display:grid;gap:14px;text-align:left;font-size:19px}
-.uni-flow-math>div{overflow-x:auto;padding-bottom:2px}
-.uni-flow-math strong{display:block;color:#6356a5;font-size:15px;margin-bottom:3px}
-@media(max-width:600px){.uni-training-controls label{width:100%}.uni-training-controls button{flex:1;font-size:13px;padding:9px 6px}.uni-flow-math{font-size:17px}.uni-training-flow .uni-method-explanation{min-height:0}}
-@media(prefers-reduced-motion:reduce){.uni-training-flow .uni-flow-node,.uni-training-flow .uni-flow-edge{transition:none!important;animation:none!important}}
+
+/* The animated artwork is the original paper vector, with stage clipping. */
+.uni-fig2-svg{display:block;width:100%;min-width:850px;height:auto;background:#fff}
+.uni-fig2-context{filter:grayscale(1);opacity:.12}
+.uni-fig2-controls{display:flex;align-items:end;gap:8px;flex-wrap:wrap;margin-bottom:16px;font-size:14px}
+.uni-fig2-select-label{display:flex;flex-direction:column;gap:5px;font-weight:600}
+.uni-fig2-controls select,.uni-fig2-controls button{font:inherit;border:1px solid #c7ccd5;border-radius:6px;background:white;color:#20252c;padding:10px 12px;min-height:44px;cursor:pointer}
+.uni-fig2-controls button[aria-pressed=true]{background:#e6e1f1;color:#493b80}
+.uni-fig2-controls button:disabled{opacity:.4;cursor:default}
+.uni-fig2-controls :focus-visible{outline:2px solid #6356a5;outline-offset:3px}
+.uni-fig2-controls .uni-fig2-zoom{display:flex;gap:8px;align-items:center;font-weight:400;min-height:44px;margin:0}
+.uni-fig2-zoom input{margin:0;width:16px;height:16px;accent-color:#6356a5}
+.uni-fig2-gradient{stroke-dasharray:9 6}
+.uni-fig2-animation[data-running=true] .uni-fig2-gradient path{animation:uni-route 1.4s linear infinite}
+@keyframes uni-route{to{stroke-dashoffset:-30}}
+.uni-fig2-note{padding:18px 22px;background:#f7f5fa;border-left:3px solid #6356a5;margin-top:16px;min-height:160px}
+.blog-content .uni-fig2-note p{font-size:16px;line-height:1.7;margin:0}
+.blog-content .uni-fig2-note .uni-fig2-stage-title{font-weight:600;color:#322d43;margin-bottom:6px}
+.blog-content h4[id^="rq3"]{font-size:1.04em;line-height:1.5;scroll-margin-top:96px;margin-top:2.3em}
+@media(max-width:600px){
+ .uni-fig2-controls .uni-fig2-select-label{width:100%}
+ .uni-fig2-controls select{width:100%}
+ .uni-fig2-controls button{flex:1;font-size:13px;padding:9px 6px}
+ .uni-fig2-controls .uni-fig2-zoom{width:100%}
+ .uni-fig2-animation[data-zoomed=true] .uni-fig2-svg{min-width:620px}
+ .uni-fig2-animation[data-zoomed=true][data-stage="4"] .uni-fig2-svg,
+ .uni-fig2-animation[data-zoomed=true][data-stage="7"] .uni-fig2-svg{min-width:1050px}
+ .uni-fig2-note{padding:14px 16px;min-height:0}
+ .blog-content .uni-fig2-note p{font-size:15px}
+}
+@media(prefers-reduced-motion:reduce){.uni-fig2-gradient path{animation:none!important}}
+
+.blog-content .uni-fig2-swipe{display:none}
+@media(max-width:600px){.blog-content .uni-fig2-swipe{display:block;font-size:13px;color:#647080;margin:4px 0 9px}}
