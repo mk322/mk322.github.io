@@ -1,0 +1,10 @@
+<div class="blog-like" data-blog-like data-url="{{ page.url | absolute_url }}">
+  <button type="button" class="blog-like__button" aria-label="Like this post" aria-pressed="false">
+    <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M12 20s-8-4.8-8-10a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 5.2-8 10-8 10Z" fill="none" stroke="currentColor" stroke-width="1.7"/></svg>
+    <span data-like-label>Like</span><span data-like-count aria-label="Total likes">—</span>
+  </button>
+  <span class="blog-like__status" data-like-status role="status">No sign-in needed</span>
+  <noscript><span>Enable JavaScript to like this post.</span></noscript>
+</div>
+<link rel="stylesheet" href="{{ '/assets/blog/like.css' | relative_url }}?v=ca119e4034c5">
+<script src="{{ '/assets/blog/like.js' | relative_url }}?v=56075e61c8f0" defer></script>

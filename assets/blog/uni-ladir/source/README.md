@@ -30,3 +30,9 @@ python3 assets/blog/uni-ladir/source/render.py
 ```
 
 The method walkthrough highlights the panels of the current diagram. It explains training and inference paths; it is not a simulation of a learned diffusion trajectory. Teacher traces are training-only. The scene in Figure 1 is illustrative.
+
+## Blog explanation figures
+
+`decision.html` and `handoff.html` in `_includes/blog/uni-ladir/` are responsive, accessible HTML/SVG reading aids. They illustrate the multi-observation grasp question and the reconstruction/continuation supervision distinction. They contain no empirical values, decoded latent semantics, or claimed rollout. Existing numbered paper figures retain their numbering. Asset URLs carry content hashes for cache invalidation.
+
+The optional top-of-post anonymous Like button uses the community Applause endpoint recommended by the upstream project. It stores shared counts remotely and remembers a vote locally per browser; it is not a verified unique-reader count. Failures are surfaced without recording a local success. Its canonical URL is fixed to the post permalink, so cache-busting query strings do not split counts. The live integration check uses a separate `_checks/` URL, never the article counter.

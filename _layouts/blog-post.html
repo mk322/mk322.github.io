@@ -6,9 +6,11 @@ layout: default
     <header class="blog-header">
       <a class="blog-back" href="{{ '/blog/' | relative_url }}">← All posts</a>
       <h1>{{ page.title | escape }}</h1>
+      {% if page.subtitle %}<p class="blog-subtitle">{{ page.subtitle | escape }}</p>{% endif %}
       {% include blog-meta.html post=page %}
       {% if page.last_modified_at %}<p class="blog-meta">Updated {{ page.last_modified_at | date: "%B %-d, %Y" }}</p>{% endif %}
       {% if page.tags.size > 0 %}<ul class="blog-tags" aria-label="Topics">{% for tag in page.tags %}<li><a href="{{ '/blog/' | relative_url }}?tag={{ tag | url_encode }}">{{ tag | escape }}</a></li>{% endfor %}</ul>{% endif %}
+      {% if page.likes %}{% include blog-like.html %}{% endif %}
     </header>
     {% if page.tldr %}
     <details class="blog-tldr" open>

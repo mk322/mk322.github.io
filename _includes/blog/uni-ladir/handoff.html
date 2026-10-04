@@ -1,0 +1,8 @@
+<figure class="uni-concept" aria-labelledby="uni-handoff-caption">
+  <div class="uni-concept-eyebrow">SAME TEACHER STEP · DIFFERENT LEARNING QUESTIONS</div>
+  <div class="uni-objective-paths">
+    <div class="uni-objective-path"><span class="uni-path-label">Reconstruction</span><div class="uni-path-source">Teacher step</div><div class="uni-path-arrow">↓ encode</div><div class="uni-path-latent">Thought block</div><div class="uni-path-arrow">↓ reconstruct</div><div class="uni-path-target">The same teacher step</div><p>“What information lets me reproduce what I saw?”</p></div>
+    <div class="uni-objective-path uni-path-forward"><span class="uni-path-label">Continuation prediction</span><div class="uni-path-source">Teacher step</div><div class="uni-path-arrow">↓ encode</div><div class="uni-path-latent">Thought block</div><div class="uni-path-arrow">↓ used with input + earlier thoughts</div><div class="uni-path-target">The next teacher step</div><p>“What information helps the reasoning continue?”</p></div>
+  </div>
+  <figcaption id="uni-handoff-caption"><strong>The loss asks a different question of the same evidence.</strong> Schematic of the supervision distinction <a href="#ref-1">[1, §3.3]</a>. Final answer/action supervision also trains the complete latent chain. The diagram omits attention masks and modality-specific prediction heads; Figure 2 shows the full method.</figcaption>
+</figure>
