@@ -542,3 +542,23 @@ This suggests a useful role for the project in the post-training stack: **learn 
 <p id="sampler-ref-10"><strong>[10]</strong> Howard Chen, Noam Razin, Karthik Narasimhan, and Danqi Chen. <a href="https://proceedings.mlr.press/v306/chen26do.html">Retaining by Doing: The Role of On-Policy Data in Mitigating Forgetting</a>. ICML, 2026. See §3–4 for distributional analysis and approximately on-policy SFT; Appendix A.5 discusses limits of KL as a predictor.</p>
 
 <p id="sampler-ref-11"><strong>[11]</strong> Zhihong Shao et al. <a href="https://arxiv.org/abs/2402.03300">DeepSeekMath: Pushing the Limits of Mathematical Reasoning in Open Language Models</a>. arXiv:2402.03300, 2024. See §4.1 for GRPO.</p>
+
+## Citation
+{: #citation}
+
+Please cite this post as:
+
+Murray Kang. “From Off-Policy Data to On-Policy SFT.” October 2026.
+
+{% raw %}
+```bibtex
+@misc{kang2026onpolicysft,
+  author = {Kang, Murray},
+  title = {{From Off-Policy Data to On-Policy SFT}},
+  year = {2026},
+  month = oct,
+  howpublished = {Research blog},
+  url = {https://mk322.github.io/blog/learned-on-policy-sampler/}
+}
+```
+{% endraw %}
