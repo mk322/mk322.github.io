@@ -1,60 +1,44 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="800" height="300" viewBox="0 0 800 300" role="img" aria-labelledby="title desc"><title id="title">Learn the search. Reuse the sampler.</title><desc id="desc">MCMC repeats a chain of proposals for each data example. Sampler training learns one policy reused to produce many verified responses.</desc><defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" fill="#525a65"/></marker><marker id="purple-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#6356a5"/></marker></defs><rect width="800" height="300" rx="12" fill="#fff"/><g font-family="Helvetica Neue, Arial, sans-serif" fill="#20252c">
-<text x="22" y="35" font-size="25" fill="#20252c" font-weight="600" text-anchor="start">Learn the search. Reuse the sampler.</text>
-<rect x="22" y="61" width="366" height="222" rx="10" fill="#fafbfd" stroke="#d7dce5" stroke-width="1.3"/>
-<text x="40" y="91" font-size="20" fill="#20252c" font-weight="600" text-anchor="start">MCMC</text>
-<text x="40" y="116" font-size="15" fill="#525a65" font-weight="400" text-anchor="start">Search for each response</text>
-<rect x="46" y="142" width="39" height="22" rx="5" fill="#e9edf2" stroke="#c6ceda" stroke-width="1.3"/>
-<path d="M88 153h19" fill="none" stroke="#525a65" stroke-width="1.7" stroke-linejoin="round"  marker-end="url(#arrow)"/>
-<rect x="111" y="142" width="39" height="22" rx="5" fill="#e9edf2" stroke="#c6ceda" stroke-width="1.3"/>
-<path d="M153 153h19" fill="none" stroke="#525a65" stroke-width="1.7" stroke-linejoin="round"  marker-end="url(#arrow)"/>
-<rect x="176" y="142" width="39" height="22" rx="5" fill="#e9edf2" stroke="#c6ceda" stroke-width="1.3"/>
-<path d="M218 153H329" fill="none" stroke="#525a65" stroke-width="1.7" stroke-linejoin="round"  marker-end="url(#arrow)"/>
-<rect x="336" y="138" width="25" height="31" rx="3" fill="#f0f7f7" stroke="#83b5b1" stroke-width="1.3"/>
-<path d="M342 147h13" stroke="#2b8b88" stroke-width="1.2"/>
-<path d="M342 153h13" stroke="#2b8b88" stroke-width="1.2"/>
-<path d="M342 159h13" stroke="#2b8b88" stroke-width="1.2"/>
-<rect x="46" y="180" width="39" height="22" rx="5" fill="#e9edf2" stroke="#c6ceda" stroke-width="1.3"/>
-<path d="M88 191h19" fill="none" stroke="#525a65" stroke-width="1.7" stroke-linejoin="round"  marker-end="url(#arrow)"/>
-<rect x="111" y="180" width="39" height="22" rx="5" fill="#e9edf2" stroke="#c6ceda" stroke-width="1.3"/>
-<path d="M153 191h19" fill="none" stroke="#525a65" stroke-width="1.7" stroke-linejoin="round"  marker-end="url(#arrow)"/>
-<rect x="176" y="180" width="39" height="22" rx="5" fill="#e9edf2" stroke="#c6ceda" stroke-width="1.3"/>
-<path d="M218 191H329" fill="none" stroke="#525a65" stroke-width="1.7" stroke-linejoin="round"  marker-end="url(#arrow)"/>
-<rect x="336" y="176" width="25" height="31" rx="3" fill="#f0f7f7" stroke="#83b5b1" stroke-width="1.3"/>
-<path d="M342 185h13" stroke="#2b8b88" stroke-width="1.2"/>
-<path d="M342 191h13" stroke="#2b8b88" stroke-width="1.2"/>
-<path d="M342 197h13" stroke="#2b8b88" stroke-width="1.2"/>
-<rect x="46" y="218" width="39" height="22" rx="5" fill="#e9edf2" stroke="#c6ceda" stroke-width="1.3"/>
-<path d="M88 229h19" fill="none" stroke="#525a65" stroke-width="1.7" stroke-linejoin="round"  marker-end="url(#arrow)"/>
-<rect x="111" y="218" width="39" height="22" rx="5" fill="#e9edf2" stroke="#c6ceda" stroke-width="1.3"/>
-<path d="M153 229h19" fill="none" stroke="#525a65" stroke-width="1.7" stroke-linejoin="round"  marker-end="url(#arrow)"/>
-<rect x="176" y="218" width="39" height="22" rx="5" fill="#e9edf2" stroke="#c6ceda" stroke-width="1.3"/>
-<path d="M218 229H329" fill="none" stroke="#525a65" stroke-width="1.7" stroke-linejoin="round"  marker-end="url(#arrow)"/>
-<rect x="336" y="214" width="25" height="31" rx="3" fill="#f0f7f7" stroke="#83b5b1" stroke-width="1.3"/>
-<path d="M342 223h13" stroke="#2b8b88" stroke-width="1.2"/>
-<path d="M342 229h13" stroke="#2b8b88" stroke-width="1.2"/>
-<path d="M342 235h13" stroke="#2b8b88" stroke-width="1.2"/>
-<text x="46" y="263" font-size="14" fill="#525a65" font-weight="400" text-anchor="start">Propose · score · repeat</text>
-<rect x="412" y="61" width="366" height="222" rx="10" fill="#f8f6fc" stroke="#d7dce5" stroke-width="1.3"/>
-<text x="430" y="91" font-size="20" fill="#20252c" font-weight="600" text-anchor="start">Amortized sampler</text>
-<text x="430" y="116" font-size="15" fill="#525a65" font-weight="400" text-anchor="start">Train, then reuse</text>
-<rect x="430" y="147" width="65" height="38" rx="10" fill="#fff" stroke="#ded8ec" stroke-width="1.3"/>
-<text x="462.5" y="171" font-size="16" fill="#525a65" font-weight="500" text-anchor="middle">Train</text>
-<path d="M497 166H519" fill="none" stroke="#6356a5" stroke-width="1.7" stroke-linejoin="round"  marker-end="url(#purple-arrow)"/>
-<rect x="526" y="139" width="96" height="54" rx="10" fill="#e6e1f1" stroke="#c1b7d9" stroke-width="1.3"/>
-<text x="574" y="172" font-size="17" fill="#6356a5" font-weight="600" text-anchor="middle">Sampler</text>
-<path d="M574 196V212H465.5V226" fill="none" stroke="#6356a5" stroke-width="1.7" stroke-linejoin="round"  marker-end="url(#purple-arrow)"/>
-<rect x="453" y="229" width="25" height="31" rx="3" fill="#f0f7f7" stroke="#83b5b1" stroke-width="1.3"/>
-<path d="M459 238h13" stroke="#2b8b88" stroke-width="1.2"/>
-<path d="M459 244h13" stroke="#2b8b88" stroke-width="1.2"/>
-<path d="M459 250h13" stroke="#2b8b88" stroke-width="1.2"/>
-<path d="M574 196V212H570.5V226" fill="none" stroke="#6356a5" stroke-width="1.7" stroke-linejoin="round"  marker-end="url(#purple-arrow)"/>
-<rect x="558" y="229" width="25" height="31" rx="3" fill="#f0f7f7" stroke="#83b5b1" stroke-width="1.3"/>
-<path d="M564 238h13" stroke="#2b8b88" stroke-width="1.2"/>
-<path d="M564 244h13" stroke="#2b8b88" stroke-width="1.2"/>
-<path d="M564 250h13" stroke="#2b8b88" stroke-width="1.2"/>
-<path d="M574 196V212H675.5V226" fill="none" stroke="#6356a5" stroke-width="1.7" stroke-linejoin="round"  marker-end="url(#purple-arrow)"/>
-<rect x="663" y="229" width="25" height="31" rx="3" fill="#f0f7f7" stroke="#83b5b1" stroke-width="1.3"/>
-<path d="M669 238h13" stroke="#2b8b88" stroke-width="1.2"/>
-<path d="M669 244h13" stroke="#2b8b88" stroke-width="1.2"/>
-<path d="M669 250h13" stroke="#2b8b88" stroke-width="1.2"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="486" viewBox="0 0 800 486" role="img" aria-labelledby="title desc"><title id="title">Update a response, or train a reusable sampler?</title><desc id="desc">MCMC repeats propose, score, and accept or reject steps for each prompt, updating the response while model weights stay fixed. Our method trains sampler parameters across prompts using sampled responses and target scores. The trained sampler is then reused for autoregressive generation and verification.</desc><defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" fill="#525a65"/></marker><marker id="purple-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#6356a5"/></marker></defs><rect width="800" height="486" rx="12" fill="#fff"/><g font-family="Helvetica Neue, Arial, sans-serif" fill="#20252c">
+<rect x="12" y="12" width="776" height="202" rx="12" fill="#f8f9fb" stroke="#e1e5eb" stroke-width="1.3"/>
+<text x="32" y="44" font-size="22" fill="#20252c" font-weight="600" text-anchor="start">MCMC</text>
+<text x="124" y="44" font-size="18" fill="#525a65" font-weight="400" text-anchor="start">Search for each prompt</text>
+<text x="766" y="43" font-size="14" fill="#525a65" font-weight="400" text-anchor="end">Model weights fixed</text>
+<rect x="32" y="80" width="142" height="56" rx="8" fill="#fff" stroke="#d7dce5" stroke-width="1.3"/>
+<text x="103.0" y="114.0" font-size="16" fill="#20252c" font-weight="500" text-anchor="middle">Current response</text>
+<rect x="216" y="80" width="150" height="56" rx="8" fill="#fff" stroke="#d7dce5" stroke-width="1.3"/>
+<text x="291.0" y="114.0" font-size="17" fill="#20252c" font-weight="500" text-anchor="middle">Propose + score</text>
+<rect x="408" y="80" width="148" height="56" rx="8" fill="#fff" stroke="#d7dce5" stroke-width="1.3"/>
+<text x="482.0" y="114.0" font-size="17" fill="#20252c" font-weight="500" text-anchor="middle">Accept / reject</text>
+<rect x="622" y="80" width="144" height="56" rx="8" fill="#edf7f5" stroke="#a4ccc6" stroke-width="1.3"/>
+<text x="694.0" y="104" font-size="17" fill="#2b8b88" font-weight="500" text-anchor="middle">Verify</text>
+<text x="694.0" y="124" font-size="14" fill="#525a65" font-weight="400" text-anchor="middle">SFT response</text>
+<path d="M176 108H208" fill="none" stroke="#525a65" stroke-width="1.7" stroke-linejoin="round"  marker-end="url(#arrow)"/>
+<path d="M368 108H400" fill="none" stroke="#525a65" stroke-width="1.7" stroke-linejoin="round"  marker-end="url(#arrow)"/>
+<path d="M558 108H614" fill="none" stroke="#525a65" stroke-width="1.7" stroke-linejoin="round"  marker-end="url(#arrow)"/>
+<path d="M482 139V164H103V139" fill="none" stroke="#525a65" stroke-width="1.7" stroke-linejoin="round"  marker-end="url(#arrow)"/>
+<text x="292" y="190" font-size="16" fill="#525a65" font-weight="400" text-anchor="middle">Update the response. Repeat the chain.</text>
+<text x="589" y="93" font-size="13" fill="#525a65" font-weight="400" text-anchor="middle">End</text>
+<rect x="12" y="230" width="776" height="244" rx="12" fill="#faf8fd" stroke="#ddd5e9" stroke-width="1.3"/>
+<text x="32" y="264" font-size="22" fill="#20252c" font-weight="600" text-anchor="start">Amortized sampler</text>
+<path d="M492 282L492 454" fill="none" stroke="#ded8e9" stroke-dasharray="4 5"/>
+<text x="32" y="297" font-size="17" fill="#6356a5" font-weight="500" text-anchor="start">Train across prompts</text>
+<text x="532" y="297" font-size="17" fill="#525a65" font-weight="500" text-anchor="start">For each new prompt</text>
+<rect x="248" y="318" width="176" height="56" rx="8" fill="#eee9f7" stroke="#b9abd7" stroke-width="1.3"/>
+<text x="336.0" y="342" font-size="17" fill="#6356a5" font-weight="500" text-anchor="middle">Sampler</text>
+<text x="336.0" y="362" font-size="14" fill="#525a65" font-weight="400" text-anchor="middle">Shared parameters</text>
+<rect x="248" y="404" width="176" height="56" rx="8" fill="#fff" stroke="#d7dce5" stroke-width="1.3"/>
+<text x="336.0" y="438.0" font-size="17" fill="#20252c" font-weight="500" text-anchor="middle">Draw + score</text>
+<path d="M336 377V396" fill="none" stroke="#6356a5" stroke-width="1.7" stroke-linejoin="round"  marker-end="url(#purple-arrow)"/>
+<path d="M246 432H214V346H240" fill="none" stroke="#6356a5" stroke-width="1.7" stroke-linejoin="round"  marker-end="url(#purple-arrow)"/>
+<text x="32" y="393" font-size="17" fill="#6356a5" font-weight="500" text-anchor="start">Update parameters</text>
+<text x="32" y="416" font-size="14" fill="#525a65" font-weight="400" text-anchor="start">Matching loss</text>
+<path d="M427 346H541" fill="none" stroke="#6356a5" stroke-width="1.7" stroke-linejoin="round"  marker-end="url(#purple-arrow)"/>
+<text x="484" y="333" font-size="15" fill="#6356a5" font-weight="400" text-anchor="middle">Reuse</text>
+<rect x="550" y="318" width="198" height="56" rx="8" fill="#eee9f7" stroke="#b9abd7" stroke-width="1.3"/>
+<text x="649.0" y="342" font-size="17" fill="#6356a5" font-weight="500" text-anchor="middle">Generate</text>
+<text x="649.0" y="362" font-size="14" fill="#525a65" font-weight="400" text-anchor="middle">Token by token</text>
+<path d="M649 377V396" fill="none" stroke="#525a65" stroke-width="1.7" stroke-linejoin="round"  marker-end="url(#arrow)"/>
+<rect x="550" y="404" width="198" height="56" rx="8" fill="#edf7f5" stroke="#a4ccc6" stroke-width="1.3"/>
+<text x="649.0" y="428" font-size="17" fill="#2b8b88" font-weight="500" text-anchor="middle">Verify</text>
+<text x="649.0" y="448" font-size="14" fill="#525a65" font-weight="400" text-anchor="middle">SFT response</text>
 </g></svg>

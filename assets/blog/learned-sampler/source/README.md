@@ -28,5 +28,8 @@ Regenerate all four result tables and their source-data record:
 Verify mathematical identities and sampled gradient relations (requires numpy):
     python3 assets/blog/learned-sampler/source/verify_math.py
 
-The amortization figure now uses repeated chains versus a reusable policy,
-with no performance numbers. Offline and online pseudocode are separate.
+The amortization figure distinguishes response-state updates in MCMC from shared-parameter
+updates in sampler training. The learned parameters pass into a separate data-generation
+stage; no MCMC trajectories are used as training targets. There are no performance numbers.
+Conceptual references: Finetuning with Sampling (https://aakaran.github.io/finetuning_with_sampling/)
+and Bengio & Hu on amortized inference (https://yoshuabengio.org/en/blog/scaling-service-reasoning-model-based-ml). Offline and online pseudocode are separate.
