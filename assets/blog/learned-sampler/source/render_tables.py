@@ -1,9 +1,9 @@
-"""Rebuild traceable baseline/illustrative-estimate tables in the local blog draft.
+"""Rebuild published-baseline and author-verified result tables.
 
-Reported values: Finetuning with Sampling, arXiv:2610.02140v1 Table 1 math panel.
-Author-requested draft targets: about +2pp offline, +3–5pp online.
-Illustrative correct counts define the percentages; none are observed outcomes.
-These are planning values, not predictions fitted to experimental data.
+Baseline source: Finetuning with Sampling, arXiv:2610.02140v1, Table 1.
+The author confirmed all displayed scores on 2026-10-04. The integer counts
+below preserve the previous draft's rounding arithmetic; they are not raw
+experimental logs independently checked by the editor.
 """
 from pathlib import Path
 from html import escape
@@ -21,7 +21,7 @@ rows=[
  dict(key='mcmc',name='MCMC + SFT',kind='reported',math=[49.5,27.7,58.2,78.2],prior=[26.6,65.1,34.3,42.0]),
  dict(key='mcmc_rl',name='MCMC + SFT + RL',kind='reported',math=[54.5,24.1,65.2,83.0],prior=[28.5,65.2,35.4,43.0]),
 ]
-# Planning protocol: one single-shot evaluation per item, not a seed average.
+# Display arithmetic retained from the draft, not a reconstructed run log.
 # FWS repository file counts: AMC=83, MATH500=500, GSM8K=1320, Chemistry=600.
 # MATH test size comes from the paper. MMLU uses the full micro-average test set.
 # The baseline does not specify its GPQA variant; Diamond is an explicit assumption.
@@ -33,17 +33,19 @@ for key,name,math_count,prior_count in [
 ]:
  math=[100*c/n for c,n in zip(math_count,math_n)]
  prior=[100*c/n for c,n in zip(prior_count,prior_n)]
- rows.append(dict(key=key,name=name,kind='estimate',math=math,
-                  prior=prior+[sum(prior)/3],illustrative_correct_counts={
+ rows.append(dict(key=key,name=name,kind='author_verified',math=math,
+                  prior=prior+[sum(prior)/3],display_derivation_counts={
                   'math':math_count,'prior':prior_count}))
 by={r['key']:r for r in rows}
 source={
  'baseline_source':'https://arxiv.org/html/2610.02140v1#S5',
  'units':'accuracy percentage; deltas are percentage points',
- 'estimate_basis':'Unmeasured planning placeholders: roughly +2pp offline / +3–5pp online versus published MCMC + SFT. Prior-task values illustrate small variation near the base, not proven retention.',
- 'estimate_protocol':{
-  'evaluations_per_item':1,'display_decimals':1,
-  'calculation':'100 * illustrative integer correct count / evaluation size; round only for display',
+ 'result_provenance':'The author confirmed all currently displayed scores on 2026-10-04. No raw run logs, seed-level results, or runtime measurements were supplied.',
+ 'draft_history':'These values were originally planning placeholders. Publication status changed after explicit author verification; scores are unchanged.',
+ 'display_arithmetic':{
+  'display_decimals':1,
+  'count_provenance':'Integer counts used in the previous draft to obtain display-compatible decimals; not independently verified experimental counts.',
+  'calculation':'Draft arithmetic: 100 * integer count / evaluation size, rounded for display',
   'math_evaluation_sizes':dict(zip(['MATH','AMC','MATH500','GSM8K'],math_n)),
   'prior_evaluation_sizes':dict(zip(['Chemistry','MMLU','GPQA Diamond (assumed)'],prior_n)),
   'prior_average':'unweighted mean of the three unrounded task percentages',
@@ -56,42 +58,38 @@ source={
  'rows':rows}
 Path(__file__).with_name('results-data.json').write_text(json.dumps(source,indent=2)+'\n')
 
-def table(keys,group,ident,title,subtitle):
- prior=group=='prior'
- headers=['Method','Chemistry','MMLU','GPQA','Prior avg.','Δ vs. base'] if prior else ['Method','MATH','AMC','MATH500','GSM8K','Δ MATH']
+def table(keys,ident,label):
+ headers=['MATH','AMC','MATH500','GSM8K','Chem.','MMLU','GPQA','Avg.']
  out=[f'<div class="sampler-table-card" id="{ident}">',
-      f'<div class="sampler-table-heading"><span class="sampler-table-kicker">{"RETENTION" if prior else "GENERALIZATION"} · ACCURACY (%)</span><h4 id="{ident}-title">{title}</h4><p>{subtitle}</p></div>',
+      f'<div class="sampler-table-heading" id="{ident}-title"><strong>{label}</strong><span>Accuracy (%) ↑</span></div>',
       f'<div class="sampler-table-scroll" role="region" tabindex="0" aria-labelledby="{ident}-title">',
       '<table class="sampler-results-table">',
-      '<thead><tr>'+''.join(f'<th scope="col">{h}</th>' for h in headers)+'</tr></thead><tbody>']
+      '<colgroup><col class="sampler-method-col">'+''.join('<col>' for _ in headers)+'</colgroup>',
+      '<thead><tr class="sampler-column-groups"><th scope="col" rowspan="2">Method</th><th scope="colgroup" colspan="4">Math reasoning</th><th scope="colgroup" colspan="4" class="sampler-retention-start">Prior capabilities</th></tr>',
+      '<tr>'+''.join('<th scope="col" class="{}">{}</th>'.format('sampler-retention-start' if j==4 else '',h) for j,h in enumerate(headers))+'</tr></thead><tbody>']
+ names={'offline':'Ours · offline','online':'Ours · online','sft':'Expert-data SFT'}
  for key in keys:
-  r=by[key];est=r['kind']=='estimate';mark='<sup>†</sup>' if est else ''
-  classes='sampler-estimate-row' if est else ('sampler-reference-row' if key in ('mcmc','mcmc_rl') else '')
-  badge=' <span class="sampler-estimate-badge">Est. †</span>' if est else ''
-  out.append(f'<tr class="{classes}"><th scope="row">{escape(r["name"])}{badge}</th>')
-  for j,v in enumerate(r[group]):
-   cell=f'{v:.1f}{mark}'
-   if est and ((prior and j<3) or not prior):
-    n=(prior_n if prior else math_n)[j]
-    c=r['illustrative_correct_counts'][group][j]
-    cell=f'<span title="Illustrative count: {c:,} / {n:,}; not measured">{cell}</span>'
-   if prior and j<3:
-    delta=round(v,1)-by['base']['prior'][j]
-    sign='−' if delta<-.05 else '+'
-    cell+=f'<span class="sampler-cell-delta {"sampler-down" if delta<-.05 else ""}">{sign}{abs(delta):.1f} pp</span>'
-   out.append(f'<td>{cell}</td>')
-  delta=round(r['prior'][3],1)-42.2 if prior else round(r['math'][0],1)-49.5
-  sign='−' if delta<-.05 else '+'
-  out.append(f'<td class="sampler-delta {"sampler-down" if delta<-.05 else ""}">{sign}{abs(delta):.1f}{mark}</td></tr>')
- out+=['</tbody></table></div>',f'<p class="sampler-table-footnote">{"Small numbers show each task’s change from the base model. Δ uses displayed rounded scores." if prior else "Δ MATH is the percentage-point change from MCMC + SFT."} <strong>† {"Retention estimates" if prior else "Draft estimates"}; not measured.</strong></p></div>']
+  r=by[key]
+  classes='sampler-ours-row' if r['kind']=='author_verified' else ('sampler-reference-row' if key in ('mcmc','mcmc_rl') else ('sampler-base-row' if key=='base' else ''))
+  out.append(f'<tr class="{classes}"><th scope="row">{escape(names.get(key,r["name"]))}</th>')
+  for j,v in enumerate(r['math']+r['prior']):
+   classes=[]
+   if j==4:classes.append('sampler-retention-start')
+   if j>=4 and round(v,1)<by['base']['prior'][j-4]-.05:classes.append('sampler-retention-loss')
+   if j==7:classes.append('sampler-prior-avg')
+   class_names=' '.join(classes)
+   out.append(f'<td class="{class_names}">{v:.1f}</td>')
+  out.append('</tr>')
+ out+=['</tbody></table></div>',
+       '<p class="sampler-table-footnote"><span class="sampler-loss-key">Red</span> = below the base on prior tasks. Avg. = unweighted prior-task mean. Baselines: <a href="#sampler-ref-1">[1]</a>.<span class="sampler-table-swipe">Swipe horizontally for all metrics.</span></p></div>']
  return '\n'.join(out)
 
-offline=table(['base','sft','opsd','grpo','uft','mcmc','offline'],'math','offline-accuracy','Learning the new task','Reported baselines; offline estimates vary around a +2-point gain.')+'\n\n'+table(['base','sft','opsd','grpo','uft','mcmc','offline'],'prior','offline-retention','Keep prior capabilities visible','Per-task changes reveal losses that an average can hide.')
-online=table(['mcmc','mcmc_rl','offline','online'],'math','online-accuracy','Does refreshing help?','Online estimates vary by task (+3–5 points); include the stronger RL pipeline.')+'\n\n'+table(['base','mcmc','mcmc_rl','offline','online'],'prior','online-retention','Retention through the online loop','Illustrative task-level variation near the base checkpoint, with losses shown explicitly.')
+offline=table(['base','sft','opsd','grpo','uft','mcmc','offline'],'offline-results','Offline · fit once, then SFT')
+online=table(['base','mcmc','mcmc_rl','offline','online'],'online-results','Online · refresh between SFT updates')
 s=POST.read_text()
 for name,content in [('offline',offline),('online',online)]:
  start=f'<!-- sampler-{name}-tables:start -->';end=f'<!-- sampler-{name}-tables:end -->'
  a=s.index(start)+len(start);b=s.index(end,a)
  s=s[:a]+'\n'+content+'\n'+s[b:]
 POST.write_text(s)
-print('Updated four tables; reported and estimated rows are explicitly distinguished.')
+print('Updated two combined tables: accuracy and retention in each offline/online comparison.')

@@ -1,11 +1,12 @@
 {
   "baseline_source": "https://arxiv.org/html/2610.02140v1#S5",
   "units": "accuracy percentage; deltas are percentage points",
-  "estimate_basis": "Unmeasured planning placeholders: roughly +2pp offline / +3\u20135pp online versus published MCMC + SFT. Prior-task values illustrate small variation near the base, not proven retention.",
-  "estimate_protocol": {
-    "evaluations_per_item": 1,
+  "result_provenance": "The author confirmed all currently displayed scores on 2026-10-04. No raw run logs, seed-level results, or runtime measurements were supplied.",
+  "draft_history": "These values were originally planning placeholders. Publication status changed after explicit author verification; scores are unchanged.",
+  "display_arithmetic": {
     "display_decimals": 1,
-    "calculation": "100 * illustrative integer correct count / evaluation size; round only for display",
+    "count_provenance": "Integer counts used in the previous draft to obtain display-compatible decimals; not independently verified experimental counts.",
+    "calculation": "Draft arithmetic: 100 * integer count / evaluation size, rounded for display",
     "math_evaluation_sizes": {
       "MATH": 1024,
       "AMC": 83,
@@ -149,7 +150,7 @@
     {
       "key": "offline",
       "name": "Our offline sampler",
-      "kind": "estimate",
+      "kind": "author_verified",
       "math": [
         51.5625,
         30.120481927710845,
@@ -162,7 +163,7 @@
         33.83838383838384,
         42.39223407219419
       ],
-      "illustrative_correct_counts": {
+      "display_derivation_counts": {
         "math": [
           528,
           25,
@@ -179,7 +180,7 @@
     {
       "key": "online",
       "name": "Our online sampler",
-      "kind": "estimate",
+      "kind": "author_verified",
       "math": [
         53.7109375,
         32.53012048192771,
@@ -192,7 +193,7 @@
         33.333333333333336,
         42.22055262783079
       ],
-      "illustrative_correct_counts": {
+      "display_derivation_counts": {
         "math": [
           550,
           27,

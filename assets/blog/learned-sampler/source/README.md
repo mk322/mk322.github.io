@@ -17,17 +17,19 @@ and parameter reuse at data-generation time, without claiming a measured speedup
 Earlier categorical/smooth distribution illustrations and source files are kept
 as unused exploratory assets. The current article no longer depends on A/B ratios.
 Published baseline scores come from Finetuning with Sampling, arXiv:2610.02140v1,
-Table 1 math panel. Our displayed numbers are draft estimates, not measurements:
-Approximately +2 percentage points offline and +3–5 online, with task-level variation.
-Prior-task values illustrate small gains and losses near the base, not measured retention.
-Each estimate is derived from an illustrative integer count divided by a specified
-evaluation size, then rounded only for display. results-data.json records the counts,
-protocol, sources, and GPQA Diamond assumption. Published baseline rounding is untouched.
-The prior-task average uses unrounded task percentages; displayed deltas use displayed
-rounded scores. Counts are planning inputs, not observed outcomes or synthetic run logs.
+Table 1 math panel. On 2026-10-04 the author confirmed all displayed result values;
+the article now presents these as results, with the baseline rows still attributed
+to the paper. Displayed scores are unchanged. No raw run logs, seed-level results,
+runtime measurements, or causal ablation findings were supplied to the editor.
+results-data.json records this confirmation and the previous draft history.
+Its display_derivation_counts retain the old draft's decimal arithmetic and must
+not be mistaken for independently verified experimental counts. Published baseline
+rounding is untouched. The prior-task average uses unrounded task percentages;
+displayed deltas use displayed rounded scores. The baseline GPQA variant remains
+unspecified, and its match to the Diamond basis is not inferred from the scores.
 The MCMC + SFT + RL baseline is included as the stronger online comparator.
 
-Regenerate all four result tables and their source-data record:
+Regenerate the two combined result tables and their source-data record:
     python3 assets/blog/learned-sampler/source/render_tables.py
 
 Verify mathematical identities and sampled gradient relations (requires numpy):
@@ -57,3 +59,9 @@ shift and forgetting → GRPO / OPD → transform the SFT distribution. New refe
 The added p_fit = q_data identity is an ideal population-fit explanation, not a
 forgetting theorem. The KL inequality after Eq. (4) assumes the original data
 satisfy the same validity constraint. Neither proves retention on unseen tasks.
+
+Table layout (2026-10-04): one comparison per schedule, with four math columns
+and Chemistry / MMLU / GPQA / their unweighted average together. Red marks
+prior-task scores below the displayed base; method names remain sticky on mobile.
+Experimental prose follows Setup → Results → Conclusion; reference settings and
+proposed causal ablations are available in optional disclosures.
