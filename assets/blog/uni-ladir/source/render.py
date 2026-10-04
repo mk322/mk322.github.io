@@ -10,10 +10,10 @@ import matplotlib.pyplot as plt
 ROOT=Path(__file__).resolve().parent
 OUT=ROOT.parent
 plt.rcParams.update({'font.family':'DejaVu Sans','font.size':14,'axes.titlesize':17,'axes.labelsize':14,'svg.fonttype':'none','text.color':'#20252C','axes.labelcolor':'#525A65','xtick.color':'#525A65','ytick.color':'#525A65','axes.edgecolor':'#D7DCE5','savefig.facecolor':'white'})
-for name in ['fig1','fig2']:
+for name in ['fig1','fig2','paper-sharing','objective','joint-training','diffusion']:
  doc=fitz.open(ROOT/(name+'.pdf'));p=doc[0]
- (OUT/(name+'.svg')).write_text(p.get_svg_image(text_as_path=True))
  p.get_pixmap(matrix=fitz.Matrix(1800/p.rect.width,1800/p.rect.width),alpha=False).save(OUT/(name+'.png'))
+ (OUT/(name+'.svg')).write_text(p.get_svg_image(text_as_path=True))
 # Measured values and version provenance are maintained in results.json.
 data=json.loads((ROOT/'results.json').read_text())
 def plot(key,stacked=False):
@@ -56,8 +56,11 @@ def mobile(key):
   ax.text(0,1.03,p['gain'],transform=ax.transAxes,fontsize=13,fontweight='bold',color='#6356A5')
  fig.subplots_adjust(left=.06,right=.95,top=.86 if n==2 else .91,bottom=.035,hspace=.7)
  fig.savefig(OUT/(key+'-mobile.svg'));fig.savefig(OUT/(key+'-mobile.png'),dpi=150);plt.close(fig)
-for key in ['main','sharing']:
+for key in ['main']:
  plot(key);plot(key,True)
+
+# Mobile sharing replot uses the same v3 values, with zero-based axes.
+mobile('sharing')
 
 # Normalize generator whitespace for stable source diffs.
 for svg in OUT.glob("*.svg"):
