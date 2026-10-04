@@ -82,3 +82,24 @@
 
 .uni-toc-method{margin-left:10px;border-left:1px solid #e6e1f1}
 .uni-toc-method a{padding-left:10px}
+
+.uni-training-svg{display:block;width:100%;min-width:940px;height:auto}
+.uni-training-controls{display:flex;align-items:end;gap:9px;flex-wrap:wrap;margin-bottom:16px;font-size:14px}
+.uni-training-controls label{display:flex;flex-direction:column;gap:4px;font-weight:600}
+.uni-training-controls select,.uni-training-controls button{font:inherit;border:1px solid #c7ccd5;border-radius:6px;background:white;color:#20252c;padding:10px 12px;min-height:44px}
+.uni-training-controls button[aria-pressed=true]{background:#e6e1f1;color:#493b80}
+.uni-training-controls button:disabled{opacity:.4}
+.uni-training-controls :focus-visible{outline:2px solid #6356a5;outline-offset:3px}
+.uni-gradient{stroke-dasharray:7 5}
+.uni-training-flow.is-interactive .uni-flow-node,.uni-training-flow.is-interactive .uni-flow-edge{opacity:.23;transition:opacity .2s}
+.uni-training-flow.is-interactive .is-active{opacity:1}
+.uni-training-flow [data-node=stop-bar]{opacity:.4}
+.uni-training-flow [data-node=stop-bar].is-active{opacity:1}
+.uni-training-flow[data-running=true] .uni-flow-edge.is-active{stroke-dasharray:7 5;animation:uni-route 1.1s linear infinite}
+@keyframes uni-route{to{stroke-dashoffset:-24}}
+.uni-training-flow .uni-method-explanation{min-height:100px}
+.uni-flow-math{display:grid;gap:14px;text-align:left;font-size:19px}
+.uni-flow-math>div{overflow-x:auto;padding-bottom:2px}
+.uni-flow-math strong{display:block;color:#6356a5;font-size:15px;margin-bottom:3px}
+@media(max-width:600px){.uni-training-controls label{width:100%}.uni-training-controls button{flex:1;font-size:13px;padding:9px 6px}.uni-flow-math{font-size:17px}.uni-training-flow .uni-method-explanation{min-height:0}}
+@media(prefers-reduced-motion:reduce){.uni-training-flow .uni-flow-node,.uni-training-flow .uni-flow-edge{transition:none!important;animation:none!important}}

@@ -55,13 +55,13 @@
       "gain": "+11.3% relative"
     },
     {
-      "title": "Visual + 3D + state teachers",
+      "title": "Visual + 3D + robot state teachers",
       "metric": "RLBench mean success (%)",
       "labels": [
         "Separate",
         "Visual\n+ 3D",
-        "Visual\n+ state",
-        "3D\n+ state",
+        "Visual\n+ robot state",
+        "3D\n+ robot state",
         "All three"
       ],
       "values": [

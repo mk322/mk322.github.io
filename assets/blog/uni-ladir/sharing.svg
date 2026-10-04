@@ -174,14 +174,14 @@ z
      <g id="line2d_15"/>
      <g id="text_15">
       <text style="fill: #525a65; font: 14px 'DejaVu Sans'" transform="translate(710.119699 310.941812)">Visual</text>
-      <text style="fill: #525a65; font: 14px 'DejaVu Sans'" transform="translate(705.190167 326.61875)">+ state</text>
+      <text style="fill: #525a65; font: 14px 'DejaVu Sans'" transform="translate(705.190167 326.61875)">+ robot state</text>
      </g>
     </g>
     <g id="xtick_6">
      <g id="line2d_16"/>
      <g id="text_16">
       <text style="fill: #525a65; font: 14px 'DejaVu Sans'" transform="translate(827.358333 310.941812)">3D</text>
-      <text style="fill: #525a65; font: 14px 'DejaVu Sans'" transform="translate(811.379739 326.61875)">+ state</text>
+      <text style="fill: #525a65; font: 14px 'DejaVu Sans'" transform="translate(811.379739 326.61875)">+ robot state</text>
      </g>
     </g>
     <g id="xtick_7">
@@ -315,7 +315,7 @@ z
     <text style="fill: #6356a5; font: 700 14px 'DejaVu Sans'; text-anchor: end" x="987.2437" y="85.63968" transform="rotate(-0 987.2437 85.63968)">+6.1% relative</text>
    </g>
    <g id="text_30">
-    <text style="fill: #20252c; font: 700 17px 'DejaVu Sans'; text-anchor: start" x="464.105022" y="32.576" transform="rotate(-0 464.105022 32.576)">Visual + 3D + state teachers</text>
+    <text style="fill: #20252c; font: 700 17px 'DejaVu Sans'; text-anchor: start" x="464.105022" y="32.576" transform="rotate(-0 464.105022 32.576)">Visual + 3D + robot state teachers</text>
    </g>
   </g>
  </g>

@@ -219,13 +219,13 @@ z
     <text style="fill: #20252c; font: 700 12px 'DejaVu Sans'; text-anchor: start" x="223.695" y="475.863103" transform="rotate(-0 223.695 475.863103)">83.50</text>
    </g>
    <g id="text_18">
-    <text style="fill: #20252c; font: 13px 'DejaVu Sans'; text-anchor: start" x="19.44" y="496.852771" transform="rotate(-0 19.44 496.852771)">Visual + state</text>
+    <text style="fill: #20252c; font: 13px 'DejaVu Sans'; text-anchor: start" x="19.44" y="496.852771" transform="rotate(-0 19.44 496.852771)">Visual + robot state</text>
    </g>
    <g id="text_19">
     <text style="fill: #20252c; font: 700 12px 'DejaVu Sans'; text-anchor: start" x="226.098" y="510.5787" transform="rotate(-0 226.098 510.5787)">84.50</text>
    </g>
    <g id="text_20">
-    <text style="fill: #20252c; font: 13px 'DejaVu Sans'; text-anchor: start" x="19.44" y="531.568367" transform="rotate(-0 19.44 531.568367)">3D + state</text>
+    <text style="fill: #20252c; font: 13px 'DejaVu Sans'; text-anchor: start" x="19.44" y="531.568367" transform="rotate(-0 19.44 531.568367)">3D + robot state</text>
    </g>
    <g id="text_21">
     <text style="fill: #20252c; font: 700 12px 'DejaVu Sans'; text-anchor: start" x="226.098" y="545.294296" transform="rotate(-0 226.098 545.294296)">84.50</text>
@@ -243,7 +243,7 @@ z
     <text style="fill: #6356a5; font: 700 13px 'DejaVu Sans'; text-anchor: start" x="19.44" y="402.652" transform="rotate(-0 19.44 402.652)">+6.1% relative</text>
    </g>
    <g id="text_26">
-    <text style="fill: #20252c; font: 700 16px 'DejaVu Sans'; text-anchor: start" x="19.44" y="364.328" transform="rotate(-0 19.44 364.328)">Visual + 3D + state</text>
+    <text style="fill: #20252c; font: 700 16px 'DejaVu Sans'; text-anchor: start" x="19.44" y="364.328" transform="rotate(-0 19.44 364.328)">Visual + 3D + robot state</text>
    </g>
   </g>
  </g>

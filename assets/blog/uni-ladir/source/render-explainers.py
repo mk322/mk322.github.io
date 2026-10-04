@@ -22,10 +22,12 @@ def decision_panel(unified):
  body=box(0,0,466,435,stroke='#CBC3DF' if unified else BORDER,fill='#F5F2FA' if unified else '#FAFBFD')
  body+=text(22,35,'Uni-LaDiR' if unified else 'Modality-specific thoughts',25,True,anchor='start')
  body+=text(22,64,'One learned thought space' if unified else 'A format for each modality',20,color=PURPLE if unified else MUTED,anchor='start')
- for i,(lab,col,pale) in enumerate(zip(['Image','3D','State'],COLORS,PALES)):
+ for i,(lab,col,pale) in enumerate(zip(['Image','3D','Robot state'],COLORS,PALES)):
   x=23+i*147
-  body+=box(x,91,126,42,lab,col,'white',21,True)
-  body+=arrow(x+63,136,x+63,155,col)
+  body+=box(x,87,126,54,'',col,'white')
+  if lab=='Robot state':body+=text(x+63,110,'Robot',20,True)+text(x+63,133,'state',20,True)
+  else:body+=text(x+63,121,lab,21,True)
+  body+=arrow(x+63,144,x+63,156,col)
   body+=box(x,160,126,42,'Features',col,pale,20)
   if unified:body+=arrow(x+63,205,x+63,229,col)
   else:
@@ -48,17 +50,17 @@ def decision_panel(unified):
 for mobile in [False,True]:
  w=490 if mobile else 1000; h=1015 if mobile else 565
  body=text(w/2,31,'Different teachers. What format should thoughts use?',22,True) if not mobile else text(w/2,30,'Different teachers. One thought space?',23,True)
- body+=text(w/2,61,'Illustrated with image, 3D, and state teacher steps',18,color=MUTED)
+ body+=text(w/2,61,'Illustrated with image, 3D, and robot state teacher steps',18,color=MUTED)
  body+=f'<g transform="translate(12,85)">{decision_panel(False)}</g>'
  body+=f'<g transform="translate({12 if mobile else 522},{544 if mobile else 85})">{decision_panel(True)}</g>'
  body+=text(w/2,h-13,'Color denotes the thought format, not decoded semantic content.',17,color=MUTED)
  if mobile:
-  body=body.replace('Different teachers. One thought space?','One space for every thought?').replace('Illustrated with image, 3D, and state teacher steps','Same teachers; a different interface.')
+  body=body.replace('Different teachers. One thought space?','One space for every thought?').replace('Illustrated with image, 3D, and robot state teacher steps','Same teachers; a different interface.')
   body=body.replace(text(233,407,'Carry reasoning across formats',20,True,MUTED),text(233,393,'Carry reasoning',20,True,MUTED)+text(233,422,'across formats',20,True,MUTED))
   body=body.replace(text(233,407,'Learn contents for what comes next',20,True,PURPLE),text(233,393,'Learn contents',20,True,PURPLE)+text(233,422,'for what comes next',20,True,PURPLE))
   body=body.replace('Color denotes the thought format, not decoded semantic content.','Color shows format, not meaning.')
   body=mobile_type(body)
- (ROOT/('decision-mobile.svg'  if mobile else 'decision.svg')).write_text(svg(w,h,body,'Different teachers, one learned thought space','Left: image, 3D, and state features retain modality-specific thought formats. Right: a shared encoder maps their features into one latent format learned for continuation. Teacher encoding is training-only.'))
+ (ROOT/('decision-mobile.svg'  if mobile else 'decision.svg')).write_text(svg(w,h,body,'Different teachers, one learned thought space','Left: image, 3D, and robot state features retain modality-specific thought formats. Right: a shared encoder maps their features into one latent format learned for continuation. Teacher encoding is training-only.'))
 def handoff_panel(continuation):
  body=box(0,0,466,460,stroke='#CBC3DF' if continuation else BORDER,fill='#F5F2FA' if continuation else '#FAFBFD')
  body+=text(233,38,'Continuation prediction' if continuation else 'Reconstruction',25,True,color=PURPLE if continuation else INK)

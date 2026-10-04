@@ -11,7 +11,9 @@ ROOT=Path(__file__).resolve().parent
 OUT=ROOT.parent
 plt.rcParams.update({'font.family':'DejaVu Sans','font.size':14,'axes.titlesize':17,'axes.labelsize':14,'svg.fonttype':'none','text.color':'#20252C','axes.labelcolor':'#525A65','xtick.color':'#525A65','ytick.color':'#525A65','axes.edgecolor':'#D7DCE5','savefig.facecolor':'white'})
 for name in ['fig1','fig2','paper-sharing','objective','joint-training','diffusion']:
- doc=fitz.open(ROOT/(name+'.pdf'));p=doc[0]
+ source=ROOT/(name+'-blog.pdf')
+ if not source.exists():source=ROOT/(name+'.pdf')
+ doc=fitz.open(source);p=doc[0]
  p.get_pixmap(matrix=fitz.Matrix(1800/p.rect.width,1800/p.rect.width),alpha=False).save(OUT/(name+'.png'))
  (OUT/(name+'.svg')).write_text(p.get_svg_image(text_as_path=True))
 # Measured values and version provenance are maintained in results.json.
@@ -49,7 +51,7 @@ def mobile(key):
   ax.set_xlim(0,120);ax.set_xticks([0,50,100]);ax.tick_params(axis='x',length=0,labelsize=12);ax.set_yticks([])
   ax.set_ylim(len(values)-.4,-.85);ax.grid(axis='x',color='#E7E9EF',zorder=0)
   ax.spines[['top','right','left']].set_visible(False)
-  title=p['title'].replace('Visual + 3D + state teachers','Visual + 3D + state').replace('Text + image teachers','Text + image')
+  title=p['title'].replace('Visual + 3D + robot state teachers','Visual + 3D + robot state').replace('Text + image teachers','Text + image')
   ax.set_title(title,loc='left',fontsize=16,fontweight='bold',pad=44)
   metric=p['metric'].replace('4-benchmark mean accuracy (%)','Mean accuracy · 4 tasks (%)').replace('7-benchmark mean accuracy (%)','Mean accuracy · 7 tasks (%)').replace('LIBERO / RLBench mean success (%)','LIBERO / RLBench mean (%)')
   ax.text(0,1.13,metric,transform=ax.transAxes,fontsize=11,color='#525A65')
