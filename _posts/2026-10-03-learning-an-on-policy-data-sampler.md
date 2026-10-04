@@ -9,11 +9,11 @@ tldr: |
   - **Our solution:** Train an expert-conditioned sampler to match the information-constrained student distribution. A group-relative GFlowNet loss removes the learned normalizer; sampler training absorbs work otherwise repeated during data generation.
   - **Two uses:** Offline, adapt an expert corpus for a chosen student. Online, refresh a LoRA sampler as that student learns, producing new targets for ordinary SFT.
   - **The real test:** Better accuracy at matched total compute, while retaining prior capabilities. A learned sampler addresses repeated search and stale data; verifier errors, incomplete coverage, and forgetting still need separate evaluation.
-  - **Illustrative targets:** Math avg. of 55.5% offline (+2.1 points) and 57.5% online (+4.1 points) versus MCMC + SFT. Prior avg. targets are 43.4% and 44.3%. These values and the online curve are estimates pending measured runs.
+  - **Illustrative targets:** Math avg. of 55.5% offline (+2.1 points versus MCMC + SFT) and 60.3% online (+6.9 points versus MCMC + SFT). Prior avg. targets are 42.1% and 42.2%, close to the base model’s 42.2%. These values and the online curve are estimates pending measured runs.
 
 ---
 
-<link rel="stylesheet" href="{{ '/assets/blog/learned-sampler/article.css' | relative_url }}?v=4">
+<link rel="stylesheet" href="{{ '/assets/blog/learned-sampler/article.css' | relative_url }}?v=5">
 
 <nav class="sampler-toc" aria-label="Article contents"><details open><summary>On this page</summary><ol><li><a href="#sft-problem">SFT’s off-policy mismatch</a></li><li><a href="#target">What is the mismatch?</a></li><li><a href="#amortization">Amortize the search</a></li><li><a href="#train-sampler">From KL to the training loss</a></li><li><a href="#offline">Offline: sampler, then SFT</a></li><li><a href="#online">Online: the LoRA sampler</a></li><li><a href="#experiments-offline">Offline experiments</a></li><li><a href="#experiments-online">Online experiments</a></li><li><a href="#use-cases">Where this is useful</a></li></ol></details></nav>
 
@@ -210,17 +210,30 @@ The offline recipe has three stages. **The student does not change while we trai
 <figure><picture><source media="(max-width: 760px)" srcset="{{ '/assets/blog/learned-sampler/offline-stages-mobile.svg' | relative_url }}"><img src="{{ '/assets/blog/learned-sampler/offline-stages.svg' | relative_url }}" width="800" height="270" alt="Three sequential stages: train the sampler against a frozen student, freeze the sampler and create data, then update the student with SFT."></picture><figcaption>Offline training runs left to right once. There is no student-to-sampler feedback after SFT starts.</figcaption></figure>
 
 <div class="sampler-algorithm" markdown="1">
-<p class="sampler-algorithm-label">Offline · fit once, then SFT</p>
+<p class="sampler-algorithm-label">Algorithm 1 · Offline sampler training and SFT</p>
 
 ```text
-fit(sampler, fixed student)  # Eq. 7
-data ← verified_samples(sampler)
-SFT(student, data)
+Input: expert examples D, student θ₀,
+       sampler φ, group size K ≥ 2
+Output: fine-tuned student θ
+
+θ_ref ← frozen copy of θ₀
+for each sampler-training step:
+    (x, τ) ← sample an expert example from D
+    Y ← K verified responses from q_φ(· | x, τ)
+    a_i ← log q_φ(y_i | x, τ) − log p_θ_ref(y_i | x)
+    L ← mean_i (a_i − stop_gradient(mean_j a_j))²
+    φ ← φ − η_φ ∇_φ L  # Eq. 7
+
+Freeze φ
+D_SFT ← verified responses generated from D using q_φ
+θ ← SFT(θ₀, D_SFT)  # Eq. 1
+Return θ
 ```
 
 </div>
 
-`fit` updates only the sampler using fresh rollout groups and equation (7). Both `fit` and `verified_samples` condition generation on the prompt and expert demonstration; the latter retains only verified responses and holds the fitted sampler fixed. SFT updates only the student, using prompts and sampled responses; the expert demonstration is not an extra student input.
+Each group contains verified responses for one prompt and expert demonstration. We draw fresh groups for each update, using the same rollout policy whose sequence probabilities enter the loss. If fewer than two responses pass verification, we collect more candidates or skip that update. The final dataset contains prompt–response pairs; the expert demonstration is not an extra student input.
 
 This version replaces per-example MCMC data creation with a trained, reusable generator. It pays an up-front sampler-training cost, then shares that work across examples. Whether the reuse saves compute is an experimental question: training, student scoring, verification, and failed generations all belong in the cost.
 
@@ -260,19 +273,33 @@ p_{C,t}(y\mid x,\tau)
 <figure><picture><source media="(max-width: 760px)" srcset="{{ '/assets/blog/learned-sampler/online-cycle-mobile.svg' | relative_url }}"><img src="{{ '/assets/blog/learned-sampler/online-cycle.svg' | relative_url }}" width="800" height="330" alt="Freeze the current backbone and fit the sampler LoRA, generate verified responses, disable LoRA and update the backbone with SFT, then refresh the adapter against the updated student."></picture><figcaption>Only the online schedule feeds the updated student back into sampler fitting. Adapter parameters and backbone parameters are updated in separate phases.</figcaption></figure>
 
 <div class="sampler-algorithm" markdown="1">
-<p class="sampler-algorithm-label">Online · refresh as the student learns</p>
+<p class="sampler-algorithm-label">Algorithm 2 · Online sampler training and SFT</p>
 
 ```text
-sampler ← LoRA(student)
-repeat:
-    fit(sampler, fixed student)  # Eq. 7
-    data ← verified_samples(sampler)
-    SFT(student, data)           # LoRA off
+Input: expert examples D, student θ₀, LoRA parameters φ,
+       group size K ≥ 2, number of rounds T
+Output: fine-tuned student θ_T
+
+for round t = 0, …, T − 1:
+    Freeze backbone θ_t; enable sampler LoRA φ
+    for each adapter-training step:
+        (x, τ) ← sample an expert example from D
+        Y ← K verified responses from q_(θ_t,φ)(· | x, τ)
+        a_i ← log q_(θ_t,φ)(y_i | x, τ) − log p_θ_t(y_i | x)
+        L ← mean_i (a_i − stop_gradient(mean_j a_j))²
+        φ ← φ − η_φ ∇_φ L  # Eq. 7
+
+    Freeze φ; generate verified SFT batch D_t
+    Disable LoRA; unfreeze backbone θ_t
+    θ_(t+1) ← SFT(θ_t, D_t)  # Eq. 1
+Return θ_T with sampler LoRA disabled
 ```
 
 </div>
 
-`fit` updates only the adapter, scoring candidates with LoRA disabled. The SFT phase disables the adapter and updates the backbone. Each new round fits the adapter against that updated backbone.
+During adapter fitting, sampler log probabilities use LoRA and expert conditioning; student log probabilities use neither. Only the adapter receives the matching-loss gradient. The SFT phase updates the backbone with the adapter disabled. We retain the adapter parameters between rounds and refit them against the updated backbone. As offline, each update uses a fresh group with at least two verified responses.
+
+The sampler already has a GFlowNet reward: the student probability of a response, masked by verification. This is the unnormalized density in equation (9), and equation (7) learns its relative probabilities. The reward trains the sampler; the student update is SFT. This is why the two parameter updates are separate in Algorithm 2.
 
 The expert demonstrations remain fixed; the generated SFT targets can evolve. Refreshing the adapter helps address stale data, but the refresh frequency has a cost. Small adapter updates also have limited capacity. Both the update schedule and LoRA rank therefore belong in the online ablation, rather than being treated as automatic improvements.
 
@@ -307,32 +334,32 @@ The reference MCMC pipeline uses 10 transitions, block size 32, and maximum sequ
 
 <p class="sampler-results-note"><strong>Reading this draft.</strong> Baseline rows are published results. The two sampler rows are estimates; † marks these entries. The online curve below is also illustrative.</p>
 
-The offline target is **55.5% Math avg.**, versus **53.4%** for MCMC + SFT: a **2.1-point average gain**. The four individual gains differ; the target concerns their mean. Prior avg. is **43.4%**, compared with **42.0%** for MCMC + SFT. Both schedules share the table below.
+The offline target is **55.5% Math avg.**, versus **53.4%** for MCMC + SFT: a **2.1-point average gain**. The four individual gains differ; the target concerns their mean. Prior avg. is **42.1%**, slightly above **42.0%** for MCMC + SFT and near the base model’s **42.2%**. Both schedules share the table below.
 
 <!-- sampler-comparison:start -->
 <div class="sampler-table-card sampler-summary-card" id="sampler-results">
 <div class="sampler-table-heading" id="sampler-results-title"><strong>Offline &amp; online · shared evaluation</strong><span>Accuracy (%) ↑</span></div>
 <div class="sampler-table-scroll" role="region" tabindex="0" aria-labelledby="sampler-results-title">
-<table class="sampler-results-table sampler-summary-table"><colgroup><col class="sampler-method-col"><col><col><col></colgroup>
-<thead><tr><th scope="col">Method</th><th scope="col">Math avg.</th><th scope="col">Δ Math<span class="sampler-header-note">vs. MCMC + SFT</span></th><th scope="col" class="sampler-retention-start">Prior avg.</th></tr></thead><tbody>
+<table class="sampler-results-table sampler-summary-table"><colgroup><col class="sampler-method-col"><col><col></colgroup>
+<thead><tr><th scope="col">Method</th><th scope="col">Math avg.<span class="sampler-header-note">Task learning</span></th><th scope="col" class="sampler-retention-start">Prior avg.<span class="sampler-header-note">Capability retention</span></th></tr></thead><tbody>
 <tr class="sampler-base-row"><th scope="row"><span class="sampler-method-name">Base model</span></th>
-<td class="sampler-average">31.8</td><td class="sampler-math-gain">−21.6</td><td class="sampler-average sampler-retention-start">42.2</td></tr>
+<td class="sampler-average">31.8</td><td class="sampler-average sampler-retention-start">42.2</td></tr>
 <tr class=""><th scope="row"><span class="sampler-method-name">Expert-data SFT</span></th>
-<td class="sampler-average">24.2</td><td class="sampler-math-gain">−29.2</td><td class="sampler-average sampler-retention-start">38.9</td></tr>
+<td class="sampler-average">24.2</td><td class="sampler-average sampler-retention-start">38.9</td></tr>
 <tr class=""><th scope="row"><span class="sampler-method-name">OPSD</span></th>
-<td class="sampler-average">30.2</td><td class="sampler-math-gain">−23.2</td><td class="sampler-average sampler-retention-start">40.4</td></tr>
+<td class="sampler-average">30.2</td><td class="sampler-average sampler-retention-start">40.4</td></tr>
 <tr class=""><th scope="row"><span class="sampler-method-name">GRPO</span></th>
-<td class="sampler-average">45.7</td><td class="sampler-math-gain">−7.7</td><td class="sampler-average sampler-retention-start">41.4</td></tr>
+<td class="sampler-average">45.7</td><td class="sampler-average sampler-retention-start">41.4</td></tr>
 <tr class=""><th scope="row"><span class="sampler-method-name">UFT</span></th>
-<td class="sampler-average">45.2</td><td class="sampler-math-gain">−8.2</td><td class="sampler-average sampler-retention-start">42.1</td></tr>
+<td class="sampler-average">45.2</td><td class="sampler-average sampler-retention-start">42.1</td></tr>
 <tr class="sampler-reference-row"><th scope="row"><span class="sampler-method-name">MCMC + SFT</span></th>
-<td class="sampler-average">53.4</td><td class="sampler-math-gain">—</td><td class="sampler-average sampler-retention-start">42.0</td></tr>
+<td class="sampler-average">53.4</td><td class="sampler-average sampler-retention-start">42.0</td></tr>
 <tr class="sampler-estimate-row"><th scope="row"><span class="sampler-method-name">Ours · offline <span class="sampler-estimate-badge">Estimate</span></span></th>
-<td class="sampler-average">55.5<sup>†</sup></td><td class="sampler-math-gain">+2.1<sup>†</sup></td><td class="sampler-average sampler-retention-start">43.4<sup>†</sup></td></tr>
+<td class="sampler-average">55.5<sup>†</sup></td><td class="sampler-average sampler-retention-start">42.1<sup>†</sup></td></tr>
 <tr class="sampler-estimate-row"><th scope="row"><span class="sampler-method-name">Ours · online <span class="sampler-estimate-badge">Estimate</span></span></th>
-<td class="sampler-average">57.5<sup>†</sup></td><td class="sampler-math-gain">+4.1<sup>†</sup></td><td class="sampler-average sampler-retention-start">44.3<sup>†</sup></td></tr>
+<td class="sampler-average">60.3<sup>†</sup></td><td class="sampler-average sampler-retention-start">42.2<sup>†</sup></td></tr>
 </tbody></table></div>
-<p class="sampler-table-footnote">Math avg.: equal-weight mean of MATH, AMC, MATH500, GSM8K. Prior avg.: equal-weight mean of Chemistry, MMLU, GPQA. Means round only for display; Δ uses displayed averages. Baselines: <a href="#sampler-ref-1">[1]</a>. <strong>† Estimates; not measured.</strong></p></div>
+<p class="sampler-table-footnote">Math avg.: equal-weight mean of MATH, AMC, MATH500, GSM8K. Prior avg.: equal-weight mean of Chemistry, MMLU, GPQA. Means round only for display. Both schedules compare with MCMC + SFT. Baselines: <a href="#sampler-ref-1">[1]</a>. <strong>† Estimates; not measured.</strong></p></div>
 <details class="sampler-benchmark-details"><summary>See the scores behind each average</summary>
 <div class="sampler-table-card sampler-detail-card"><div class="sampler-table-scroll" role="region" tabindex="0" aria-label="Per-task accuracy breakdown">
 <table class="sampler-results-table sampler-detail-table"><colgroup><col class="sampler-method-col"><col><col><col><col><col><col><col></colgroup>
@@ -343,14 +370,14 @@ The offline target is **55.5% Math avg.**, versus **53.4%** for MCMC + SFT: a **
 <tr class=""><th scope="row">GRPO</th><td>45.7</td><td>24.9</td><td>31.3</td><td>80.8</td><td>27.8</td><td>65.2</td><td>31.3</td></tr>
 <tr class=""><th scope="row">UFT</th><td>47.0</td><td>29.3</td><td>29.7</td><td>74.6</td><td>28.3</td><td>65.3</td><td>32.8</td></tr>
 <tr class="sampler-reference-row"><th scope="row">MCMC + SFT</th><td>49.5</td><td>27.7</td><td>58.2</td><td>78.2</td><td>26.6</td><td>65.1</td><td>34.3</td></tr>
-<tr class="sampler-estimate-row"><th scope="row">Ours · offline</th><td>51.5<sup>†</sup></td><td>28.9<sup>†</sup></td><td>61.0<sup>†</sup></td><td>80.6<sup>†</sup></td><td>29.3<sup>†</sup></td><td>65.6<sup>†</sup></td><td>35.4<sup>†</sup></td></tr>
-<tr class="sampler-estimate-row"><th scope="row">Ours · online</th><td>53.9<sup>†</sup></td><td>31.3<sup>†</sup></td><td>62.6<sup>†</sup></td><td>82.1<sup>†</sup></td><td>30.2<sup>†</sup></td><td>65.8<sup>†</sup></td><td>36.9<sup>†</sup></td></tr>
+<tr class="sampler-estimate-row"><th scope="row">Ours · offline</th><td>51.5<sup>†</sup></td><td>28.9<sup>†</sup></td><td>61.0<sup>†</sup></td><td>80.6<sup>†</sup></td><td>28.0<sup>†</sup></td><td>65.1<sup>†</sup></td><td>33.3<sup>†</sup></td></tr>
+<tr class="sampler-estimate-row"><th scope="row">Ours · online</th><td>57.2<sup>†</sup></td><td>33.7<sup>†</sup></td><td>66.2<sup>†</sup></td><td>84.1<sup>†</sup></td><td>28.2<sup>†</sup></td><td>65.1<sup>†</sup></td><td>33.3<sup>†</sup></td></tr>
 </tbody></table></div></div></details>
 <!-- sampler-comparison:end -->
 
 ### Conclusion
 
-The offline test asks whether a learned data-preparation policy can improve math performance while retaining prior skills. The estimates set that goal concretely: about two points of average math improvement and a higher prior-task average. Measured runs must establish those gains; total compute must also include fitting, generation, scoring, verification, rejected outputs, and SFT.
+The offline test asks whether a learned data-preparation policy can improve math performance while retaining prior skills. The estimates set that goal concretely: about two points of average math improvement while keeping the prior-task average close to the starting model. This average must be checked alongside the individual tasks; it cannot rule out forgetting on every ability. Measured runs must establish those gains; total compute must also include fitting, generation, scoring, verification, rejected outputs, and SFT.
 
 ## Online experiments
 {: #experiments-online}
@@ -359,24 +386,24 @@ The offline test asks whether a learned data-preparation policy can improve math
 
 The data split, starting checkpoint, and evaluation suite stay the same. The sampler is a **LoRA adapter on the current student**. Each round fits the adapter against the frozen student, generates verified responses, and updates the student with SFT while the adapter is disabled. The next round refreshes the sampler against that updated student.
 
-We compare this schedule with the fixed offline sampler and all baselines in the [shared table](#sampler-results). Offline fitting targets the starting checkpoint; online fitting follows the evolving student.
+We compare with **MCMC + SFT** and the fixed offline sampler in the [shared table](#sampler-results). Our online sampler uses the GFlowNet reward—student probability masked by verification—and supplies refreshed data for SFT. The student-update objective remains the same; the data-generation method and refresh schedule change. Matched-compute runs must include sampler fitting, verification, student scoring, and SFT.
 
 ### Results
 
-The online target is **57.5% Math avg.**: **4.1 points** above MCMC + SFT and **2.0 points** above the offline target. Prior avg. is **44.3%**, versus 43.4% offline and **42.0%** for MCMC + SFT. These are average targets, not claims that every benchmark improves by the same amount.
+The online target is **60.3% Math avg.**, versus **53.4%** for MCMC + SFT: a **6.9-point average gain**. Prior avg. is **42.2%**, close to the base model and slightly above plain MCMC + SFT’s **42.0%**. These are average targets, not claims that every benchmark improves by the same amount.
 
 The curve below sketches how student Math avg. might evolve during online training: uneven gains followed by a plateau near the table’s target.
 
-<figure id="online-training-curve"><picture><source media="(max-width: 600px)" srcset="{{ '/assets/blog/learned-sampler/online-training-curve-mobile.svg' | relative_url }}?v=1"><img src="{{ '/assets/blog/learned-sampler/online-training-curve.svg' | relative_url }}?v=1" width="800" height="370" alt="Illustrative single-line online learning curve: Math average rises with noisy fluctuations and later plateaus near the 57.5 percent target. Training progress is normalized; this is not a measured training trace."></picture><figcaption><strong>Illustrative online trajectory; not measured.</strong> Student Math avg. over normalized training progress. The noisy trajectory and plateau are schematic; the endpoint matches the 57.5% target in the table.</figcaption></figure>
+<figure id="online-training-curve"><picture><source media="(max-width: 600px)" srcset="{{ '/assets/blog/learned-sampler/online-training-curve-mobile.svg' | relative_url }}?v=2"><img src="{{ '/assets/blog/learned-sampler/online-training-curve.svg' | relative_url }}?v=2" width="800" height="370" alt="Illustrative single-line online learning curve: Math average rises with noisy fluctuations and later plateaus near the 60.3 percent target. Training progress is normalized; this is not a measured training trace."></picture><figcaption><strong>Illustrative online trajectory; not measured.</strong> Student Math avg. over normalized training progress. The noisy trajectory and plateau are schematic; the endpoint matches the 60.3% target in the table.</figcaption></figure>
 
 ### Conclusion
 
-The online test asks whether refreshing the sampler improves on fitting it once. The estimated gap is two points in Math avg., with a higher prior-task average. A measured curve and matched-compute comparisons are needed to determine whether this comes from tracking the student, additional training, or both.
+The online target combines higher math accuracy with a prior-task average near the base model. A measured curve and matched-compute runs must establish this comparison. To identify the contribution of sampler refreshes, the frozen and refreshed variants must use the same reward settings and student-update schedule.
 
 <details class="sampler-experiment-details" markdown="1">
 <summary>Next ablations: what produces the online gain?</summary>
 
-- **Tracking the student.** Compare a sampler fitted to the initial student, a frozen adapter on the changing backbone, and a refreshed adapter at equal compute. Measure accuracy, validity, and accepted-output log-gap dispersion.
+- **Tracking the student.** Compare a sampler fitted to the initial student, a frozen adapter on the changing backbone, and a refreshed adapter at equal compute and with the same student SFT schedule. Measure accuracy, validity, and accepted-output log-gap dispersion.
 - **Reusing the adapter.** Compare retained and reset LoRA weights against the same backbone; record the fitting work needed to reach comparable sampling quality.
 - **Refresh frequency.** Sweep the interval under a fixed total budget, tracking math accuracy and prior-task retention.
 

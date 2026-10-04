@@ -19,17 +19,21 @@ as unused exploratory assets. The current article no longer depends on A/B ratio
 Published baseline scores come from Finetuning with Sampling, arXiv:2610.02140v1,
 Table 1 math panel. Sampler values were revised again at the author's request on
 2026-10-04. The new rows are estimates, not the previously author-confirmed scores.
-Both rows target an equal-weight Math average gain over MCMC + SFT: offline
-1.5–2.5pp, online 3–5pp. Prior-task average estimates exceed the MCMC pipelines.
+Offline targets a 1.5–2.5pp equal-weight Math average gain over MCMC + SFT;
+online retains the requested 60.3% estimate after the extra-RL comparator was removed. Prior-task estimates are slightly
+above plain MCMC + SFT, at or below the base model, without claiming improvement over a hidden extra-RL pipeline.
 Integer planning counts define sample-compatible decimals; they are not observed
 outcomes. results-data.json records the earlier confirmation separately from the
 new estimates. Published per-task baseline values and prior averages are preserved;
 Math averages are derived from their published scores, with decimal half-up display.
-All sampler values and arithmetic are computed before display rounding. Δ uses the
-rounded average scores. GPQA Diamond remains an explicit basis; the baseline's
+All sampler values and arithmetic are computed before display rounding. Prose gains
+use the displayed averages; no column mixes deltas against different comparators. GPQA Diamond remains an explicit basis; the baseline's
 variant and seed aggregation are not inferred from its scores.
-MCMC + SFT + RL is excluded from the displayed comparison at the author’s request.
-Its historical published row remains in the source record only.
+MCMC + SFT + RL is excluded again at the author’s latest request. Its historical
+published scores remain in the source record only; no displayed comparison uses them. The author confirmed online reward is the existing GFlowNet target density
+(student probability × verification); it trains the sampler, while the student uses SFT.
+No extra student RL stage is inferred. Both algorithms now specify group rollouts,
+centered log-gap loss, frozen parameters, and separate student SFT updates.
 
 Regenerate the aggregate comparison and optional per-task breakdown and their source-data record:
     python3 assets/blog/learned-sampler/source/render_tables.py
@@ -63,7 +67,7 @@ forgetting theorem. The KL inequality after Eq. (4) assumes the original data
 satisfy the same validity constraint. Neither proves retention on unseen tasks.
 
 Table layout (2026-10-04): one shared comparison for offline and online. The main
-view shows Math avg., Δ Math versus MCMC + SFT, and Prior avg. A disclosure preserves
+view shows Math avg. and Prior avg. Explicit comparisons are in the results prose. A disclosure preserves
 all seven task scores. OPSD, GRPO, and UFT are retained and explained in Setup.
 New sources: OPSD (arXiv:2601.18734) and UFT (arXiv:2505.16984, §3).
 

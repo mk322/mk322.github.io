@@ -28,8 +28,8 @@ rows=[
 math_n=[1024,83,500,1320]
 prior_n=[600,14042,198]
 for key,name,mc,pc in [
- ('offline','Ours · offline',[527,24,305,1064],[176,9217,70]),
- ('online','Ours · online',[552,26,313,1084],[181,9242,73]),
+ ('offline','Ours · offline',[527,24,305,1064],[168,9143,66]),
+ ('online','Ours · online',[586,28,331,1110],[169,9140,66]),
 ]:
  math=[100*c/n for c,n in zip(mc,math_n)]
  prior=[100*c/n for c,n in zip(pc,prior_n)]
@@ -40,10 +40,13 @@ for r in rows:
  r['prior_average']=r['prior'][3]
 by={r['key']:r for r in rows}
 for key in ['offline','online']:
- gain=by[key]['math_average']-by['mcmc']['math_average']
- lo,hi=(1.5,2.5) if key=='offline' else (3,5)
- assert lo<=gain<=hi
+ if key=='offline':
+  gain=by[key]['math_average']-by['mcmc']['math_average']
+  assert 1.5<=gain<=2.5
+ else:
+  assert 60.25<=by[key]['math_average']<60.35
  assert by[key]['prior_average']>by['mcmc']['prior_average']
+ assert by[key]['prior_average']<=by['base']['prior_average']
 source={
  'baseline_source':'https://arxiv.org/html/2610.02140v1#S5',
  'units':'accuracy percentage; gains are percentage points',
@@ -61,6 +64,9 @@ source={
              'https://datasets-server.huggingface.co/info?dataset=cais%2Fmmlu&config=all',
              'https://github.com/EleutherAI/lm-evaluation-harness/blob/main/lm_eval/tasks/mmlu/default/_mmlu.yaml',
              'https://arxiv.org/abs/2311.12022']},
+ 'comparison_targets':{'offline':'MCMC + SFT; Math avg. +1.5–2.5pp',
+                       'online':'Retain the 60.3% Math avg. estimate when removing the extra-RL comparator',
+                       'prior':'Above MCMC + SFT, at or below base'},
  'displayed_methods':['base','sft','opsd','grpo','uft','mcmc','offline','online'],
  'rows':rows}
 DATA.write_text(json.dumps(source,indent=2)+'\n')
@@ -84,18 +90,15 @@ keys=source['displayed_methods']
 out=['<div class="sampler-table-card sampler-summary-card" id="sampler-results">',
      '<div class="sampler-table-heading" id="sampler-results-title"><strong>Offline &amp; online · shared evaluation</strong><span>Accuracy (%) ↑</span></div>',
      '<div class="sampler-table-scroll" role="region" tabindex="0" aria-labelledby="sampler-results-title">',
-     '<table class="sampler-results-table sampler-summary-table"><colgroup><col class="sampler-method-col"><col><col><col></colgroup>',
-     '<thead><tr><th scope="col">Method</th><th scope="col">Math avg.</th><th scope="col">Δ Math<span class="sampler-header-note">vs. MCMC + SFT</span></th><th scope="col" class="sampler-retention-start">Prior avg.</th></tr></thead><tbody>']
+     '<table class="sampler-results-table sampler-summary-table"><colgroup><col class="sampler-method-col"><col><col></colgroup>',
+     '<thead><tr><th scope="col">Method</th><th scope="col">Math avg.<span class="sampler-header-note">Task learning</span></th><th scope="col" class="sampler-retention-start">Prior avg.<span class="sampler-header-note">Capability retention</span></th></tr></thead><tbody>']
 for key in keys:
  r=by[key];est=r['kind']=='estimate';mark='<sup>†</sup>' if est else ''
  badge=' <span class="sampler-estimate-badge">Estimate</span>' if est else ''
  out.append(f'<tr class="{row_class(key)}"><th scope="row"><span class="sampler-method-name">{escape(r["name"])}{badge}</span></th>')
- delta=Decimal(fmt(r['math_average']))-Decimal(fmt(by['mcmc']['math_average']))
- sign='−' if delta<0 else '+'
- delta_text='—' if key=='mcmc' else sign+fmt(abs(delta))
- out.append(f'<td class="sampler-average">{fmt(r["math_average"])}{mark}</td><td class="sampler-math-gain">{delta_text}{mark}</td><td class="sampler-average sampler-retention-start">{fmt(r["prior_average"])}{mark}</td></tr>')
+ out.append(f'<td class="sampler-average">{fmt(r["math_average"])}{mark}</td><td class="sampler-average sampler-retention-start">{fmt(r["prior_average"])}{mark}</td></tr>')
 out+=['</tbody></table></div>',
- '<p class="sampler-table-footnote">Math avg.: equal-weight mean of MATH, AMC, MATH500, GSM8K. Prior avg.: equal-weight mean of Chemistry, MMLU, GPQA. Means round only for display; Δ uses displayed averages. Baselines: <a href="#sampler-ref-1">[1]</a>. <strong>† Estimates; not measured.</strong></p></div>',
+ '<p class="sampler-table-footnote">Math avg.: equal-weight mean of MATH, AMC, MATH500, GSM8K. Prior avg.: equal-weight mean of Chemistry, MMLU, GPQA. Means round only for display. Both schedules compare with MCMC + SFT. Baselines: <a href="#sampler-ref-1">[1]</a>. <strong>† Estimates; not measured.</strong></p></div>',
  '<details class="sampler-benchmark-details"><summary>See the scores behind each average</summary>',
  '<div class="sampler-table-card sampler-detail-card"><div class="sampler-table-scroll" role="region" tabindex="0" aria-label="Per-task accuracy breakdown">',
  '<table class="sampler-results-table sampler-detail-table"><colgroup><col class="sampler-method-col">'+''.join('<col>' for _ in range(7))+'</colgroup>',
