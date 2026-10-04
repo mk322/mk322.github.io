@@ -2,16 +2,16 @@
   "main": [
     {
       "title": "Visual reasoning",
-      "metric": "8-benchmark mean accuracy (%)",
+      "metric": "7-benchmark mean accuracy (%)",
       "labels": [
-        "Qwen2.5-VL\nmatched base",
+        "Qwen2.5-VL\nbase model",
         "Uni-LaDiR"
       ],
       "values": [
-        63.55,
-        75.55
+        64.6,
+        78.5
       ],
-      "gain": "+18.9% relative"
+      "gain": "+21.4% relative"
     },
     {
       "title": "Visual math & logic",
@@ -21,8 +21,8 @@
         "Uni-LaDiR"
       ],
       "values": [
-        45.68,
-        49.03
+        45.7,
+        49.0
       ],
       "gain": "+7.3% relative"
     },
@@ -30,7 +30,7 @@
       "title": "Robot manipulation",
       "metric": "RLBench mean success (%)",
       "labels": [
-        "LaST\u2080",
+        "LaST₀",
         "Uni-LaDiR"
       ],
       "values": [
@@ -49,14 +49,14 @@
         "Text + image\nshared"
       ],
       "values": [
-        62.97,
-        67.66
+        63.0,
+        70.1
       ],
-      "gain": "+7.4% relative"
+      "gain": "+11.3% relative"
     },
     {
       "title": "Visual + 3D + state teachers",
-      "metric": "LIBERO / RLBench mean success (%)",
+      "metric": "RLBench mean success (%)",
       "labels": [
         "Separate",
         "Visual\n+ 3D",
@@ -65,13 +65,21 @@
         "All three"
       ],
       "values": [
-        90.05,
-        90.6,
-        90.25,
-        91.25,
-        93.08
+        82,
+        83.5,
+        84.5,
+        84.5,
+        87
       ],
-      "gain": "+3.4% relative"
+      "gain": "+6.1% relative"
     }
-  ]
+  ],
+  "source": {
+    "version": "arXiv:2609.19878v3",
+    "date": "2026-09-29",
+    "url": "https://arxiv.org/abs/2609.19878v3",
+    "main": "Tables 1–2 (rounded scores; reported relative gains use unrounded scores)",
+    "sharing": "Figure 3 (rounded scores)",
+    "protocol": "Section 4.3 and Appendix B.3: fixed backbone, data, teacher supervision and thought-token dimensions; encoder parameter counts are not matched"
+  }
 }
