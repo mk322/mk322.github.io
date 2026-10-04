@@ -72,3 +72,25 @@
     motion();show(0);
   });
 })();
+
+(() => {
+  document.querySelectorAll('[data-uni-citation]').forEach(root => {
+    const button = root.querySelector('[data-copy-citation]');
+    const code = root.querySelector('[data-citation-text]');
+    const status = root.querySelector('[data-citation-status]');
+    button.hidden = false;
+    button.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(code.textContent.trim() + '\n');
+        button.textContent = 'Copied';
+        status.textContent = 'BibTeX copied to clipboard.';
+      } catch (_) {
+        const selection = window.getSelection();
+        const range = document.createRange();
+        range.selectNodeContents(code);
+        selection.removeAllRanges(); selection.addRange(range);
+        status.textContent = 'Citation selected. Press Command+C or Control+C to copy.';
+      }
+    });
+  });
+})();
