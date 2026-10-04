@@ -13,6 +13,6 @@
       <span class="uni-stage-highlight" hidden aria-hidden="true"></span>
     </div>
   </div>
-  <p class="uni-method-explanation" data-explanation aria-live="polite"><strong>One backbone, three training objectives.</strong> Encoding maps local teacher steps to shared thought blocks. Continuation prediction trains their contents; diffusion learns to generate them. The bottom row shows what runs at inference.</p>
-  <figcaption><strong>Figure 2. Encode, predict what follows, and generate.</strong> Original v3 method diagram <a href="#ref-1">[1, Fig. 2]</a>. Snowflakes mark stop-gradient; outlined targets mark supervision. The diffusion panel summarizes flow-matching training; it is not an unrolled sampler. <a href="{{ '/assets/blog/uni-ladir/source/fig2.pdf' | relative_url }}">Vector PDF</a><span class="uni-pan-hint"> · Swipe to inspect; tap to enlarge.</span></figcaption>
+  <p class="uni-method-explanation" data-explanation aria-live="polite"><strong>One backbone, jointly trained.</strong> Encoding maps local teacher steps to shared thought blocks. Continuation and final-output supervision train their contents; diffusion learns to generate them. Both update the shared backbone during joint training. The bottom row shows what runs at inference.</p>
+  <figcaption><strong>Figure 2. Encode, predict what follows, and generate.</strong> Original method diagram <a href="#ref-1">[1, Fig. 2]</a>. Snowflakes mark stop-gradient; outlined targets mark supervision. The diffusion panel summarizes flow-matching training; it is not an unrolled sampler. <a href="{{ '/assets/blog/uni-ladir/source/fig2.pdf' | relative_url }}">Vector PDF</a><span class="uni-pan-hint"> · Swipe to inspect; tap to enlarge.</span></figcaption>
 </figure>
