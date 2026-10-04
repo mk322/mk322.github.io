@@ -79,3 +79,6 @@
 }
 /* Theme reveal transforms would make the fixed directory relative to main. */
 #main.blog-shell.blog-article{transform:none!important;animation:none!important}
+
+.uni-toc-method{margin-left:10px;border-left:1px solid #e6e1f1}
+.uni-toc-method a{padding-left:10px}
