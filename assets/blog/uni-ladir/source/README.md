@@ -47,7 +47,7 @@ The optional top-of-post anonymous Like button uses the community Applause endpo
 
 ## Editorial source notes
 
-The opening motivates a shared latent representation and a common diffusion generation process. The discussion includes a hub-and-spoke analogy from cognitive science, citing Lambon Ralph et al. (PNAS, 2010; Nature Reviews Neuroscience, 2017). It uses this as motivation for a common thought space, not as evidence that all human cognition is amodal or that Uni-LaDiR reproduces a brain mechanism. Figure 5 is explained as two crossed choices: shared vs separate encoding and continuation vs reconstruction. Its RLBench encoder contrasts (73.0→77.3 under reconstruction; 82.0→87.0 under continuation) follow the original plotted values. Continuation average gains follow the paper's reported aggregation. Public paper links are version-neutral; exact experimental provenance remains recorded in `results.json` and source PDF checksums.
+The opening draws on the hub-and-spoke account of conceptual knowledge, citing Lambon Ralph et al. (PNAS, 2010; Nature Reviews Neuroscience, 2017). It uses this as motivation for a common thought space, not as evidence that all human cognition is amodal or that Uni-LaDiR reproduces a brain mechanism. Figure 5 is explained as two crossed choices: shared vs separate encoding and continuation vs reconstruction. Its RLBench encoder contrasts (73.0→77.3 under reconstruction; 82.0→87.0 under continuation) follow the original plotted values. Continuation average gains follow the paper's reported aggregation. Public paper links are version-neutral; exact experimental provenance remains recorded in `results.json` and source PDF checksums.
 
 ## Task interpretation and label adaptations
 
