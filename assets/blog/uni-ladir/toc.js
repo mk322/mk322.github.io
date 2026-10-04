@@ -29,16 +29,16 @@
   links.forEach(link => link.addEventListener('click', event => {
     const section = document.getElementById(link.hash.slice(1));
     if (!section) return;
-    // The theme's delegated smooth-scroll handler otherwise suppresses the URL
+    // The theme's smooth-scroll handler otherwise suppresses the URL
     // fragment and scrolls without accounting for the collapsed mobile menu.
     event.preventDefault();
-    event.stopPropagation();
+    event.stopImmediatePropagation();
     if (!desktop.matches) details.open = false;
     window.history.pushState(null, '', link.hash);
     section.scrollIntoView({ behavior: 'instant', block: 'start' });
     section.setAttribute('tabindex', '-1');
     section.focus({ preventScroll: true });
     highlight();
-  }));
+  }, { capture: true }));
   highlight();
 })();
