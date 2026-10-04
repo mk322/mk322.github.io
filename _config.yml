@@ -12,6 +12,7 @@ title_separator          : "-"
 name                     : &name "Murray Kang"
 description              : &description "Haoqiang (Murray) Kang - CS PhD candidate at UCSD researching RL post-training, latent reasoning, and embodied coding agents for large AI models."
 url                      : https://mk322.github.io # the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
+blog_metrics_origin      : "https://mk322.github.io" # Stable counter keys; previews read counts without incrementing.
 baseurl                  : "" # the subpath of your site, e.g. "/blog"
 repository               : "mk322/mk322.github.io"
 teaser                   :  # filename of teaser fallback teaser image placed in /images/, .e.g. "500x300.png"
@@ -79,6 +80,7 @@ exclude:
   - log
   - node_modules
   - package.json
+  - learned_on_policy_sampler_blog_brief.md
   - tmp
   - vendor
 keep_files:

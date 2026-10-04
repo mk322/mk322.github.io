@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="330" viewBox="0 0 800 330" role="img" aria-labelledby="title desc"><title id="title">Online: refresh after each student update</title><desc id="desc">Online repeats three stages against the updated student.</desc><defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" fill="#525a65"/></marker><marker id="purple-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#6356a5"/></marker></defs><rect width="800" height="330" rx="12" fill="#fff"/><g font-family="Helvetica Neue, Arial, sans-serif" fill="#20252c">
+<text x="22" y="34" font-size="24" fill="#20252c" font-weight="600" text-anchor="start">Online · repeat each round</text>
+<rect x="22" y="82" width="230" height="116" rx="10" fill="#f2f0f8" stroke="#d7dce5" stroke-width="1.3"/>
+<text x="40" y="113" font-size="19" fill="#20252c" font-weight="600" text-anchor="start">1  Fit sampler LoRA</text>
+<text x="40" y="146" font-size="16" fill="#525a65" font-weight="400" text-anchor="start">Backbone fixed</text>
+<text x="40" y="170" font-size="16" fill="#525a65" font-weight="400" text-anchor="start">LoRA updated</text>
+<path d="M255 140H277" fill="none" stroke="#525a65" stroke-width="1.7" stroke-linejoin="round"  marker-end="url(#arrow)"/>
+<rect x="285" y="82" width="230" height="116" rx="10" fill="#fafbfd" stroke="#d7dce5" stroke-width="1.3"/>
+<text x="303" y="113" font-size="19" fill="#20252c" font-weight="600" text-anchor="start">2  Generate data</text>
+<text x="303" y="146" font-size="16" fill="#525a65" font-weight="400" text-anchor="start">LoRA on + expert input</text>
+<text x="303" y="170" font-size="16" fill="#525a65" font-weight="400" text-anchor="start">Verify the next batch</text>
+<path d="M518 140H540" fill="none" stroke="#525a65" stroke-width="1.7" stroke-linejoin="round"  marker-end="url(#arrow)"/>
+<rect x="548" y="82" width="230" height="116" rx="10" fill="#eff7f6" stroke="#d7dce5" stroke-width="1.3"/>
+<text x="566" y="113" font-size="19" fill="#20252c" font-weight="600" text-anchor="start">3  SFT backbone</text>
+<text x="566" y="146" font-size="16" fill="#525a65" font-weight="400" text-anchor="start">LoRA off, weights fixed</text>
+<text x="566" y="170" font-size="16" fill="#525a65" font-weight="400" text-anchor="start">Backbone updated</text>
+<path d="M663 201V250H137V201" fill="none" stroke="#6356a5" stroke-width="1.7" stroke-linejoin="round"  marker-end="url(#purple-arrow)"/>
+<text x="400.0" y="292" font-size="17" fill="#6356a5" font-weight="600" text-anchor="middle">Updated student → new target</text>
+<text x="400.0" y="317" font-size="15" fill="#525a65" font-weight="400" text-anchor="middle">Then fit the sampler again</text>
+</g></svg>

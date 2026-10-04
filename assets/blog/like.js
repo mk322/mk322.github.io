@@ -18,6 +18,7 @@
       label.textContent = 'Liked';
       status.textContent = 'Thank you!';
     };
+    const isPreview = location.origin !== new URL(url).origin;
     let liked = false;
     try { liked = localStorage.getItem(key) === '1'; } catch (_) {}
     if (liked) markLiked();
@@ -38,8 +39,13 @@
     let initial = request('/get-claps').then(total => {
       count.textContent = total.toLocaleString();
     }).catch(() => {
-      if (!liked) status.textContent = 'Count unavailable · you can still try liking';
+      if (!liked && !isPreview) status.textContent = 'Count unavailable · you can still try liking';
     });
+    if (isPreview) {
+      button.disabled = true;
+      status.textContent = 'Preview';
+      return;
+    }
     button.addEventListener('click', async () => {
       if (liked) return;
       button.disabled = true;

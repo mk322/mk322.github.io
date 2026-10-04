@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="380" height="545" viewBox="0 0 380 545" role="img" aria-labelledby="title desc"><title id="title">Learn the search. Reuse the sampler.</title><desc id="desc">MCMC repeats a chain of proposals for each data example. Sampler training learns one policy reused to produce many verified responses.</desc><defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" fill="#525a65"/></marker><marker id="purple-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#6356a5"/></marker></defs><rect width="380" height="545" rx="12" fill="#fff"/><g font-family="Helvetica Neue, Arial, sans-serif" fill="#20252c">
+<text x="22" y="35" font-size="22" fill="#20252c" font-weight="600" text-anchor="start">Learn the search. Reuse it.</text>
+<rect x="22" y="61" width="336" height="222" rx="10" fill="#fafbfd" stroke="#d7dce5" stroke-width="1.3"/>
+<text x="40" y="91" font-size="20" fill="#20252c" font-weight="600" text-anchor="start">MCMC</text>
+<text x="40" y="116" font-size="15" fill="#525a65" font-weight="400" text-anchor="start">Search for each response</text>
+<rect x="46" y="142" width="39" height="22" rx="5" fill="#e9edf2" stroke="#c6ceda" stroke-width="1.3"/>
+<path d="M88 153h19" fill="none" stroke="#525a65" stroke-width="1.7" stroke-linejoin="round"  marker-end="url(#arrow)"/>
+<rect x="111" y="142" width="39" height="22" rx="5" fill="#e9edf2" stroke="#c6ceda" stroke-width="1.3"/>
+<path d="M153 153h19" fill="none" stroke="#525a65" stroke-width="1.7" stroke-linejoin="round"  marker-end="url(#arrow)"/>
+<rect x="176" y="142" width="39" height="22" rx="5" fill="#e9edf2" stroke="#c6ceda" stroke-width="1.3"/>
+<path d="M218 153H299" fill="none" stroke="#525a65" stroke-width="1.7" stroke-linejoin="round"  marker-end="url(#arrow)"/>
+<rect x="306" y="138" width="25" height="31" rx="3" fill="#f0f7f7" stroke="#83b5b1" stroke-width="1.3"/>
+<path d="M312 147h13" stroke="#2b8b88" stroke-width="1.2"/>
+<path d="M312 153h13" stroke="#2b8b88" stroke-width="1.2"/>
+<path d="M312 159h13" stroke="#2b8b88" stroke-width="1.2"/>
+<rect x="46" y="180" width="39" height="22" rx="5" fill="#e9edf2" stroke="#c6ceda" stroke-width="1.3"/>
+<path d="M88 191h19" fill="none" stroke="#525a65" stroke-width="1.7" stroke-linejoin="round"  marker-end="url(#arrow)"/>
+<rect x="111" y="180" width="39" height="22" rx="5" fill="#e9edf2" stroke="#c6ceda" stroke-width="1.3"/>
+<path d="M153 191h19" fill="none" stroke="#525a65" stroke-width="1.7" stroke-linejoin="round"  marker-end="url(#arrow)"/>
+<rect x="176" y="180" width="39" height="22" rx="5" fill="#e9edf2" stroke="#c6ceda" stroke-width="1.3"/>
+<path d="M218 191H299" fill="none" stroke="#525a65" stroke-width="1.7" stroke-linejoin="round"  marker-end="url(#arrow)"/>
+<rect x="306" y="176" width="25" height="31" rx="3" fill="#f0f7f7" stroke="#83b5b1" stroke-width="1.3"/>
+<path d="M312 185h13" stroke="#2b8b88" stroke-width="1.2"/>
+<path d="M312 191h13" stroke="#2b8b88" stroke-width="1.2"/>
+<path d="M312 197h13" stroke="#2b8b88" stroke-width="1.2"/>
+<rect x="46" y="218" width="39" height="22" rx="5" fill="#e9edf2" stroke="#c6ceda" stroke-width="1.3"/>
+<path d="M88 229h19" fill="none" stroke="#525a65" stroke-width="1.7" stroke-linejoin="round"  marker-end="url(#arrow)"/>
+<rect x="111" y="218" width="39" height="22" rx="5" fill="#e9edf2" stroke="#c6ceda" stroke-width="1.3"/>
+<path d="M153 229h19" fill="none" stroke="#525a65" stroke-width="1.7" stroke-linejoin="round"  marker-end="url(#arrow)"/>
+<rect x="176" y="218" width="39" height="22" rx="5" fill="#e9edf2" stroke="#c6ceda" stroke-width="1.3"/>
+<path d="M218 229H299" fill="none" stroke="#525a65" stroke-width="1.7" stroke-linejoin="round"  marker-end="url(#arrow)"/>
+<rect x="306" y="214" width="25" height="31" rx="3" fill="#f0f7f7" stroke="#83b5b1" stroke-width="1.3"/>
+<path d="M312 223h13" stroke="#2b8b88" stroke-width="1.2"/>
+<path d="M312 229h13" stroke="#2b8b88" stroke-width="1.2"/>
+<path d="M312 235h13" stroke="#2b8b88" stroke-width="1.2"/>
+<text x="46" y="263" font-size="14" fill="#525a65" font-weight="400" text-anchor="start">Propose · score · repeat</text>
+<rect x="22" y="303" width="336" height="222" rx="10" fill="#f8f6fc" stroke="#d7dce5" stroke-width="1.3"/>
+<text x="40" y="333" font-size="20" fill="#20252c" font-weight="600" text-anchor="start">Amortized sampler</text>
+<text x="40" y="358" font-size="15" fill="#525a65" font-weight="400" text-anchor="start">Train, then reuse</text>
+<rect x="40" y="389" width="65" height="38" rx="10" fill="#fff" stroke="#ded8ec" stroke-width="1.3"/>
+<text x="72.5" y="413" font-size="16" fill="#525a65" font-weight="500" text-anchor="middle">Train</text>
+<path d="M107 408H129" fill="none" stroke="#6356a5" stroke-width="1.7" stroke-linejoin="round"  marker-end="url(#purple-arrow)"/>
+<rect x="136" y="381" width="96" height="54" rx="10" fill="#e6e1f1" stroke="#c1b7d9" stroke-width="1.3"/>
+<text x="184" y="414" font-size="17" fill="#6356a5" font-weight="600" text-anchor="middle">Sampler</text>
+<path d="M184 438V454H75.5V468" fill="none" stroke="#6356a5" stroke-width="1.7" stroke-linejoin="round"  marker-end="url(#purple-arrow)"/>
+<rect x="63" y="471" width="25" height="31" rx="3" fill="#f0f7f7" stroke="#83b5b1" stroke-width="1.3"/>
+<path d="M69 480h13" stroke="#2b8b88" stroke-width="1.2"/>
+<path d="M69 486h13" stroke="#2b8b88" stroke-width="1.2"/>
+<path d="M69 492h13" stroke="#2b8b88" stroke-width="1.2"/>
+<path d="M184 438V454H180.5V468" fill="none" stroke="#6356a5" stroke-width="1.7" stroke-linejoin="round"  marker-end="url(#purple-arrow)"/>
+<rect x="168" y="471" width="25" height="31" rx="3" fill="#f0f7f7" stroke="#83b5b1" stroke-width="1.3"/>
+<path d="M174 480h13" stroke="#2b8b88" stroke-width="1.2"/>
+<path d="M174 486h13" stroke="#2b8b88" stroke-width="1.2"/>
+<path d="M174 492h13" stroke="#2b8b88" stroke-width="1.2"/>
+<path d="M184 438V454H285.5V468" fill="none" stroke="#6356a5" stroke-width="1.7" stroke-linejoin="round"  marker-end="url(#purple-arrow)"/>
+<rect x="273" y="471" width="25" height="31" rx="3" fill="#f0f7f7" stroke="#83b5b1" stroke-width="1.3"/>
+<path d="M279 480h13" stroke="#2b8b88" stroke-width="1.2"/>
+<path d="M279 486h13" stroke="#2b8b88" stroke-width="1.2"/>
+<path d="M279 492h13" stroke="#2b8b88" stroke-width="1.2"/>
+</g></svg>

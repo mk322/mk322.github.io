@@ -1,0 +1,84 @@
+/* Local to this research note; diagrams have dedicated mobile compositions. */
+.sampler-status { color: #69717d; font-size: .75em; letter-spacing: .02em; margin-top: -8px; }
+.sampler-equation { display: flex; align-items: center; justify-content: center; gap: 12px; padding: 24px 12px; margin: 28px 0; border-top: 1px solid #e3e0ec; border-bottom: 1px solid #e3e0ec; font-family: Georgia, 'Times New Roman', serif; font-size: 1.08em; background: #faf9fc; }
+.sampler-fraction { display: inline-flex; flex-direction: column; text-align: center; line-height: 1.6; }
+.sampler-fraction > span:first-child { border-bottom: 1px solid #6356a5; padding: 0 8px 3px; }
+.sampler-fraction > span:last-child { padding-top: 3px; }
+.sampler-results-note { font-size: .85em; color: #59616d; padding: 12px 16px; border-left: 3px solid #81739e; background: #faf9fc; }
+.blog-content picture { display: block; }
+.blog-content picture img { display: block; width: 100%; height: auto; }
+[id^="sampler-ref-"] { font-size: .82em; scroll-margin-top: 24px; }
+@media (max-width: 600px) { .sampler-equation { font-size: .88em; gap: 8px; padding: 22px 4px; } }
+/* The theme's #main container otherwise overrides the blog reading width. */
+#main.blog-shell.blog-article { max-width: 780px; padding-left: 0; padding-right: 0; margin-top: 52px; }
+@media (max-width: 600px) { #main.blog-shell.blog-article { margin-top: 32px; } }
+/* Equations use the site's MathJax renderer, with contained mobile scrolling. */
+.sampler-math { overflow-x: auto; overflow-y: hidden; max-width: 100%; margin: 24px 0 28px; padding: 12px 10px; border-left: 2px solid #e5e0f0; background: #fcfbfe; font-size: .92em; }
+.sampler-math .MathJax_Display { margin: .5em 0 !important; }
+.sampler-math .MathJax_SVG_Display { margin: .5em 0 !important; }
+@media (max-width: 600px) { .sampler-math { font-size: .83em; padding: 10px 5px; } }
+.blog-article .blog-header .blog-subtitle { font-size: 1.1em; line-height: 1.65; color: #525a65; margin-top: 0; }
+/* A native anchor directory remains usable without JavaScript. */
+.sampler-toc { margin: 24px 0 36px; padding: 16px 20px; border: 1px solid #e2e4eb; border-radius: 8px; font-size: .83em; background: #fafbfd; }
+.sampler-toc summary { cursor: pointer; font-weight: 600; color: #20252c; }
+.sampler-toc ol { margin: 12px 0 0; padding-left: 20px; }
+.sampler-toc li { padding: 4px 0; line-height: 1.5; }
+.sampler-toc a { color: #525a65; text-decoration: none; }
+.sampler-toc a:hover, .sampler-toc a:focus { color: #6356a5; text-decoration: underline; }
+.blog-content h2[id] { scroll-margin-top: 30px; }
+.blog-content table { display: block; max-width: 100%; overflow-x: auto; font-size: .83em; }
+@media(min-width:1280px) {
+ .sampler-toc { position: fixed; top: 145px; left: calc(50% + 420px); width: 190px; max-height: calc(100vh - 190px); overflow-y: auto; margin: 0; padding: 0 0 0 16px; border: 0; border-left: 1px solid #ded8ec; border-radius: 0; background: transparent; font-size: 13px; }
+ .sampler-toc ol { padding-left: 16px; }
+}
+/* Theme entrance transforms otherwise make fixed navigation scroll away. */
+#main.blog-shell.blog-article { transform: none !important; animation: none !important; }
+.sampler-example { margin: 22px 0; padding: 4px 20px; background: #f8f7fb; border-left: 3px solid #81739e; }
+.sampler-example p { margin: 14px 0; }
+
+/* Keep pseudocode legible instead of inheriting nested em reductions. */
+#main.blog-article .blog-content pre { font-size: 13px; line-height: 1.7; overflow-x: auto; }
+#main.blog-article .blog-content pre code { font-size: inherit; line-height: inherit; }
+@media (max-width: 600px) {
+ #main.blog-article .blog-content pre { font-size: 12px; padding: 14px 10px; }
+}
+
+/* Compact algorithms: one schedule per block. */
+.sampler-algorithm { margin: 24px 0; padding: 16px 18px; border: 1px solid #ded8ec; border-radius: 10px; background: #faf9fd; }
+#main.blog-article .sampler-algorithm .sampler-algorithm-label { margin: 0 0 12px; font: 600 13px/1.5 'Helvetica Neue', Arial, sans-serif; color: #6356a5; }
+#main.blog-article .sampler-algorithm .highlighter-rouge,
+#main.blog-article .sampler-algorithm .highlight { margin: 0; background: transparent; }
+#main.blog-article .sampler-algorithm pre { padding: 0; margin: 0; font-size: 13px; line-height: 1.85; }
+
+/* Research tables: separate provenance, aligned metrics, visible retention. */
+.sampler-table-card { margin: 28px 0 34px; border: 1px solid #dfe3eb; border-radius: 12px; overflow: hidden; background: #fff; font-family: 'Helvetica Neue', Arial, sans-serif; }
+.sampler-table-heading { padding: 19px 21px 16px; background: #fafbfd; border-bottom: 1px solid #e5e8ef; }
+.sampler-table-kicker { display: block; font-size: 10px; font-weight: 600; letter-spacing: .1em; line-height: 1.5; color: #687284; }
+#main.blog-article .sampler-table-heading h4 { margin: 5px 0 4px; font-size: 19px; line-height: 1.4; color: #20252c; }
+#main.blog-article .sampler-table-heading p { margin: 0; font-size: 12.5px; line-height: 1.6; color: #59616d; }
+.sampler-table-scroll { overflow-x: auto; overscroll-behavior-x: contain; }
+#main.blog-article .sampler-results-table { display: table; margin: 0; border: 0; width: 100%; min-width: 640px; table-layout: auto; border-collapse: separate; border-spacing: 0; font-size: 14px; line-height: 1.5; font-variant-numeric: tabular-nums; }
+#main.blog-article .sampler-results-table th,
+#main.blog-article .sampler-results-table td { padding: 12px 11px; border: 0; border-bottom: 1px solid #edf0f5; text-align: right; white-space: nowrap; vertical-align: middle; }
+#main.blog-article .sampler-results-table thead th { padding-top: 11px; padding-bottom: 11px; font-size: 11px; font-weight: 600; color: #596579; background: #fff; }
+#main.blog-article .sampler-results-table th:first-child { text-align: left; padding-left: 21px; min-width: 185px; }
+#main.blog-article .sampler-results-table tbody th { color: #303945; font-size: 13px; font-weight: 500; }
+#main.blog-article .sampler-results-table tr:last-child > * { border-bottom: 0; }
+#main.blog-article .sampler-results-table .sampler-reference-row > * { background: #f2f7f7; }
+#main.blog-article .sampler-results-table .sampler-estimate-row > * { background: #f6f3fb; border-top: 1px dashed #c8bddc; color: #514382; font-weight: 600; }
+.sampler-estimate-badge { display: block; width: fit-content; margin-top: 4px; padding: 1px 6px; border: 1px solid #d8cfe8; border-radius: 4px; color: #69528d; font-size: 10px; font-weight: 500; letter-spacing: .02em; }
+.sampler-results-table sup { font-size: 9px; padding-left: 2px; }
+.sampler-cell-delta { display: block; margin-top: 3px; font-size: 10px; font-weight: 400; color: #697580; }
+.sampler-results-table .sampler-down { color: #9b5260; }
+.sampler-delta { font-weight: 600; }
+#main.blog-article .sampler-table-footnote { margin: 0; padding: 13px 21px; border-top: 1px solid #e5e8ef; font-size: 11.5px; line-height: 1.7; color: #66707d; }
+@media (max-width: 600px) {
+ .sampler-table-heading { padding: 16px; }
+ #main.blog-article .sampler-table-heading h4 { font-size: 18px; }
+ #main.blog-article .sampler-table-footnote { padding: 12px 16px; }
+ #main.blog-article .sampler-results-table th:first-child { position: sticky; left: 0; z-index: 1; background: #fff; min-width: 151px; max-width: 165px; white-space: normal; padding-left: 14px; box-shadow: 1px 0 0 #e5e8ef; }
+ #main.blog-article .sampler-results-table .sampler-reference-row th:first-child { background: #f2f7f7; }
+ #main.blog-article .sampler-results-table .sampler-estimate-row th:first-child { background: #f6f3fb; }
+ .sampler-algorithm { padding: 14px 12px; }
+ #main.blog-article .sampler-algorithm pre { font-size: 12px; }
+}

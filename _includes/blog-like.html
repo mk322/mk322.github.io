@@ -1,10 +1,17 @@
-<div class="blog-like" data-blog-like data-url="{{ page.url | absolute_url }}">
+{% assign metrics_origin = site.blog_metrics_origin | default: site.url %}
+<div class="blog-like" data-blog-like data-url="{{ metrics_origin }}{{ site.baseurl }}{{ page.url }}">
   <button type="button" class="blog-like__button" aria-label="Like this post" aria-pressed="false">
     <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M12 20s-8-4.8-8-10a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 5.2-8 10-8 10Z" fill="none" stroke="currentColor" stroke-width="1.7"/></svg>
     <span data-like-label>Like</span><span data-like-count aria-label="Total likes">—</span>
   </button>
+  <span class="blog-views" data-blog-views data-url="{{ metrics_origin }}{{ site.baseurl }}{{ page.url }}" title="Page views since this counter was enabled">
+    <svg viewBox="0 0 24 24" width="19" height="19" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
+    <span data-view-count aria-label="Page views">—</span><span>views</span>
+  </span>
   <span class="blog-like__status" data-like-status role="status">No sign-in needed</span>
   <noscript><span>Enable JavaScript to like this post.</span></noscript>
 </div>
-<link rel="stylesheet" href="{{ '/assets/blog/like.css' | relative_url }}?v=ca119e4034c5">
-<script src="{{ '/assets/blog/like.js' | relative_url }}?v=56075e61c8f0" defer></script>
+<link rel="stylesheet" href="{{ '/assets/blog/like.css' | relative_url }}?v=20261004">
+<script src="{{ '/assets/blog/like.js' | relative_url }}?v=20261004" defer></script>
+
+<script src="{{ "/assets/blog/views.js" | relative_url }}?v=20261004" defer></script>

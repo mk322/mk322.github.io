@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="320" viewBox="0 0 800 320" role="img" aria-labelledby="title desc"><title id="title">One backbone, two roles</title><desc id="desc">The expert-conditioned sampler enables a separate LoRA adapter. Prompt-only student scoring and SFT disable the adapter. The backbone evolves only during student SFT.</desc><defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" fill="#525a65"/></marker><marker id="purple-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#6356a5"/></marker></defs><rect width="800" height="320" rx="12" fill="#fff"/><g font-family="Helvetica Neue, Arial, sans-serif" fill="#20252c">
+<text x="22" y="34" font-size="24" fill="#20252c" font-weight="600" text-anchor="start">One backbone. Two roles.</text>
+<rect x="22" y="63" width="756" height="66" rx="10" fill="#fafbfd" stroke="#d7dce5" stroke-width="1.3"/>
+<text x="400.0" y="91" font-size="19" fill="#20252c" font-weight="600" text-anchor="middle">Current student backbone</text>
+<text x="400.0" y="115" font-size="16" fill="#525a65" font-weight="400" text-anchor="middle">Shared weights θ</text>
+<rect x="22" y="168" width="340" height="143" rx="10" fill="#f2f0f8" stroke="#d7dce5" stroke-width="1.3"/>
+<text x="40" y="199" font-size="19" fill="#6356a5" font-weight="600" text-anchor="start">Sampler · LoRA on</text>
+<text x="40" y="233" font-size="16" fill="#525a65" font-weight="400" text-anchor="start">Input: prompt + expert trace</text>
+<text x="40" y="263" font-size="16" fill="#20252c" font-weight="400" text-anchor="start">Generate verified SFT responses</text>
+<text x="40" y="291" font-size="15" fill="#525a65" font-weight="400" text-anchor="start">Sampler phase: update adapter φ</text>
+<rect x="438" y="168" width="340" height="143" rx="10" fill="#eff7f6" stroke="#d7dce5" stroke-width="1.3"/>
+<text x="456" y="199" font-size="19" fill="#2b8b88" font-weight="600" text-anchor="start">Student · LoRA off</text>
+<text x="456" y="233" font-size="16" fill="#525a65" font-weight="400" text-anchor="start">Input: prompt only</text>
+<text x="456" y="263" font-size="16" fill="#20252c" font-weight="400" text-anchor="start">Score responses / run SFT</text>
+<text x="456" y="291" font-size="15" fill="#525a65" font-weight="400" text-anchor="start">SFT phase: update backbone θ</text>
+<path d="M230 132V156" fill="none" stroke="#525a65" stroke-width="1.7" stroke-linejoin="round"  marker-end="url(#arrow)"/>
+<path d="M570 132V156" fill="none" stroke="#525a65" stroke-width="1.7" stroke-linejoin="round"  marker-end="url(#arrow)"/>
+</g></svg>

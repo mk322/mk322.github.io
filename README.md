@@ -34,13 +34,12 @@ To support this, all changes to the underlying code appear as a closed issue wit
 
 ## Publishing blog posts
 
-The blog lives at `/blog/`. Posts use a reading-focused layout with dates, reading time, tags,
-math, code highlighting, and previous/next navigation. Search matches titles,
-summaries, and topics; it combines with the topic filter.
+The blog lives at `/blog/`. Posts use a reading-focused layout with a compact author/date byline, estimated reading time,
+math, code highlighting, and previous/next navigation. The Blog lists posts directly, without topic tags or filtering.
 
 1. Copy `_drafts/blog-template.md` to `_posts/YYYY-MM-DD-your-post-slug.md`.
-2. Set `title`, `excerpt`, and `tags` in the front matter, then write in Markdown.
-   Choose tags from `_data/blog_topics.yml`, shared with the homepage Research Topics.
+2. Set `title` and `excerpt` in the front matter, then write in Markdown.
+   Existing research-topic metadata is not displayed in the Blog.
    The filename sets the publication date and `/blog/your-post-slug/` URL.
 3. Keep the table-of-contents block for long articles, or remove it for short notes.
    Put figures in `images/blog/your-post-slug/` and use the image example in the template.
@@ -52,6 +51,19 @@ Add `tldr: |` followed by an indented Markdown summary to show a collapsible
 **TL;DR** at the start of a post (expanded by default). Omit it to hide the panel.
 
 Optional front matter: `reading_time: 10` (minutes, recommended for Chinese text),
-`last_modified_at: YYYY-MM-DD`, and `author: Name`. To keep a file in `_posts`
+`last_modified_at: YYYY-MM-DD`, and `author: Name`. The byline shows only the
+latest date. Reading time uses approximately 250 English words per minute and
+excludes references, figure/table/preformatted blocks, and the articles’ display
+equations; front matter can override it. To keep a file in `_posts`
 unpublished, set `published: false`. This site currently sets `future: true`, so
 future-dated files in `_posts` are published too; use `_drafts` for unfinished work.
+
+Blog posts include anonymous likes and page-view counts by default (`likes: false`
+hides the engagement row). Likes reuse the existing Applause backend, preserving
+the Uni-LaDiR counter. Views use [CounterAPI.com](https://counterapi.com/) with
+a domain namespace and a stable per-article key. These are page views, not
+verified unique readers; historical views before installation are unavailable.
+`blog_metrics_origin` pins the production origin: local previews only read counts
+and cannot record likes or views. Service failures display an unavailable count
+instead of an invented zero. No account, API key, or third-party JavaScript SDK
+is embedded. Counts are public, approximate engagement metrics.

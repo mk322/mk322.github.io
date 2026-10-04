@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="270" viewBox="0 0 800 270" role="img" aria-labelledby="title desc"><title id="title">Offline: finish data creation before SFT</title><desc id="desc">Three sequential phases. The student is fixed until the final phase.</desc><defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" fill="#525a65"/></marker><marker id="purple-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#6356a5"/></marker></defs><rect width="800" height="270" rx="12" fill="#fff"/><g font-family="Helvetica Neue, Arial, sans-serif" fill="#20252c">
+<text x="22" y="34" font-size="24" fill="#20252c" font-weight="600" text-anchor="start">Offline · run once, in order</text>
+<rect x="22" y="82" width="230" height="116" rx="10" fill="#f2f0f8" stroke="#d7dce5" stroke-width="1.3"/>
+<text x="40" y="113" font-size="19" fill="#20252c" font-weight="600" text-anchor="start">1  Fit sampler</text>
+<text x="40" y="146" font-size="16" fill="#525a65" font-weight="400" text-anchor="start">Starting student fixed</text>
+<text x="40" y="170" font-size="16" fill="#525a65" font-weight="400" text-anchor="start">Sampler updated</text>
+<path d="M255 140H277" fill="none" stroke="#525a65" stroke-width="1.7" stroke-linejoin="round"  marker-end="url(#arrow)"/>
+<rect x="285" y="82" width="230" height="116" rx="10" fill="#fafbfd" stroke="#d7dce5" stroke-width="1.3"/>
+<text x="303" y="113" font-size="19" fill="#20252c" font-weight="600" text-anchor="start">2  Generate data</text>
+<text x="303" y="146" font-size="16" fill="#525a65" font-weight="400" text-anchor="start">Sampler fixed</text>
+<text x="303" y="170" font-size="16" fill="#525a65" font-weight="400" text-anchor="start">Save a verified dataset</text>
+<path d="M518 140H540" fill="none" stroke="#525a65" stroke-width="1.7" stroke-linejoin="round"  marker-end="url(#arrow)"/>
+<rect x="548" y="82" width="230" height="116" rx="10" fill="#eff7f6" stroke="#d7dce5" stroke-width="1.3"/>
+<text x="566" y="113" font-size="19" fill="#20252c" font-weight="600" text-anchor="start">3  Run SFT</text>
+<text x="566" y="146" font-size="16" fill="#525a65" font-weight="400" text-anchor="start">Use the saved dataset</text>
+<text x="566" y="170" font-size="16" fill="#525a65" font-weight="400" text-anchor="start">Student updated</text>
+<text x="400.0" y="246" font-size="16" fill="#525a65" font-weight="400" text-anchor="middle">No feedback from SFT to the sampler</text>
+</g></svg>

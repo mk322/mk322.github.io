@@ -1,0 +1,160 @@
+{
+  "baseline_source": "https://arxiv.org/html/2610.02140v1#S5",
+  "units": "accuracy percentage; deltas are percentage points",
+  "estimate_basis": "User-specified +2pp offline / +3\u20135pp online, using +4pp midpoint for all four math columns. Prior-task estimates are base-level retention targets. No measured runs.",
+  "rows": [
+    {
+      "key": "base",
+      "name": "Base model",
+      "kind": "reported",
+      "math": [
+        31.5,
+        13.3,
+        24.5,
+        57.9
+      ],
+      "prior": [
+        28.3,
+        65.1,
+        33.3,
+        42.2
+      ]
+    },
+    {
+      "key": "sft",
+      "name": "Expert-data SFT",
+      "kind": "reported",
+      "math": [
+        24.3,
+        10.0,
+        16.8,
+        45.5
+      ],
+      "prior": [
+        22.2,
+        64.8,
+        29.8,
+        38.9
+      ]
+    },
+    {
+      "key": "opsd",
+      "name": "OPSD",
+      "kind": "reported",
+      "math": [
+        26.7,
+        8.4,
+        33.2,
+        52.4
+      ],
+      "prior": [
+        24.2,
+        65.2,
+        31.3,
+        40.4
+      ]
+    },
+    {
+      "key": "grpo",
+      "name": "GRPO",
+      "kind": "reported",
+      "math": [
+        45.7,
+        24.9,
+        31.3,
+        80.8
+      ],
+      "prior": [
+        27.8,
+        65.2,
+        31.3,
+        41.4
+      ]
+    },
+    {
+      "key": "uft",
+      "name": "UFT",
+      "kind": "reported",
+      "math": [
+        47.0,
+        29.3,
+        29.7,
+        74.6
+      ],
+      "prior": [
+        28.3,
+        65.3,
+        32.8,
+        42.1
+      ]
+    },
+    {
+      "key": "mcmc",
+      "name": "MCMC + SFT",
+      "kind": "reported",
+      "math": [
+        49.5,
+        27.7,
+        58.2,
+        78.2
+      ],
+      "prior": [
+        26.6,
+        65.1,
+        34.3,
+        42.0
+      ]
+    },
+    {
+      "key": "mcmc_rl",
+      "name": "MCMC + SFT + RL",
+      "kind": "reported",
+      "math": [
+        54.5,
+        24.1,
+        65.2,
+        83.0
+      ],
+      "prior": [
+        28.5,
+        65.2,
+        35.4,
+        43.0
+      ]
+    },
+    {
+      "key": "offline",
+      "name": "Our offline sampler",
+      "kind": "estimate",
+      "math": [
+        51.5,
+        29.7,
+        60.2,
+        80.2
+      ],
+      "prior": [
+        28.3,
+        65.1,
+        33.3,
+        42.2
+      ]
+    },
+    {
+      "key": "online",
+      "name": "Our online sampler",
+      "kind": "estimate",
+      "math": [
+        53.5,
+        31.7,
+        62.2,
+        82.2
+      ],
+      "prior": [
+        28.3,
+        65.1,
+        33.3,
+        42.2
+      ]
+    }
+  ]
+}
