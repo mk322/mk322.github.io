@@ -1,12 +1,45 @@
 {
   "baseline_source": "https://arxiv.org/html/2610.02140v1#S5",
-  "units": "accuracy percentage; deltas are percentage points",
-  "result_provenance": "The author confirmed all currently displayed scores on 2026-10-04. No raw run logs, seed-level results, or runtime measurements were supplied.",
-  "draft_history": "These values were originally planning placeholders. Publication status changed after explicit author verification; scores are unchanged.",
-  "display_arithmetic": {
+  "units": "accuracy percentage; gains are percentage points",
+  "result_provenance": "Revised sampler rows are illustrative estimates requested on 2026-10-04, not measured results. Published baseline numbers are unchanged.",
+  "previous_author_confirmed_display": [
+    {
+      "key": "offline",
+      "math": [
+        51.5625,
+        30.120481927710845,
+        59.8,
+        80.15151515151516
+      ],
+      "prior": [
+        28.333333333333332,
+        65.0049850448654,
+        33.83838383838384,
+        42.39223407219419
+      ]
+    },
+    {
+      "key": "online",
+      "math": [
+        53.7109375,
+        32.53012048192771,
+        62.2,
+        81.66666666666667
+      ],
+      "prior": [
+        28.166666666666668,
+        65.16165788349238,
+        33.333333333333336,
+        42.22055262783079
+      ]
+    }
+  ],
+  "estimate_protocol": {
+    "evaluations_per_item": 1,
     "display_decimals": 1,
-    "count_provenance": "Integer counts used in the previous draft to obtain display-compatible decimals; not independently verified experimental counts.",
-    "calculation": "Draft arithmetic: 100 * integer count / evaluation size, rounded for display",
+    "calculation": "100 * illustrative integer correct count / evaluation size; round half up for display",
+    "math_average": "unweighted mean of four task accuracies (not pooled accuracy)",
+    "prior_average": "unweighted mean of three task accuracies; reported baseline prior averages retained",
     "math_evaluation_sizes": {
       "MATH": 1024,
       "AMC": 83,
@@ -18,15 +51,24 @@
       "MMLU": 14042,
       "GPQA Diamond (assumed)": 198
     },
-    "prior_average": "unweighted mean of the three unrounded task percentages",
+    "baseline_note": "Math averages use published rounded task scores. Baseline seed aggregation and GPQA variant remain unspecified; no statistical significance is inferred.",
     "sources": [
-      "https://github.com/aakaran/finetuning-with-sampling (ood_data/AMC.json, ood_data/MATH-TTT.json, ood_data/GSM8K.jsonl, sci_data/test_data.jsonl)",
-      "https://datasets-server.huggingface.co/info?dataset=cais%2Fmmlu&config=all (14042 test examples)",
-      "https://github.com/EleutherAI/lm-evaluation-harness/blob/main/lm_eval/tasks/mmlu/default/_mmlu.yaml (micro-average)",
-      "https://arxiv.org/abs/2311.12022 (GPQA Diamond assumption: 198 items)"
-    ],
-    "baseline_note": "Published baseline values and rounding are preserved. Their seed aggregation and GPQA variant are not inferred from their decimals."
+      "https://github.com/aakaran/finetuning-with-sampling",
+      "https://datasets-server.huggingface.co/info?dataset=cais%2Fmmlu&config=all",
+      "https://github.com/EleutherAI/lm-evaluation-harness/blob/main/lm_eval/tasks/mmlu/default/_mmlu.yaml",
+      "https://arxiv.org/abs/2311.12022"
+    ]
   },
+  "displayed_methods": [
+    "base",
+    "sft",
+    "opsd",
+    "grpo",
+    "uft",
+    "mcmc",
+    "offline",
+    "online"
+  ],
   "rows": [
     {
       "key": "base",
@@ -43,7 +85,9 @@
         65.1,
         33.3,
         42.2
-      ]
+      ],
+      "math_average": 31.8,
+      "prior_average": 42.2
     },
     {
       "key": "sft",
@@ -60,7 +104,9 @@
         64.8,
         29.8,
         38.9
-      ]
+      ],
+      "math_average": 24.15,
+      "prior_average": 38.9
     },
     {
       "key": "opsd",
@@ -77,7 +123,9 @@
         65.2,
         31.3,
         40.4
-      ]
+      ],
+      "math_average": 30.175,
+      "prior_average": 40.4
     },
     {
       "key": "grpo",
@@ -94,7 +142,9 @@
         65.2,
         31.3,
         41.4
-      ]
+      ],
+      "math_average": 45.675,
+      "prior_average": 41.4
     },
     {
       "key": "uft",
@@ -111,7 +161,9 @@
         65.3,
         32.8,
         42.1
-      ]
+      ],
+      "math_average": 45.15,
+      "prior_average": 42.1
     },
     {
       "key": "mcmc",
@@ -128,7 +180,9 @@
         65.1,
         34.3,
         42.0
-      ]
+      ],
+      "math_average": 53.4,
+      "prior_average": 42.0
     },
     {
       "key": "mcmc_rl",
@@ -145,67 +199,73 @@
         65.2,
         35.4,
         43.0
-      ]
+      ],
+      "math_average": 56.7,
+      "prior_average": 43.0
     },
     {
       "key": "offline",
-      "name": "Our offline sampler",
-      "kind": "author_verified",
+      "name": "Ours \u00b7 offline",
+      "kind": "estimate",
       "math": [
-        51.5625,
-        30.120481927710845,
-        59.8,
-        80.15151515151516
+        51.46484375,
+        28.91566265060241,
+        61.0,
+        80.60606060606061
       ],
       "prior": [
-        28.333333333333332,
-        65.0049850448654,
-        33.83838383838384,
-        42.39223407219419
+        29.333333333333332,
+        65.63879789203817,
+        35.35353535353536,
+        43.44188885963562
       ],
-      "display_derivation_counts": {
+      "illustrative_correct_counts": {
         "math": [
-          528,
-          25,
-          299,
-          1058
+          527,
+          24,
+          305,
+          1064
         ],
         "prior": [
-          170,
-          9128,
-          67
+          176,
+          9217,
+          70
         ]
-      }
+      },
+      "math_average": 55.496641751665756,
+      "prior_average": 43.44188885963562
     },
     {
       "key": "online",
-      "name": "Our online sampler",
-      "kind": "author_verified",
+      "name": "Ours \u00b7 online",
+      "kind": "estimate",
       "math": [
-        53.7109375,
-        32.53012048192771,
-        62.2,
-        81.66666666666667
+        53.90625,
+        31.325301204819276,
+        62.6,
+        82.12121212121212
       ],
       "prior": [
-        28.166666666666668,
-        65.16165788349238,
-        33.333333333333336,
-        42.22055262783079
+        30.166666666666668,
+        65.81683520865974,
+        36.86868686868687,
+        44.2840629146711
       ],
-      "display_derivation_counts": {
+      "illustrative_correct_counts": {
         "math": [
-          550,
-          27,
-          311,
-          1078
+          552,
+          26,
+          313,
+          1084
         ],
         "prior": [
-          169,
-          9150,
-          66
+          181,
+          9242,
+          73
         ]
-      }
+      },
+      "math_average": 57.48819083150785,
+      "prior_average": 44.2840629146711
     }
   ]
 }

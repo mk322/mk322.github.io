@@ -17,19 +17,21 @@ and parameter reuse at data-generation time, without claiming a measured speedup
 Earlier categorical/smooth distribution illustrations and source files are kept
 as unused exploratory assets. The current article no longer depends on A/B ratios.
 Published baseline scores come from Finetuning with Sampling, arXiv:2610.02140v1,
-Table 1 math panel. On 2026-10-04 the author confirmed all displayed result values;
-the article now presents these as results, with the baseline rows still attributed
-to the paper. Displayed scores are unchanged. No raw run logs, seed-level results,
-runtime measurements, or causal ablation findings were supplied to the editor.
-results-data.json records this confirmation and the previous draft history.
-Its display_derivation_counts retain the old draft's decimal arithmetic and must
-not be mistaken for independently verified experimental counts. Published baseline
-rounding is untouched. The prior-task average uses unrounded task percentages;
-displayed deltas use displayed rounded scores. The baseline GPQA variant remains
-unspecified, and its match to the Diamond basis is not inferred from the scores.
-The MCMC + SFT + RL baseline is included as the stronger online comparator.
+Table 1 math panel. Sampler values were revised again at the author's request on
+2026-10-04. The new rows are estimates, not the previously author-confirmed scores.
+Both rows target an equal-weight Math average gain over MCMC + SFT: offline
+1.5–2.5pp, online 3–5pp. Prior-task average estimates exceed the MCMC pipelines.
+Integer planning counts define sample-compatible decimals; they are not observed
+outcomes. results-data.json records the earlier confirmation separately from the
+new estimates. Published per-task baseline values and prior averages are preserved;
+Math averages are derived from their published scores, with decimal half-up display.
+All sampler values and arithmetic are computed before display rounding. Δ uses the
+rounded average scores. GPQA Diamond remains an explicit basis; the baseline's
+variant and seed aggregation are not inferred from its scores.
+MCMC + SFT + RL is excluded from the displayed comparison at the author’s request.
+Its historical published row remains in the source record only.
 
-Regenerate the two combined result tables and their source-data record:
+Regenerate the aggregate comparison and optional per-task breakdown and their source-data record:
     python3 assets/blog/learned-sampler/source/render_tables.py
 
 Verify mathematical identities and sampled gradient relations (requires numpy):
@@ -60,8 +62,16 @@ The added p_fit = q_data identity is an ideal population-fit explanation, not a
 forgetting theorem. The KL inequality after Eq. (4) assumes the original data
 satisfy the same validity constraint. Neither proves retention on unseen tasks.
 
-Table layout (2026-10-04): one comparison per schedule, with four math columns
-and Chemistry / MMLU / GPQA / their unweighted average together. Red marks
-prior-task scores below the displayed base; method names remain sticky on mobile.
-Experimental prose follows Setup → Results → Conclusion; reference settings and
-proposed causal ablations are available in optional disclosures.
+Table layout (2026-10-04): one shared comparison for offline and online. The main
+view shows Math avg., Δ Math versus MCMC + SFT, and Prior avg. A disclosure preserves
+all seven task scores. OPSD, GRPO, and UFT are retained and explained in Setup.
+New sources: OPSD (arXiv:2601.18734) and UFT (arXiv:2505.16984, §3).
+
+Regenerate the illustrative online curve (requires numpy and matplotlib):
+    python3 assets/blog/learned-sampler/source/render_online_curve.py
+
+online-training-curve.svg / -mobile.svg and the PNG share one synthetic trajectory.
+The plot is labeled illustrative, with normalized progress rather than fabricated
+step counts. online-curve-data.json records construction, seed, and points. Its
+endpoint follows the current online Math-average estimate. There are no measured
+rollout logs, variance estimates, speedups, or convergence claims in this curve.

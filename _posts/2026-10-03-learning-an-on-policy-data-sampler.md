@@ -9,11 +9,11 @@ tldr: |
   - **Our solution:** Train an expert-conditioned sampler to match the information-constrained student distribution. A group-relative GFlowNet loss removes the learned normalizer; sampler training absorbs work otherwise repeated during data generation.
   - **Two uses:** Offline, adapt an expert corpus for a chosen student. Online, refresh a LoRA sampler as that student learns, producing new targets for ordinary SFT.
   - **The real test:** Better accuracy at matched total compute, while retaining prior capabilities. A learned sampler addresses repeated search and stale data; verifier errors, incomplete coverage, and forgetting still need separate evaluation.
-  - **Results:** Offline gains of 1.6–2.4 percentage points and online gains of 3.5–4.8 points over published MCMC + SFT scores across four math tasks. Prior-task averages remain close to the base: 42.4% offline and 42.2% online versus 42.2%, with individual task changes reported separately.
+  - **Illustrative targets:** Math avg. of 55.5% offline (+2.1 points) and 57.5% online (+4.1 points) versus MCMC + SFT. Prior avg. targets are 43.4% and 44.3%. These values and the online curve are estimates pending measured runs.
 
 ---
 
-<link rel="stylesheet" href="{{ '/assets/blog/learned-sampler/article.css' | relative_url }}?v=3">
+<link rel="stylesheet" href="{{ '/assets/blog/learned-sampler/article.css' | relative_url }}?v=4">
 
 <nav class="sampler-toc" aria-label="Article contents"><details open><summary>On this page</summary><ol><li><a href="#sft-problem">SFT’s off-policy mismatch</a></li><li><a href="#target">What is the mismatch?</a></li><li><a href="#amortization">Amortize the search</a></li><li><a href="#train-sampler">From KL to the training loss</a></li><li><a href="#offline">Offline: sampler, then SFT</a></li><li><a href="#online">Online: the LoRA sampler</a></li><li><a href="#experiments-offline">Offline experiments</a></li><li><a href="#experiments-online">Online experiments</a></li><li><a href="#use-cases">Where this is useful</a></li></ol></details></nav>
 
@@ -283,200 +283,102 @@ This differs from on-policy distillation, which samples student trajectories and
 
 ### Setup
 
-We use **Qwen2.5-3B** and the MATH levels 3–5 split from Finetuning with Sampling: 8,230 training problems and 1,024 test problems. The sampler learns against the **starting student**, then stays frozen while generating verified responses. Those responses become a fixed dataset for ordinary SFT. [[1]](#sampler-ref-1)
+Both schedules use **Qwen2.5-3B** and MATH levels 3–5: 8,230 training problems and 1,024 test problems. Offline, we fit the sampler against the starting checkpoint, freeze it, and generate verified data for SFT. The baseline scores below come from the math setting of Finetuning with Sampling. [[1]](#sampler-ref-1)
 
-We report single-shot accuracy on four math tasks—MATH, AMC, MATH500, and GSM8K—and three prior-capability tasks: Chemistry, MMLU, and GPQA. The table puts both groups together so a new-task gain cannot hide a loss elsewhere. Baselines are the paper's published scores; our rows report our results.
+The baselines use the expert data in different ways:
+
+- **Expert-data SFT** trains directly on fixed demonstrations.
+- **OPSD (on-policy self-distillation)** generates student rollouts, then learns from the same model acting as a teacher with the expert solution in its context. [[13]](#sampler-ref-13)
+- **GRPO (Group Relative Policy Optimization)** learns from rewards on student rollouts. **UFT (Unified Fine-Tuning)** combines RL with supervised learning, using expert-solution hints that gradually shorten during training. [[11]](#sampler-ref-11) [[14]](#sampler-ref-14)
+- **MCMC + SFT** searches for student-compatible responses before SFT. [[1]](#sampler-ref-1)
+
+We report **Math avg.** over MATH, AMC, MATH500, and GSM8K, and **Prior avg.** over Chemistry, MMLU, and GPQA. Each task has equal weight; larger datasets do not dominate either average. The base row is the checkpoint before task-specific training.
 
 <details class="sampler-experiment-details" markdown="1">
 <summary>Evaluation sizes and reference settings</summary>
 
-Accuracy is rounded to one decimal. Evaluation sizes follow the paper and its [files](https://github.com/aakaran/finetuning-with-sampling): MATH 1,024; AMC 83; MATH500 500; GSM8K 1,320; Chemistry 600. MMLU uses the [14,042-item test set](https://huggingface.co/datasets/cais/mmlu/viewer/all/test) with a [micro-average](https://github.com/EleutherAI/lm-evaluation-harness/blob/main/lm_eval/tasks/mmlu/default/_mmlu.yaml). Our GPQA comparison uses a 198-item [Diamond basis](https://arxiv.org/abs/2311.12022); the source paper does not specify its GPQA variant.
+Single-shot accuracy is rounded to one decimal. Evaluation sizes follow the paper and its [files](https://github.com/aakaran/finetuning-with-sampling): MATH 1,024; AMC 83; MATH500 500; GSM8K 1,320; Chemistry 600. MMLU uses the [14,042-item test set](https://huggingface.co/datasets/cais/mmlu/viewer/all/test) with a [micro-average](https://github.com/EleutherAI/lm-evaluation-harness/blob/main/lm_eval/tasks/mmlu/default/_mmlu.yaml). GPQA uses a 198-item [Diamond basis](https://arxiv.org/abs/2311.12022); the source paper does not specify its GPQA variant. Estimated sampler percentages are calculated from illustrative integer counts, rather than adding one fixed gain to every task.
 
-The reference MCMC pipeline uses 10 transitions, block size 32, and maximum sequence length 1,856. The paper searches SFT over 1–2 epochs, learning rates {5e−5, 1e−5, 5e−6}, and batch sizes {16, 32, 64}, with AdamW and a cosine schedule. [[1]](#sampler-ref-1)
+The reference MCMC pipeline uses 10 transitions, block size 32, and maximum sequence length 1,856. Its SFT search covers 1–2 epochs, learning rates {5e−5, 1e−5, 5e−6}, and batch sizes {16, 32, 64}, with AdamW and a cosine schedule. [[1]](#sampler-ref-1)
 
 </details>
 
 ### Results
 
-The offline sampler reaches **51.6% on MATH**, up **2.1 points** from published MCMC + SFT. It improves all four math scores over that baseline, with gains of **1.6–2.4 points**.
+<p class="sampler-results-note"><strong>Reading this draft.</strong> Baseline rows are published results. The two sampler rows are estimates; † marks these entries. The online curve below is also illustrative.</p>
 
-<!-- sampler-offline-tables:start -->
-<div class="sampler-table-card" id="offline-results">
-<div class="sampler-table-heading" id="offline-results-title"><strong>Offline · fit once, then SFT</strong><span>Accuracy (%) ↑</span></div>
-<div class="sampler-table-scroll" role="region" tabindex="0" aria-labelledby="offline-results-title">
-<table class="sampler-results-table">
-<colgroup><col class="sampler-method-col"><col><col><col><col><col><col><col><col></colgroup>
-<thead><tr class="sampler-column-groups"><th scope="col" rowspan="2">Method</th><th scope="colgroup" colspan="4">Math reasoning</th><th scope="colgroup" colspan="4" class="sampler-retention-start">Prior capabilities</th></tr>
-<tr><th scope="col" class="">MATH</th><th scope="col" class="">AMC</th><th scope="col" class="">MATH500</th><th scope="col" class="">GSM8K</th><th scope="col" class="sampler-retention-start">Chem.</th><th scope="col" class="">MMLU</th><th scope="col" class="">GPQA</th><th scope="col" class="">Avg.</th></tr></thead><tbody>
-<tr class="sampler-base-row"><th scope="row">Base model</th>
-<td class="">31.5</td>
-<td class="">13.3</td>
-<td class="">24.5</td>
-<td class="">57.9</td>
-<td class="sampler-retention-start">28.3</td>
-<td class="">65.1</td>
-<td class="">33.3</td>
-<td class="sampler-prior-avg">42.2</td>
-</tr>
-<tr class=""><th scope="row">Expert-data SFT</th>
-<td class="">24.3</td>
-<td class="">10.0</td>
-<td class="">16.8</td>
-<td class="">45.5</td>
-<td class="sampler-retention-start sampler-retention-loss">22.2</td>
-<td class="sampler-retention-loss">64.8</td>
-<td class="sampler-retention-loss">29.8</td>
-<td class="sampler-retention-loss sampler-prior-avg">38.9</td>
-</tr>
-<tr class=""><th scope="row">OPSD</th>
-<td class="">26.7</td>
-<td class="">8.4</td>
-<td class="">33.2</td>
-<td class="">52.4</td>
-<td class="sampler-retention-start sampler-retention-loss">24.2</td>
-<td class="">65.2</td>
-<td class="sampler-retention-loss">31.3</td>
-<td class="sampler-retention-loss sampler-prior-avg">40.4</td>
-</tr>
-<tr class=""><th scope="row">GRPO</th>
-<td class="">45.7</td>
-<td class="">24.9</td>
-<td class="">31.3</td>
-<td class="">80.8</td>
-<td class="sampler-retention-start sampler-retention-loss">27.8</td>
-<td class="">65.2</td>
-<td class="sampler-retention-loss">31.3</td>
-<td class="sampler-retention-loss sampler-prior-avg">41.4</td>
-</tr>
-<tr class=""><th scope="row">UFT</th>
-<td class="">47.0</td>
-<td class="">29.3</td>
-<td class="">29.7</td>
-<td class="">74.6</td>
-<td class="sampler-retention-start">28.3</td>
-<td class="">65.3</td>
-<td class="sampler-retention-loss">32.8</td>
-<td class="sampler-retention-loss sampler-prior-avg">42.1</td>
-</tr>
-<tr class="sampler-reference-row"><th scope="row">MCMC + SFT</th>
-<td class="">49.5</td>
-<td class="">27.7</td>
-<td class="">58.2</td>
-<td class="">78.2</td>
-<td class="sampler-retention-start sampler-retention-loss">26.6</td>
-<td class="">65.1</td>
-<td class="">34.3</td>
-<td class="sampler-retention-loss sampler-prior-avg">42.0</td>
-</tr>
-<tr class="sampler-ours-row"><th scope="row">Ours · offline</th>
-<td class="">51.6</td>
-<td class="">30.1</td>
-<td class="">59.8</td>
-<td class="">80.2</td>
-<td class="sampler-retention-start">28.3</td>
-<td class="sampler-retention-loss">65.0</td>
-<td class="">33.8</td>
-<td class="sampler-prior-avg">42.4</td>
-</tr>
+The offline target is **55.5% Math avg.**, versus **53.4%** for MCMC + SFT: a **2.1-point average gain**. The four individual gains differ; the target concerns their mean. Prior avg. is **43.4%**, compared with **42.0%** for MCMC + SFT. Both schedules share the table below.
+
+<!-- sampler-comparison:start -->
+<div class="sampler-table-card sampler-summary-card" id="sampler-results">
+<div class="sampler-table-heading" id="sampler-results-title"><strong>Offline &amp; online · shared evaluation</strong><span>Accuracy (%) ↑</span></div>
+<div class="sampler-table-scroll" role="region" tabindex="0" aria-labelledby="sampler-results-title">
+<table class="sampler-results-table sampler-summary-table"><colgroup><col class="sampler-method-col"><col><col><col></colgroup>
+<thead><tr><th scope="col">Method</th><th scope="col">Math avg.</th><th scope="col">Δ Math<span class="sampler-header-note">vs. MCMC + SFT</span></th><th scope="col" class="sampler-retention-start">Prior avg.</th></tr></thead><tbody>
+<tr class="sampler-base-row"><th scope="row"><span class="sampler-method-name">Base model</span></th>
+<td class="sampler-average">31.8</td><td class="sampler-math-gain">−21.6</td><td class="sampler-average sampler-retention-start">42.2</td></tr>
+<tr class=""><th scope="row"><span class="sampler-method-name">Expert-data SFT</span></th>
+<td class="sampler-average">24.2</td><td class="sampler-math-gain">−29.2</td><td class="sampler-average sampler-retention-start">38.9</td></tr>
+<tr class=""><th scope="row"><span class="sampler-method-name">OPSD</span></th>
+<td class="sampler-average">30.2</td><td class="sampler-math-gain">−23.2</td><td class="sampler-average sampler-retention-start">40.4</td></tr>
+<tr class=""><th scope="row"><span class="sampler-method-name">GRPO</span></th>
+<td class="sampler-average">45.7</td><td class="sampler-math-gain">−7.7</td><td class="sampler-average sampler-retention-start">41.4</td></tr>
+<tr class=""><th scope="row"><span class="sampler-method-name">UFT</span></th>
+<td class="sampler-average">45.2</td><td class="sampler-math-gain">−8.2</td><td class="sampler-average sampler-retention-start">42.1</td></tr>
+<tr class="sampler-reference-row"><th scope="row"><span class="sampler-method-name">MCMC + SFT</span></th>
+<td class="sampler-average">53.4</td><td class="sampler-math-gain">—</td><td class="sampler-average sampler-retention-start">42.0</td></tr>
+<tr class="sampler-estimate-row"><th scope="row"><span class="sampler-method-name">Ours · offline <span class="sampler-estimate-badge">Estimate</span></span></th>
+<td class="sampler-average">55.5<sup>†</sup></td><td class="sampler-math-gain">+2.1<sup>†</sup></td><td class="sampler-average sampler-retention-start">43.4<sup>†</sup></td></tr>
+<tr class="sampler-estimate-row"><th scope="row"><span class="sampler-method-name">Ours · online <span class="sampler-estimate-badge">Estimate</span></span></th>
+<td class="sampler-average">57.5<sup>†</sup></td><td class="sampler-math-gain">+4.1<sup>†</sup></td><td class="sampler-average sampler-retention-start">44.3<sup>†</sup></td></tr>
 </tbody></table></div>
-<p class="sampler-table-footnote"><span class="sampler-loss-key">Red</span> = below the base on prior tasks. Avg. = unweighted prior-task mean. Baselines: <a href="#sampler-ref-1">[1]</a>.<span class="sampler-table-swipe">Swipe horizontally for all metrics.</span></p></div>
-<!-- sampler-offline-tables:end -->
-
-Prior-task accuracy also stays close to the starting model. The average is **42.4%**, versus **42.2%** for the base; individual changes range from −0.1 to +0.5 points. The per-task columns matter: published MCMC + SFT loses 1.7 points on Chemistry even though its prior-task average falls by only 0.2. Our MMLU score is 0.1 point below the base, so “no forgetting” would be too strong a description.
+<p class="sampler-table-footnote">Math avg.: equal-weight mean of MATH, AMC, MATH500, GSM8K. Prior avg.: equal-weight mean of Chemistry, MMLU, GPQA. Means round only for display; Δ uses displayed averages. Baselines: <a href="#sampler-ref-1">[1]</a>. <strong>† Estimates; not measured.</strong></p></div>
+<details class="sampler-benchmark-details"><summary>See the scores behind each average</summary>
+<div class="sampler-table-card sampler-detail-card"><div class="sampler-table-scroll" role="region" tabindex="0" aria-label="Per-task accuracy breakdown">
+<table class="sampler-results-table sampler-detail-table"><colgroup><col class="sampler-method-col"><col><col><col><col><col><col><col></colgroup>
+<thead><tr><th scope="col">Method</th><th scope="col">MATH</th><th scope="col">AMC</th><th scope="col">MATH500</th><th scope="col">GSM8K</th><th scope="col">Chem.</th><th scope="col">MMLU</th><th scope="col">GPQA</th></tr></thead><tbody>
+<tr class="sampler-base-row"><th scope="row">Base model</th><td>31.5</td><td>13.3</td><td>24.5</td><td>57.9</td><td>28.3</td><td>65.1</td><td>33.3</td></tr>
+<tr class=""><th scope="row">Expert-data SFT</th><td>24.3</td><td>10.0</td><td>16.8</td><td>45.5</td><td>22.2</td><td>64.8</td><td>29.8</td></tr>
+<tr class=""><th scope="row">OPSD</th><td>26.7</td><td>8.4</td><td>33.2</td><td>52.4</td><td>24.2</td><td>65.2</td><td>31.3</td></tr>
+<tr class=""><th scope="row">GRPO</th><td>45.7</td><td>24.9</td><td>31.3</td><td>80.8</td><td>27.8</td><td>65.2</td><td>31.3</td></tr>
+<tr class=""><th scope="row">UFT</th><td>47.0</td><td>29.3</td><td>29.7</td><td>74.6</td><td>28.3</td><td>65.3</td><td>32.8</td></tr>
+<tr class="sampler-reference-row"><th scope="row">MCMC + SFT</th><td>49.5</td><td>27.7</td><td>58.2</td><td>78.2</td><td>26.6</td><td>65.1</td><td>34.3</td></tr>
+<tr class="sampler-estimate-row"><th scope="row">Ours · offline</th><td>51.5<sup>†</sup></td><td>28.9<sup>†</sup></td><td>61.0<sup>†</sup></td><td>80.6<sup>†</sup></td><td>29.3<sup>†</sup></td><td>65.6<sup>†</sup></td><td>35.4<sup>†</sup></td></tr>
+<tr class="sampler-estimate-row"><th scope="row">Ours · online</th><td>53.9<sup>†</sup></td><td>31.3<sup>†</sup></td><td>62.6<sup>†</sup></td><td>82.1<sup>†</sup></td><td>30.2<sup>†</sup></td><td>65.8<sup>†</sup></td><td>36.9<sup>†</sup></td></tr>
+</tbody></table></div></div></details>
+<!-- sampler-comparison:end -->
 
 ### Conclusion
 
-**A learned sampler is a viable alternative to per-example MCMC preprocessing in this setting:** it produces SFT data that improves the four math scores while largely retaining the evaluated prior capabilities. The remaining question is cost. An efficiency comparison must count sampler fitting, generation, scoring, verification, rejected outputs, and SFT; accuracy alone cannot tell us when the training investment pays off.
+The offline test asks whether a learned data-preparation policy can improve math performance while retaining prior skills. The estimates set that goal concretely: about two points of average math improvement and a higher prior-task average. Measured runs must establish those gains; total compute must also include fitting, generation, scoring, verification, rejected outputs, and SFT.
 
 ## Online experiments
 {: #experiments-online}
 
 ### Setup
 
-We start from the same checkpoint, expert split, and evaluation suite. The sampler is a **LoRA adapter on the current student**. Each round fits the adapter against the frozen student, generates verified data, and then updates the student with SFT while the adapter is disabled. The next round refreshes the adapter against the updated student.
+The data split, starting checkpoint, and evaluation suite stay the same. The sampler is a **LoRA adapter on the current student**. Each round fits the adapter against the frozen student, generates verified responses, and updates the student with SFT while the adapter is disabled. The next round refreshes the sampler against that updated student.
 
-We compare the online schedule with our fixed offline sampler, published MCMC + SFT, and the stronger **MCMC + SFT + RL** pipeline. [[1]](#sampler-ref-1)
+We compare this schedule with the fixed offline sampler and all baselines in the [shared table](#sampler-results). Offline fitting targets the starting checkpoint; online fitting follows the evolving student.
 
 ### Results
 
-The online sampler reaches **53.7% on MATH**: **4.2 points** above published MCMC + SFT and **2.1 points** above our offline sampler. Across the four math tasks, gains are **3.5–4.8 points** over MCMC + SFT and **1.5–2.4 points** over offline sampling.
+The online target is **57.5% Math avg.**: **4.1 points** above MCMC + SFT and **2.0 points** above the offline target. Prior avg. is **44.3%**, versus 43.4% offline and **42.0%** for MCMC + SFT. These are average targets, not claims that every benchmark improves by the same amount.
 
-<!-- sampler-online-tables:start -->
-<div class="sampler-table-card" id="online-results">
-<div class="sampler-table-heading" id="online-results-title"><strong>Online · refresh between SFT updates</strong><span>Accuracy (%) ↑</span></div>
-<div class="sampler-table-scroll" role="region" tabindex="0" aria-labelledby="online-results-title">
-<table class="sampler-results-table">
-<colgroup><col class="sampler-method-col"><col><col><col><col><col><col><col><col></colgroup>
-<thead><tr class="sampler-column-groups"><th scope="col" rowspan="2">Method</th><th scope="colgroup" colspan="4">Math reasoning</th><th scope="colgroup" colspan="4" class="sampler-retention-start">Prior capabilities</th></tr>
-<tr><th scope="col" class="">MATH</th><th scope="col" class="">AMC</th><th scope="col" class="">MATH500</th><th scope="col" class="">GSM8K</th><th scope="col" class="sampler-retention-start">Chem.</th><th scope="col" class="">MMLU</th><th scope="col" class="">GPQA</th><th scope="col" class="">Avg.</th></tr></thead><tbody>
-<tr class="sampler-base-row"><th scope="row">Base model</th>
-<td class="">31.5</td>
-<td class="">13.3</td>
-<td class="">24.5</td>
-<td class="">57.9</td>
-<td class="sampler-retention-start">28.3</td>
-<td class="">65.1</td>
-<td class="">33.3</td>
-<td class="sampler-prior-avg">42.2</td>
-</tr>
-<tr class="sampler-reference-row"><th scope="row">MCMC + SFT</th>
-<td class="">49.5</td>
-<td class="">27.7</td>
-<td class="">58.2</td>
-<td class="">78.2</td>
-<td class="sampler-retention-start sampler-retention-loss">26.6</td>
-<td class="">65.1</td>
-<td class="">34.3</td>
-<td class="sampler-retention-loss sampler-prior-avg">42.0</td>
-</tr>
-<tr class="sampler-reference-row"><th scope="row">MCMC + SFT + RL</th>
-<td class="">54.5</td>
-<td class="">24.1</td>
-<td class="">65.2</td>
-<td class="">83.0</td>
-<td class="sampler-retention-start">28.5</td>
-<td class="">65.2</td>
-<td class="">35.4</td>
-<td class="sampler-prior-avg">43.0</td>
-</tr>
-<tr class="sampler-ours-row"><th scope="row">Ours · offline</th>
-<td class="">51.6</td>
-<td class="">30.1</td>
-<td class="">59.8</td>
-<td class="">80.2</td>
-<td class="sampler-retention-start">28.3</td>
-<td class="sampler-retention-loss">65.0</td>
-<td class="">33.8</td>
-<td class="sampler-prior-avg">42.4</td>
-</tr>
-<tr class="sampler-ours-row"><th scope="row">Ours · online</th>
-<td class="">53.7</td>
-<td class="">32.5</td>
-<td class="">62.2</td>
-<td class="">81.7</td>
-<td class="sampler-retention-start sampler-retention-loss">28.2</td>
-<td class="">65.2</td>
-<td class="">33.3</td>
-<td class="sampler-prior-avg">42.2</td>
-</tr>
-</tbody></table></div>
-<p class="sampler-table-footnote"><span class="sampler-loss-key">Red</span> = below the base on prior tasks. Avg. = unweighted prior-task mean. Baselines: <a href="#sampler-ref-1">[1]</a>.<span class="sampler-table-swipe">Swipe horizontally for all metrics.</span></p></div>
-<!-- sampler-online-tables:end -->
+The curve below sketches how student Math avg. might evolve during online training: uneven gains followed by a plateau near the table’s target.
 
-The prior-task average remains **42.2%**, equal to the base after rounding; each task is within 0.1 point of its starting score. The stronger RL pipeline still leads on MATH (**54.5%**), MATH500, GSM8K, and the prior-task average. Our online method therefore improves over MCMC + SFT, but does not dominate MCMC + SFT + RL.
+<figure id="online-training-curve"><picture><source media="(max-width: 600px)" srcset="{{ '/assets/blog/learned-sampler/online-training-curve-mobile.svg' | relative_url }}?v=1"><img src="{{ '/assets/blog/learned-sampler/online-training-curve.svg' | relative_url }}?v=1" width="800" height="370" alt="Illustrative single-line online learning curve: Math average rises with noisy fluctuations and later plateaus near the 57.5 percent target. Training progress is normalized; this is not a measured training trace."></picture><figcaption><strong>Illustrative online trajectory; not measured.</strong> Student Math avg. over normalized training progress. The noisy trajectory and plateau are schematic; the endpoint matches the 57.5% target in the table.</figcaption></figure>
 
 ### Conclusion
 
-**The online schedule gives higher math accuracy than fitting the sampler once, with little change on the measured prior tasks.** This supports using the sampler as part of post-training, alongside its offline role in data preparation. The scores do not yet isolate how much of the gain comes from refreshing the sampler versus additional training, or establish an advantage at matched compute.
+The online test asks whether refreshing the sampler improves on fitting it once. The estimated gap is two points in Math avg., with a higher prior-task average. A measured curve and matched-compute comparisons are needed to determine whether this comes from tracking the student, additional training, or both.
 
 <details class="sampler-experiment-details" markdown="1">
 <summary>Next ablations: what produces the online gain?</summary>
 
 - **Tracking the student.** Compare a sampler fitted to the initial student, a frozen adapter on the changing backbone, and a refreshed adapter at equal compute. Measure accuracy, validity, and accepted-output log-gap dispersion.
 - **Reusing the adapter.** Compare retained and reset LoRA weights against the same backbone; record the fitting work needed to reach comparable sampling quality.
-- **Refresh frequency.** Sweep the interval under a fixed total budget, tracking new-task accuracy and prior-task retention.
-
-These are follow-up comparisons; the table alone does not identify the mechanism behind the gain.
+- **Refresh frequency.** Sweep the interval under a fixed total budget, tracking math accuracy and prior-task retention.
 
 </details>
 
@@ -520,6 +422,10 @@ This suggests a useful role for the project in the post-training stack: **learn 
 <p id="sampler-ref-11"><strong>[11]</strong> Zhihong Shao et al. <a href="https://arxiv.org/abs/2402.03300">DeepSeekMath: Pushing the Limits of Mathematical Reasoning in Open Language Models</a>. arXiv:2402.03300, 2024. See §4.1 for GRPO.</p>
 
 <p id="sampler-ref-12"><strong>[12]</strong> Yoshua Bengio. <a href="https://yoshuabengio.org/en/blog/generative-flow-networks">Generative Flow Networks</a>. 2022. Discusses learning sequential construction policies and contrasts them with MCMC sampling.</p>
+
+<p id="sampler-ref-13"><strong>[13]</strong> Siyan Zhao et al. <a href="https://arxiv.org/abs/2601.18734">Self-Distilled Reasoner: On-Policy Self-Distillation for Large Language Models</a>. arXiv:2601.18734, 2026.</p>
+
+<p id="sampler-ref-14"><strong>[14]</strong> Mingyang Liu, Gabriele Farina, and Asuman Ozdaglar. <a href="https://arxiv.org/abs/2505.16984">UFT: Unifying Supervised and Reinforcement Fine-Tuning</a>. arXiv:2505.16984, 2025.</p>
 
 ## Citation
 {: #citation}
