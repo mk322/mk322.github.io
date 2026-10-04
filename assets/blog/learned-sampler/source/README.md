@@ -18,8 +18,13 @@ Earlier categorical/smooth distribution illustrations and source files are kept
 as unused exploratory assets. The current article no longer depends on A/B ratios.
 Published baseline scores come from Finetuning with Sampling, arXiv:2610.02140v1,
 Table 1 math panel. Our displayed numbers are draft estimates, not measurements:
-+2 percentage points offline, +4 online (the midpoint of the requested +3–5).
-Prior-task values copy the base checkpoint as explicit retention targets.
+Approximately +2 percentage points offline and +3–5 online, with task-level variation.
+Prior-task values illustrate small gains and losses near the base, not measured retention.
+Each estimate is derived from an illustrative integer count divided by a specified
+evaluation size, then rounded only for display. results-data.json records the counts,
+protocol, sources, and GPQA Diamond assumption. Published baseline rounding is untouched.
+The prior-task average uses unrounded task percentages; displayed deltas use displayed
+rounded scores. Counts are planning inputs, not observed outcomes or synthetic run logs.
 The MCMC + SFT + RL baseline is included as the stronger online comparator.
 
 Regenerate all four result tables and their source-data record:
@@ -30,9 +35,12 @@ Verify mathematical identities and sampled gradient relations (requires numpy):
 
 The amortization figure distinguishes response-state updates in MCMC from shared-parameter
 updates in sampler training. The learned parameters pass into a separate data-generation
-stage; no MCMC trajectories are used as training targets. There are no performance numbers.
+stage that appends tokens to construct responses; MCMC revises response states. Both
+routes explicitly terminate in verified SFT data and student SFT. No MCMC trajectories
+are used as sampler training targets. There are no performance numbers in the diagram.
 Conceptual references: Finetuning with Sampling (https://aakaran.github.io/finetuning_with_sampling/)
-and Bengio & Hu on amortized inference (https://yoshuabengio.org/en/blog/scaling-service-reasoning-model-based-ml). Offline and online pseudocode are separate.
+and Bengio & Hu on amortized inference (https://yoshuabengio.org/en/blog/scaling-service-reasoning-model-based-ml). Also consulted Bengio’s GFN explanation (https://yoshuabengio.org/en/blog/generative-flow-networks).
+Offline and online pseudocode are separate.
 
 
 Opening revision (2026-10-04): SFT efficiency → off-policy mismatch → distribution

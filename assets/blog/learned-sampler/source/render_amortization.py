@@ -1,110 +1,111 @@
-"""Where computation goes: response-state updates vs shared-parameter updates.
+"""Response revision versus learned constructive generation, both followed by SFT.
 
-Original schematic; arrows show operations, not measured compute or speedups.
-MCMC here denotes the fixed-model preprocessing route in Finetuning with Sampling.
+Conceptual offline schematic, not a runtime measurement. Sampler fitting uses
+student scores and validity feedback, not MCMC trajectories. The sampler constructs
+a response autoregressively: a rollout is not a single neural-network forward call.
 """
 from render_figures import start, text, rect, line, save, PURPLE, MUTED, TEAL, INK
 
 
-def node(s, x, y, w, label, sub=None, kind='plain', h=56):
-    fill, stroke, color = {
-        'plain': ('#fff', '#d7dce5', INK),
-        'sampler': ('#eee9f7', '#b9abd7', PURPLE),
-        'output': ('#edf7f5', '#a4ccc6', TEAL),
-    }[kind]
-    rect(s, x, y, w, h, fill, stroke, 8)
-    text(s, x+w/2, y+(24 if sub else h/2+6), label, 16 if label == 'Current response' else 17, color, 500, 'middle')
-    if sub:
-        text(s, x+w/2, y+44, sub, 14, MUTED, anchor='middle')
+def label(s, x, y, w, h, top, bottom=None, color=INK, fill='#fff', stroke='#d7dce5'):
+    rect(s,x,y,w,h,fill,stroke,8)
+    text(s,x+w/2,y+h/2+(0 if bottom else 6),top,16,color,500,'middle')
+    if bottom: text(s,x+w/2,y+h/2+23,bottom,14,MUTED,anchor='middle')
 
 
-def rule(s, x1, y1, x2, y2):
-    s.append(f'<path d="M{x1} {y1}L{x2} {y2}" fill="none" stroke="#ded8e9" stroke-dasharray="4 5"/>')
+def drafts(s,x,y):
+    for i,lab in enumerate(['Draft 0','Draft 1','Draft k']):
+        a=x+i*108
+        rect(s,a,y,82,58,'#fff','#cad1dc',7)
+        text(s,a+41,y-10,lab,15,MUTED,anchor='middle')
+        for j,length in enumerate([50,42-i*5,49-i*7]):
+            s.append(f'<path d="M{a+15} {y+16+j*13}h{length}" stroke="{"#3e73a8" if i and j==1 else "#aeb7c5"}" stroke-width="4" stroke-linecap="round"/>')
+        if i<2: line(s,f'M{a+85} {y+29}H{a+100}')
+
+
+def prefixes(s,x,y):
+    # Increasing prefix lengths expose the constructive operation explicitly.
+    for a,w,lab in [(x,32,'∅'),(x+52,39,'t₁'),(x+112,65,'t₁ t₂'),(x+201,96,'… EOS')]:
+        label(s,a,y,w,42,lab,color=PURPLE,fill='#fff',stroke='#c6badf')
+    for a,b in [(x+35,x+44),(x+94,x+104),(x+180,x+193)]:
+        line(s,f'M{a} {y+21}H{b}',True)
 
 
 def desktop():
-    s = start(800, 486, 'Update a response, or train a reusable sampler?',
-              'MCMC repeats propose, score, and accept or reject steps for each prompt, '
-              'updating the response while model weights stay fixed. Our method trains '
-              'sampler parameters across prompts using sampled responses and target scores. '
-              'The trained sampler is then reused for autoregressive generation and verification.')
-    rect(s, 12, 12, 776, 202, '#f8f9fb', '#e1e5eb', 12)
-    text(s, 32, 44, 'MCMC', 22, weight=600)
-    text(s, 124, 44, 'Search for each prompt', 18, MUTED)
-    text(s, 766, 43, 'Model weights fixed', 14, MUTED, anchor='end')
-    node(s, 32, 80, 142, 'Current response')
-    node(s, 216, 80, 150, 'Propose + score')
-    node(s, 408, 80, 148, 'Accept / reject')
-    node(s, 622, 80, 144, 'Verify', 'SFT response', 'output')
-    for a,b in ((176,208),(368,400),(558,614)):
-        line(s, f'M{a} 108H{b}')
-    line(s, 'M482 139V164H103V139')
-    text(s, 292, 190, 'Update the response. Repeat the chain.', 16, MUTED, anchor='middle')
-    text(s, 589, 93, 'End', 13, MUTED, anchor='middle')
+    s=start(800,584,'Search each response, or reuse a learned generation policy?',
+        'Top: MCMC revises a complete response with repeated propose, score, and accept/reject steps for each example. Bottom: first train a policy across examples using student scores and validity feedback, then reuse that policy to construct responses by appending tokens. Both routes verify outputs, collect training data, and update the student with SFT.')
+    rect(s,12,12,776,250,'#f8f9fb','#e1e5eb',12)
+    text(s,30,45,'MCMC',22,weight=600)
+    text(s,127,45,'Search again for each example',18,MUTED)
+    label(s,30,125,94,76,'Prompt','+ expert')
+    line(s,'M127 163H138')
+    rect(s,146,77,338,172,'#fff','#d7dce5',10)
+    text(s,315,103,'Propose · score · accept/reject',16,MUTED,anchor='middle')
+    drafts(s,162,136)
+    line(s,'M460 196V211H203V196')
+    text(s,315,239,'Revise the response; weights stay fixed',14,MUTED,anchor='middle')
+    line(s,'M487 163H515')
+    label(s,523,125,112,76,'Verified','SFT data',TEAL,'#edf7f5','#a4ccc6')
+    line(s,'M638 163H666')
+    label(s,674,125,94,76,'SFT','Train student')
 
-    rect(s, 12, 230, 776, 244, '#faf8fd', '#ddd5e9', 12)
-    text(s, 32, 264, 'Amortized sampler', 22, weight=600)
-    rule(s, 492, 282, 492, 454)
-    text(s, 32, 297, 'Train across prompts', 17, PURPLE, 500)
-    text(s, 532, 297, 'For each new prompt', 17, MUTED, 500)
-    node(s, 248, 318, 176, 'Sampler', 'Shared parameters', 'sampler')
-    node(s, 248, 404, 176, 'Draw + score')
-    line(s, 'M336 377V396', True)
-    line(s, 'M246 432H214V346H240', True)
-    text(s, 32, 393, 'Update parameters', 17, PURPLE, 500)
-    text(s, 32, 416, 'Matching loss', 14, MUTED)
-    line(s, 'M427 346H541', True)
-    text(s, 484, 333, 'Reuse', 15, PURPLE, anchor='middle')
-    node(s, 550, 318, 198, 'Generate', 'Token by token', 'sampler')
-    line(s, 'M649 377V396')
-    node(s, 550, 404, 198, 'Verify', 'SFT response', 'output')
-    save(s, 'amortized-comparison.svg')
+    rect(s,12,278,776,294,'#faf8fd','#ddd5e9',12)
+    text(s,30,312,'Amortized sampler',22,weight=600)
+    rect(s,146,333,338,62,'#eee9f7','#b9abd7',9)
+    text(s,315,358,'Train one policy across examples',17,PURPLE,500,'middle')
+    text(s,315,381,'Student scores + validity → update weights',14,MUTED,anchor='middle')
+    line(s,'M315 398V416',True)
+    label(s,30,449,94,76,'Prompt','+ expert')
+    line(s,'M127 487H138')
+    rect(s,146,424,338,135,'#fff','#b9abd7',10)
+    text(s,315,450,'Reuse learned weights',18,PURPLE,500,'middle')
+    prefixes(s,166,470)
+    text(s,315,543,'Append tokens to build a new response',15,MUTED,anchor='middle')
+    line(s,'M487 487H515')
+    label(s,523,449,112,76,'Verified','SFT data',TEAL,'#edf7f5','#a4ccc6')
+    line(s,'M638 487H666')
+    label(s,674,449,94,76,'SFT','Train student')
+    save(s,'amortized-comparison.svg')
 
 
 def mobile():
-    s = start(380, 786, 'Update a response, or train a reusable sampler?',
-              'MCMC updates the response in a repeated chain for each prompt. '
-              'Amortized training updates shared sampler parameters across prompts. '
-              'Data generation reuses the trained sampler, followed by verification.')
-    rect(s, 10, 10, 360, 314, '#f8f9fb', '#e1e5eb', 12)
-    text(s, 28, 42, 'MCMC', 22, weight=600)
-    text(s, 28, 68, 'Search for each prompt', 17, MUTED)
-    node(s, 28, 92, 140, 'Current response')
-    node(s, 211, 92, 140, 'Propose + score')
-    line(s, 'M170 120H203')
-    line(s, 'M281 151V183')
-    node(s, 211, 191, 140, 'Accept / reject')
-    line(s, 'M209 219H98V151')
-    text(s, 28, 179, 'Update', 15, MUTED)
-    text(s, 28, 198, 'response', 15, MUTED)
-    # Route the final state to verification after the search chain.
-    line(s, 'M281 250V275H176')
-    text(s, 233, 268, 'End', 13, MUTED, anchor='middle')
-    node(s, 28, 249, 140, 'Verify', 'SFT response', 'output')
-    text(s, 351, 311, 'Model weights fixed', 13, MUTED, anchor='end')
+    s=start(380,922,'Search each response, or reuse a learned generation policy?',
+        'MCMC repeatedly revises each response with fixed weights. Sampler training changes a policy across examples; data generation reuses it to append tokens and construct a new response. Both routes end in verified data and SFT of the student.')
+    rect(s,10,10,360,409,'#f8f9fb','#e1e5eb',12)
+    text(s,28,43,'MCMC',22,weight=600)
+    text(s,28,70,'Search again for each example',17,MUTED)
+    text(s,190,103,'Prompt + expert',16,anchor='middle')
+    line(s,'M190 113V132')
+    rect(s,28,140,324,172,'#fff','#d7dce5',10)
+    text(s,190,165,'Propose · score · accept/reject',16,MUTED,anchor='middle')
+    drafts(s,41,198)
+    line(s,'M338 260V278H82V260')
+    text(s,190,300,'Revise response; weights stay fixed',14,MUTED,anchor='middle')
+    line(s,'M190 315V328H103V335')
+    label(s,28,343,150,58,'Verified','SFT data',TEAL,'#edf7f5','#a4ccc6')
+    line(s,'M181 372H194')
+    label(s,202,343,150,58,'SFT','Train student')
 
-    rect(s, 10, 340, 360, 434, '#faf8fd', '#ddd5e9', 12)
-    text(s, 28, 376, 'Amortized sampler', 22, weight=600)
-    text(s, 28, 406, 'Train across prompts', 17, PURPLE, 500)
-    node(s, 188, 426, 160, 'Sampler', 'Shared parameters', 'sampler')
-    node(s, 188, 520, 160, 'Draw + score')
-    line(s, 'M300 485V512', True)
-    line(s, 'M186 548H158V454H180', True)
-    text(s, 28, 478, 'Update', 17, PURPLE, 500)
-    text(s, 28, 500, 'parameters', 17, PURPLE, 500)
-    text(s, 28, 524, 'Matching loss', 14, MUTED)
-    # A separate path carries learned parameters, never MCMC trajectories.
-    line(s, 'M350 454H359V687H351', True)
-    rule(s, 28, 601, 348, 601)
-    text(s, 28, 631, 'For each new prompt', 17, MUTED, 500)
-    node(s, 188, 659, 160, 'Generate', 'Token by token', 'sampler')
-    text(s, 318, 647, 'Reuse', 14, PURPLE, anchor='middle')
-    line(s, 'M186 687H176')
-    node(s, 28, 659, 140, 'Verify', 'SFT response', 'output')
-    text(s, 28, 749, 'Reuse the policy learned across prompts.', 15, PURPLE)
-    save(s, 'amortized-comparison-mobile.svg')
+    rect(s,10,435,360,477,'#faf8fd','#ddd5e9',12)
+    text(s,28,471,'Amortized sampler',22,weight=600)
+    rect(s,28,493,324,77,'#eee9f7','#b9abd7',9)
+    text(s,190,519,'Train across examples',18,PURPLE,500,'middle')
+    text(s,190,543,'Student scores + validity',15,MUTED,anchor='middle')
+    text(s,190,561,'Update policy weights',14,PURPLE,anchor='middle')
+    line(s,'M280 573V636',True)
+    text(s,190,607,'Prompt + expert',16,anchor='middle')
+    line(s,'M145 617V636')
+    rect(s,28,644,324,139,'#fff','#b9abd7',10)
+    text(s,190,672,'Reuse learned weights',18,PURPLE,500,'middle')
+    prefixes(s,40,690)
+    text(s,190,762,'Append tokens to build a response',15,MUTED,anchor='middle')
+    line(s,'M190 786V799H103V809')
+    label(s,28,817,150,64,'Verified','SFT data',TEAL,'#edf7f5','#a4ccc6')
+    line(s,'M181 849H194')
+    label(s,202,817,150,64,'SFT','Train student')
+    save(s,'amortized-comparison-mobile.svg')
 
 
-if __name__ == '__main__':
+if __name__=='__main__':
     desktop()
     mobile()

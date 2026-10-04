@@ -1,47 +1,67 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="380" height="786" viewBox="0 0 380 786" role="img" aria-labelledby="title desc"><title id="title">Update a response, or train a reusable sampler?</title><desc id="desc">MCMC updates the response in a repeated chain for each prompt. Amortized training updates shared sampler parameters across prompts. Data generation reuses the trained sampler, followed by verification.</desc><defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" fill="#525a65"/></marker><marker id="purple-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#6356a5"/></marker></defs><rect width="380" height="786" rx="12" fill="#fff"/><g font-family="Helvetica Neue, Arial, sans-serif" fill="#20252c">
-<rect x="10" y="10" width="360" height="314" rx="12" fill="#f8f9fb" stroke="#e1e5eb" stroke-width="1.3"/>
-<text x="28" y="42" font-size="22" fill="#20252c" font-weight="600" text-anchor="start">MCMC</text>
-<text x="28" y="68" font-size="17" fill="#525a65" font-weight="400" text-anchor="start">Search for each prompt</text>
-<rect x="28" y="92" width="140" height="56" rx="8" fill="#fff" stroke="#d7dce5" stroke-width="1.3"/>
-<text x="98.0" y="126.0" font-size="16" fill="#20252c" font-weight="500" text-anchor="middle">Current response</text>
-<rect x="211" y="92" width="140" height="56" rx="8" fill="#fff" stroke="#d7dce5" stroke-width="1.3"/>
-<text x="281.0" y="126.0" font-size="17" fill="#20252c" font-weight="500" text-anchor="middle">Propose + score</text>
-<path d="M170 120H203" fill="none" stroke="#525a65" stroke-width="1.7" stroke-linejoin="round"  marker-end="url(#arrow)"/>
-<path d="M281 151V183" fill="none" stroke="#525a65" stroke-width="1.7" stroke-linejoin="round"  marker-end="url(#arrow)"/>
-<rect x="211" y="191" width="140" height="56" rx="8" fill="#fff" stroke="#d7dce5" stroke-width="1.3"/>
-<text x="281.0" y="225.0" font-size="17" fill="#20252c" font-weight="500" text-anchor="middle">Accept / reject</text>
-<path d="M209 219H98V151" fill="none" stroke="#525a65" stroke-width="1.7" stroke-linejoin="round"  marker-end="url(#arrow)"/>
-<text x="28" y="179" font-size="15" fill="#525a65" font-weight="400" text-anchor="start">Update</text>
-<text x="28" y="198" font-size="15" fill="#525a65" font-weight="400" text-anchor="start">response</text>
-<path d="M281 250V275H176" fill="none" stroke="#525a65" stroke-width="1.7" stroke-linejoin="round"  marker-end="url(#arrow)"/>
-<text x="233" y="268" font-size="13" fill="#525a65" font-weight="400" text-anchor="middle">End</text>
-<rect x="28" y="249" width="140" height="56" rx="8" fill="#edf7f5" stroke="#a4ccc6" stroke-width="1.3"/>
-<text x="98.0" y="273" font-size="17" fill="#2b8b88" font-weight="500" text-anchor="middle">Verify</text>
-<text x="98.0" y="293" font-size="14" fill="#525a65" font-weight="400" text-anchor="middle">SFT response</text>
-<text x="351" y="311" font-size="13" fill="#525a65" font-weight="400" text-anchor="end">Model weights fixed</text>
-<rect x="10" y="340" width="360" height="434" rx="12" fill="#faf8fd" stroke="#ddd5e9" stroke-width="1.3"/>
-<text x="28" y="376" font-size="22" fill="#20252c" font-weight="600" text-anchor="start">Amortized sampler</text>
-<text x="28" y="406" font-size="17" fill="#6356a5" font-weight="500" text-anchor="start">Train across prompts</text>
-<rect x="188" y="426" width="160" height="56" rx="8" fill="#eee9f7" stroke="#b9abd7" stroke-width="1.3"/>
-<text x="268.0" y="450" font-size="17" fill="#6356a5" font-weight="500" text-anchor="middle">Sampler</text>
-<text x="268.0" y="470" font-size="14" fill="#525a65" font-weight="400" text-anchor="middle">Shared parameters</text>
-<rect x="188" y="520" width="160" height="56" rx="8" fill="#fff" stroke="#d7dce5" stroke-width="1.3"/>
-<text x="268.0" y="554.0" font-size="17" fill="#20252c" font-weight="500" text-anchor="middle">Draw + score</text>
-<path d="M300 485V512" fill="none" stroke="#6356a5" stroke-width="1.7" stroke-linejoin="round"  marker-end="url(#purple-arrow)"/>
-<path d="M186 548H158V454H180" fill="none" stroke="#6356a5" stroke-width="1.7" stroke-linejoin="round"  marker-end="url(#purple-arrow)"/>
-<text x="28" y="478" font-size="17" fill="#6356a5" font-weight="500" text-anchor="start">Update</text>
-<text x="28" y="500" font-size="17" fill="#6356a5" font-weight="500" text-anchor="start">parameters</text>
-<text x="28" y="524" font-size="14" fill="#525a65" font-weight="400" text-anchor="start">Matching loss</text>
-<path d="M350 454H359V687H351" fill="none" stroke="#6356a5" stroke-width="1.7" stroke-linejoin="round"  marker-end="url(#purple-arrow)"/>
-<path d="M28 601L348 601" fill="none" stroke="#ded8e9" stroke-dasharray="4 5"/>
-<text x="28" y="631" font-size="17" fill="#525a65" font-weight="500" text-anchor="start">For each new prompt</text>
-<rect x="188" y="659" width="160" height="56" rx="8" fill="#eee9f7" stroke="#b9abd7" stroke-width="1.3"/>
-<text x="268.0" y="683" font-size="17" fill="#6356a5" font-weight="500" text-anchor="middle">Generate</text>
-<text x="268.0" y="703" font-size="14" fill="#525a65" font-weight="400" text-anchor="middle">Token by token</text>
-<text x="318" y="647" font-size="14" fill="#6356a5" font-weight="400" text-anchor="middle">Reuse</text>
-<path d="M186 687H176" fill="none" stroke="#525a65" stroke-width="1.7" stroke-linejoin="round"  marker-end="url(#arrow)"/>
-<rect x="28" y="659" width="140" height="56" rx="8" fill="#edf7f5" stroke="#a4ccc6" stroke-width="1.3"/>
-<text x="98.0" y="683" font-size="17" fill="#2b8b88" font-weight="500" text-anchor="middle">Verify</text>
-<text x="98.0" y="703" font-size="14" fill="#525a65" font-weight="400" text-anchor="middle">SFT response</text>
-<text x="28" y="749" font-size="15" fill="#6356a5" font-weight="400" text-anchor="start">Reuse the policy learned across prompts.</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="380" height="922" viewBox="0 0 380 922" role="img" aria-labelledby="title desc"><title id="title">Search each response, or reuse a learned generation policy?</title><desc id="desc">MCMC repeatedly revises each response with fixed weights. Sampler training changes a policy across examples; data generation reuses it to append tokens and construct a new response. Both routes end in verified data and SFT of the student.</desc><defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" fill="#525a65"/></marker><marker id="purple-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#6356a5"/></marker></defs><rect width="380" height="922" rx="12" fill="#fff"/><g font-family="Helvetica Neue, Arial, sans-serif" fill="#20252c">
+<rect x="10" y="10" width="360" height="409" rx="12" fill="#f8f9fb" stroke="#e1e5eb" stroke-width="1.3"/>
+<text x="28" y="43" font-size="22" fill="#20252c" font-weight="600" text-anchor="start">MCMC</text>
+<text x="28" y="70" font-size="17" fill="#525a65" font-weight="400" text-anchor="start">Search again for each example</text>
+<text x="190" y="103" font-size="16" fill="#20252c" font-weight="400" text-anchor="middle">Prompt + expert</text>
+<path d="M190 113V132" fill="none" stroke="#525a65" stroke-width="1.7" stroke-linejoin="round"  marker-end="url(#arrow)"/>
+<rect x="28" y="140" width="324" height="172" rx="10" fill="#fff" stroke="#d7dce5" stroke-width="1.3"/>
+<text x="190" y="165" font-size="16" fill="#525a65" font-weight="400" text-anchor="middle">Propose · score · accept/reject</text>
+<rect x="41" y="198" width="82" height="58" rx="7" fill="#fff" stroke="#cad1dc" stroke-width="1.3"/>
+<text x="82" y="188" font-size="15" fill="#525a65" font-weight="400" text-anchor="middle">Draft 0</text>
+<path d="M56 214h50" stroke="#aeb7c5" stroke-width="4" stroke-linecap="round"/>
+<path d="M56 227h42" stroke="#aeb7c5" stroke-width="4" stroke-linecap="round"/>
+<path d="M56 240h49" stroke="#aeb7c5" stroke-width="4" stroke-linecap="round"/>
+<path d="M126 227H141" fill="none" stroke="#525a65" stroke-width="1.7" stroke-linejoin="round"  marker-end="url(#arrow)"/>
+<rect x="149" y="198" width="82" height="58" rx="7" fill="#fff" stroke="#cad1dc" stroke-width="1.3"/>
+<text x="190" y="188" font-size="15" fill="#525a65" font-weight="400" text-anchor="middle">Draft 1</text>
+<path d="M164 214h50" stroke="#aeb7c5" stroke-width="4" stroke-linecap="round"/>
+<path d="M164 227h37" stroke="#3e73a8" stroke-width="4" stroke-linecap="round"/>
+<path d="M164 240h42" stroke="#aeb7c5" stroke-width="4" stroke-linecap="round"/>
+<path d="M234 227H249" fill="none" stroke="#525a65" stroke-width="1.7" stroke-linejoin="round"  marker-end="url(#arrow)"/>
+<rect x="257" y="198" width="82" height="58" rx="7" fill="#fff" stroke="#cad1dc" stroke-width="1.3"/>
+<text x="298" y="188" font-size="15" fill="#525a65" font-weight="400" text-anchor="middle">Draft k</text>
+<path d="M272 214h50" stroke="#aeb7c5" stroke-width="4" stroke-linecap="round"/>
+<path d="M272 227h32" stroke="#3e73a8" stroke-width="4" stroke-linecap="round"/>
+<path d="M272 240h35" stroke="#aeb7c5" stroke-width="4" stroke-linecap="round"/>
+<path d="M338 260V278H82V260" fill="none" stroke="#525a65" stroke-width="1.7" stroke-linejoin="round"  marker-end="url(#arrow)"/>
+<text x="190" y="300" font-size="14" fill="#525a65" font-weight="400" text-anchor="middle">Revise response; weights stay fixed</text>
+<path d="M190 315V328H103V335" fill="none" stroke="#525a65" stroke-width="1.7" stroke-linejoin="round"  marker-end="url(#arrow)"/>
+<rect x="28" y="343" width="150" height="58" rx="8" fill="#edf7f5" stroke="#a4ccc6" stroke-width="1.3"/>
+<text x="103.0" y="372.0" font-size="16" fill="#2b8b88" font-weight="500" text-anchor="middle">Verified</text>
+<text x="103.0" y="395.0" font-size="14" fill="#525a65" font-weight="400" text-anchor="middle">SFT data</text>
+<path d="M181 372H194" fill="none" stroke="#525a65" stroke-width="1.7" stroke-linejoin="round"  marker-end="url(#arrow)"/>
+<rect x="202" y="343" width="150" height="58" rx="8" fill="#fff" stroke="#d7dce5" stroke-width="1.3"/>
+<text x="277.0" y="372.0" font-size="16" fill="#20252c" font-weight="500" text-anchor="middle">SFT</text>
+<text x="277.0" y="395.0" font-size="14" fill="#525a65" font-weight="400" text-anchor="middle">Train student</text>
+<rect x="10" y="435" width="360" height="477" rx="12" fill="#faf8fd" stroke="#ddd5e9" stroke-width="1.3"/>
+<text x="28" y="471" font-size="22" fill="#20252c" font-weight="600" text-anchor="start">Amortized sampler</text>
+<rect x="28" y="493" width="324" height="77" rx="9" fill="#eee9f7" stroke="#b9abd7" stroke-width="1.3"/>
+<text x="190" y="519" font-size="18" fill="#6356a5" font-weight="500" text-anchor="middle">Train across examples</text>
+<text x="190" y="543" font-size="15" fill="#525a65" font-weight="400" text-anchor="middle">Student scores + validity</text>
+<text x="190" y="561" font-size="14" fill="#6356a5" font-weight="400" text-anchor="middle">Update policy weights</text>
+<path d="M280 573V636" fill="none" stroke="#6356a5" stroke-width="1.7" stroke-linejoin="round"  marker-end="url(#purple-arrow)"/>
+<text x="190" y="607" font-size="16" fill="#20252c" font-weight="400" text-anchor="middle">Prompt + expert</text>
+<path d="M145 617V636" fill="none" stroke="#525a65" stroke-width="1.7" stroke-linejoin="round"  marker-end="url(#arrow)"/>
+<rect x="28" y="644" width="324" height="139" rx="10" fill="#fff" stroke="#b9abd7" stroke-width="1.3"/>
+<text x="190" y="672" font-size="18" fill="#6356a5" font-weight="500" text-anchor="middle">Reuse learned weights</text>
+<rect x="40" y="690" width="32" height="42" rx="8" fill="#fff" stroke="#c6badf" stroke-width="1.3"/>
+<text x="56.0" y="717.0" font-size="16" fill="#6356a5" font-weight="500" text-anchor="middle">∅</text>
+<rect x="92" y="690" width="39" height="42" rx="8" fill="#fff" stroke="#c6badf" stroke-width="1.3"/>
+<text x="111.5" y="717.0" font-size="16" fill="#6356a5" font-weight="500" text-anchor="middle">t₁</text>
+<rect x="152" y="690" width="65" height="42" rx="8" fill="#fff" stroke="#c6badf" stroke-width="1.3"/>
+<text x="184.5" y="717.0" font-size="16" fill="#6356a5" font-weight="500" text-anchor="middle">t₁ t₂</text>
+<rect x="241" y="690" width="96" height="42" rx="8" fill="#fff" stroke="#c6badf" stroke-width="1.3"/>
+<text x="289.0" y="717.0" font-size="16" fill="#6356a5" font-weight="500" text-anchor="middle">… EOS</text>
+<path d="M75 711H84" fill="none" stroke="#6356a5" stroke-width="1.7" stroke-linejoin="round"  marker-end="url(#purple-arrow)"/>
+<path d="M134 711H144" fill="none" stroke="#6356a5" stroke-width="1.7" stroke-linejoin="round"  marker-end="url(#purple-arrow)"/>
+<path d="M220 711H233" fill="none" stroke="#6356a5" stroke-width="1.7" stroke-linejoin="round"  marker-end="url(#purple-arrow)"/>
+<text x="190" y="762" font-size="15" fill="#525a65" font-weight="400" text-anchor="middle">Append tokens to build a response</text>
+<path d="M190 786V799H103V809" fill="none" stroke="#525a65" stroke-width="1.7" stroke-linejoin="round"  marker-end="url(#arrow)"/>
+<rect x="28" y="817" width="150" height="64" rx="8" fill="#edf7f5" stroke="#a4ccc6" stroke-width="1.3"/>
+<text x="103.0" y="849.0" font-size="16" fill="#2b8b88" font-weight="500" text-anchor="middle">Verified</text>
+<text x="103.0" y="872.0" font-size="14" fill="#525a65" font-weight="400" text-anchor="middle">SFT data</text>
+<path d="M181 849H194" fill="none" stroke="#525a65" stroke-width="1.7" stroke-linejoin="round"  marker-end="url(#arrow)"/>
+<rect x="202" y="817" width="150" height="64" rx="8" fill="#fff" stroke="#d7dce5" stroke-width="1.3"/>
+<text x="277.0" y="849.0" font-size="16" fill="#20252c" font-weight="500" text-anchor="middle">SFT</text>
+<text x="277.0" y="872.0" font-size="14" fill="#525a65" font-weight="400" text-anchor="middle">Train student</text>
 </g></svg>

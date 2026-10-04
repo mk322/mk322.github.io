@@ -9,7 +9,7 @@ tldr: |
   - **Our solution:** Train an expert-conditioned sampler to match the information-constrained student distribution. A group-relative GFlowNet loss removes the learned normalizer; sampler training absorbs work otherwise repeated during data generation.
   - **Two uses:** Offline, adapt an expert corpus for a chosen student. Online, refresh a LoRA sampler as that student learns, producing new targets for ordinary SFT.
   - **The real test:** Better accuracy at matched total compute, while retaining prior capabilities. A learned sampler addresses repeated search and stale data; verifier errors, incomplete coverage, and forgetting still need separate evaluation.
-  - **Draft estimates, not measurements:** Offline +2 percentage points and online +3–5 points over MCMC + SFT; no loss of prior-task accuracy is the retention target. These placeholders await experiments.
+  - **Draft estimates, not measurements:** Offline about +2 percentage points and online +3–5 points over MCMC + SFT; no loss of prior-task accuracy is the retention target. These placeholders await experiments.
 
 ---
 
@@ -122,11 +122,13 @@ Knowing the target distribution does not make it easy to sample. We could draw f
 
 MCMC uses the expert trace to guide this search. For a given prompt, it proposes changes to the current response, scores them, and accepts or rejects each proposal. **The response changes; the model weights stay fixed during this search.** A new prompt requires another chain. [[1]](#sampler-ref-1)
 
-**Amortized inference moves much of this repeated search cost into training an inference machine.** The reusable result is a set of sampler parameters: training on one batch can change how the sampler generates responses for later prompts. This is the training-for-inference tradeoff described by Bengio: invest computation in learning a reusable inference procedure, then use it to generate samples cheaply. [[8]](#sampler-ref-8)
+**Amortized inference moves much of this repeated search cost into training an inference machine.** The reusable result is a set of sampler parameters: training on one batch can change how the sampler generates responses for later prompts. This is the training-for-inference tradeoff described by Bengio: invest computation in learning a reusable inference procedure, then use it to generate samples. [[8]](#sampler-ref-8)
 
-In our case, the inference machine is a conditional sampler \\(q_\phi(y\mid x,\tau)\\). During training, it explores responses, receives student likelihoods and validity feedback, and learns to approximate \\(p_C\\) across expert examples. Once trained, it can propose a response through an ordinary autoregressive rollout, followed by verification, instead of running a fresh MCMC chain for every example. We train this policy directly from the target scores; we do not need MCMC-generated examples to teach it. Here, sampling-time inference refers to creating training data.
+In our case, the inference machine is a conditional sampler \\(q_\phi(y\mid x,\tau)\\). During fitting, it explores responses, receives student likelihoods and validity feedback, and learns to approximate \\(p_C\\) across expert examples. We train it directly from these scores, without MCMC-generated teaching examples.
 
-<figure><picture><source media="(max-width: 760px)" srcset="{{ '/assets/blog/learned-sampler/amortized-comparison-mobile.svg' | relative_url }}?v=2"><img src="{{ '/assets/blog/learned-sampler/amortized-comparison.svg' | relative_url }}?v=2" width="800" height="486" alt="MCMC feeds accept/reject decisions back into the current response and repeats the chain for each prompt. Amortized training feeds a distribution-matching loss back into shared sampler parameters. Those parameters are reused to generate and verify responses for new prompts."></picture><figcaption><strong>What does the computation leave behind?</strong> MCMC updates a response for the current prompt. Our training updates a sampler that can be reused across prompts. Scoring uses student likelihood and validity feedback; generation still requires token-by-token decoding and verification.</figcaption></figure>
+At data-generation time, MCMC repeatedly revises a candidate response. The trained sampler instead starts with an empty response and appends tokens, using transition probabilities learned across examples. This constructive policy is the reusable object in a GFlowNet. [[12]](#sampler-ref-12) It still requires autoregressive decoding and verification. Both routes then use their verified outputs for SFT. Here, sampling-time inference refers to creating training data.
+
+<figure><picture><source media="(max-width: 760px)" srcset="{{ '/assets/blog/learned-sampler/amortized-comparison-mobile.svg' | relative_url }}?v=3"><img src="{{ '/assets/blog/learned-sampler/amortized-comparison.svg' | relative_url }}?v=3" width="800" height="584" alt="MCMC repeats a chain of response revisions for each prompt and expert example. Amortized training learns policy weights across examples, then reuses those weights to construct new responses by appending tokens. Both routes produce verified data and train the student with SFT."></picture><figcaption><strong>Search per example versus a reusable generation policy.</strong> Fitting across examples turns scoring feedback into sampler weights. Those weights then construct responses token by token (∅ is the empty prefix). Both routes verify outputs, collect data, and update the student with SFT. This is the offline schedule; sampler fitting and student SFT are separate stages.</figcaption></figure>
 
 The intended benefits follow from this reuse: lower cost per generated example after training, shared learning across related prompts, and a sampler that can be refreshed as the student changes. The training investment only pays off if enough useful data is generated. Total cost must therefore include sampler training, student scoring, verification, and rejected samples.
 
@@ -287,13 +289,17 @@ The offline comparison follows the math setting of Finetuning with Sampling: **Q
 
 The source SFT search uses 1–2 epochs, learning rates {5e−5, 1e−5, 5e−6}, and batch sizes {16, 32, 64}, with AdamW and a cosine schedule. Its MCMC baseline uses 10 transitions, block size 32, and maximum sequence length 1,856. [[1]](#sampler-ref-1) Our offline sampler is fitted to the starting student, then frozen to create a dataset before SFT begins.
 
+For these placeholders, each percentage comes from an illustrative integer correct count in one evaluation pass, then rounds to one decimal. The sizes are MATH 1,024; AMC 83; MATH500 500; GSM8K 1,320; Chemistry 600, following the paper and its [evaluation files](https://github.com/aakaran/finetuning-with-sampling). For example, **25/83 rounds to 30.1%** on AMC; MATH500 moves in **0.2-point** increments.
+
+MMLU uses the [full 14,042-item test set](https://huggingface.co/datasets/cais/mmlu/viewer/all/test) and a [micro-average](https://github.com/EleutherAI/lm-evaluation-harness/blob/main/lm_eval/tasks/mmlu/default/_mmlu.yaml). GPQA temporarily assumes the 198-item [Diamond subset](https://arxiv.org/abs/2311.12022); the baseline's variant needs confirmation before a measured comparison. The prior-task average is the unweighted mean of the three task scores.
+
 ### Results: task accuracy and retention
 
-<p class="sampler-results-note"><strong>Draft estimates, not experimental measurements.</strong> Baseline scores are reported in Table 1 of <a href="https://arxiv.org/html/2610.02140v1#S5">Finetuning with Sampling</a>, converted to percentages. Rows marked <strong>Est. †</strong> are author-specified planning values. We apply +2 percentage points to the MCMC math scores offline; prior-task values target the base checkpoint. No uncertainty intervals or runtime measurements are implied.</p>
+<p class="sampler-results-note"><strong>Draft estimates, not experimental measurements.</strong> Baseline scores are reported in Table 1 of <a href="https://arxiv.org/html/2610.02140v1#S5">Finetuning with Sampling</a>, converted to percentages. Rows marked <strong>Est. †</strong> are unmeasured planning values: gains vary around +2 points offline, with slight task-level variation in retention. Published baselines retain their original rounding.</p>
 
 <!-- sampler-offline-tables:start -->
 <div class="sampler-table-card" id="offline-accuracy">
-<div class="sampler-table-heading"><span class="sampler-table-kicker">GENERALIZATION · ACCURACY (%)</span><h4 id="offline-accuracy-title">Learning the new task</h4><p>Reported baselines and the +2-point offline estimate.</p></div>
+<div class="sampler-table-heading"><span class="sampler-table-kicker">GENERALIZATION · ACCURACY (%)</span><h4 id="offline-accuracy-title">Learning the new task</h4><p>Reported baselines; offline estimates vary around a +2-point gain.</p></div>
 <div class="sampler-table-scroll" role="region" tabindex="0" aria-labelledby="offline-accuracy-title">
 <table class="sampler-results-table">
 <thead><tr><th scope="col">Method</th><th scope="col">MATH</th><th scope="col">AMC</th><th scope="col">MATH500</th><th scope="col">GSM8K</th><th scope="col">Δ MATH</th></tr></thead><tbody>
@@ -334,11 +340,11 @@ The source SFT search uses 1–2 epochs, learning rates {5e−5, 1e−5, 5e−6}
 <td>78.2</td>
 <td class="sampler-delta ">+0.0</td></tr>
 <tr class="sampler-estimate-row"><th scope="row">Our offline sampler <span class="sampler-estimate-badge">Est. †</span></th>
-<td>51.5<sup>†</sup></td>
-<td>29.7<sup>†</sup></td>
-<td>60.2<sup>†</sup></td>
-<td>80.2<sup>†</sup></td>
-<td class="sampler-delta ">+2.0<sup>†</sup></td></tr>
+<td><span title="Illustrative count: 528 / 1,024; not measured">51.6<sup>†</sup></span></td>
+<td><span title="Illustrative count: 25 / 83; not measured">30.1<sup>†</sup></span></td>
+<td><span title="Illustrative count: 299 / 500; not measured">59.8<sup>†</sup></span></td>
+<td><span title="Illustrative count: 1,058 / 1,320; not measured">80.2<sup>†</sup></span></td>
+<td class="sampler-delta ">+2.1<sup>†</sup></td></tr>
 </tbody></table></div>
 <p class="sampler-table-footnote">Δ MATH is the percentage-point change from MCMC + SFT. <strong>† Draft estimates; not measured.</strong></p></div>
 
@@ -384,16 +390,16 @@ The source SFT search uses 1–2 epochs, learning rates {5e−5, 1e−5, 5e−6}
 <td>42.0</td>
 <td class="sampler-delta sampler-down">−0.2</td></tr>
 <tr class="sampler-estimate-row"><th scope="row">Our offline sampler <span class="sampler-estimate-badge">Est. †</span></th>
-<td>28.3<sup>†</sup><span class="sampler-cell-delta ">+0.0 pp</span></td>
-<td>65.1<sup>†</sup><span class="sampler-cell-delta ">+0.0 pp</span></td>
-<td>33.3<sup>†</sup><span class="sampler-cell-delta ">+0.0 pp</span></td>
-<td>42.2<sup>†</sup></td>
-<td class="sampler-delta ">+0.0<sup>†</sup></td></tr>
+<td><span title="Illustrative count: 170 / 600; not measured">28.3<sup>†</sup></span><span class="sampler-cell-delta ">+0.0 pp</span></td>
+<td><span title="Illustrative count: 9,128 / 14,042; not measured">65.0<sup>†</sup></span><span class="sampler-cell-delta sampler-down">−0.1 pp</span></td>
+<td><span title="Illustrative count: 67 / 198; not measured">33.8<sup>†</sup></span><span class="sampler-cell-delta ">+0.5 pp</span></td>
+<td>42.4<sup>†</sup></td>
+<td class="sampler-delta ">+0.2<sup>†</sup></td></tr>
 </tbody></table></div>
-<p class="sampler-table-footnote">Small numbers show each task’s change from the base model. Δ uses the reported rounded averages. <strong>† Retention targets; not measured.</strong></p></div>
+<p class="sampler-table-footnote">Small numbers show each task’s change from the base model. Δ uses displayed rounded scores. <strong>† Retention estimates; not measured.</strong></p></div>
 <!-- sampler-offline-tables:end -->
 
-The offline estimate raises MATH from **49.5% to 51.5%**. The important accompanying target is **42.2% prior-task average**, equal to the starting checkpoint. These are two separate requirements: learn the new task and retain existing capabilities.
+The offline placeholders give **51.6% MATH**, versus 49.5% for MCMC + SFT. Gains across the four math tasks range from 1.6 to 2.4 points. The prior-task average is **42.4%**, but MMLU still slips by 0.1 point in this scenario. Learning the new task and retaining prior skills must be checked separately.
 
 **Forgetting needs a per-task check.** The reported MCMC baseline is only 0.2 points below the base model on the prior-task average, yet Chemistry drops from 28.3% to 26.6%. An average can hide that loss. We therefore report all three prior tasks and their change from the base checkpoint. [[1]](#sampler-ref-1) A supported retention claim requires repeated runs and per-task confidence intervals with a prespecified tolerance for degradation; the estimated row is a target, not evidence of no forgetting.
 
@@ -401,7 +407,7 @@ For efficiency, compare equal-size verified datasets and include sampler fitting
 
 ### Conclusion
 
-The offline hypothesis is concrete: **a reusable data-preparation model should preserve MCMC's learning benefit while reducing the cost of producing enough training data.** The draft accuracy target is +2 points, with prior capabilities held at the base level. It succeeds as an efficiency method only if those gains survive a comparison at matched total compute. For a small dataset, sampler training may cost more than the search it replaces.
+The offline hypothesis is concrete: **a reusable data-preparation model should preserve MCMC's learning benefit while reducing the cost of producing enough training data.** The draft accuracy target is roughly +2 points while keeping each prior capability close to its starting level. It succeeds as an efficiency method only if those gains survive a comparison at matched total compute. For a small dataset, sampler training may cost more than the search it replaces.
 
 ## Online experiments
 {: #experiments-online}
@@ -414,11 +420,11 @@ Report LoRA rank, adapted modules, rollout group size, refresh interval, and bot
 
 ### Results: projected online improvement
 
-<p class="sampler-results-note"><strong>Illustrative midpoint.</strong> The online row uses +4 percentage points over MCMC + SFT, the midpoint of the requested +3–5-point estimate. This is a planning range, not a confidence interval. Retention values again target the base checkpoint; all † entries are unmeasured.</p>
+<p class="sampler-results-note"><strong>Draft estimates.</strong> Gains vary from 3.5 to 4.8 points over MCMC + SFT, rather than adding one constant to every task. Retention values include small gains and losses near the base checkpoint. All † entries remain unmeasured.</p>
 
 <!-- sampler-online-tables:start -->
 <div class="sampler-table-card" id="online-accuracy">
-<div class="sampler-table-heading"><span class="sampler-table-kicker">GENERALIZATION · ACCURACY (%)</span><h4 id="online-accuracy-title">Does refreshing help?</h4><p>The online estimate is the +4-point midpoint; MCMC + SFT + RL is a stronger comparator.</p></div>
+<div class="sampler-table-heading"><span class="sampler-table-kicker">GENERALIZATION · ACCURACY (%)</span><h4 id="online-accuracy-title">Does refreshing help?</h4><p>Online estimates vary by task (+3–5 points); include the stronger RL pipeline.</p></div>
 <div class="sampler-table-scroll" role="region" tabindex="0" aria-labelledby="online-accuracy-title">
 <table class="sampler-results-table">
 <thead><tr><th scope="col">Method</th><th scope="col">MATH</th><th scope="col">AMC</th><th scope="col">MATH500</th><th scope="col">GSM8K</th><th scope="col">Δ MATH</th></tr></thead><tbody>
@@ -435,22 +441,22 @@ Report LoRA rank, adapted modules, rollout group size, refresh interval, and bot
 <td>83.0</td>
 <td class="sampler-delta ">+5.0</td></tr>
 <tr class="sampler-estimate-row"><th scope="row">Our offline sampler <span class="sampler-estimate-badge">Est. †</span></th>
-<td>51.5<sup>†</sup></td>
-<td>29.7<sup>†</sup></td>
-<td>60.2<sup>†</sup></td>
-<td>80.2<sup>†</sup></td>
-<td class="sampler-delta ">+2.0<sup>†</sup></td></tr>
+<td><span title="Illustrative count: 528 / 1,024; not measured">51.6<sup>†</sup></span></td>
+<td><span title="Illustrative count: 25 / 83; not measured">30.1<sup>†</sup></span></td>
+<td><span title="Illustrative count: 299 / 500; not measured">59.8<sup>†</sup></span></td>
+<td><span title="Illustrative count: 1,058 / 1,320; not measured">80.2<sup>†</sup></span></td>
+<td class="sampler-delta ">+2.1<sup>†</sup></td></tr>
 <tr class="sampler-estimate-row"><th scope="row">Our online sampler <span class="sampler-estimate-badge">Est. †</span></th>
-<td>53.5<sup>†</sup></td>
-<td>31.7<sup>†</sup></td>
-<td>62.2<sup>†</sup></td>
-<td>82.2<sup>†</sup></td>
-<td class="sampler-delta ">+4.0<sup>†</sup></td></tr>
+<td><span title="Illustrative count: 550 / 1,024; not measured">53.7<sup>†</sup></span></td>
+<td><span title="Illustrative count: 27 / 83; not measured">32.5<sup>†</sup></span></td>
+<td><span title="Illustrative count: 311 / 500; not measured">62.2<sup>†</sup></span></td>
+<td><span title="Illustrative count: 1,078 / 1,320; not measured">81.7<sup>†</sup></span></td>
+<td class="sampler-delta ">+4.2<sup>†</sup></td></tr>
 </tbody></table></div>
 <p class="sampler-table-footnote">Δ MATH is the percentage-point change from MCMC + SFT. <strong>† Draft estimates; not measured.</strong></p></div>
 
 <div class="sampler-table-card" id="online-retention">
-<div class="sampler-table-heading"><span class="sampler-table-kicker">RETENTION · ACCURACY (%)</span><h4 id="online-retention-title">Retention through the online loop</h4><p>Both estimated sampler rows target the starting checkpoint’s prior-task accuracy.</p></div>
+<div class="sampler-table-heading"><span class="sampler-table-kicker">RETENTION · ACCURACY (%)</span><h4 id="online-retention-title">Retention through the online loop</h4><p>Illustrative task-level variation near the base checkpoint, with losses shown explicitly.</p></div>
 <div class="sampler-table-scroll" role="region" tabindex="0" aria-labelledby="online-retention-title">
 <table class="sampler-results-table">
 <thead><tr><th scope="col">Method</th><th scope="col">Chemistry</th><th scope="col">MMLU</th><th scope="col">GPQA</th><th scope="col">Prior avg.</th><th scope="col">Δ vs. base</th></tr></thead><tbody>
@@ -473,22 +479,22 @@ Report LoRA rank, adapted modules, rollout group size, refresh interval, and bot
 <td>43.0</td>
 <td class="sampler-delta ">+0.8</td></tr>
 <tr class="sampler-estimate-row"><th scope="row">Our offline sampler <span class="sampler-estimate-badge">Est. †</span></th>
-<td>28.3<sup>†</sup><span class="sampler-cell-delta ">+0.0 pp</span></td>
-<td>65.1<sup>†</sup><span class="sampler-cell-delta ">+0.0 pp</span></td>
-<td>33.3<sup>†</sup><span class="sampler-cell-delta ">+0.0 pp</span></td>
-<td>42.2<sup>†</sup></td>
-<td class="sampler-delta ">+0.0<sup>†</sup></td></tr>
+<td><span title="Illustrative count: 170 / 600; not measured">28.3<sup>†</sup></span><span class="sampler-cell-delta ">+0.0 pp</span></td>
+<td><span title="Illustrative count: 9,128 / 14,042; not measured">65.0<sup>†</sup></span><span class="sampler-cell-delta sampler-down">−0.1 pp</span></td>
+<td><span title="Illustrative count: 67 / 198; not measured">33.8<sup>†</sup></span><span class="sampler-cell-delta ">+0.5 pp</span></td>
+<td>42.4<sup>†</sup></td>
+<td class="sampler-delta ">+0.2<sup>†</sup></td></tr>
 <tr class="sampler-estimate-row"><th scope="row">Our online sampler <span class="sampler-estimate-badge">Est. †</span></th>
-<td>28.3<sup>†</sup><span class="sampler-cell-delta ">+0.0 pp</span></td>
-<td>65.1<sup>†</sup><span class="sampler-cell-delta ">+0.0 pp</span></td>
-<td>33.3<sup>†</sup><span class="sampler-cell-delta ">+0.0 pp</span></td>
+<td><span title="Illustrative count: 169 / 600; not measured">28.2<sup>†</sup></span><span class="sampler-cell-delta sampler-down">−0.1 pp</span></td>
+<td><span title="Illustrative count: 9,150 / 14,042; not measured">65.2<sup>†</sup></span><span class="sampler-cell-delta ">+0.1 pp</span></td>
+<td><span title="Illustrative count: 66 / 198; not measured">33.3<sup>†</sup></span><span class="sampler-cell-delta ">+0.0 pp</span></td>
 <td>42.2<sup>†</sup></td>
 <td class="sampler-delta ">+0.0<sup>†</sup></td></tr>
 </tbody></table></div>
-<p class="sampler-table-footnote">Small numbers show each task’s change from the base model. Δ uses the reported rounded averages. <strong>† Retention targets; not measured.</strong></p></div>
+<p class="sampler-table-footnote">Small numbers show each task’s change from the base model. Δ uses displayed rounded scores. <strong>† Retention estimates; not measured.</strong></p></div>
 <!-- sampler-online-tables:end -->
 
-The online midpoint is **53.5% MATH**, versus 51.5% for the offline estimate. The proposed +3–5-point range corresponds to 52.5–54.5% against the 49.5% MCMC + SFT baseline. The midpoint remains below the published **54.5% MCMC + SFT + RL** result; this draft does not establish superiority over that stronger pipeline. Prior-task retention must be checked at each checkpoint, because several individually small updates can accumulate into forgetting.
+The online placeholder is **53.7% MATH**, versus 51.6% offline: a 4.2-point gain over MCMC + SFT. It remains below the published **54.5% MCMC + SFT + RL** result. The retention average is 42.2%, yet Chemistry is 0.1 point lower than the base. Neither task gains nor a stable average establish superiority over the stronger pipeline or prove an absence of forgetting. Prior-task retention must be checked at each checkpoint, because several individually small updates can accumulate into forgetting.
 
 ### What would explain an online gain?
 
@@ -542,6 +548,8 @@ This suggests a useful role for the project in the post-training stack: **learn 
 <p id="sampler-ref-10"><strong>[10]</strong> Howard Chen, Noam Razin, Karthik Narasimhan, and Danqi Chen. <a href="https://proceedings.mlr.press/v306/chen26do.html">Retaining by Doing: The Role of On-Policy Data in Mitigating Forgetting</a>. ICML, 2026. See §3–4 for distributional analysis and approximately on-policy SFT; Appendix A.5 discusses limits of KL as a predictor.</p>
 
 <p id="sampler-ref-11"><strong>[11]</strong> Zhihong Shao et al. <a href="https://arxiv.org/abs/2402.03300">DeepSeekMath: Pushing the Limits of Mathematical Reasoning in Open Language Models</a>. arXiv:2402.03300, 2024. See §4.1 for GRPO.</p>
+
+<p id="sampler-ref-12"><strong>[12]</strong> Yoshua Bengio. <a href="https://yoshuabengio.org/en/blog/generative-flow-networks">Generative Flow Networks</a>. 2022. Discusses learning sequential construction policies and contrasts them with MCMC sampling.</p>
 
 ## Citation
 {: #citation}

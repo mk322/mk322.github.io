@@ -1,7 +1,31 @@
 {
   "baseline_source": "https://arxiv.org/html/2610.02140v1#S5",
   "units": "accuracy percentage; deltas are percentage points",
-  "estimate_basis": "User-specified +2pp offline / +3\u20135pp online, using +4pp midpoint for all four math columns. Prior-task estimates are base-level retention targets. No measured runs.",
+  "estimate_basis": "Unmeasured planning placeholders: roughly +2pp offline / +3\u20135pp online versus published MCMC + SFT. Prior-task values illustrate small variation near the base, not proven retention.",
+  "estimate_protocol": {
+    "evaluations_per_item": 1,
+    "display_decimals": 1,
+    "calculation": "100 * illustrative integer correct count / evaluation size; round only for display",
+    "math_evaluation_sizes": {
+      "MATH": 1024,
+      "AMC": 83,
+      "MATH500": 500,
+      "GSM8K": 1320
+    },
+    "prior_evaluation_sizes": {
+      "Chemistry": 600,
+      "MMLU": 14042,
+      "GPQA Diamond (assumed)": 198
+    },
+    "prior_average": "unweighted mean of the three unrounded task percentages",
+    "sources": [
+      "https://github.com/aakaran/finetuning-with-sampling (ood_data/AMC.json, ood_data/MATH-TTT.json, ood_data/GSM8K.jsonl, sci_data/test_data.jsonl)",
+      "https://datasets-server.huggingface.co/info?dataset=cais%2Fmmlu&config=all (14042 test examples)",
+      "https://github.com/EleutherAI/lm-evaluation-harness/blob/main/lm_eval/tasks/mmlu/default/_mmlu.yaml (micro-average)",
+      "https://arxiv.org/abs/2311.12022 (GPQA Diamond assumption: 198 items)"
+    ],
+    "baseline_note": "Published baseline values and rounding are preserved. Their seed aggregation and GPQA variant are not inferred from their decimals."
+  },
   "rows": [
     {
       "key": "base",
@@ -127,34 +151,60 @@
       "name": "Our offline sampler",
       "kind": "estimate",
       "math": [
-        51.5,
-        29.7,
-        60.2,
-        80.2
+        51.5625,
+        30.120481927710845,
+        59.8,
+        80.15151515151516
       ],
       "prior": [
-        28.3,
-        65.1,
-        33.3,
-        42.2
-      ]
+        28.333333333333332,
+        65.0049850448654,
+        33.83838383838384,
+        42.39223407219419
+      ],
+      "illustrative_correct_counts": {
+        "math": [
+          528,
+          25,
+          299,
+          1058
+        ],
+        "prior": [
+          170,
+          9128,
+          67
+        ]
+      }
     },
     {
       "key": "online",
       "name": "Our online sampler",
       "kind": "estimate",
       "math": [
-        53.5,
-        31.7,
+        53.7109375,
+        32.53012048192771,
         62.2,
-        82.2
+        81.66666666666667
       ],
       "prior": [
-        28.3,
-        65.1,
-        33.3,
-        42.2
-      ]
+        28.166666666666668,
+        65.16165788349238,
+        33.333333333333336,
+        42.22055262783079
+      ],
+      "illustrative_correct_counts": {
+        "math": [
+          550,
+          27,
+          311,
+          1078
+        ],
+        "prior": [
+          169,
+          9150,
+          66
+        ]
+      }
     }
   ]
 }
