@@ -1,11 +1,11 @@
-/* Original paper figures remain vector; prose keeps its reading width. */
-.blog-content .uni-paper-figure{display:block;margin-top:38px;margin-bottom:38px;clear:both}
-.uni-wide{width:min(1100px,calc(100vw - 56px));position:relative;left:50%;transform:translateX(-50%)}
+/* Figures and tables stay within the article reading column. */
+.blog-content .uni-paper-figure{display:block;width:100%;max-width:100%;box-sizing:border-box;margin:38px 0;clear:both}
+.uni-wide{width:100%;position:relative;left:auto;transform:none}
 .uni-paper-figure img{display:block;width:100%;height:auto;background:#fff;border-radius:0}
 .uni-figure-scroll{overflow-x:auto;overscroll-behavior-x:contain;scrollbar-width:thin;background:#fff;padding:3px;border:1px solid #e4e7ed;border-radius:10px}
 .uni-figure-scroll:focus-visible{outline:2px solid #6356a5;outline-offset:4px}
-.uni-paper-figure .uni-diagram{min-width:850px}
-.uni-method-canvas{position:relative;min-width:850px}
+.uni-paper-figure .uni-diagram{min-width:0}
+.uni-method-canvas{position:relative;min-width:0}
 .blog-content .uni-paper-figure figcaption{max-width:780px;margin:16px auto 0;font-size:.78em;line-height:1.7;text-align:left;color:#525a65}
 .uni-pan-hint{display:none}.uni-walk-controls{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
 .uni-walk-controls button{font:inherit;font-size:14px;color:#20252c;border:1px solid #c7ccd5;border-radius:6px;padding:9px 13px;background:#fff;cursor:pointer;min-height:42px}
@@ -23,7 +23,7 @@
 .uni-cite{font-size:.72em;white-space:nowrap;margin-left:.12em}.uni-cite a{text-decoration:none}.blog-content .uni-references{font-size:.82em;line-height:1.75;padding-left:1.6em}.uni-references li{margin-bottom:14px;scroll-margin-top:32px}.uni-references li:target{background:#f2eff8;outline:4px solid #f2eff8;border-radius:2px}
 
 /* Explanation figures use Helvetica Neue and the paper's vector palette. */
-.blog-content .uni-explainer{width:min(1000px,calc(100vw - 56px));position:relative;left:50%;transform:translateX(-50%)}
+.blog-content .uni-explainer{width:100%;max-width:100%;position:relative;left:auto;transform:none}
 .uni-explainer picture,.uni-explainer img{display:block;width:100%;height:auto}
 .blog-content .uni-explainer figcaption{max-width:780px}
 .blog-content h3[id^="rq"]{font-size:1.15em;line-height:1.45;margin-top:2.8em;color:#20252c}
@@ -75,7 +75,6 @@
 }
 @media(min-width:1280px){
  #main.blog-shell.blog-article{margin-left:calc(50% - 520px);margin-right:auto}
- .uni-wide,.blog-content .uni-explainer{width:min(1000px,calc(100vw - 320px))}
 }
 /* Theme reveal transforms would make the fixed directory relative to main. */
 #main.blog-shell.blog-article{transform:none!important;animation:none!important}
@@ -85,7 +84,7 @@
 
 
 /* The animated artwork is the original paper vector, with stage clipping. */
-.uni-fig2-svg{display:block;width:100%;min-width:850px;height:auto;background:#fff}
+.uni-fig2-svg{display:block;width:100%;min-width:0;height:auto;background:#fff}
 .uni-fig2-context{filter:grayscale(1);opacity:.12}
 .uni-fig2-controls{display:flex;align-items:end;gap:8px;flex-wrap:wrap;margin-bottom:16px;font-size:14px}
 .uni-fig2-select-label{display:flex;flex-direction:column;gap:5px;font-weight:600}
@@ -103,6 +102,7 @@
 .blog-content .uni-fig2-note .uni-fig2-stage-title{font-weight:600;color:#322d43;margin-bottom:6px}
 .blog-content h4[id^="rq3"]{font-size:1.04em;line-height:1.5;scroll-margin-top:96px;margin-top:2.3em}
 @media(max-width:600px){
+ .uni-paper-figure .uni-diagram,.uni-method-canvas,.uni-fig2-svg{min-width:850px}
  .uni-fig2-controls .uni-fig2-select-label{width:100%}
  .uni-fig2-controls select{width:100%}
  .uni-fig2-controls button{flex:1;font-size:13px;padding:9px 6px}
@@ -126,3 +126,6 @@
 .uni-citation-tools :focus-visible{outline:2px solid #6356a5;outline-offset:3px}
 .blog-content .uni-citation-block pre{margin:0;padding:18px;background:transparent;color:#20252c;white-space:pre-wrap;overflow-wrap:anywhere;border:0;box-shadow:none}
 .blog-content .uni-citation-block code{padding:0;font-size:14px;line-height:1.7;white-space:inherit;background:transparent;color:inherit}
+
+/* Wide table contents scroll inside the reading column. */
+.blog-content table{display:block;width:100%;max-width:100%;box-sizing:border-box;overflow-x:auto}
