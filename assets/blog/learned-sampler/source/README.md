@@ -33,3 +33,19 @@ updates in sampler training. The learned parameters pass into a separate data-ge
 stage; no MCMC trajectories are used as training targets. There are no performance numbers.
 Conceptual references: Finetuning with Sampling (https://aakaran.github.io/finetuning_with_sampling/)
 and Bengio & Hu on amortized inference (https://yoshuabengio.org/en/blog/scaling-service-reasoning-model-based-ml). Offline and online pseudocode are separate.
+
+
+Opening revision (2026-10-04): SFT efficiency → off-policy mismatch → distribution
+shift and forgetting → GRPO / OPD → transform the SFT distribution. New references:
+- RL’s Razor, arXiv:2509.04259v1: §4 reports the empirical KL–forgetting association;
+  §5 / Appendix A analyze projections under restricted policy-family assumptions.
+  Our Eq. (2–4) corresponds to its rejection-sampling lemma; we do not claim its
+  idealized convergence theorem holds for arbitrary neural-network / GRPO updates.
+- Retaining by Doing, ICML 2026 (arXiv:2510.18874v3): §3 gives a Gaussian-mixture
+  explanation, §4.2 tests approximately on-policy SFT, and Appendix A.5 shows
+  that training-task KL does not universally predict forgetting.
+- DeepSeekMath, arXiv:2402.03300: §4.1 describes group rollouts and relative-reward
+  advantages. GRPO has no learned critic; the opening does not imply otherwise.
+The added p_fit = q_data identity is an ideal population-fit explanation, not a
+forgetting theorem. The KL inequality after Eq. (4) assumes the original data
+satisfy the same validity constraint. Neither proves retention on unseen tasks.
