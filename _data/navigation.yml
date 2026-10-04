@@ -5,5 +5,8 @@ main:
   - title: "Blog"
     url: /blog/
 
+  - title: "Latent Space"
+    url: /latent-space/
+
   - title: "CV"
     url: /papers/PhD_CV.pdf

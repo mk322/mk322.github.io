@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ page.title }} · Haoqiang Kang & collaborators</title>
+  <meta name="description" content="{{ page.description | escape }}">
+  <meta name="theme-color" content="#f4f3ed">
+  <link rel="canonical" href="{{ page.url | absolute_url }}">
+  <meta property="og:title" content="{{ page.title | escape }}">
+  <meta property="og:description" content="{{ page.description | escape }}">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="{{ page.url | absolute_url }}">
+  <link rel="stylesheet" href="{{ '/assets/latent-space/site.css' | relative_url }}?v=1">
+  <script src="{{ '/assets/latent-space/site.js' | relative_url }}?v=1" defer></script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+{{ content }}
+</body>
+</html>

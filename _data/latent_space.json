@@ -1,0 +1,220 @@
+{
+  "papers": [
+    {
+      "id": "2510.04573",
+      "name": "LaDiR",
+      "title": "LaDiR: Latent Diffusion Enhances LLMs for Text Reasoning",
+      "authors": [
+        "Haoqiang Kang",
+        "Yizhe Zhang",
+        "Nikki Lijing Kuang",
+        "Nicklas Majamaki",
+        "Navdeep Jaitly",
+        "Yi-An Ma",
+        "Lianhui Qin"
+      ],
+      "date": "2025-10-06",
+      "year": "2025",
+      "question": "Generate thoughts, then refine them.",
+      "description": "Encodes text reasoning into compact thought blocks and generates them with diffusion. Iterative denoising gives the model room to refine a thought before continuing.",
+      "category": "Reasoning",
+      "track": "Generation",
+      "blog": "/blog/ladir/",
+      "url": "https://arxiv.org/abs/2510.04573"
+    },
+    {
+      "id": "2602.01705",
+      "name": "LaDi-RL",
+      "title": "LaDi-RL: Latent Diffusion Reasoning Prevents Entropy Collapse in Reinforcement Learning",
+      "authors": [
+        "Haoqiang Kang",
+        "Yizhe Zhang",
+        "Nikki Lijing Kuang",
+        "Yi-An Ma",
+        "Lianhui Qin"
+      ],
+      "date": "2026-02-02",
+      "year": "2026",
+      "question": "Explore in thought space.",
+      "description": "Optimizes a diffusion reasoning policy with reinforcement learning. Multiple text decodings of each latent trajectory help separate the quality of a thought from how it is expressed.",
+      "category": "Reasoning",
+      "track": "Learning",
+      "blog": "",
+      "url": "https://arxiv.org/abs/2602.01705"
+    },
+    {
+      "id": "2609.19878",
+      "name": "Uni-LaDiR",
+      "title": "Uni-LaDiR: Latent Diffusion Unifies Multimodal Reasoning",
+      "authors": [
+        "Haoqiang Kang",
+        "Yizhe Zhang",
+        "Nikki Lijing Kuang",
+        "Jiatao Gu",
+        "Yian Ma",
+        "Lianhui Qin"
+      ],
+      "date": "2026-09-17",
+      "year": "2026",
+      "question": "Different evidence. One reasoning interface.",
+      "description": "Learns shared thoughts from text, images, 3D point clouds, and robot states through continuation prediction. A jointly trained diffusion reasoner generates the thoughts at test time.",
+      "category": "Reasoning",
+      "track": "Representation",
+      "blog": "/blog/uni-ladir/",
+      "url": "https://arxiv.org/abs/2609.19878"
+    },
+    {
+      "id": "2606.06447",
+      "name": "NF-CoT",
+      "title": "Latent Reasoning with Normalizing Flows",
+      "authors": [
+        "Guancheng Tu",
+        "Xiangjun Fu",
+        "Suhao Yu",
+        "Yao Tang",
+        "Haoqiang Kang",
+        "Lianhui Qin",
+        "Yizhe Zhang",
+        "Jiatao Gu"
+      ],
+      "date": "2026-06-04",
+      "year": "2026",
+      "question": "Continuous thoughts in a causal stream.",
+      "description": "Uses normalizing flows to sample latent thoughts alongside text in a causal language model. Exact likelihoods and KV-cache decoding connect continuous reasoning to familiar language-model tools.",
+      "category": "Reasoning",
+      "track": "Generation",
+      "blog": "",
+      "url": "https://arxiv.org/abs/2606.06447"
+    },
+    {
+      "id": "2608.19669",
+      "name": "Scaffolding Minds",
+      "title": "Scaffolding Minds: Optimizing Latent Visual Target Representations for Multimodal Reasoning",
+      "authors": [
+        "Haoqiang Kang",
+        "Yinpeng Chen",
+        "Luyang Liu",
+        "Jesper Sparre Andersen",
+        "Abhijit Ogale",
+        "Baochen Sun",
+        "Lichan Hong",
+        "Ed H. Chi"
+      ],
+      "date": "2026-08-20",
+      "year": "2026",
+      "question": "Learn what a visual thought should contain.",
+      "description": "Learns a dedicated encoder for useful visual targets, then learns both the mean and variance of a latent sampler. Representation learning and exploration work together.",
+      "category": "Reasoning",
+      "track": "Learning",
+      "blog": "",
+      "url": "https://arxiv.org/abs/2608.19669"
+    },
+    {
+      "id": "2511.18659",
+      "name": "CLaRa",
+      "title": "CLaRa: Bridging Retrieval and Generation with Continuous Latent Reasoning",
+      "authors": [
+        "Jie He",
+        "Richard He Bai",
+        "Sinead Williamson",
+        "Jeff Z. Pan",
+        "Navdeep Jaitly",
+        "Yizhe Zhang"
+      ],
+      "date": "2025-11-24",
+      "year": "2025",
+      "question": "Connect knowledge to the answer.",
+      "description": "Compresses documents into continuous representations and trains retrieval and generation together. A shared objective ties the knowledge selected by the retriever to the answer the model produces.",
+      "category": "Reasoning",
+      "track": "Representation",
+      "blog": "",
+      "url": "https://arxiv.org/abs/2511.18659"
+    },
+    {
+      "id": "2609.39382",
+      "name": "SkillFM",
+      "title": "SkillFM: Generating Skills for LLM Agents via Latent Flow Matching",
+      "authors": [
+        "Zuming Zhang",
+        "Jie He",
+        "Yizhe Zhang",
+        "Jeff Z. Pan"
+      ],
+      "date": "2026-09-30",
+      "year": "2026",
+      "question": "Generate guidance for an agent.",
+      "description": "Samples task-conditioned skills in a latent space with flow matching, then decodes them into textual guidance for a frozen agent. The latent object is a reusable skill, rather than an intermediate thought.",
+      "category": "Extensions",
+      "track": "Generation",
+      "blog": "",
+      "url": "https://arxiv.org/abs/2609.39382"
+    },
+    {
+      "id": "2605.20670",
+      "name": "LT\u00b2",
+      "title": "LT2: Linear-Time Looped Transformers",
+      "authors": [
+        "Chunyuan Deng",
+        "Yizhe Zhang",
+        "Rui-Jie Zhu",
+        "Yuanyuan Xu",
+        "Jiarui Liu",
+        "T. S. Eugene Ng",
+        "Hanjie Chen"
+      ],
+      "date": "2026-05-20",
+      "year": "2026",
+      "question": "Make repeated computation affordable.",
+      "description": "Pairs looped transformers with linear or sparse attention. Repeated internal computation refines memory and expands context access without requiring a new text token at each iteration.",
+      "category": "Extensions",
+      "track": "Learning",
+      "blog": "",
+      "url": "https://arxiv.org/abs/2605.20670"
+    },
+    {
+      "id": "2306.02531",
+      "name": "PLANNER",
+      "title": "PLANNER: Generating Diversified Paragraph via Latent Language Diffusion Model",
+      "authors": [
+        "Yizhe Zhang",
+        "Jiatao Gu",
+        "Zhuofeng Wu",
+        "Shuangfei Zhai",
+        "Josh Susskind",
+        "Navdeep Jaitly"
+      ],
+      "date": "2023-06-05",
+      "year": "2023",
+      "question": "Plan meaning before writing words.",
+      "description": "Combines diffusion over paragraph-level semantic representations with autoregressive text decoding. An earlier foundation for separating the generation of a latent plan from its expression in language.",
+      "category": "Foundations",
+      "track": "Generation",
+      "blog": "",
+      "url": "https://arxiv.org/abs/2306.02531"
+    },
+    {
+      "id": "2507.00425",
+      "name": "TarFlowLM",
+      "title": "Flexible Language Modeling in Continuous Space with Transformer-based Autoregressive Flows",
+      "authors": [
+        "Ruixiang Zhang",
+        "Shuangfei Zhai",
+        "Jiatao Gu",
+        "Yizhe Zhang",
+        "Huangjie Zheng",
+        "Tianrong Chen",
+        "Miguel Angel Bautista",
+        "Josh Susskind",
+        "Navdeep Jaitly"
+      ],
+      "date": "2025-07-01",
+      "year": "2025",
+      "question": "Model language in continuous space.",
+      "description": "Uses transformer-based normalizing flows for continuous language modeling, with flexible token blocks and multiple generation passes. A foundation for probabilistic models of latent states.",
+      "category": "Foundations",
+      "track": "Generation",
+      "blog": "",
+      "url": "https://arxiv.org/abs/2507.00425"
+    }
+  ]
+}
