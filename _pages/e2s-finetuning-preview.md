@@ -298,7 +298,9 @@ The baseline scores come from that study; the E2S rows are our project results. 
 </tbody></table>
 </div>
 
-**Offline.** E2S-Offline improves Math avg. by **3.9% relative to MCMC + SFT**, while Prior avg. remains within **0.1 percentage point** of the starting model. **At exact convergence, MCMC and E2S-Offline target the same constrained distribution.** The observed gap is therefore not evidence of a better asymptotic target: finite-budget differences can come from approximation quality, coverage, compute allocation, and reuse across examples.
+**Offline.** E2S-Offline improves Math avg. by **3.9% relative to MCMC + SFT**, while keeping the evaluated prior-task average slightly closer to the starting model. **It learns more from expert data while retaining prior skills at least as well in this comparison.**
+
+MCMC starts a new search for each example. E2S learns a sampling strategy across examples and reuses it to generate training responses. The practical advantage is that **search experience becomes reusable knowledge in the sampler**, rather than remaining in a separate chain for each prompt.
 
 **Online.** E2S-Online adds a **7.0% relative improvement over offline**, or **11.2% over MCMC + SFT**, while matching the starting model’s displayed Prior avg. The trajectory below tracks online learning; the horizontal lines mark the other methods’ final scores.
 
