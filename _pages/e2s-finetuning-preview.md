@@ -1,34 +1,32 @@
 ---
 layout: blog-post
 title: "E2S Finetuning: From Expert Demonstrations to On-Policy Learning"
-subtitle: "Make SFT more on-policy by adapting expert demonstrations to the student."
+subtitle: "Turn expert answers into training data your model can learn from."
 permalink: /blog/e2s-finetuning-preview/
 date: 2026-10-05
 sitemap: false
 author_profile: false
 likes: false
 tldr: |
-  - **SFT data is usually off-policy.** Expert trajectories can be far from the student’s policy, so fitting them can require a large distribution shift and contribute to forgetting.
-  - **We formulate data generation as constrained distribution matching.** For valid responses \\(y\\), the target preserves the student’s relative probabilities: \\(q^*(y)\propto p_{\mathrm{student}}(y)\\). Invalid responses receive zero probability.
-  - **E2S Finetuning amortizes the sampling problem.** MCMC searches separately for every example; E2S learns a GFlowNet sampler that is reused across examples. E2S-Offline reaches 55.5% Math avg.; E2S-Online reaches 59.4%, while prior-task averages remain near the base model.
+  - **Problem:** Correct expert answers can still be hard for your model to imitate.
+  - **Idea:** Preserve the required expert information while favoring answers your model is already more likely to produce.
+  - **Method:** E2S learns a reusable answer sampler instead of starting a new search for every training example.
 ---
 
 <link rel="stylesheet" href="{{ '/assets/blog/learned-sampler/article.css' | relative_url }}">
 <link rel="stylesheet" href="{{ '/assets/blog/e2s-preview/article.css' | relative_url }}">
 
-<nav class="sampler-toc" aria-label="Article contents"><details><summary>On this page</summary><ol><li><a href="#sft-problem">Off-policy mismatch</a></li><li><a href="#amortization">Why amortize search?</a></li><li><a href="#target">The constrained target</a></li><li><a href="#gflownet">GFlowNet and group matching</a></li><li><a href="#versions">Offline and online</a></li><li><a href="#experiments">Experiments</a></li><li><a href="#scaling">Diversity scaling</a></li><li><a href="#comparison">RL, OPD, and MCMC</a></li><li><a href="#lookahead">Looking ahead</a></li><li><a href="#references">References</a></li><li><a href="#citation">Citation</a></li></ol></details></nav>
+<nav class="sampler-toc" aria-label="Article contents"><details><summary>On this page</summary><ol><li><a href="#sft-problem">Off-policy mismatch</a></li><li><a href="#amortization">Existing approaches: RL, OPD, and MCMC</a></li><li><a href="#target">The target distribution</a></li><li><a href="#gflownet">GFlowNet and group matching</a></li><li><a href="#versions">Offline and online</a></li><li><a href="#experiments">Experiments</a></li><li><a href="#scaling">Diversity scaling</a></li><li><a href="#comparison">RL, OPD, and MCMC</a></li><li><a href="#lookahead">Looking ahead</a></li><li><a href="#references">References</a></li><li><a href="#citation">Citation</a></li></ol></details></nav>
 <script defer src="{{ "/assets/blog/learned-sampler/navigation.js" | relative_url }}"></script>
 <script defer src="{{ "/assets/blog/e2s-preview/navigation.js" | relative_url }}"></script>
 
-**Standard SFT trains on demonstrations produced by someone other than the student—typically a human or a stronger model. That makes the data off-policy.**
+Expert answers can be correct yet follow reasoning paths your model would rarely produce. Training it to imitate those paths can require a large change in its behavior.
 
-Even when every demonstration is correct, its reasoning path may be unlikely under the student. Matching those trajectories can require a larger policy shift than the task itself demands. This mismatch is one mechanism that can contribute to catastrophic forgetting: learning a new task at the expense of existing skills.
+**E2S keeps the required expert information while favoring answers the model is already more likely to produce.**
 
-**Can we preserve the expert information without forcing the student to imitate the expert distribution?**
+<figure id="figure-constrained-distribution" class="sampler-chart"><picture><source media="(max-width: 600px)" srcset="{{ '/assets/blog/e2s-preview/constrained-distribution-mobile.svg' | relative_url }}?v=e65fcf828691"><img src="{{ '/assets/blog/e2s-preview/constrained-distribution.svg' | relative_url }}?v=b47ffba5a242" width="800" height="360" loading="lazy" alt="Before: the model and expert prefer different answers. After: new training data keeps answers with the correct final answer, while preserving the model’s relative preferences among them."></picture><figcaption>Shading marks answers with the correct final answer. Keep these answers in the proportions preferred by your model. Illustration, not measured results.</figcaption></figure>
 
-We formulate this as constrained distribution matching. Among response distributions that satisfy the expert constraint, we choose the one closest to the student. The solution is simple: the student conditioned on being valid.
-
-MCMC can target this distribution, but it searches again for every example. **E2S Finetuning amortizes that search:** we train a reusable GFlowNet sampler across examples, then use it to generate more on-policy training data. E2S changes where the SFT targets come from, not the SFT loss itself.
+MCMC can generate such answers by searching separately for each example. E2S learns a reusable sampler across examples; the student still learns through SFT.
 
 ## Off-policy SFT creates a distribution mismatch
 {: #sft-problem}
@@ -60,16 +58,16 @@ For prompt \\(x\\) and expert response \\(y=(y_1,\ldots,y_T)\\), the sequence lo
 
 <div class="sampler-key"><div class="e2s-key-title">Key message</div><p>Off-policy SFT can force the student to move farther than the task itself requires.</p></div>
 
-## Two ways to reduce the mismatch
+## Existing approaches to the distribution mismatch
 {: #amortization}
 
 Both routes address the same mismatch, but they change different parts of training: **where supervision is applied, or which responses become training targets.**
 
-**Move learning to the student.** Let the current student generate a response, then provide feedback on that trajectory. RL scores the student’s answers with rewards. In on-policy distillation (OPD), a teacher reads what the student has written so far and provides probabilities for the next token. Feedback is applied to the student’s own attempt. [[3]](#sampler-ref-3) [[4]](#sampler-ref-4)
+**Move learning to the student — RL / OPD.** Let the current student generate a response, then provide feedback on that trajectory. RL scores the student’s answers with rewards. In on-policy distillation (OPD), a teacher reads what the student has written so far and provides probabilities for the next token. Feedback is applied to the student’s own attempt. [[3]](#sampler-ref-3) [[4]](#sampler-ref-4)
 
-**Move the data to the student.** Use the expert constraint to define which responses are valid, and the student policy to define their relative probabilities. Sample from that constrained distribution, then train the student on the resulting responses with SFT. Here, we change the training targets themselves. MCMC and E2S are two ways to obtain them. [[5]](#sampler-ref-5)
+**Move the data to the student — MCMC + SFT.** Use the expert constraint to define which responses are valid, and the student policy to define their relative probabilities. Sample from that constrained distribution, then train the student on the resulting responses with SFT. Here, we change the training targets themselves. MCMC and E2S are two ways to obtain them. [[5]](#sampler-ref-5)
 
-<figure id="figure-two-routes"><picture><source media="(max-width: 600px)" srcset="{{ '/assets/blog/e2s-preview/two-routes-mobile.svg' | relative_url }}"><img src="{{ '/assets/blog/e2s-preview/two-routes.svg' | relative_url }}" loading="lazy" alt="Top: the student generates trajectories, receives reward or teacher feedback, and is updated through RL or distillation. Bottom: the expert constraint and student policy guide MCMC or E2S sampling; the resulting valid responses become SFT targets."></picture><figcaption>RL and OPD bring feedback to student rollouts. MCMC and E2S prepare a constrained response distribution for SFT. Both ultimately update the student.</figcaption></figure>
+<figure id="figure-two-routes"><picture><source media="(max-width: 600px)" srcset="{{ '/assets/blog/e2s-preview/two-routes-mobile.svg' | relative_url }}?v=eeb5a96589fc"><img src="{{ '/assets/blog/e2s-preview/two-routes.svg' | relative_url }}?v=e0d012879c33" loading="lazy" alt="RL / OPD apply feedback to student-generated responses. MCMC + SFT uses expert information and the student policy to prepare new training responses before SFT."></picture><figcaption>RL / OPD bring feedback to student responses. MCMC + SFT changes the training responses before updating the student.</figcaption></figure>
 
 Rejection sampling can also produce the constrained target: draw from the student and keep valid responses. It wastes most rollouts when success is rare. MCMC instead starts from an expert solution and repeatedly proposes, scores, and accepts or rejects edits—the route developed in *Finetuning with Sampling*. [[5]](#sampler-ref-5)
 
@@ -83,7 +81,7 @@ MCMC revises one response at a time; E2S improves a sampler that can generate re
 
 <div class="sampler-key"><div class="e2s-key-title">Key message</div><p>MCMC searches again; E2S learns a sampling policy it can reuse across examples.</p></div>
 
-## The target: the student conditioned on the expert constraint
+## The target distribution: preserve expert information with minimal policy change
 {: #target}
 
 For a prompt \\(x\\) and expert solution \\(\tau\\), let \\(C_\tau\\) be the set of valid responses that preserve the information we care about. For math, the simplest constraint is the correct final answer; requiring correct intermediate reasoning would need a stronger check. Write \\(p(y)=p_{\mathrm{ref}}(y\mid x)\\) for the frozen student’s probability of response \\(y\\).
@@ -104,8 +102,6 @@ Let \\(Z_\tau=\sum_{y\in C_\tau}p(y)>0\\) be the student’s total probability o
 q^*(y)=\frac{p(y)\mathbf 1[y\in C_\tau]}{Z_\tau}.
 \]
 </div>
-
-<figure id="figure-constrained-distribution" class="sampler-chart"><picture><source media="(max-width: 600px)" srcset="{{ '/assets/blog/e2s-preview/constrained-distribution-mobile.svg' | relative_url }}"><img src="{{ '/assets/blog/e2s-preview/constrained-distribution.svg' | relative_url }}" width="800" height="360" loading="lazy" alt="Left: the expert and student prefer different responses; the shaded region contains valid responses. Right: the constrained target removes student probability outside that region and renormalizes the remaining probability, preserving the relative heights of both valid modes."></picture><figcaption>Conceptual illustration: the shaded region marks the expert constraint. The target removes invalid responses and preserves the student’s relative preferences among valid ones. Responses are arranged schematically; these curves are not experimental data.</figcaption></figure>
 
 **The solution is simply the student, conditioned on being valid.** The left panel shows why fitting the expert distribution can move the student substantially. The right panel keeps both of the student’s valid response modes, in their original proportions, while removing the invalid ones.
 

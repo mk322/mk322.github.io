@@ -2,14 +2,14 @@
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
   "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg xmlns:xlink="http://www.w3.org/1999/xlink" width="576pt" height="259.2pt" viewBox="0 0 576 259.2" xmlns="http://www.w3.org/2000/svg" version="1.1">
- <title>Mismatch and the expert constraint</title>
+ <title>Keep correct answers in the proportions preferred by your model</title>
  <metadata>
   <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
    <cc:Work>
     <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
-    <dc:title>Mismatch and the expert constraint</dc:title>
-    <dc:date>2026-10-05T02:12:09.893932</dc:date>
-    <dc:description>Conceptual illustration. Left: expert and student distributions differ, while expert responses satisfy the shaded constraint. Right: zero out student probability outside the valid set and renormalize, preserving relative probabilities inside. Not experimental data.</dc:description>
+    <dc:title>Keep correct answers in the proportions preferred by your model</dc:title>
+    <dc:date>2026-10-05T02:27:03.582253</dc:date>
+    <dc:description>Illustration, not measured results. Left: your model and expert answers have different preferences. Shading marks answers with the correct final answer. Right: new training data keeps these answers in the proportions preferred by your model.</dc:description>
     <dc:format>image/svg+xml</dc:format>
     <dc:creator>
      <cc:Agent>
@@ -46,11 +46,11 @@ L 279.677064 209.952
 L 279.677064 69.984
 L 156.708991 69.984
 z
-" clip-path="url(#pba59e9637a)" style="fill: #edf6f3; stroke: #edf6f3; stroke-linejoin: miter"/>
+" clip-path="url(#peeff80540e)" style="fill: #edf6f3; stroke: #edf6f3; stroke-linejoin: miter"/>
    </g>
    <g id="FillBetweenPolyCollection_1">
     <defs>
-     <path id="md5eda4cd41" d="M 43.2 -49.248
+     <path id="m4ffc11b368" d="M 43.2 -49.248
 L 43.2 -49.675026
 L 43.791193 -49.720724
 L 44.382385 -49.770731
@@ -857,24 +857,24 @@ L 43.2 -49.248
 z
 " style="stroke: #3e73a8; stroke-opacity: 0.06"/>
     </defs>
-    <g clip-path="url(#pba59e9637a)">
-     <use xlink:href="#md5eda4cd41" x="0" y="259.2" style="fill: #3e73a8; fill-opacity: 0.06; stroke: #3e73a8; stroke-opacity: 0.06"/>
+    <g clip-path="url(#peeff80540e)">
+     <use xlink:href="#m4ffc11b368" x="0" y="259.2" style="fill: #3e73a8; fill-opacity: 0.06; stroke: #3e73a8; stroke-opacity: 0.06"/>
     </g>
    </g>
    <g id="matplotlib.axis_1">
     <g id="text_1">
-     <text style="font-size: 10px; font-family: 'Helvetica Neue', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #525a65" x="161.438532" y="226.092625" transform="rotate(-0 161.438532 226.092625)">Possible responses</text>
+     <text style="font-size: 10px; font-family: 'Helvetica Neue', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #525a65" x="161.438532" y="226.092625" transform="rotate(-0 161.438532 226.092625)">Possible answers</text>
     </g>
    </g>
    <g id="matplotlib.axis_2">
     <g id="text_2">
-     <text style="font-size: 10px; font-family: 'Helvetica Neue', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #525a65" x="35.129687" y="139.968" transform="rotate(-90 35.129687 139.968)">Probability density</text>
+     <text style="font-size: 10px; font-family: 'Helvetica Neue', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #525a65" x="35.129687" y="139.968" transform="rotate(-90 35.129687 139.968)">How likely</text>
     </g>
    </g>
    <g id="line2d_1">
     <path d="M 156.708991 209.952
 L 156.708991 69.984
-" clip-path="url(#pba59e9637a)" style="fill: none; stroke-dasharray: 2.4,2.4; stroke-dashoffset: 0; stroke: #2b8b88; stroke-opacity: 0.7; stroke-width: 0.8"/>
+" clip-path="url(#peeff80540e)" style="fill: none; stroke-dasharray: 2.4,2.4; stroke-dashoffset: 0; stroke: #2b8b88; stroke-opacity: 0.7; stroke-width: 0.8"/>
    </g>
    <g id="line2d_2">
     <path d="M 43.2 209.524974
@@ -986,7 +986,7 @@ L 271.99156 209.461402
 L 274.947523 209.739483
 L 279.677064 209.905256
 L 279.677064 209.905256
-" clip-path="url(#pba59e9637a)" style="fill: none; stroke: #3e73a8; stroke-width: 1.5; stroke-linecap: square"/>
+" clip-path="url(#peeff80540e)" style="fill: none; stroke: #3e73a8; stroke-width: 1.5; stroke-linecap: square"/>
    </g>
    <g id="line2d_3">
     <path d="M 43.2 209.952
@@ -1047,7 +1047,7 @@ L 277.312294 208.209785
 L 279.085872 208.860862
 L 279.677064 209.023498
 L 279.677064 209.023498
-" clip-path="url(#pba59e9637a)" style="fill: none; stroke: #ba8b51; stroke-width: 1.9; stroke-linecap: square"/>
+" clip-path="url(#peeff80540e)" style="fill: none; stroke: #ba8b51; stroke-width: 1.9; stroke-linecap: square"/>
    </g>
    <g id="patch_4">
     <path d="M 43.2 209.952
@@ -1055,13 +1055,13 @@ L 279.677064 209.952
 " style="fill: none; stroke: #cdd3dd; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
    </g>
    <g id="text_3">
-    <text style="font-size: 10px; font-family: 'Helvetica Neue', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #2b8b88" x="217.010642" y="81.770779" transform="rotate(-0 217.010642 81.770779)">Valid responses</text>
+    <text style="font-size: 10px; font-family: 'Helvetica Neue', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #2b8b88" x="217.010642" y="81.770779" transform="rotate(-0 217.010642 81.770779)">Correct final answer</text>
    </g>
    <g id="text_4">
-    <text style="font-size: 9px; font-family: 'Helvetica Neue', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #87909b" x="98.77211" y="81.770779" transform="rotate(-0 98.77211 81.770779)">Outside constraint</text>
+    <text style="font-size: 9px; font-family: 'Helvetica Neue', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #87909b" x="98.77211" y="81.770779" transform="rotate(-0 98.77211 81.770779)">Wrong final answer</text>
    </g>
    <g id="text_5">
-    <text style="font-weight: 500; font-size: 12px; font-family: 'Helvetica Neue', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: start; fill: #20252c" x="43.2" y="27.984" transform="rotate(-0 43.2 27.984)">1  Expert–student mismatch</text>
+    <text style="font-weight: 500; font-size: 12px; font-family: 'Helvetica Neue', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: start; fill: #20252c" x="43.2" y="27.984" transform="rotate(-0 43.2 27.984)">1  Before: different preferences</text>
    </g>
    <g id="legend_1">
     <g id="line2d_4">
@@ -1071,16 +1071,16 @@ L 66 55.388483
 " style="fill: none; stroke: #3e73a8; stroke-width: 1.5; stroke-linecap: square"/>
     </g>
     <g id="text_6">
-     <text style="font-size: 9.5px; font-family: 'Helvetica Neue', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: start; fill: #20252c" x="73.6" y="58.713483" transform="rotate(-0 73.6 58.713483)">Student</text>
+     <text style="font-size: 9.5px; font-family: 'Helvetica Neue', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: start; fill: #20252c" x="73.6" y="58.713483" transform="rotate(-0 73.6 58.713483)">Your model</text>
     </g>
     <g id="line2d_5">
-     <path d="M 120.338516 55.388483
-L 129.838516 55.388483
-L 139.338516 55.388483
+     <path d="M 134.938828 55.388483
+L 144.438828 55.388483
+L 153.938828 55.388483
 " style="fill: none; stroke: #ba8b51; stroke-width: 1.9; stroke-linecap: square"/>
     </g>
     <g id="text_7">
-     <text style="font-size: 9.5px; font-family: 'Helvetica Neue', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: start; fill: #20252c" x="146.938516" y="58.713483" transform="rotate(-0 146.938516 58.713483)">Expert</text>
+     <text style="font-size: 9.5px; font-family: 'Helvetica Neue', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: start; fill: #20252c" x="161.538828" y="58.713483" transform="rotate(-0 161.538828 58.713483)">Expert answers</text>
     </g>
    </g>
   </g>
@@ -1099,11 +1099,11 @@ L 558.72 209.952
 L 558.72 69.984
 L 435.751927 69.984
 z
-" clip-path="url(#p097464c2b8)" style="fill: #edf6f3; stroke: #edf6f3; stroke-linejoin: miter"/>
+" clip-path="url(#p7d488132b9)" style="fill: #edf6f3; stroke: #edf6f3; stroke-linejoin: miter"/>
    </g>
    <g id="FillBetweenPolyCollection_2">
     <defs>
-     <path id="m0919b067bf" d="M 322.242936 -49.248
+     <path id="m70b78c5b45" d="M 322.242936 -49.248
 L 322.242936 -49.248
 L 322.834128 -49.248
 L 323.425321 -49.248
@@ -1910,20 +1910,20 @@ L 322.242936 -49.248
 z
 " style="stroke: #6356a5; stroke-opacity: 0.1"/>
     </defs>
-    <g clip-path="url(#p097464c2b8)">
-     <use xlink:href="#m0919b067bf" x="0" y="259.2" style="fill: #6356a5; fill-opacity: 0.1; stroke: #6356a5; stroke-opacity: 0.1"/>
+    <g clip-path="url(#p7d488132b9)">
+     <use xlink:href="#m70b78c5b45" x="0" y="259.2" style="fill: #6356a5; fill-opacity: 0.1; stroke: #6356a5; stroke-opacity: 0.1"/>
     </g>
    </g>
    <g id="matplotlib.axis_3">
     <g id="text_8">
-     <text style="font-size: 10px; font-family: 'Helvetica Neue', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #525a65" x="440.481468" y="226.092625" transform="rotate(-0 440.481468 226.092625)">Possible responses</text>
+     <text style="font-size: 10px; font-family: 'Helvetica Neue', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #525a65" x="440.481468" y="226.092625" transform="rotate(-0 440.481468 226.092625)">Possible answers</text>
     </g>
    </g>
    <g id="matplotlib.axis_4"/>
    <g id="line2d_6">
     <path d="M 435.751927 209.952
 L 435.751927 69.984
-" clip-path="url(#p097464c2b8)" style="fill: none; stroke-dasharray: 2.4,2.4; stroke-dashoffset: 0; stroke: #2b8b88; stroke-opacity: 0.7; stroke-width: 0.8"/>
+" clip-path="url(#p7d488132b9)" style="fill: none; stroke-dasharray: 2.4,2.4; stroke-dashoffset: 0; stroke: #2b8b88; stroke-opacity: 0.7; stroke-width: 0.8"/>
    </g>
    <g id="line2d_7">
     <path d="M 322.242936 209.524974
@@ -2035,7 +2035,7 @@ L 551.034495 209.461402
 L 553.990459 209.739483
 L 558.72 209.905256
 L 558.72 209.905256
-" clip-path="url(#p097464c2b8)" style="fill: none; stroke-dasharray: 4.5,3; stroke-dashoffset: 0; stroke: #3e73a8; stroke-opacity: 0.6; stroke-width: 1.5"/>
+" clip-path="url(#p7d488132b9)" style="fill: none; stroke-dasharray: 4.5,3; stroke-dashoffset: 0; stroke: #3e73a8; stroke-opacity: 0.6; stroke-width: 1.5"/>
    </g>
    <g id="line2d_8">
     <path d="M 322.242936 209.952
@@ -2122,7 +2122,7 @@ L 554.581651 209.507199
 L 557.537615 209.777902
 L 558.72 209.835166
 L 558.72 209.835166
-" clip-path="url(#p097464c2b8)" style="fill: none; stroke: #6356a5; stroke-width: 1.9; stroke-linecap: square"/>
+" clip-path="url(#p7d488132b9)" style="fill: none; stroke: #6356a5; stroke-width: 1.9; stroke-linecap: square"/>
    </g>
    <g id="patch_7">
     <path d="M 322.242936 209.952
@@ -2130,13 +2130,13 @@ L 558.72 209.952
 " style="fill: none; stroke: #cdd3dd; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
    </g>
    <g id="text_9">
-    <text style="font-size: 10px; font-family: 'Helvetica Neue', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #2b8b88" x="496.053578" y="81.770779" transform="rotate(-0 496.053578 81.770779)">Valid responses</text>
+    <text style="font-size: 10px; font-family: 'Helvetica Neue', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #2b8b88" x="496.053578" y="81.770779" transform="rotate(-0 496.053578 81.770779)">Correct final answer</text>
    </g>
    <g id="text_10">
-    <text style="font-size: 9px; font-family: 'Helvetica Neue', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #87909b" x="377.815046" y="81.770779" transform="rotate(-0 377.815046 81.770779)">Outside constraint</text>
+    <text style="font-size: 9px; font-family: 'Helvetica Neue', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #87909b" x="377.815046" y="81.770779" transform="rotate(-0 377.815046 81.770779)">Wrong final answer</text>
    </g>
    <g id="text_11">
-    <text style="font-weight: 500; font-size: 12px; font-family: 'Helvetica Neue', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: start; fill: #20252c" x="322.242936" y="27.984" transform="rotate(-0 322.242936 27.984)">2  Keep valid student responses</text>
+    <text style="font-weight: 500; font-size: 12px; font-family: 'Helvetica Neue', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: start; fill: #20252c" x="322.242936" y="27.984" transform="rotate(-0 322.242936 27.984)">2  After: keep correct answers</text>
    </g>
    <g id="legend_2">
     <g id="line2d_9">
@@ -2146,25 +2146,25 @@ L 345.042936 55.274186
 " style="fill: none; stroke-dasharray: 4.5,3; stroke-dashoffset: 0; stroke: #3e73a8; stroke-opacity: 0.6; stroke-width: 1.5"/>
     </g>
     <g id="text_12">
-     <text style="font-size: 9.5px; font-family: 'Helvetica Neue', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: start; fill: #20252c" x="352.642936" y="58.599186" transform="rotate(-0 352.642936 58.599186)">Student</text>
+     <text style="font-size: 9.5px; font-family: 'Helvetica Neue', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: start; fill: #20252c" x="352.642936" y="58.599186" transform="rotate(-0 352.642936 58.599186)">Your model</text>
     </g>
     <g id="line2d_10">
-     <path d="M 399.381451 55.274186
-L 408.881451 55.274186
-L 418.381451 55.274186
+     <path d="M 413.981764 55.274186
+L 423.481764 55.274186
+L 432.981764 55.274186
 " style="fill: none; stroke: #6356a5; stroke-width: 1.9; stroke-linecap: square"/>
     </g>
     <g id="text_13">
-     <text style="font-size: 9.5px; font-family: 'Helvetica Neue', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: start; fill: #20252c" x="425.981451" y="58.599186" transform="rotate(-0 425.981451 58.599186)">Constrained target</text>
+     <text style="font-size: 9.5px; font-family: 'Helvetica Neue', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: start; fill: #20252c" x="440.581764" y="58.599186" transform="rotate(-0 440.581764 58.599186)">New training data</text>
     </g>
    </g>
   </g>
  </g>
  <defs>
-  <clipPath id="pba59e9637a">
+  <clipPath id="peeff80540e">
    <rect x="43.2" y="69.984" width="236.477064" height="139.968"/>
   </clipPath>
-  <clipPath id="p097464c2b8">
+  <clipPath id="p7d488132b9">
    <rect x="322.242936" y="69.984" width="236.477064" height="139.968"/>
   </clipPath>
  </defs>
