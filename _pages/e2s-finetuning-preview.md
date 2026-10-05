@@ -63,13 +63,21 @@ For prompt \\(x\\) and expert response \\(y=(y_1,\ldots,y_T)\\), the sequence lo
 ## Two ways to reduce the mismatch
 {: #amortization}
 
-**Move learning to the student.** RL samples student trajectories and supplies rewards. On-policy distillation (OPD) supplies teacher probabilities on student-generated prefixes. Both bring supervision to states the student actually visits. [[3]](#sampler-ref-3) [[4]](#sampler-ref-4)
+Both routes address the same mismatch, but they change different parts of training: **where supervision is applied, or which responses become training targets.**
 
-**Move the data to the student.** Keep the expert constraint, but change the distribution of training responses. Rejection sampling draws from the student and keeps valid responses; it wastes most rollouts when success is rare. MCMC starts from an expert solution and repeatedly proposes, scores, and accepts or rejects edits. *Finetuning with Sampling* develops this route. [[5]](#sampler-ref-5)
+**Move learning to the student.** Let the current student generate a response, then provide feedback on that trajectory. RL supplies rewards; on-policy distillation (OPD) supplies teacher probabilities on student-generated prefixes. The student chooses the path, and supervision follows the states it visits. [[3]](#sampler-ref-3) [[4]](#sampler-ref-4)
 
-E2S takes the second route. MCMC runs a new chain for every example. **That repeated search is the motivation for E2S.** Instead, we train a conditional sampler across prompts: work on one example changes the sampler used for the next.
+**Move the data to the student.** Use the expert constraint to define which responses are valid, and the student policy to define their relative probabilities. Sample from that constrained distribution, then train the student on the resulting responses with SFT. Here, we change the training targets themselves. MCMC and E2S are two ways to obtain them. [[5]](#sampler-ref-5)
 
-<figure id="figure-amortization"><picture><source media="(max-width: 600px)" srcset="{{ '/assets/blog/e2s-preview/amortization-mobile.svg' | relative_url }}"><img src="{{ '/assets/blog/e2s-preview/amortization.svg' | relative_url }}" loading="lazy" alt="MCMC repeats search for every example; E2S learns a sampler whose parameters are reused across examples."></picture><figcaption>MCMC repeats search for every example; E2S learns a sampler whose parameters are reused across examples.</figcaption></figure>
+<figure id="figure-two-routes"><picture><source media="(max-width: 600px)" srcset="{{ '/assets/blog/e2s-preview/two-routes-mobile.svg' | relative_url }}"><img src="{{ '/assets/blog/e2s-preview/two-routes.svg' | relative_url }}" loading="lazy" alt="Top: the student generates trajectories, receives reward or teacher feedback, and is updated through RL or distillation. Bottom: the expert constraint and student policy guide MCMC or E2S sampling; the resulting valid responses become SFT targets."></picture><figcaption>RL and OPD bring feedback to student rollouts. MCMC and E2S prepare a constrained response distribution for SFT. Both ultimately update the student.</figcaption></figure>
+
+Rejection sampling can also produce the constrained target: draw from the student and keep valid responses. It wastes most rollouts when success is rare. MCMC instead starts from an expert solution and repeatedly proposes, scores, and accepts or rejects edits—the route developed in *Finetuning with Sampling*. [[5]](#sampler-ref-5)
+
+Write \\(x\\) for the prompt, \\(\tau\\) for its off-policy expert trace, and \\(y\\) for a new response that satisfies the expert constraint while following the student’s relative probabilities. **Both MCMC and E2S turn \\(\tau\\) into a more on-policy \\(y\\), then use \\((x,y)\\) for student SFT.** The expert trace guides data preparation; it is the new response \\(y\\) that becomes the SFT target.
+
+E2S takes this second route. MCMC runs a new chain for every example. **That repeated search is the motivation for E2S.** Instead, we train a conditional sampler across prompts: work on one example changes the sampler used for the next.
+
+<figure id="figure-amortization"><picture><source media="(max-width: 600px)" srcset="{{ '/assets/blog/e2s-preview/amortization-mobile.svg' | relative_url }}"><img src="{{ '/assets/blog/e2s-preview/amortization.svg' | relative_url }}" loading="lazy" alt="Both routes turn off-policy expert trace τ into more on-policy response y, then train the student on (x, y). MCMC searches anew for each example; E2S reuses learned sampler parameters."></picture><figcaption>Both routes turn off-policy expert trace τ into more on-policy response y, then train the student on (x, y). MCMC searches anew for each example; E2S reuses learned sampler parameters.</figcaption></figure>
 
 MCMC updates a response state; E2S updates a reusable sampling policy. E2S moves part of the repeated search cost into sampler training. Whether that saves total compute depends on the training cost and how much useful data the sampler subsequently generates.
 
