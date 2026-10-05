@@ -22,7 +22,7 @@ Expert responses can contain valuable information yet follow reasoning paths the
 
 **E2S keeps the required expert information while favoring answers the model is already more likely to produce.**
 
-<figure id="figure-constrained-distribution" class="sampler-chart"><picture><source media="(max-width: 600px)" srcset="{{ '/assets/blog/e2s-preview/constrained-distribution-mobile.svg' | relative_url }}?v=af81251e3819"><img src="{{ '/assets/blog/e2s-preview/constrained-distribution.svg' | relative_url }}?v=858c36fdfa55" width="800" height="360" loading="lazy" alt="Before: the student model and expert prefer different responses. After: training data keeps responses that meet expert requirements and preserves the student model’s relative preferences among them."></picture><figcaption>Shading marks responses that preserve the required expert information—such as an answer, reasoning steps, or other requirements. Keep these responses in the proportions preferred by the student model. Conceptual illustration.</figcaption></figure>
+<figure id="figure-constrained-distribution" class="sampler-chart"><picture><source media="(max-width: 600px)" srcset="{{ '/assets/blog/e2s-preview/constrained-distribution-mobile.svg' | relative_url }}?v=db097d1a6f63"><img src="{{ '/assets/blog/e2s-preview/constrained-distribution.svg' | relative_url }}?v=389e70b1b7b0" width="800" height="360" loading="lazy" alt="Before: the student model and expert prefer different responses. After: training data keeps responses that meet the expert semantic constraints and preserves the student model’s relative preferences among them."></picture><figcaption>Shaded region: responses that meet the expert semantic constraints. Their relative probabilities follow the student model. Conceptual illustration.</figcaption></figure>
 
 MCMC can generate such answers by searching separately for each example. E2S learns a reusable sampler across examples; the student still learns through SFT.
 
@@ -82,7 +82,7 @@ MCMC revises one response at a time; E2S improves a sampler that can generate re
 ## The target distribution: preserve expert information with minimal policy change
 {: #target}
 
-**The expert constraint defines what information must survive, not which words must be copied.** Following *Finetuning with Sampling*, let \\(C_\tau\\) contain responses semantically equivalent to expert trace \\(\tau\\). Math and science use correct outcomes; knowledge tasks require preserving key facts. [[5]](#sampler-ref-5)
+**The expert semantic constraint requires responses to be semantically equivalent to the expert response.** Following *Finetuning with Sampling*, let \\(C_\tau\\) contain responses satisfying this constraint for expert trace \\(\tau\\). Math and science use correct outcomes; knowledge tasks require preserving key facts. [[5]](#sampler-ref-5)
 
 For prompt \\(x\\), write \\(p(y)=p_{\mathrm{ref}}(y\mid x)\\) for the frozen student’s response probability. The expert requirement selects valid responses; the student determines their relative probabilities.
 

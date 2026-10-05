@@ -8,8 +8,8 @@
    <cc:Work>
     <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
     <dc:title>Preserve expert information and student preferences</dc:title>
-    <dc:date>2026-10-05T02:38:15.097373</dc:date>
-    <dc:description>Illustration, not measured results. Student and expert response distributions differ. Shading marks responses that meet expert requirements, such as preserving the required answer, reasoning steps or other information. New training data preserves the student relative preferences within that set.</dc:description>
+    <dc:date>2026-10-05T02:54:59.811774</dc:date>
+    <dc:description>Illustration, not measured results. Student and expert response distributions differ. Shading marks responses that meet the expert semantic constraints. New training data preserves the student relative preferences within that set.</dc:description>
     <dc:format>image/svg+xml</dc:format>
     <dc:creator>
      <cc:Agent>
@@ -46,11 +46,11 @@ L 272.376 204.927273
 L 272.376 70.2
 L 151.18272 70.2
 z
-" clip-path="url(#p4ef5283ab0)" style="fill: #edf6f3; stroke: #edf6f3; stroke-linejoin: miter"/>
+" clip-path="url(#p4370fe0873)" style="fill: #edf6f3; stroke: #edf6f3; stroke-linejoin: miter"/>
    </g>
    <g id="FillBetweenPolyCollection_1">
     <defs>
-     <path id="ma31762e5ce" d="M 39.312 -263.072727
+     <path id="me3ea3ea787" d="M 39.312 -263.072727
 L 39.312 -263.444618
 L 39.89466 -263.484416
 L 40.47732 -263.527966
@@ -857,8 +857,8 @@ L 39.312 -263.072727
 z
 " style="stroke: #3e73a8; stroke-opacity: 0.06"/>
     </defs>
-    <g clip-path="url(#p4ef5283ab0)">
-     <use xlink:href="#ma31762e5ce" x="0" y="468" style="fill: #3e73a8; fill-opacity: 0.06; stroke: #3e73a8; stroke-opacity: 0.06"/>
+    <g clip-path="url(#p4370fe0873)">
+     <use xlink:href="#me3ea3ea787" x="0" y="468" style="fill: #3e73a8; fill-opacity: 0.06; stroke: #3e73a8; stroke-opacity: 0.06"/>
     </g>
    </g>
    <g id="matplotlib.axis_1">
@@ -870,7 +870,7 @@ z
    <g id="line2d_1">
     <path d="M 151.18272 204.927273
 L 151.18272 70.2
-" clip-path="url(#p4ef5283ab0)" style="fill: none; stroke-dasharray: 2.4,2.4; stroke-dashoffset: 0; stroke: #2b8b88; stroke-opacity: 0.7; stroke-width: 0.8"/>
+" clip-path="url(#p4370fe0873)" style="fill: none; stroke-dasharray: 2.4,2.4; stroke-dashoffset: 0; stroke: #2b8b88; stroke-opacity: 0.7; stroke-width: 0.8"/>
    </g>
    <g id="line2d_2">
     <path d="M 39.312 204.555382
@@ -975,7 +975,7 @@ L 267.13206 204.707002
 L 271.79334 204.877495
 L 272.376 204.886564
 L 272.376 204.886564
-" clip-path="url(#p4ef5283ab0)" style="fill: none; stroke: #3e73a8; stroke-width: 1.5; stroke-linecap: square"/>
+" clip-path="url(#p4370fe0873)" style="fill: none; stroke: #3e73a8; stroke-width: 1.5; stroke-linecap: square"/>
    </g>
    <g id="line2d_3">
     <path d="M 39.312 204.927273
@@ -1034,7 +1034,7 @@ L 270.04536 203.410003
 L 271.79334 203.977017
 L 272.376 204.118654
 L 272.376 204.118654
-" clip-path="url(#p4ef5283ab0)" style="fill: none; stroke: #ba8b51; stroke-width: 1.9; stroke-linecap: square"/>
+" clip-path="url(#p4370fe0873)" style="fill: none; stroke: #ba8b51; stroke-width: 1.9; stroke-linecap: square"/>
    </g>
    <g id="patch_4">
     <path d="M 39.312 204.927273
@@ -1043,11 +1043,11 @@ L 272.376 204.927273
    </g>
    <g id="text_2">
     <text style="font-size: 10px; font-family: 'Helvetica Neue', 'Arial', 'DejaVu Sans', sans-serif; fill: #2b8b88" transform="translate(181.259352 75.05834)">Meets expert</text>
-    <text style="font-size: 10px; font-family: 'Helvetica Neue', 'Arial', 'DejaVu Sans', sans-serif; fill: #2b8b88" transform="translate(181.429665 85.597403)">requirements</text>
+    <text style="font-size: 10px; font-family: 'Helvetica Neue', 'Arial', 'DejaVu Sans', sans-serif; fill: #2b8b88" transform="translate(164.21404 85.597403)">semantic constraints</text>
    </g>
    <g id="text_3">
-    <text style="font-size: 9px; font-family: 'Helvetica Neue', 'Arial', 'DejaVu Sans', sans-serif; fill: #87909b" transform="translate(64.570477 76.112246)">Does not meet</text>
-    <text style="font-size: 9px; font-family: 'Helvetica Neue', 'Arial', 'DejaVu Sans', sans-serif; fill: #87909b" transform="translate(67.816102 85.597403)">requirements</text>
+    <text style="font-size: 9px; font-family: 'Helvetica Neue', 'Arial', 'DejaVu Sans', sans-serif; fill: #87909b" transform="translate(64.409462 76.112246)">Outside expert</text>
+    <text style="font-size: 9px; font-family: 'Helvetica Neue', 'Arial', 'DejaVu Sans', sans-serif; fill: #87909b" transform="translate(52.32204 85.597403)">semantic constraints</text>
    </g>
    <g id="text_4">
     <text style="font-weight: 500; font-size: 12px; font-family: 'Helvetica Neue', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: start; fill: #20252c" x="39.312" y="28.2" transform="rotate(-0 39.312 28.2)">1  Before: different preferences</text>
@@ -1088,11 +1088,11 @@ L 272.376 425.88
 L 272.376 291.152727
 L 151.18272 291.152727
 z
-" clip-path="url(#p54fdd57ad3)" style="fill: #edf6f3; stroke: #edf6f3; stroke-linejoin: miter"/>
+" clip-path="url(#p223007c19a)" style="fill: #edf6f3; stroke: #edf6f3; stroke-linejoin: miter"/>
    </g>
    <g id="FillBetweenPolyCollection_2">
     <defs>
-     <path id="mc7c6ebf005" d="M 39.312 -42.12
+     <path id="mf75d43496f" d="M 39.312 -42.12
 L 39.312 -42.12
 L 39.89466 -42.12
 L 40.47732 -42.12
@@ -1899,8 +1899,8 @@ L 39.312 -42.12
 z
 " style="stroke: #6356a5; stroke-opacity: 0.1"/>
     </defs>
-    <g clip-path="url(#p54fdd57ad3)">
-     <use xlink:href="#mc7c6ebf005" x="0" y="468" style="fill: #6356a5; fill-opacity: 0.1; stroke: #6356a5; stroke-opacity: 0.1"/>
+    <g clip-path="url(#p223007c19a)">
+     <use xlink:href="#mf75d43496f" x="0" y="468" style="fill: #6356a5; fill-opacity: 0.1; stroke: #6356a5; stroke-opacity: 0.1"/>
     </g>
    </g>
    <g id="matplotlib.axis_3">
@@ -1912,7 +1912,7 @@ z
    <g id="line2d_6">
     <path d="M 151.18272 425.88
 L 151.18272 291.152727
-" clip-path="url(#p54fdd57ad3)" style="fill: none; stroke-dasharray: 2.4,2.4; stroke-dashoffset: 0; stroke: #2b8b88; stroke-opacity: 0.7; stroke-width: 0.8"/>
+" clip-path="url(#p223007c19a)" style="fill: none; stroke-dasharray: 2.4,2.4; stroke-dashoffset: 0; stroke: #2b8b88; stroke-opacity: 0.7; stroke-width: 0.8"/>
    </g>
    <g id="line2d_7">
     <path d="M 39.312 425.508109
@@ -2017,7 +2017,7 @@ L 267.13206 425.659729
 L 271.79334 425.830222
 L 272.376 425.839291
 L 272.376 425.839291
-" clip-path="url(#p54fdd57ad3)" style="fill: none; stroke-dasharray: 4.5,3; stroke-dashoffset: 0; stroke: #3e73a8; stroke-opacity: 0.6; stroke-width: 1.5"/>
+" clip-path="url(#p223007c19a)" style="fill: none; stroke-dasharray: 4.5,3; stroke-dashoffset: 0; stroke: #3e73a8; stroke-opacity: 0.6; stroke-width: 1.5"/>
    </g>
    <g id="line2d_8">
     <path d="M 39.312 425.88
@@ -2098,7 +2098,7 @@ L 267.71472 425.417409
 L 270.62802 425.695852
 L 272.376 425.778251
 L 272.376 425.778251
-" clip-path="url(#p54fdd57ad3)" style="fill: none; stroke: #6356a5; stroke-width: 1.9; stroke-linecap: square"/>
+" clip-path="url(#p223007c19a)" style="fill: none; stroke: #6356a5; stroke-width: 1.9; stroke-linecap: square"/>
    </g>
    <g id="patch_7">
     <path d="M 39.312 425.88
@@ -2107,14 +2107,14 @@ L 272.376 425.88
    </g>
    <g id="text_8">
     <text style="font-size: 10px; font-family: 'Helvetica Neue', 'Arial', 'DejaVu Sans', sans-serif; fill: #2b8b88" transform="translate(181.259352 296.011067)">Meets expert</text>
-    <text style="font-size: 10px; font-family: 'Helvetica Neue', 'Arial', 'DejaVu Sans', sans-serif; fill: #2b8b88" transform="translate(181.429665 306.55013)">requirements</text>
+    <text style="font-size: 10px; font-family: 'Helvetica Neue', 'Arial', 'DejaVu Sans', sans-serif; fill: #2b8b88" transform="translate(164.21404 306.55013)">semantic constraints</text>
    </g>
    <g id="text_9">
-    <text style="font-size: 9px; font-family: 'Helvetica Neue', 'Arial', 'DejaVu Sans', sans-serif; fill: #87909b" transform="translate(64.570477 297.064974)">Does not meet</text>
-    <text style="font-size: 9px; font-family: 'Helvetica Neue', 'Arial', 'DejaVu Sans', sans-serif; fill: #87909b" transform="translate(67.816102 306.55013)">requirements</text>
+    <text style="font-size: 9px; font-family: 'Helvetica Neue', 'Arial', 'DejaVu Sans', sans-serif; fill: #87909b" transform="translate(64.409462 297.064974)">Outside expert</text>
+    <text style="font-size: 9px; font-family: 'Helvetica Neue', 'Arial', 'DejaVu Sans', sans-serif; fill: #87909b" transform="translate(52.32204 306.55013)">semantic constraints</text>
    </g>
    <g id="text_10">
-    <text style="font-weight: 500; font-size: 12px; font-family: 'Helvetica Neue', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: start; fill: #20252c" x="39.312" y="249.152727" transform="rotate(-0 39.312 249.152727)">2  After: preserve expert information</text>
+    <text style="font-weight: 500; font-size: 12px; font-family: 'Helvetica Neue', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: start; fill: #20252c" x="39.312" y="249.152727" transform="rotate(-0 39.312 249.152727)">2  After: meet semantic constraints</text>
    </g>
    <g id="legend_2">
     <g id="line2d_9">
@@ -2139,10 +2139,10 @@ L 164.492313 276.652543
   </g>
  </g>
  <defs>
-  <clipPath id="p4ef5283ab0">
+  <clipPath id="p4370fe0873">
    <rect x="39.312" y="70.2" width="233.064" height="134.727273"/>
   </clipPath>
-  <clipPath id="p54fdd57ad3">
+  <clipPath id="p223007c19a">
    <rect x="39.312" y="291.152727" width="233.064" height="134.727273"/>
   </clipPath>
  </defs>

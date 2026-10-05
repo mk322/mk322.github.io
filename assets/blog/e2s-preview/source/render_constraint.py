@@ -27,8 +27,8 @@ for mobile in [False,True]:
  for i,ax in enumerate(axes):
   ax.axvspan(.48,1,color='#edf6f3',zorder=0)
   ax.axvline(.48,color=TEAL,lw=.8,ls=(0,(3,3)),alpha=.7)
-  ax.text(.735,9.3,'Meets expert\nrequirements',ha='center',fontsize=10,color=TEAL)
-  ax.text(.235,9.3,'Does not meet\nrequirements',ha='center',fontsize=9,color='#87909b')
+  ax.text(.735,9.3,'Meets expert\nsemantic constraints',ha='center',fontsize=10,color=TEAL)
+  ax.text(.235,9.3,'Outside expert\nsemantic constraints',ha='center',fontsize=9,color='#87909b')
   ax.set_xlim(0,1);ax.set_ylim(0,10.5);ax.set_xticks([]);ax.set_yticks([])
   for edge in ['top','right','left']:ax.spines[edge].set_visible(False)
   ax.spines['bottom'].set_color('#cdd3dd');ax.spines['bottom'].set_linewidth(.8)
@@ -41,10 +41,10 @@ for mobile in [False,True]:
   else:
    ax.fill_between(x,q,color=PURPLE,alpha=.10)
    ax.plot(x,q,color=PURPLE,lw=1.9,label='New training data')
-   ax.set_title('2  After: preserve expert information',fontsize=12,loc='left',pad=42,fontweight='medium')
+   ax.set_title('2  After: meet semantic constraints',fontsize=12,loc='left',pad=42,fontweight='medium')
   ax.legend(loc='lower left',bbox_to_anchor=(0,1.04),ncol=2,frameon=False,fontsize=9.5,handlelength=2,columnspacing=1.4,borderaxespad=0)
  name='constrained-distribution'+('-mobile' if mobile else '')
- fig.savefig(OUT/(name+'.svg'),metadata={'Title':'Preserve expert information and student preferences','Description':'Illustration, not measured results. Student and expert response distributions differ. Shading marks responses that meet expert requirements, such as preserving the required answer, reasoning steps or other information. New training data preserves the student relative preferences within that set.'})
+ fig.savefig(OUT/(name+'.svg'),metadata={'Title':'Preserve expert information and student preferences','Description':'Illustration, not measured results. Student and expert response distributions differ. Shading marks responses that meet the expert semantic constraints. New training data preserves the student relative preferences within that set.'})
  fig.savefig('/tmp/'+name+'.png',dpi=150)
  path=OUT/(name+'.svg');path.write_text('\n'.join(line.rstrip() for line in path.read_text().splitlines())+'\n')
  plt.close(fig)
