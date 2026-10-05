@@ -12,7 +12,7 @@ import matplotlib.pyplot as plt
 OUT=Path(__file__).resolve().parents[1]
 BLUE='#3e73a8'; OCHRE='#ba8b51'; PURPLE='#6356a5'; TEAL='#2b8b88'; MUTED='#525a65'
 plt.rcParams.update({'font.family':'sans-serif','font.sans-serif':['Helvetica Neue','Arial','DejaVu Sans'],'font.size':11,'text.color':'#20252c','axes.labelcolor':MUTED,'svg.fonttype':'none'})
-x=np.linspace(0,1,4001)
+x=np.linspace(0,1,401)
 def normal(mu,sigma):return np.exp(-.5*((x-mu)/sigma)**2)/(sigma*np.sqrt(2*np.pi))
 p=.6*normal(.23,.075)+.25*normal(.64,.055)+.15*normal(.85,.043)
 p/=np.trapezoid(p,x)
