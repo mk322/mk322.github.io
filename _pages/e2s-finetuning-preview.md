@@ -1,16 +1,16 @@
 ---
 layout: blog-post
 title: "E2S Finetuning: From Expert Demonstrations to On-Policy Learning"
-subtitle: "Turn expert answers into training data your model can learn from."
+subtitle: "Turn expert responses into training data the student model can learn from."
 permalink: /blog/e2s-finetuning-preview/
 date: 2026-10-05
 sitemap: false
 author_profile: false
 likes: false
 tldr: |
-  - **Problem:** Correct expert answers can still be hard for your model to imitate.
-  - **Idea:** Preserve the required expert information while favoring answers your model is already more likely to produce.
-  - **Method:** E2S learns a reusable answer sampler instead of starting a new search for every training example.
+  - **Problem:** Expert responses can be informative but hard for the student model to imitate.
+  - **Idea:** Preserve the required expert information while favoring responses the student model is already more likely to produce.
+  - **Method:** E2S learns a reusable response sampler instead of starting a new search for every training example.
 ---
 
 <link rel="stylesheet" href="{{ '/assets/blog/learned-sampler/article.css' | relative_url }}">
@@ -20,11 +20,11 @@ tldr: |
 <script defer src="{{ "/assets/blog/learned-sampler/navigation.js" | relative_url }}"></script>
 <script defer src="{{ "/assets/blog/e2s-preview/navigation.js" | relative_url }}"></script>
 
-Expert answers can be correct yet follow reasoning paths your model would rarely produce. Training it to imitate those paths can require a large change in its behavior.
+Expert responses can contain valuable information yet follow reasoning paths the student model would rarely produce. Training it to imitate those paths can require a large change in its behavior.
 
 **E2S keeps the required expert information while favoring answers the model is already more likely to produce.**
 
-<figure id="figure-constrained-distribution" class="sampler-chart"><picture><source media="(max-width: 600px)" srcset="{{ '/assets/blog/e2s-preview/constrained-distribution-mobile.svg' | relative_url }}?v=e65fcf828691"><img src="{{ '/assets/blog/e2s-preview/constrained-distribution.svg' | relative_url }}?v=b47ffba5a242" width="800" height="360" loading="lazy" alt="Before: the model and expert prefer different answers. After: new training data keeps answers with the correct final answer, while preserving the model’s relative preferences among them."></picture><figcaption>Shading marks answers with the correct final answer. Keep these answers in the proportions preferred by your model. Illustration, not measured results.</figcaption></figure>
+<figure id="figure-constrained-distribution" class="sampler-chart"><picture><source media="(max-width: 600px)" srcset="{{ '/assets/blog/e2s-preview/constrained-distribution-mobile.svg' | relative_url }}?v=af81251e3819"><img src="{{ '/assets/blog/e2s-preview/constrained-distribution.svg' | relative_url }}?v=858c36fdfa55" width="800" height="360" loading="lazy" alt="Before: the student model and expert prefer different responses. After: training data keeps responses that meet expert requirements and preserves the student model’s relative preferences among them."></picture><figcaption>Shading marks responses that preserve the required expert information—such as an answer, reasoning steps, or other requirements. Keep these responses in the proportions preferred by the student model. Conceptual illustration.</figcaption></figure>
 
 MCMC can generate such answers by searching separately for each example. E2S learns a reusable sampler across examples; the student still learns through SFT.
 
