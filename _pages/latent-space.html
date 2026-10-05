@@ -8,9 +8,12 @@ description: "A research thread on continuous thoughts: latent diffusion, normal
 {% include latent-space/header.html %}
 <main id="main" class="research-page">
   <section class="page-intro">
-    <h1>Latent Reasoning<br>Research</h1>
+    <p class="intro-eyebrow">A research thread on continuous thoughts</p>
+    <h1>Reasoning beyond words.</h1>
     <p>Language lets a model explain its reasoning. But must every intermediate thought become a word? We study how models can reason in continuous latent states: how to learn useful thoughts, generate possible next steps, and improve them through feedback.</p>
-    <p class="intro-secondary">These works explore that idea through diffusion, normalizing flows, visual reasoning, and a shared interface across modalities.</p>
+    <p class="intro-secondary">From generating and refining thoughts to learning from feedback and reasoning across modalities.</p>
+    {% assign metrics_origin = site.blog_metrics_origin | default: site.url %}
+    <div class="collection-meta"><span>{{ site.data.latent_space.papers.size }} papers</span><span class="collection-views" data-blog-views data-url="{{ metrics_origin }}{{ site.baseurl }}{{ page.url }}" title="Page views since this counter was enabled"><svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" stroke-width="1.5"/></svg><span data-view-count aria-label="Page views">—</span> views</span></div>
   </section>
   <section class="research-thread" aria-label="Research, most recent first">
     {% assign sorted_papers = site.data.latent_space.papers | sort: 'date' | reverse %}
@@ -38,8 +41,10 @@ description: "A research thread on continuous thoughts: latent diffusion, normal
   <section class="about-thread">
     <h2>About this research thread</h2>
     <p>A latent state can carry information before a model commits to words. Learning such states raises a connected set of questions: what information should they preserve, how can we generate a distribution of possible thoughts, and how can feedback improve the reasoning process?</p>
-    <p>The LaDiR series follows these questions from diffusion-based text reasoning to reinforcement learning and multimodal unification. NF-CoT explores probabilistic thoughts with normalizing flows. Scaffolding Minds learns visual targets and latent exploration together. Related work connects this direction to compressed knowledge, skill generation, and repeated internal computation.</p>
+    <p>The LaDiR series follows these questions from diffusion-based text reasoning to reinforcement learning and multimodal unification. NF-CoT explores probabilistic thoughts with normalizing flows. Scaffolding Minds learns visual targets and latent exploration together. Related work connects this direction to compressed knowledge and repeated internal computation.</p>
     <p>This site brings together work by <a href="{{ '/latent-space/people/' | relative_url }}">Murray Kang, Nikki Lijing Kuang, Yizhe Zhang, Yian Ma, Lianhui Qin</a>, and their collaborators. Each paper credits its complete author list.</p>
   </section>
 </main>
 {% include latent-space/footer.html %}
+
+<script src="{{ "/assets/blog/views.js" | relative_url }}?v=20261004-record" defer></script>

@@ -19,7 +19,7 @@
       "description": "Encodes text reasoning into compact thought blocks and generates them with diffusion. Iterative denoising gives the model room to refine a thought before continuing.",
       "category": "Reasoning",
       "track": "Generation",
-      "blog": "/blog/ladir/",
+      "blog": "",
       "url": "https://arxiv.org/abs/2510.04573",
       "image": "/images/papers/ladir.png",
       "image_width": 2002,
@@ -146,27 +146,8 @@
       "url": "https://arxiv.org/abs/2511.18659"
     },
     {
-      "id": "2609.39382",
-      "name": "SkillFM",
-      "title": "SkillFM: Generating Skills for LLM Agents via Latent Flow Matching",
-      "authors": [
-        "Zuming Zhang",
-        "Jie He",
-        "Yizhe Zhang",
-        "Jeff Z. Pan"
-      ],
-      "date": "2026-09-30",
-      "year": "2026",
-      "question": "Generate guidance for an agent.",
-      "description": "Samples task-conditioned skills in a latent space with flow matching, then decodes them into textual guidance for a frozen agent. The latent object is a reusable skill, rather than an intermediate thought.",
-      "category": "Extensions",
-      "track": "Generation",
-      "blog": "",
-      "url": "https://arxiv.org/abs/2609.39382"
-    },
-    {
       "id": "2605.20670",
-      "name": "LT\u00b2",
+      "name": "LT²",
       "title": "LT2: Linear-Time Looped Transformers",
       "authors": [
         "Chunyuan Deng",
@@ -206,30 +187,6 @@
       "track": "Generation",
       "blog": "",
       "url": "https://arxiv.org/abs/2306.02531"
-    },
-    {
-      "id": "2507.00425",
-      "name": "TarFlowLM",
-      "title": "Flexible Language Modeling in Continuous Space with Transformer-based Autoregressive Flows",
-      "authors": [
-        "Ruixiang Zhang",
-        "Shuangfei Zhai",
-        "Jiatao Gu",
-        "Yizhe Zhang",
-        "Huangjie Zheng",
-        "Tianrong Chen",
-        "Miguel Angel Bautista",
-        "Josh Susskind",
-        "Navdeep Jaitly"
-      ],
-      "date": "2025-07-01",
-      "year": "2025",
-      "question": "Model language in continuous space.",
-      "description": "Uses transformer-based normalizing flows for continuous language modeling, with flexible token blocks and multiple generation passes. A foundation for probabilistic models of latent states.",
-      "category": "Foundations",
-      "track": "Generation",
-      "blog": "",
-      "url": "https://arxiv.org/abs/2507.00425"
     }
   ],
   "people": [

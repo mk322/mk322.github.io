@@ -5,3 +5,21 @@
 @media(max-width:560px){.site-header{padding:17px 20px;font-size:13px;gap:18px}.site-name{gap:9px}.site-mark{font-size:26px}.site-mark>span{font-size:20px}.site-header nav{gap:20px}.research-page,.people-page,.site-footer{width:calc(100% - 40px)}.page-intro{margin-top:55px;margin-bottom:56px}.page-intro h1{font-size:36px;line-height:1.1;letter-spacing:-1.1px}.page-intro p{font-size:18px}.page-intro .intro-secondary{font-size:15px}.research-entry{display:block;margin-bottom:38px}.featured-entry .entry-main h3{font-size:24px;line-height:1.2}.entry-main h3{font-size:21px}.entry-authors{font-size:9px;margin-top:11px}.entry-description{font-size:16px;line-height:1.55}.entry-image{display:block;width:100%;max-width:330px;margin:20px 0 0;padding:12px}.entry-links{font-size:10px;gap:16px}.research-month{margin-bottom:38px}.month-label{margin-bottom:19px}.about-thread{margin-top:60px;margin-bottom:50px;padding-top:28px}.about-thread h2{font-size:24px}.about-thread p{font-size:15px}.site-footer{font-size:10px;gap:18px;padding-top:20px}.site-footer>span{order:3;width:100%}.person-row{grid-template-columns:58px minmax(0,1fr);padding:27px 0}.person-monogram{width:40px;height:40px;font-size:13px}.person-label{padding-right:15px}.person-content h2{font-size:23px}.person-work-label{font-size:9px}.person-works{gap:7px 16px}.person-works li{font-size:15px}.collaborator-note{font-size:14px;margin-bottom:50px}}
 @media(max-width:350px){.site-header{padding-inline:16px;font-size:12px}.site-header nav{gap:14px}.research-page,.people-page,.site-footer{width:calc(100% - 32px)}.page-intro h1{font-size:33px}.site-mark{font-size:24px}.featured-entry .entry-main h3{font-size:22px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+
+/* A quiet editorial hierarchy for the research collection. */
+.page-intro{margin-top:80px;margin-bottom:70px;max-width:680px}
+.page-intro .intro-eyebrow{font-family:var(--sans);font-size:11px;letter-spacing:1.4px;text-transform:uppercase;color:#677b8a;margin-bottom:19px}
+.research-page .page-intro h1{font-size:48px;line-height:1.12;letter-spacing:-1.8px;max-width:650px}
+.collection-meta{display:flex;align-items:center;gap:24px;margin-top:26px;font-family:var(--sans);font-size:12px;color:var(--muted)}
+.collection-views{display:inline-flex;align-items:center;gap:6px;font-variant-numeric:tabular-nums}
+.research-month{border-top:1px solid var(--line);padding-top:26px}
+.month-label{font-size:11px;font-weight:500;letter-spacing:.7px}
+.entry-authors{font-size:11px;letter-spacing:0;text-transform:none}
+.entry-links{font-size:12px;gap:18px}
+.entry-links a{color:#3c5e76;text-decoration-color:#b6c5cf}
+.entry-image{flex-basis:250px;border:1px solid var(--line);border-radius:5px;padding:12px}
+.featured-entry .entry-main h3{font-size:25px;line-height:1.3;font-weight:600}
+.about-thread{margin-top:85px}
+@media(max-width:1050px){.entry-image{flex-basis:210px}}
+@media(max-width:780px){.page-intro{margin-top:60px;margin-bottom:50px}.research-page .page-intro h1{font-size:41px}.entry-image{flex-basis:185px}}
+@media(max-width:560px){.research-page .page-intro h1{font-size:37px;letter-spacing:-1.3px}.page-intro .intro-eyebrow{font-size:10px;letter-spacing:1px}.research-month{padding-top:20px}.entry-image{max-width:none}.featured-entry .entry-main h3{font-size:23px}.entry-links{font-size:12px}.collection-meta{margin-top:23px}}
