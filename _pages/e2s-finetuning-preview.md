@@ -105,7 +105,11 @@ q^*(y)=\frac{p(y)\mathbf 1[y\in C_\tau]}{Z_\tau}.
 \]
 </div>
 
-**The solution is simply the student, conditioned on being valid.** For any feasible distribution with finite KL, substituting \\(p(y)=Z_\tau q^*(y)\\) on the valid set gives:
+<figure id="figure-constrained-distribution" class="sampler-chart"><picture><source media="(max-width: 600px)" srcset="{{ '/assets/blog/e2s-preview/constrained-distribution-mobile.svg' | relative_url }}"><img src="{{ '/assets/blog/e2s-preview/constrained-distribution.svg' | relative_url }}" width="800" height="360" loading="lazy" alt="Left: the expert and student prefer different responses; the shaded region contains valid responses. Right: the constrained target removes student probability outside that region and renormalizes the remaining probability, preserving the relative heights of both valid modes."></picture><figcaption>Conceptual illustration: the shaded region marks the expert constraint. The target removes invalid responses and preserves the student’s relative preferences among valid ones. Responses are arranged schematically; these curves are not experimental data.</figcaption></figure>
+
+**The solution is simply the student, conditioned on being valid.** The left panel shows why fitting the expert distribution can move the student substantially. The right panel keeps both of the student’s valid response modes, in their original proportions, while removing the invalid ones.
+
+For any feasible distribution with finite KL, substituting \\(p(y)=Z_\tau q^*(y)\\) on the valid set gives:
 
 <div class="sampler-math">
 \[
