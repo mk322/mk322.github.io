@@ -1,0 +1,37 @@
+---
+layout: latent-space
+title: "People · Latent Space"
+permalink: /latent-space/people/
+latent_tab: people
+description: "Murray Kang, Nikki Lijing Kuang, Yizhe Zhang, Yian Ma, and Lianhui Qin: collaborators on continuous latent reasoning."
+---
+{% include latent-space/header.html %}
+<main id="main" class="people-page">
+  <section class="page-intro">
+    <h1>People</h1>
+    <p>A shared research direction, built through collaboration. These are the people connecting the work collected in Latent Space.</p>
+  </section>
+  <section class="people-list" aria-label="People">
+    {% for person in site.data.latent_space.people %}
+    <article class="person-row">
+      <div class="person-label"><span class="person-monogram" aria-hidden="true">{{ person.initials }}</span></div>
+      <div class="person-content">
+        <h2><a href="{{ person.url }}">{{ person.name }}</a></h2>
+        {% if person.note %}<p class="person-note">{{ person.note }}</p>{% endif %}
+        <p class="person-work-label">Work in this collection</p>
+        <ul class="person-works">
+          {% for paper in site.data.latent_space.papers %}
+          {% if paper.authors contains person.author_name or paper.authors contains person.author_alias %}
+          {% assign destination = paper.url %}{% if paper.blog != '' %}{% assign destination = paper.blog | relative_url %}{% endif %}
+          <li><a href="{{ destination }}">{{ paper.name }}</a></li>
+          {% endif %}
+          {% endfor %}
+        </ul>
+        <a class="person-home" href="{{ person.url }}">Personal website <span aria-hidden="true">↗</span></a>
+      </div>
+    </article>
+    {% endfor %}
+  </section>
+  <p class="collaborator-note">These projects involve many other collaborators. The linked papers provide the full author lists.</p>
+</main>
+{% include latent-space/footer.html %}

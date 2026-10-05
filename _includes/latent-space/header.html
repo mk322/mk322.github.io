@@ -1,0 +1,7 @@
+<header class="site-header">
+  <a class="site-name" href="{{ '/latent-space/' | relative_url }}"><span class="site-mark" aria-hidden="true">L<span>↗</span></span><span>Latent Space</span></a>
+  <nav aria-label="Latent Space navigation">
+    <a href="{{ '/latent-space/' | relative_url }}"{% if page.latent_tab == 'research' %} aria-current="page"{% endif %}>Research</a>
+    <a href="{{ '/latent-space/people/' | relative_url }}"{% if page.latent_tab == 'people' %} aria-current="page"{% endif %}>People</a>
+  </nav>
+</header>

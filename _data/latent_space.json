@@ -20,7 +20,10 @@
       "category": "Reasoning",
       "track": "Generation",
       "blog": "/blog/ladir/",
-      "url": "https://arxiv.org/abs/2510.04573"
+      "url": "https://arxiv.org/abs/2510.04573",
+      "image": "/images/papers/ladir.png",
+      "image_width": 2002,
+      "image_height": 660
     },
     {
       "id": "2602.01705",
@@ -40,7 +43,10 @@
       "category": "Reasoning",
       "track": "Learning",
       "blog": "",
-      "url": "https://arxiv.org/abs/2602.01705"
+      "url": "https://arxiv.org/abs/2602.01705",
+      "image": "/images/papers/ladirl.png",
+      "image_width": 4759,
+      "image_height": 2206
     },
     {
       "id": "2609.19878",
@@ -61,7 +67,10 @@
       "category": "Reasoning",
       "track": "Representation",
       "blog": "/blog/uni-ladir/",
-      "url": "https://arxiv.org/abs/2609.19878"
+      "url": "https://arxiv.org/abs/2609.19878",
+      "image": "/assets/blog/uni-ladir/fig1.png",
+      "image_width": 1800,
+      "image_height": 1416
     },
     {
       "id": "2606.06447",
@@ -84,7 +93,10 @@
       "category": "Reasoning",
       "track": "Generation",
       "blog": "",
-      "url": "https://arxiv.org/abs/2606.06447"
+      "url": "https://arxiv.org/abs/2606.06447",
+      "image": "/images/papers/nfcot.png",
+      "image_width": 1142,
+      "image_height": 1002
     },
     {
       "id": "2608.19669",
@@ -107,7 +119,10 @@
       "category": "Reasoning",
       "track": "Learning",
       "blog": "",
-      "url": "https://arxiv.org/abs/2608.19669"
+      "url": "https://arxiv.org/abs/2608.19669",
+      "image": "/images/papers/scaffoldingminds.png",
+      "image_width": 1496,
+      "image_height": 1066
     },
     {
       "id": "2511.18659",
@@ -215,6 +230,40 @@
       "track": "Generation",
       "blog": "",
       "url": "https://arxiv.org/abs/2507.00425"
+    }
+  ],
+  "people": [
+    {
+      "name": "Murray Kang",
+      "initials": "MK",
+      "author_name": "Haoqiang Kang",
+      "note": "Publishes as Haoqiang Kang.",
+      "url": "https://mk322.github.io/"
+    },
+    {
+      "name": "Nikki Lijing Kuang",
+      "initials": "NK",
+      "author_name": "Nikki Lijing Kuang",
+      "url": "https://nikkilkuang.github.io/"
+    },
+    {
+      "name": "Yizhe Zhang",
+      "initials": "YZ",
+      "author_name": "Yizhe Zhang",
+      "url": "https://dreasysnail.github.io/"
+    },
+    {
+      "name": "Yian Ma",
+      "initials": "YM",
+      "author_name": "Yian Ma",
+      "author_alias": "Yi-An Ma",
+      "url": "https://sites.google.com/view/yianma/home"
+    },
+    {
+      "name": "Lianhui Qin",
+      "initials": "LQ",
+      "author_name": "Lianhui Qin",
+      "url": "https://lianhui.ucsd.edu/"
     }
   ]
 }
