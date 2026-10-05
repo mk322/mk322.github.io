@@ -284,7 +284,13 @@ Each round freezes the current student while fitting the sampler and generating 
 ## Experiments: does E2S learn more without forgetting more?
 {: #experiments}
 
-**E2S improves math while keeping the evaluated prior-task average near the starting model.** On Qwen2.5-3B, E2S-Offline reaches 55.5% Math avg., compared with 53.4% for MCMC + SFT. E2S-Online reaches 59.4%. Their Prior averages are 42.1% and 42.2%, compared with the base model’s 42.2%.
+### Setup
+
+We follow the math setting in *Finetuning with Sampling*: Qwen2.5-3B, MATH levels 3–5, 8,230 training problems, and 1,024 held-out MATH problems. Math avg. is the equal-weight mean of MATH, AMC, MATH500, and GSM8K; Prior avg. averages Chemistry, MMLU, and GPQA. [[5]](#sampler-ref-5)
+
+The baseline scores come from that study; the E2S rows are our project results. Offline and online use the same starting checkpoint, training corpus, and evaluation suite. The comparison measures accuracy and retention, rather than speed at matched total compute.
+
+### Results
 
 <div class="sampler-table-scroll">
 <table class="e2s-summary"><caption>Accuracy (%) on new math tasks and prior tasks</caption><thead><tr><th scope="col">Method</th><th scope="col">Math avg.</th><th scope="col">Prior avg.</th></tr></thead><tbody>
@@ -296,19 +302,9 @@ Each round freezes the current student while fitting the sampler and generating 
 </tbody></table>
 </div>
 
-### Setup
+**Offline.** E2S-Offline improves Math avg. by **3.9% relative to MCMC + SFT**, while Prior avg. remains within **0.1 percentage point** of the starting model. **At exact convergence, MCMC and E2S-Offline target the same constrained distribution.** The observed gap is therefore not evidence of a better asymptotic target: finite-budget differences can come from approximation quality, coverage, compute allocation, and reuse across examples.
 
-We follow the math setting in *Finetuning with Sampling*: Qwen2.5-3B, MATH levels 3–5, 8,230 training problems, and 1,024 held-out MATH problems. Math avg. is the equal-weight mean of MATH, AMC, MATH500, and GSM8K; Prior avg. averages Chemistry, MMLU, and GPQA. [[5]](#sampler-ref-5)
-
-The baseline scores come from that study; the E2S rows are our project results. Offline and online use the same starting checkpoint, training corpus, and evaluation suite. The comparison measures accuracy and retention, rather than speed at matched total compute.
-
-### Offline result
-
-E2S-Offline improves Math avg. by 2.1 points over MCMC + SFT while keeping Prior avg. within 0.1 point of the base model. **At exact convergence, MCMC and E2S-Offline target the same constrained distribution.** The observed gap is therefore not evidence of a better asymptotic target: finite-budget differences can come from approximation quality, coverage, compute allocation, and reuse across examples.
-
-### Online result
-
-E2S-Online reaches 59.4% Math avg.—3.9 points above offline and 6.0 points above MCMC + SFT—while matching the base model’s displayed Prior avg. The trajectory below tracks online learning; the horizontal lines mark the other methods’ final scores.
+**Online.** E2S-Online adds a **7.0% relative improvement over offline**, or **11.2% over MCMC + SFT**, while matching the starting model’s displayed Prior avg. The trajectory below tracks online learning; the horizontal lines mark the other methods’ final scores.
 
 <figure id="online-training-curve" class="sampler-chart"><picture><source media="(max-width: 600px)" srcset="{{ '/assets/blog/learned-sampler/e2s-online-progress-mobile.svg' | relative_url }}"><img src="{{ '/assets/blog/learned-sampler/e2s-online-progress.svg' | relative_url }}" width="800" height="410" loading="lazy" alt="Online Math average reaches 59.4 percent. Horizontal reference lines mark MCMC plus SFT at 53.4 and E2S-Offline at 55.5 percent."></picture><figcaption>Author-confirmed online trajectory. Horizontal lines show MCMC + SFT (53.4%) and E2S-Offline (55.5%), not their training trajectories. Online progress is normalized within its own run and does not align compute across methods. <a href="/assets/blog/learned-sampler/source/online-curve-data.json">Stored trajectory</a>.</figcaption></figure>
 
@@ -327,9 +323,13 @@ E2S-Online reaches 59.4% Math avg.—3.9 points above offline and 6.0 points abo
 <tr class="sampler-result-row"><th scope="row">E2S-Online</th><td>56.3</td><td>32.5</td><td>65.4</td><td>83.2</td><td class="sampler-retention-start">28.2</td><td>65.1</td><td>33.3</td></tr>
 </tbody></table></div></div></details>
 
-These results support stronger math learning with little change in the evaluated prior-task average. They compare complete training schedules; isolating the effect of refreshing alone requires equal-compute frozen-versus-refreshed experiments. An average over three prior benchmarks also does not establish retention of every capability.
+### Conclusion
 
-<div class="sampler-key sampler-key-teal"><div class="e2s-key-title">Key message</div><p>E2S improves math while keeping prior-task performance near the starting model.</p></div>
+**These results support adapting the training-data distribution as a way to improve the learning–retention tradeoff.** Expert information can support new-task learning without a comparable decline in the evaluated prior-task average. The online result further supports treating data generation as part of learning, rather than only preparing targets once.
+
+The comparison evaluates complete training schedules. Isolating the effect of refreshing alone requires equal-compute frozen-versus-refreshed experiments; an average over three prior benchmarks also does not establish retention of every capability.
+
+<div class="sampler-key sampler-key-teal"><div class="e2s-key-title">Key message</div><p>Adapting expert data to the student can improve the learning–retention tradeoff without changing the SFT objective.</p></div>
 
 ## Diversity scaling: more responses from the same expert examples
 {: #scaling}
