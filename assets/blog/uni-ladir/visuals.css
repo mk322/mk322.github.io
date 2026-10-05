@@ -161,3 +161,8 @@
 .blog-content .uni-key-message p:first-child{margin-bottom:8px;color:#2475a7;font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
 .blog-content .uni-key-message p:first-child strong{font-weight:700}
 @media(max-width:600px){.blog-content .uni-key-message{padding:16px 18px;font-size:18px}}
+
+/* Simple, prominent chains without card decoration. */
+.blog-content .uni-inline-chain{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 14px;margin:20px 0 28px;padding:14px 0;border-top:1px solid #e4e7ed;border-bottom:1px solid #e4e7ed;font-family:Inter,"Helvetica Neue",Arial,sans-serif;font-size:18px;font-weight:600;line-height:1.8;color:#20252c}
+.uni-chain-link{white-space:nowrap}
+.uni-chain-link>span{display:inline-block;margin-right:10px;color:#3498db;font-weight:400}
