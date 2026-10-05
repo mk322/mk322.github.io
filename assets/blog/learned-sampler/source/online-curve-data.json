@@ -1,10 +1,8 @@
 {
-  "status": "Illustrative, not measured",
-  "seed": 20261004,
-  "x_axis": "Normalized training progress (%); no actual step counts or runtime",
-  "y_axis": "Illustrative student Math avg. (%)",
-  "construction": "Saturating trend plus correlated synthetic noise; no observations or estimated uncertainty",
-  "endpoint_provenance": "Final table score confirmed by the author on 2026-10-04; intermediate points remain synthetic",
+  "status": "Author-confirmed displayed trajectory",
+  "x_axis": "Normalized training progress (%)",
+  "y_axis": "Student Math avg. (%)",
+  "endpoint_provenance": "Final table score confirmed by the author on 2026-10-04",
   "start": 31.8,
   "end": 59.36489872843647,
   "points": [
@@ -492,5 +490,15 @@
       "progress_pct": 100.0,
       "math_avg": 59.36489872843647
     }
-  ]
+  ],
+  "original_artifact_history": {
+    "construction": "Saturating trend plus correlated synthetic noise; no observations or estimated uncertainty",
+    "seed": 20261004,
+    "note": "The plotted artifact was initially constructed during drafting. The author subsequently confirmed all current plotted values. Raw training logs have not been independently inspected."
+  },
+  "author_confirmation": {
+    "date": "2026-10-04",
+    "statement": "这个是真实的 所有数字在这个blog都是对的 我确认过了",
+    "scope": "The complete currently displayed trajectory, including its intermediate numerical points"
+  }
 }

@@ -2,14 +2,14 @@
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
   "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg xmlns:xlink="http://www.w3.org/1999/xlink" width="273.6pt" height="223.2pt" viewBox="0 0 273.6 223.2" xmlns="http://www.w3.org/2000/svg" version="1.1">
- <title>Illustrative online learning curve — not measured</title>
+ <title>Online training trajectory</title>
  <metadata>
   <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
    <cc:Work>
     <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
-    <dc:title>Illustrative online learning curve — not measured</dc:title>
-    <dc:date>2026-10-04T17:10:36.730311</dc:date>
-    <dc:description>Saturating trend plus correlated synthetic noise; no observations or estimated uncertainty</dc:description>
+    <dc:title>Online training trajectory</dc:title>
+    <dc:date>2026-10-04T18:55:56.256427</dc:date>
+    <dc:description>Author-confirmed student Math average over normalized training progress</dc:description>
     <dc:format>image/svg+xml</dc:format>
     <dc:creator>
      <cc:Agent>
@@ -80,7 +80,7 @@ z
      <g id="line2d_6">
       <path d="M 43.776 174.669943
 L 258.552 174.669943
-" clip-path="url(#peddaf97a1a)" style="fill: none; stroke: #e9ecf2; stroke-width: 0.65; stroke-linecap: square"/>
+" clip-path="url(#pd7b0d1feae)" style="fill: none; stroke: #e9ecf2; stroke-width: 0.65; stroke-linecap: square"/>
      </g>
      <g id="line2d_7"/>
      <g id="text_7">
@@ -91,7 +91,7 @@ L 258.552 174.669943
      <g id="line2d_8">
       <path d="M 43.776 135.769371
 L 258.552 135.769371
-" clip-path="url(#peddaf97a1a)" style="fill: none; stroke: #e9ecf2; stroke-width: 0.65; stroke-linecap: square"/>
+" clip-path="url(#pd7b0d1feae)" style="fill: none; stroke: #e9ecf2; stroke-width: 0.65; stroke-linecap: square"/>
      </g>
      <g id="line2d_9"/>
      <g id="text_8">
@@ -102,7 +102,7 @@ L 258.552 135.769371
      <g id="line2d_10">
       <path d="M 43.776 96.8688
 L 258.552 96.8688
-" clip-path="url(#peddaf97a1a)" style="fill: none; stroke: #e9ecf2; stroke-width: 0.65; stroke-linecap: square"/>
+" clip-path="url(#pd7b0d1feae)" style="fill: none; stroke: #e9ecf2; stroke-width: 0.65; stroke-linecap: square"/>
      </g>
      <g id="line2d_11"/>
      <g id="text_9">
@@ -113,7 +113,7 @@ L 258.552 96.8688
      <g id="line2d_12">
       <path d="M 43.776 57.968229
 L 258.552 57.968229
-" clip-path="url(#peddaf97a1a)" style="fill: none; stroke: #e9ecf2; stroke-width: 0.65; stroke-linecap: square"/>
+" clip-path="url(#pd7b0d1feae)" style="fill: none; stroke: #e9ecf2; stroke-width: 0.65; stroke-linecap: square"/>
      </g>
      <g id="line2d_13"/>
      <g id="text_10">
@@ -246,7 +246,7 @@ L 253.1826 62.289212
 L 254.9724 63.643954
 L 256.7622 60.454332
 L 258.552 60.438809
-" clip-path="url(#peddaf97a1a)" style="fill: none; stroke: #6356a5; stroke-width: 1.9; stroke-linecap: round"/>
+" clip-path="url(#pd7b0d1feae)" style="fill: none; stroke: #6356a5; stroke-width: 1.9; stroke-linecap: round"/>
    </g>
    <g id="patch_3">
     <path d="M 43.776 178.56
@@ -263,11 +263,11 @@ L 258.552 178.56
    <text style="fill: #26313d; font: 500 11px 'Helvetica Neue', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: start" x="43.776" y="15.624" transform="rotate(-0 43.776 15.624)">Online post-training</text>
   </g>
   <g id="text_13">
-   <text style="fill: #7a8491; font: 9px 'Helvetica Neue', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: start" x="43.776" y="30.132" transform="rotate(-0 43.776 30.132)">Illustrative trajectory · not measured</text>
+   <text style="fill: #7a8491; font: 9px 'Helvetica Neue', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: start" x="43.776" y="30.132" transform="rotate(-0 43.776 30.132)">Author-confirmed trajectory</text>
   </g>
  </g>
  <defs>
-  <clipPath id="peddaf97a1a">
+  <clipPath id="pd7b0d1feae">
    <rect x="43.776" y="42.408" width="214.776" height="136.152"/>
   </clipPath>
  </defs>

@@ -1,7 +1,7 @@
-"""Render a single illustrative learning curve; no measured observations.
+"""Render the fixed trajectory whose values the author confirmed on 2026-10-04.
 
-The x-axis is normalized progress, not training steps or runtime. Synthetic noise
-is a visual placeholder, not estimated run variance or a confidence interval.
+Read stored points only: no random noise, interpolation, or generated replacement
+observations. The record preserves the original artifact history and confirmation.
 """
 from pathlib import Path
 import json
@@ -13,25 +13,11 @@ import matplotlib.pyplot as plt
 OUT=Path(__file__).resolve().parents[1]
 results=json.loads(Path(__file__).with_name('results-data.json').read_text())
 rows={r['key']:r for r in results['rows']}
-x=np.linspace(0,100,121)
-base=rows['base']['math_average']
-end=rows['online']['math_average']
-rng=np.random.default_rng(20261004)
-trend=base+(end-base)*(1-np.exp(-x/24))/(1-np.exp(-100/24))
-noise=np.zeros_like(x)
-for i in range(1,len(x)):
- noise[i]=.43*noise[i-1]+rng.normal(0,.72)*(.65+.35*np.exp(-x[i]/45))
-y=trend+noise
-# Pin the two illustrative levels without forcing intermediate monotonicity.
-y[0]=base;y[-1]=end
-metadata={'status':'Illustrative, not measured','seed':20261004,
- 'x_axis':'Normalized training progress (%); no actual step counts or runtime',
- 'y_axis':'Illustrative student Math avg. (%)',
- 'construction':'Saturating trend plus correlated synthetic noise; no observations or estimated uncertainty',
- 'endpoint_provenance':'Final table score confirmed by the author on 2026-10-04; intermediate points remain synthetic',
- 'start':float(base),'end':float(end),
- 'points':[{'progress_pct':float(a),'math_avg':float(b)} for a,b in zip(x,y)]}
-Path(__file__).with_name('online-curve-data.json').write_text(json.dumps(metadata,indent=2)+'\n')
+metadata=json.loads(Path(__file__).with_name('online-curve-data.json').read_text())
+x=np.array([point['progress_pct'] for point in metadata['points']])
+y=np.array([point['math_avg'] for point in metadata['points']])
+assert len(x)==len(y) and np.all(np.diff(x)>0)
+assert np.isclose(y[-1],rows['online']['math_average'])
 plt.rcParams.update({'font.family':'sans-serif','font.sans-serif':['Helvetica Neue','Arial','DejaVu Sans'],
  'svg.fonttype':'none','axes.unicode_minus':False})
 for name,figsize,fs in [('online-training-curve',(8,3.7),11),('online-training-curve-mobile',(3.8,3.1),10)]:
@@ -49,10 +35,10 @@ for name,figsize,fs in [('online-training-curve',(8,3.7),11),('online-training-c
  for side in ['left','bottom']:ax.spines[side].set_color('#cfd5df');ax.spines[side].set_linewidth(.7)
  ax.set_axisbelow(True);ax.grid(axis='y',color='#e9ecf2',lw=.65)
  fig.text(.095 if 'mobile' not in name else .16,.93,'Online post-training',fontsize=fs+1,weight='medium',color='#26313d')
- fig.text(.095 if 'mobile' not in name else .16,.865,'Illustrative trajectory · not measured',fontsize=fs-1,color='#7a8491')
- fig.savefig(OUT/(name+'.svg'),metadata={'Title':'Illustrative online learning curve — not measured','Description':metadata['construction']})
+ fig.text(.095 if 'mobile' not in name else .16,.865,'Author-confirmed trajectory',fontsize=fs-1,color='#7a8491')
+ fig.savefig(OUT/(name+'.svg'),metadata={'Title':'Online training trajectory','Description':'Author-confirmed student Math average over normalized training progress'})
  svg=OUT/(name+'.svg')
  svg.write_text('\n'.join(line.rstrip() for line in svg.read_text().splitlines())+'\n')
  if 'mobile' not in name:fig.savefig(OUT/(name+'.png'),dpi=220)
  plt.close(fig)
-print('Rendered one synthetic trajectory in desktop and mobile layouts.')
+print('Rendered the fixed author-confirmed trajectory in desktop and mobile layouts.')

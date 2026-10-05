@@ -73,14 +73,17 @@ view shows Math avg. and Prior avg. Explicit comparisons are in the results pros
 all seven task scores, with New tasks and Prior tasks grouped and separated by a dashed rule. OPSD, GRPO, and UFT are retained and explained in Setup.
 New sources: OPSD (arXiv:2601.18734) and UFT (arXiv:2505.16984, §3).
 
-Regenerate the illustrative online curve (requires numpy and matplotlib):
+Render the fixed online trajectory (requires numpy and matplotlib):
     python3 assets/blog/learned-sampler/source/render_online_curve.py
 
-online-training-curve.svg / -mobile.svg and the PNG share one synthetic trajectory.
-The plot is labeled illustrative, with normalized progress rather than fabricated
-step counts. online-curve-data.json records construction, seed, and points. Its
-endpoint matches the author-confirmed online Math average. There are no measured
-rollout logs, variance estimates, speedups, or convergence claims in this curve.
+online-training-curve.svg / -mobile.svg and the PNG share the stored trajectory.
+On 2026-10-04 the author explicitly confirmed all plotted values, including the
+intermediate points. The public figure attributes the confirmation to the author.
+The renderer now reads online-curve-data.json without generating noise or replacing
+points. Its normalized axis does not imply particular training-step counts.
+The data record preserves the original construction history alongside the later
+author confirmation. Raw training logs were not independently inspected; no variance,
+runtime, or convergence-rate measurements are inferred from this confirmation.
 
 
 Reference-image replacements (2026-10-04):

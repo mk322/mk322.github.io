@@ -51,7 +51,7 @@ source={
  'units':'accuracy percentage; gains are percentage points',
  'result_provenance':'The author confirmed the current sampler scores as real results on 2026-10-04. Published baseline numbers are unchanged. Raw evaluation logs were not independently inspected.',
  'previous_author_confirmed_display':previous_verified,
- 'author_confirmation':{'date':'2026-10-04','statement':'现在数字都是真实值','scope':'Current offline and online table scores; synthetic intermediate curve points are not empirical observations'},
+ 'author_confirmation':{'date':'2026-10-04','statement':'现在数字都是真实值','scope':'Current offline and online table scores. The author separately confirmed the full displayed curve; see online-curve-data.json.'},
  'display_protocol':{
   'evaluations_per_item':1,'display_decimals':1,
   'calculation':'Display reconstruction: 100 * integer count / evaluation size; round half up. Reconstruction counts originated during drafting, not from run logs.',

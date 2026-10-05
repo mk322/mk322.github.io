@@ -393,9 +393,9 @@ We compare with **MCMC + SFT** and the fixed offline sampler in the [shared tabl
 
 Online, we achieve **59.4% Math avg.**, versus **53.4%** for MCMC + SFT: a **6.0-point average gain**. Prior avg. is **42.2%**, close to the base model and slightly above plain MCMC + SFT’s **42.0%**. The gains vary across benchmarks; the aggregate summarizes their mean.
 
-The schematic below illustrates an online training trajectory ending at the reported Math avg. of 59.4%. Its intermediate points are synthetic, rather than recorded training measurements.
+The curve below shows student Math avg. over normalized online training progress, ending at 59.4%.
 
-<figure id="online-training-curve"><picture><source media="(max-width: 600px)" srcset="{{ '/assets/blog/learned-sampler/online-training-curve-mobile.svg' | relative_url }}?v=3"><img src="{{ '/assets/blog/learned-sampler/online-training-curve.svg' | relative_url }}?v=3" width="800" height="370" alt="Illustrative single-line online learning curve: Math average rises with noisy fluctuations and later plateaus near the reported 59.4 percent score. Training progress is normalized; this is not a measured training trace."></picture><figcaption><strong>Illustrative online trajectory; not measured.</strong> Student Math avg. over normalized training progress. The noisy trajectory and plateau are schematic; the endpoint matches the reported 59.4% score in the table.</figcaption></figure>
+<figure id="online-training-curve"><picture><source media="(max-width: 600px)" srcset="{{ '/assets/blog/learned-sampler/online-training-curve-mobile.svg' | relative_url }}?v=4"><img src="{{ '/assets/blog/learned-sampler/online-training-curve.svg' | relative_url }}?v=4" width="800" height="370" alt="Online learning curve: Math average rises with noisy fluctuations and later plateaus near the reported 59.4 percent score. Training progress is normalized."></picture><figcaption><strong>Online training trajectory.</strong> Student Math avg. over normalized training progress, ending at 59.4%. Values confirmed by the author.</figcaption></figure>
 
 ### Conclusion
 

@@ -37,7 +37,7 @@
   "author_confirmation": {
     "date": "2026-10-04",
     "statement": "\u73b0\u5728\u6570\u5b57\u90fd\u662f\u771f\u5b9e\u503c",
-    "scope": "Current offline and online table scores; synthetic intermediate curve points are not empirical observations"
+    "scope": "Current offline and online table scores. The author separately confirmed the full displayed curve; see online-curve-data.json."
   },
   "display_protocol": {
     "evaluations_per_item": 1,
