@@ -82,7 +82,7 @@ MCMC revises one response at a time; E2S improves a sampler that can generate re
 ## The target distribution: preserve expert information with minimal policy change
 {: #target}
 
-**The expert constraint defines what information must survive, not which words must be copied.** Following *Finetuning with Sampling*, let \\(C_\tau\\) contain responses equivalent to expert trace \\(\tau\\) under a task-specific preservation rule. Math and science use correct outcomes; knowledge tasks require preserving key facts. [[5]](#sampler-ref-5)
+**The expert constraint defines what information must survive, not which words must be copied.** Following *Finetuning with Sampling*, let \\(C_\tau\\) contain responses semantically equivalent to expert trace \\(\tau\\). Math and science use correct outcomes; knowledge tasks require preserving key facts. [[5]](#sampler-ref-5)
 
 For prompt \\(x\\), write \\(p(y)=p_{\mathrm{ref}}(y\mid x)\\) for the frozen student’s response probability. The expert requirement selects valid responses; the student determines their relative probabilities.
 
