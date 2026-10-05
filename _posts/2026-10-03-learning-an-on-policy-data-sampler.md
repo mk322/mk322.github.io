@@ -1,7 +1,7 @@
 ---
 layout: blog-post
 title: "E2S Finetuning: From Expert Demonstrations to On-Policy Learning"
-subtitle: "Turn expert responses into training data the student model can learn from."
+subtitle: "Make SFT great again! Turn off-policy expert data into more on-policy training data."
 permalink: /blog/learned-on-policy-sampler/
 date: 2026-10-03
 last_modified_at: 2026-10-05
