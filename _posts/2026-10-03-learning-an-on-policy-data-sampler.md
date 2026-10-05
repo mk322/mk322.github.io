@@ -5,9 +5,7 @@ permalink: /blog/learned-on-policy-sampler/
 last_modified_at: 2026-10-05
 excerpt: "Keep SFT simple; change the data. E2S learns a reusable sampler that turns expert demonstrations into calibrated student training targets—learning new tasks while retaining prior capabilities."
 tldr: |
-  - **Problem:** Expert demonstrations teach valuable information, but often follow reasoning paths the student would rarely generate. SFT asks the student to imitate both the knowledge and that unfamiliar way of expressing it.
-  - **Our solution:** E2S Finetuning learns an expert-conditioned sampler for the student’s distribution restricted to acceptable responses. A group-relative GFlowNet loss trains this sampler; the student still learns with ordinary SFT.
-  - **Why it matters:** An expert example can become a source of useful training responses, rather than one fixed target. Offline, prepare data for a chosen student. Online, refresh it as the student learns. Our experiments show stronger math performance while keeping prior-task averages near the base model.
+  **E2S Finetuning learns an amortized sampler with GFlowNet to turn off-policy expert data into more on-policy training targets for SFT.** E2S-Offline creates a dataset for a fixed student. E2S-Online serves as a post-training method, refreshing the targets as the student learns.
 ---
 
 <link rel="stylesheet" href="{{ '/assets/blog/learned-sampler/article.css' | relative_url }}?v=e2s-educational-3">

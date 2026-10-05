@@ -8,9 +8,7 @@ sitemap: false
 author_profile: false
 likes: false
 tldr: |
-  - **Problem:** Expert responses can be informative but hard for the student model to imitate.
-  - **Idea:** Preserve the required expert information while favoring responses the student model is already more likely to produce.
-  - **Method:** E2S learns a reusable response sampler instead of starting a new search for every training example.
+  **E2S Finetuning learns an amortized sampler with GFlowNet to turn off-policy expert data into more on-policy training targets for SFT.** E2S-Offline creates a dataset for a fixed student. E2S-Online serves as a post-training method, refreshing the targets as the student learns.
 ---
 
 <link rel="stylesheet" href="{{ '/assets/blog/learned-sampler/article.css' | relative_url }}">
@@ -84,7 +82,9 @@ MCMC revises one response at a time; E2S improves a sampler that can generate re
 ## The target distribution: preserve expert information with minimal policy change
 {: #target}
 
-For a prompt \\(x\\) and expert solution \\(\tau\\), let \\(C_\tau\\) be the set of valid responses that preserve the information we care about. For math, the simplest constraint is the correct final answer; requiring correct intermediate reasoning would need a stronger check. Write \\(p(y)=p_{\mathrm{ref}}(y\mid x)\\) for the frozen student’s probability of response \\(y\\).
+**The expert constraint defines what information must survive, not which words must be copied.** Following *Finetuning with Sampling*, let \\(C_\tau\\) contain responses equivalent to expert trace \\(\tau\\) under a task-specific preservation rule. Math and science use correct outcomes; knowledge tasks require preserving key facts. [[5]](#sampler-ref-5)
+
+For prompt \\(x\\), write \\(p(y)=p_{\mathrm{ref}}(y\mid x)\\) for the frozen student’s response probability. The expert requirement selects valid responses; the student determines their relative probabilities.
 
 Among normalized distributions \\(q\\) supported on this valid set, choose the one closest to the student: [[5]](#sampler-ref-5)
 
@@ -103,7 +103,7 @@ q^*(y)=\frac{p(y)\mathbf 1[y\in C_\tau]}{Z_\tau}.
 \]
 </div>
 
-**The solution is simply the student, conditioned on being valid.** The left panel shows why fitting the expert distribution can move the student substantially. The right panel keeps both of the student’s valid response modes, in their original proportions, while removing the invalid ones.
+**The solution preserves the student’s relative probabilities among responses that satisfy the expert requirement.** The opening illustration keeps both valid modes in their original proportions and removes responses outside the requirement.
 
 For any feasible distribution with finite KL, substituting \\(p(y)=Z_\tau q^*(y)\\) on the valid set gives:
 
