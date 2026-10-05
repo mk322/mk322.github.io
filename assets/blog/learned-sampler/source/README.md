@@ -98,3 +98,10 @@ does not claim exact sampling from the unconstrained student. Offline alignment 
 with the frozen reference student; online refits the adapter as the student evolves.
 The comparison separates response updates in MCMC from parameter learning in the
 sampler, and claims no measured speedup. Both data sources are expert-guided.
+
+Typography and label refinement (2026-10-04):
+The displayed versions use -v2.png / -v2-mobile.png assets. Outputs are labeled
+Calibrated “on-policy” data, without output y or verified subtitles. Inter-style
+regular/medium labels and restrained semibold titles match the blog typography;
+muted blue/orange/teal panels retain the original technical flows. Exact edit
+prompts and final asset names: reference-image-refinement-prompts.json.
