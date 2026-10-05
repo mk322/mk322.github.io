@@ -166,3 +166,9 @@
 .blog-content .uni-inline-chain{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 14px;margin:20px 0 28px;padding:14px 0;border-top:1px solid #e4e7ed;border-bottom:1px solid #e4e7ed;font-family:Inter,"Helvetica Neue",Arial,sans-serif;font-size:18px;font-weight:600;line-height:1.8;color:#20252c}
 .uni-chain-link{white-space:nowrap}
 .uni-chain-link>span{display:inline-block;margin-right:10px;color:#3498db;font-weight:400}
+
+/* Optional literature notes stay out of the main reading path. */
+.blog-content .uni-related-reading{margin:26px 0 34px;border-top:1px solid #e4e7ed;border-bottom:1px solid #e4e7ed;padding:14px 0;font-size:16px;line-height:1.7}
+.uni-related-reading summary{cursor:pointer;color:#525a65;font-weight:600;line-height:1.6}
+.uni-related-reading summary:focus-visible{outline:2px solid #3498db;outline-offset:4px}
+.blog-content .uni-related-reading ul{margin-top:18px;margin-bottom:4px}
