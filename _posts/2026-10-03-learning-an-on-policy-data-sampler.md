@@ -8,7 +8,7 @@ last_modified_at: 2026-10-05
 author_profile: false
 excerpt: "E2S learns an amortized GFlowNet sampler to turn off-policy expert responses into more on-policy SFT data, offline for dataset creation or online for post-training."
 tldr: |
-  **E2S Finetuning learns an amortized sampler with GFlowNet to turn off-policy expert data into more on-policy training targets for SFT.** E2S-Offline creates a dataset for a fixed student. E2S-Online serves as a post-training method, refreshing the targets as the student learns.
+  **E2S Finetuning learns an amortized sampler with GFlowNet to turn off-policy expert data into more on-policy training targets for SFT.** E2S-Offline creates a dataset for a fixed student. E2S-Online is a post-training method that alternates generating training data and fine-tuning the student.
 ---
 
 <link rel="stylesheet" href="{{ '/assets/blog/learned-sampler/article.css' | relative_url }}">
@@ -185,7 +185,7 @@ E2S-Offline fits the sampler against a fixed starting student, generates a datas
 
 <figure id="figure-offline"><picture><source media="(max-width: 600px)" srcset="{{ '/assets/blog/e2s-preview/offline-mobile.svg' | relative_url }}"><img src="{{ '/assets/blog/e2s-preview/offline.svg' | relative_url }}" loading="lazy" alt="Offline E2S fits once for a fixed student, then generates a fixed training set."></picture><figcaption>Offline E2S fits once for a fixed student, then generates a fixed training set.</figcaption></figure>
 
-### E2S-Online: refresh as the student changes
+### E2S-Online: generate data during training
 {: #online}
 
 After a student update, the constrained target changes too. E2S-Online refits the sampler against the current student, generates a fresh batch, and runs SFT. Repeating this cycle lets data generation track the evolving policy.
@@ -306,7 +306,7 @@ MCMC starts a new search for each example. E2S learns a sampling strategy across
 
 **Online.** E2S-Online adds a **7.0% relative improvement over offline**, or **11.2% over MCMC + SFT**, while matching the starting model’s displayed Prior avg. The trajectory below tracks online learning; the horizontal lines mark the other methods’ final scores.
 
-<figure id="online-training-curve" class="sampler-chart"><picture><source media="(max-width: 600px)" srcset="{{ '/assets/blog/learned-sampler/e2s-online-progress-mobile.svg' | relative_url }}"><img src="{{ '/assets/blog/learned-sampler/e2s-online-progress.svg' | relative_url }}" width="800" height="410" loading="lazy" alt="Online Math average reaches 59.4 percent. Horizontal reference lines mark MCMC plus SFT at 53.4 and E2S-Offline at 55.5 percent."></picture><figcaption>Author-confirmed online trajectory. Horizontal lines show MCMC + SFT (53.4%) and E2S-Offline (55.5%), not their training trajectories. Online progress is normalized within its own run and does not align compute across methods. <a href="/assets/blog/learned-sampler/source/online-curve-data.json">Stored trajectory</a>.</figcaption></figure>
+<figure id="online-training-curve" class="sampler-chart"><picture><source media="(max-width: 600px)" srcset="{{ '/assets/blog/learned-sampler/e2s-online-progress-mobile.svg' | relative_url }}"><img src="{{ '/assets/blog/learned-sampler/e2s-online-progress.svg' | relative_url }}" width="800" height="410" loading="lazy" alt="Online Math average reaches 59.4 percent. Horizontal reference lines mark MCMC plus SFT at 53.4 and E2S-Offline at 55.5 percent."></picture><figcaption><strong>Online training curve.</strong> Horizontal lines mark the final scores of MCMC + SFT and E2S-Offline.</figcaption></figure>
 
 <details class="sampler-benchmark-details"><summary>See the scores behind each average</summary>
 <p>Published comparison methods also include OPSD (Math 30.2%, Prior 40.4%), GRPO (45.7%, 41.4%), and UFT (45.2%, 42.1%). OPSD uses on-policy self-distillation; UFT combines supervised and reinforcement fine-tuning. <a href="#sampler-ref-12">[12]</a> <a href="#sampler-ref-13">[13]</a></p>
@@ -327,7 +327,7 @@ MCMC starts a new search for each example. E2S learns a sampling strategy across
 
 **These results support adapting the training-data distribution as a way to improve the learning–retention tradeoff.** Expert information can support new-task learning without a comparable decline in the evaluated prior-task average. The online result further supports treating data generation as part of learning, rather than only preparing targets once.
 
-The comparison evaluates complete training schedules. Isolating the effect of refreshing alone requires equal-compute frozen-versus-refreshed experiments; an average over three prior benchmarks also does not establish retention of every capability.
+The comparison evaluates complete training schedules. A controlled comparison at equal compute is needed to isolate which parts of online training drive the gain; an average over three prior benchmarks also does not establish retention of every capability.
 
 <div class="sampler-key sampler-key-teal"><div class="e2s-key-title">Key message</div><p>Adapting expert data to the student can improve the learning–retention tradeoff without changing the SFT objective.</p></div>
 
