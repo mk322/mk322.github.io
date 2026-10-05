@@ -1,0 +1,28 @@
+/* Preview edition: inherit the research-note layout, keep emphasis quiet. */
+#main.blog-shell.blog-article { max-width:780px; }
+#main.blog-article .blog-tldr { background:#faf9fd; border:1px solid #e0daed; border-left:3px solid #6356a5; border-radius:4px 10px 10px 4px; padding:18px 22px; margin:24px 0 38px; box-shadow:none; }
+#main.blog-article .blog-tldr summary { color:#6356a5; }
+#main.blog-article .blog-tldr__content { font:16px/1.75 Inter,'Helvetica Neue',Arial,sans-serif; color:#20252c; }
+#main.blog-article .blog-content .sampler-key { margin:24px 0; padding:15px 18px; border-radius:4px 8px 8px 4px; background:#faf9fd; box-shadow:none; }
+#main.blog-article .blog-content .sampler-key p {font-size:16.5px;line-height:1.55;}
+#main.blog-article .blog-content .sampler-key-teal { background:#f2f8f7; }
+#main.blog-article .sampler-math, #main.blog-article .sampler-technical {border-radius:5px;box-shadow:none;}
+#main.blog-article .blog-content figure img {display:block;width:100%;height:auto;max-width:100%;border-radius:4px;box-shadow:none;}
+#main.blog-article .blog-content figure {width:100%;}
+#main.blog-article .sampler-table-card {box-shadow:none;border-radius:4px;}
+#main.blog-article .e2s-summary {width:100%;min-width:0;border-collapse:collapse;font-size:15px;font-variant-numeric:tabular-nums;}
+#main.blog-article .e2s-summary caption {text-align:left;font-size:13px;color:#525a65;padding:0 0 10px;}
+#main.blog-article .e2s-summary th,#main.blog-article .e2s-summary td {padding:12px 14px;border-bottom:1px solid #e3e6eb;text-align:right;font-weight:400;}
+#main.blog-article .e2s-summary th:first-child {text-align:left;}
+#main.blog-article .e2s-summary thead th {font-size:13px;font-weight:500;background:#fafafd;}
+#main.blog-article .e2s-summary .e2s-row {background:#f6f4fa;}
+#main.blog-article .sampler-toc {box-shadow:none;}
+@media(max-width:600px) {
+ #main.blog-article .blog-header h1 {font-size:34px;}
+ #main.blog-article .blog-tldr {padding:15px 16px;}
+ #main.blog-article .e2s-summary th,#main.blog-article .e2s-summary td {padding:11px 7px;font-size:13px;}
+ #main.blog-article .blog-content .sampler-key p {font-size:16px;}
+ #main.blog-article .sampler-math {font-size:12px;}
+}
+#main.blog-article .blog-content .MathJax_CHTML {max-width:100%;overflow-x:auto;overflow-y:hidden;vertical-align:middle;}
+#main.blog-article .e2s-summary {display:table;}
