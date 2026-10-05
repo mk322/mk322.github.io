@@ -26,3 +26,5 @@
 }
 #main.blog-article .blog-content .MathJax_CHTML {max-width:100%;overflow-x:auto;overflow-y:hidden;vertical-align:middle;}
 #main.blog-article .e2s-summary {display:table;}
+#main.blog-article .sampler-key .e2s-key-title {font-size:19px;line-height:1.35;font-weight:600;color:#6356a5;margin-bottom:9px;letter-spacing:-.01em;}
+#main.blog-article .sampler-key-teal .e2s-key-title {color:#267873;}

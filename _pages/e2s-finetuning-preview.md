@@ -1,7 +1,7 @@
 ---
 layout: blog-post
-title: "E2S Finetuning: From Off-Policy Expert Data to On-Policy Training Data"
-subtitle: "Learn a reusable sampler instead of searching again for every training example."
+title: "E2S Finetuning: From Expert Demonstrations to On-Policy Learning"
+subtitle: "Make SFT more on-policy by adapting expert demonstrations to the student."
 permalink: /blog/e2s-finetuning-preview/
 date: 2026-10-05
 sitemap: false
@@ -49,23 +49,23 @@ For a fixed prompt, let \\(q_{\mathrm{data}}\\) be the distribution of expert re
 
 Some policy change is necessary to learn a new task. Imitating an expert’s particular trajectory can demand additional change. Larger shifts have been associated with more forgetting, motivating training data closer to the student; the KL identity alone does not prove that other skills will be lost. [[1]](#sampler-ref-1) [[2]](#sampler-ref-2)
 
-The same mismatch appears token by token: SFT trains on prefixes visited by the expert, not prefixes the student would typically visit itself.
+The same mismatch appears word by word: SFT asks the student to continue the expert’s reasoning, even when the student would have written something different up to that point.
 
 <details class="sampler-technical" markdown="1">
-<summary>Technical note: off-policy prefixes</summary>
+<summary>Technical note: learning to continue an expert response</summary>
 
 For prompt \\(x\\) and expert response \\(y=(y_1,\ldots,y_T)\\), the sequence loss is \\(-\sum_{t=1}^{T}\log p_\theta(y_t\mid x,y_{<t})\\), including the termination token. The prefixes \\(y_{<t}\\) come from the demonstration distribution. They are not sampled from the current student.
 
 </details>
 
-<div class="sampler-key"><p>Off-policy SFT can force the student to move farther than the task itself requires.</p></div>
+<div class="sampler-key"><div class="e2s-key-title">Key message</div><p>Off-policy SFT can force the student to move farther than the task itself requires.</p></div>
 
 ## Two ways to reduce the mismatch
 {: #amortization}
 
 Both routes address the same mismatch, but they change different parts of training: **where supervision is applied, or which responses become training targets.**
 
-**Move learning to the student.** Let the current student generate a response, then provide feedback on that trajectory. RL supplies rewards; on-policy distillation (OPD) supplies teacher probabilities on student-generated prefixes. The student chooses the path, and supervision follows the states it visits. [[3]](#sampler-ref-3) [[4]](#sampler-ref-4)
+**Move learning to the student.** Let the current student generate a response, then provide feedback on that trajectory. RL scores the student’s answers with rewards. In on-policy distillation (OPD), a teacher reads what the student has written so far and provides probabilities for the next token. Feedback is applied to the student’s own attempt. [[3]](#sampler-ref-3) [[4]](#sampler-ref-4)
 
 **Move the data to the student.** Use the expert constraint to define which responses are valid, and the student policy to define their relative probabilities. Sample from that constrained distribution, then train the student on the resulting responses with SFT. Here, we change the training targets themselves. MCMC and E2S are two ways to obtain them. [[5]](#sampler-ref-5)
 
@@ -79,9 +79,9 @@ E2S takes this second route. MCMC runs a new chain for every example. **That rep
 
 <figure id="figure-amortization"><picture><source media="(max-width: 600px)" srcset="{{ '/assets/blog/e2s-preview/amortization-mobile.svg' | relative_url }}"><img src="{{ '/assets/blog/e2s-preview/amortization.svg' | relative_url }}" loading="lazy" alt="Both routes turn off-policy expert trace τ into more on-policy response y, then train the student on (x, y). MCMC searches anew for each example; E2S reuses learned sampler parameters."></picture><figcaption>Both routes turn off-policy expert trace τ into more on-policy response y, then train the student on (x, y). MCMC searches anew for each example; E2S reuses learned sampler parameters.</figcaption></figure>
 
-MCMC updates a response state; E2S updates a reusable sampling policy. E2S moves part of the repeated search cost into sampler training. Whether that saves total compute depends on the training cost and how much useful data the sampler subsequently generates.
+MCMC revises one response at a time; E2S improves a sampler that can generate responses for many examples. E2S moves part of the repeated search cost into sampler training. Whether that saves total compute depends on the training cost and how much useful data the sampler subsequently generates.
 
-<div class="sampler-key"><p>MCMC searches again; E2S learns a sampling policy it can reuse across examples.</p></div>
+<div class="sampler-key"><div class="e2s-key-title">Key message</div><p>MCMC searches again; E2S learns a sampling policy it can reuse across examples.</p></div>
 
 ## The target: the student conditioned on the expert constraint
 {: #target}
@@ -119,7 +119,7 @@ Suppose the student assigns 6% to one valid solution and 3% to another, with all
 
 We call these responses **more on-policy** because they retain the student’s relative probabilities within the valid set. Formally, the target is the constrained student distribution, rather than its unconstrained policy.
 
-<div class="sampler-key"><p>The expert decides what is valid; the student decides the relative probability of valid responses.</p></div>
+<div class="sampler-key"><div class="e2s-key-title">Key message</div><p>The expert decides what is valid; the student decides the relative probability of valid responses.</p></div>
 
 ## Amortize the target with GFlowNet
 {: #gflownet}
@@ -145,7 +145,7 @@ The right-hand side does not depend on the response. **Matching the target means
 \]
 </div>
 
-If the residual is zero across the valid set, normalization forces \\(z_\tau=\log Z_\tau\\). For autoregressive text generation, each response has one prefix path, so its trajectory probability is simply its sequence probability. Earlier GFlowNet work applies this connection to language and visual reasoning. [[8]](#sampler-ref-8) [[9]](#sampler-ref-9)
+If the residual is zero across the valid set, normalization forces \\(z_\tau=\log Z_\tau\\). For text generated one token at a time, a response follows a single sequence of token choices. Its probability is the product of those token probabilities, including the end-of-response token. Earlier GFlowNet work applies this connection to language and visual reasoning. [[8]](#sampler-ref-8) [[9]](#sampler-ref-9)
 
 ### Remove the normalizer with a group of responses
 
@@ -160,7 +160,7 @@ Draw \\(K\ge2\\) valid responses for the same prompt and expert trace. Define ea
 
 Relative to the group, an above-average gap means a response is overrepresented; a below-average gap means it is underrepresented. The loss adjusts those relative probabilities without a separate normalizer network. Related group-relative objectives appear in GFlowNet reasoning methods. [[10]](#sampler-ref-10) [[7]](#sampler-ref-7)
 
-<div class="sampler-key"><p>GFlowNet turns the constrained target into a trainable amortized sampler across examples.</p></div>
+<div class="sampler-key"><div class="e2s-key-title">Key message</div><p>GFlowNet turns the constrained target into a trainable amortized sampler across examples.</p></div>
 
 <details class="sampler-technical" markdown="1">
 <summary>Implementation details: acceptance, gradients, and sequence scores</summary>
@@ -192,7 +192,7 @@ After a student update, the constrained target changes too. E2S-Online refits th
 
 <figure id="figure-online"><picture><source media="(max-width: 600px)" srcset="{{ '/assets/blog/e2s-preview/online-mobile.svg' | relative_url }}"><img src="{{ '/assets/blog/e2s-preview/online.svg' | relative_url }}" loading="lazy" alt="Online E2S refits after each student update, so data generation tracks the current policy."></picture><figcaption>Online E2S refits after each student update, so data generation tracks the current policy.</figcaption></figure>
 
-<div class="sampler-key"><p>Offline fits one student; online keeps tracking the student as it changes.</p></div>
+<div class="sampler-key"><div class="e2s-key-title">Key message</div><p>Offline fits one student; online keeps tracking the student as it changes.</p></div>
 
 <details class="sampler-technical" markdown="1">
 <summary>Implementation: one backbone, LoRA sampler</summary>
@@ -276,14 +276,14 @@ E2S-Online reaches 59.4% Math avg.—3.9 points above offline and 6.0 points abo
 
 These results support stronger math learning with little change in the evaluated prior-task average. They compare complete training schedules; isolating the effect of refreshing alone requires equal-compute frozen-versus-refreshed experiments. An average over three prior benchmarks also does not establish retention of every capability.
 
-<div class="sampler-key sampler-key-teal"><p>E2S improves math while keeping prior-task performance near the starting model.</p></div>
+<div class="sampler-key sampler-key-teal"><div class="e2s-key-title">Key message</div><p>E2S improves math while keeping prior-task performance near the starting model.</p></div>
 
 ## How E2S differs from RL, OPD, and MCMC
 {: #comparison}
 
 **RL starts from student trajectories and primarily optimizes reward.** GRPO increases probability on better-rewarded trajectories using policy constraints and clipping. E2S explicitly specifies a constrained target and trains a sampler to match it. This is a distinction between these objectives, not a claim that RL cannot be understood through distributions: KL-regularized RL can also have a reward-tilted target. [[3]](#sampler-ref-3)
 
-**OPD brings teacher supervision to student-visited states.** It samples from the student and supplies dense teacher feedback on the resulting prefixes. E2S instead starts from expert information and constructs an SFT target distribution for the student. [[4]](#sampler-ref-4)
+**OPD gives teacher feedback on the student’s own writing.** The student generates a response, and the teacher provides next-token probabilities after each part the student has written. E2S instead starts from expert information and constructs an SFT target distribution for the student. [[4]](#sampler-ref-4)
 
 **MCMC and E2S move expert information toward the student.** Both target the student conditioned on validity. MCMC searches separately for each example; E2S stores reusable sampling behavior in learned parameters. [[5]](#sampler-ref-5)
 
@@ -296,7 +296,7 @@ This distinction matters for diversity. A binary correctness reward alone does n
 
 **Online E2S makes data generation part of learning.** An expert-conditioned sampler can guide generation toward valid responses while tracking the student as it changes. The broader idea is to learn the data-generation policy itself: not only which information to teach, but how to express it for the model that will learn from it.
 
-<div class="sampler-key"><p>Instead of storing one expert answer, learn a reusable distribution of ways to teach it.</p></div>
+<div class="sampler-key"><div class="e2s-key-title">Key message</div><p>Instead of storing one expert answer, learn a reusable distribution of ways to teach it.</p></div>
 
 ## References
 {: #references}
@@ -333,13 +333,13 @@ This distinction matters for diversity. A binary correctness reward alone does n
 
 If you found this post useful, please cite it as:
 
-Murray Kang. “E2S Finetuning: From Off-Policy Expert Data to On-Policy Training Data.” October 2026.
+Murray Kang. “E2S Finetuning: From Expert Demonstrations to On-Policy Learning.” October 2026.
 
 {% raw %}
 ```bibtex
 @misc{kang2026onpolicysft,
   author = {Kang, Murray},
-  title = {{E2S Finetuning: From Off-Policy Expert Data to On-Policy Training Data}},
+  title = {{E2S Finetuning: From Expert Demonstrations to On-Policy Learning}},
   year = {2026},
   month = oct,
   howpublished = {Research blog},
