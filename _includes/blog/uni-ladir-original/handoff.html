@@ -1,0 +1,4 @@
+<figure class="uni-paper-figure uni-explainer">
+  <picture><source media="(max-width: 600px)" srcset="{{ '/assets/blog/uni-ladir-original/handoff-mobile.svg' | relative_url }}?v=3b14370ee41b"><img src="{{ '/assets/blog/uni-ladir-original/handoff.svg' | relative_url }}?v=d106378b46ca" width="1000" height="600" loading="lazy" alt="Reconstruction trains a thought to reproduce its own teacher step. Continuation prediction uses it with input and earlier thought blocks to predict the next teacher step."></picture>
+  <figcaption><strong>Which target should train the thought?</strong> Reconstruction points back to the source; continuation prediction points forward to the next step <a href="#ref-1">[1, §3.3]</a>. The latter must carry information from the source through its latent block. This schematic omits prediction heads and attention masks; the full method also supervises the final answer or action.</figcaption>
+</figure>

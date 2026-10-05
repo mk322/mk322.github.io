@@ -1,0 +1,314 @@
+---
+layout: blog-post
+permalink: /blog/uni-ladir-original/
+date: 2026-09-14
+sitemap: false
+author_profile: false
+title: "Unified Multimodal Reasoning: Can Different Modalities Share One Thought Space?"
+subtitle: "Uni-LaDiR learns one thought space from text, images, 3D point clouds, and robot states."
+excerpt: "The format that teaches a model need not be the format in which it thinks. Uni-LaDiR learns intermediate thoughts from what later reasoning needs, and learns to generate them with diffusion."
+tags: ["Model Architecture and Latent Reasoning", "Embodied Foundation Models, Agents, and Simulation Environments"]
+last_modified_at: 2026-10-04
+likes: false
+tldr: |
+  - **Problem:** Multimodal reasoning chains often switch between representations tied to text, images, 3D point clouds, or robot states. Can we learn one space that carries useful information from one reasoning step to the next?
+  - **Our solution:** Uni-LaDiR learns a shared space for thoughts through reasoning continuation. A common encoder turns training examples' intermediate steps into latent blocks. Predicting later steps and the final output teaches these blocks what to retain. A diffusion reasoner learns to generate them. We train both jointly; at test time, the model produces its own thoughts.
+  - **Why it matters:** A thought can be shaped by what the next reasoning step needs, regardless of where its information came from. This suggests a path toward models whose reasoning abilities grow together across modalities: spatial knowledge learned from 3D point clouds could help interpret an image, while experience from interaction could inform a plan. A shared thought space gives these different forms of knowledge a way to work together.
+---
+
+<link rel="stylesheet" href="{{ '/assets/blog/uni-ladir-original/visuals.css' | relative_url }}?v=2ad89f9bdadb">
+
+<p style="font-size:16px;line-height:1.6;color:#647080;border-bottom:1px solid #e4e7ed;padding-bottom:18px;margin-bottom:28px;">Original version · Saved before the October 4 rewrite. <a href="{{ '/blog/uni-ladir/' | relative_url }}">Compare with the current version →</a></p>
+
+{% include blog/uni-ladir-original/toc.html %}
+
+## Why reason in a shared latent space? {#motivation}
+
+Multimodal reasoning has an interface problem.
+
+An image, a sentence, a point cloud, and a robot state all expose useful information, but in very different forms. If reasoning directly operates in these native spaces, every transition has to deal with modality-specific structure: image-to-text, text-to-3D, 3D-to-action, and so on. <sup class="uni-cite"><a href="#ref-8">[8]</a></sup>
+
+A simpler approach is to move the reasoning itself into a shared latent space.
+
+The key idea is not to make different modalities identical. They are not. Instead, each modality maps its task-relevant information into a common representation that the reasoning model knows how to consume.
+
+In other words, **we do not need to unify the modalities themselves; we only need to unify the interface through which they participate in reasoning.**
+
+This gives us a natural abstraction. The input may come from vision, language, 3D point clouds, or proprioception, but once it enters the latent reasoning space, it becomes the same kind of computational object: a latent thought.
+
+That separation is useful. Modality-specific encoders can focus on extracting the right information from raw inputs, while the reasoning model only needs to operate on one common representation. A visual thought may encode where an object is, a 3D thought may encode free space around it, and a robot-state thought may encode the current configuration. Their semantics differ, but their interface to the next reasoning step is shared.
+
+This is the first principle behind Uni-LaDiR: **use latent space as the common substrate for multimodal reasoning.**
+
+Empirically, this shared interface is already valuable. With the same teaching data, sharing the encoder across text and images improves mean accuracy by 11.3% relative across four visual reasoning benchmarks. The same idea also extends beyond language and vision to 3D point clouds and robot states. <sup class="uni-cite"><a href="#ref-1">[1]</a></sup>
+
+But a shared latent space raises two immediate questions:
+
+1. What should a latent thought represent?
+2. How do we generate the next thought at inference time?
+
+The first determines whether the representation is useful for reasoning. The second determines whether the reasoning process can actually run without teacher supervision.
+
+{% include blog/uni-ladir-original/world.html %}
+
+## How do we learn a useful shared latent space for reasoning? {#unification}
+
+A useful thought does not need to reconstruct its input. It only needs to preserve what matters for what comes next.
+
+This distinction is important. If we train an image latent to reconstruct image features, we encourage it to retain information about the image. But reasoning does not care about all of that information equally. For a grasping problem, for example, the next step may only need the handle location and nearby free space—not a faithful representation of the entire scene.
+
+We therefore train latent thoughts through **continuation prediction**.
+
+During training, teacher reasoning steps are encoded into latent thoughts, and those thoughts are optimized to predict future reasoning steps and eventually the final output. This gives the latent space a task-oriented objective: preserve whatever information helps the reasoning process continue. <sup class="uni-cite"><a href="#ref-1">[1]</a></sup>
+
+So continuation prediction tells us **what a useful latent thought should contain**.
+
+The remaining problem is generation.
+
+At training time, latent thoughts come from encoding teacher steps. At inference time, those steps are unavailable. The model must generate the next thought directly from the task context and previous thoughts.
+
+Once reasoning lives in a continuous latent space, diffusion becomes a natural way to do this.
+
+There are two reasons.
+
+First, the object we want to generate is already continuous. We no longer need separate generation mechanisms for text tokens, image features, 3D structures, or robot states. They have all been mapped into the same latent representation.
+
+Second, intermediate reasoning is inherently multimodal in another sense: there may be multiple valid next thoughts. A robot may approach the same grasp in several ways; a visual problem may admit several useful intermediate abstractions. Predicting a single latent vector with regression can collapse these possibilities toward an average. Diffusion instead models a distribution over plausible latent thoughts. <sup class="uni-cite"><a href="#ref-1">[1]</a></sup><sup class="uni-cite"><a href="#ref-3">[3]</a></sup>
+
+This gives us the second principle behind Uni-LaDiR:
+
+**latent space unifies the representation of multimodal thoughts; diffusion unifies their generation.**
+
+The combination is especially clean because diffusion is agnostic to the original modality. Once a reasoning step has been expressed as a latent thought, the same denoising process can generate the next one regardless of whether its underlying information came from language, vision, 3D point clouds, or robot state.
+
+Uni-LaDiR therefore learns the representation and the generator jointly. Continuation prediction shapes the latent space toward information that is useful for future reasoning, while diffusion learns how to produce states in that space from the context available at inference time. <sup class="uni-cite"><a href="#ref-1">[1]</a></sup>
+
+At test time, the model repeatedly generates the next latent thought with diffusion, conditions on it, and continues until it produces the final answer or action.
+
+The result is a single reasoning process over a single latent space, shared across modalities.
+
+[Paper →](https://arxiv.org/abs/2609.19878)
+
+## Methodology: Uni-LaDiR (Unified Latent Diffusion Reasoner) {#method}
+
+Uni-LaDiR learns a shared latent thought space through continuation prediction and jointly trains a diffusion reasoner to generate thoughts in that space. Figure 2 shows its three components: Latent Encoding, Continuation Prediction, and Diffusion Training, trained jointly through a shared backbone. <sup class="uni-cite"><a href="#ref-1" aria-label="Reference 1">[1]</a></sup>
+
+{% include blog/uni-ladir-original/grounding.html %}
+
+### 1. Latent Encoding {#latent-encoding}
+
+A teacher step can be a sentence, an intermediate image, a point cloud, or a robot state. A modality encoder first turns it into features, denoted <em>s<sub>i</sub></em>. We append learnable queries <em>q</em>: tokens trained to collect information from the step. The features and queries pass through the shared language-model encoder. We then project the query outputs into a block of thought tokens <em>z<sub>i</sub><sup>★</sup></em>.
+
+**Every modality uses the same queries and output projection.** In our experiments, a block contains four 512-dimensional tokens. An attention mask allows each query block to read only its own teacher step and itself. It cannot read the task input or other teacher steps while constructing that block. <sup class="uni-cite"><a href="#ref-1" aria-label="Reference 1">[1]</a></sup> (Section 3.2; Appendix B.2.)
+
+Each block therefore encodes one teacher step. The task input and earlier blocks provide the wider context when the reasoner uses it.
+
+### 2. Continuation Prediction {#continuation-prediction}
+
+We train through continuation prediction. Given the task input and the earlier thought blocks, the backbone predicts the next teacher step. Given the entire latent chain, it predicts the final answer or action. Raw earlier teacher steps are hidden from these predictions, as are future latent blocks. **Information from a previous teacher step must reach the next prediction through its thought tokens.** <sup class="uni-cite"><a href="#ref-1" aria-label="Reference 1">[1]</a></sup> (Section 3.3; Appendix A.1.)
+
+This creates an information bottleneck: whatever a later prediction needs from an earlier teacher step must survive in that step’s thought block. For a grasp, that could be the handle’s location relative to the hand. The loss rewards keeping the details that help the next prediction.
+
+{% include blog/uni-ladir-original/handoff.html %}
+
+The targets remain concrete: text uses cross-entropy; continuous image, 3D, and robot state targets use squared error. The final output is a text answer for visual reasoning, or an action sequence produced by a flow-matching head for control. The latent targets are learned; the teacher targets used for supervision remain fixed.
+
+### 3. Diffusion Training {#diffusion-training}
+
+A teacher can reveal information the model will not have at inference. For example, a future image from a successful demonstration can show that a grasp worked. Encoding it may yield a useful training target, but predicting that target from the current observation is a separate problem.
+
+The next thought can have more than one useful form. For a grasp, for example, several approaches may work. We use flow matching to learn how to generate thought blocks from noise, conditioned on the task and earlier thoughts. <sup class="uni-cite"><a href="#ref-3">[3]</a></sup>
+
+We add noise to the encoder's thought blocks and train the reasoner with a standard diffusion loss, implemented through flow matching. The task input and earlier thoughts provide the context for learning how to turn noise into the next block. At inference, the reasoner starts from noise and generates a thought through successive denoising updates. <sup class="uni-cite"><a href="#ref-1">[1, §3.4]</a></sup>
+
+At inference, the model generates thought blocks from the input, decides when to stop the chain, and predicts the answer or action. The teacher steps are needed only during training.
+
+### Joint Training {#joint-training}
+
+**We train the encoder and diffusion reasoner jointly through a shared backbone.** This matters because learning the encoder first and freezing it would leave the reasoner fitting whatever targets that encoder chose. Those targets may support continuation prediction yet be difficult to generate from the available input.
+
+The joint objective combines continuation and final-output supervision with the diffusion loss. The former trains the thoughts to support later reasoning and the task output; the latter trains the backbone to generate them. Updating the shared weights also changes how teacher steps are encoded. **This couples what the model needs to retain with what it can learn to generate.**
+
+During a diffusion update, the clean target block and earlier thought blocks are treated as fixed targets and context, using stop-gradient. The shared backbone still learns from both objectives: continuation and final-output losses train the encoded thoughts, while the diffusion loss trains their generator. <sup class="uni-cite"><a href="#ref-1" aria-label="Reference 1">[1]</a></sup>
+
+
+
+## Testing the design: six research questions {#experiments}
+
+We first test the complete system, then examine sharing, continuation supervision, joint training, diffusion, and the generated thoughts themselves. Each experiment below gives its own setup, results, and conclusion. Visual reasoning and robot control use separate model instances of the same design. <sup class="uni-cite"><a href="#ref-1">[1]</a></sup>
+
+### RQ1. Does unified latent reasoning improve visual answers and robot actions? {#rq1}
+
+**Setup.** We test the complete system in two settings:
+
+- Visual reasoning. Train Qwen2.5-VL-7B <sup class="uni-cite"><a href="#ref-4">[4]</a></sup> on Zebra-CoT <sup class="uni-cite"><a href="#ref-5">[5]</a></sup> traces containing text and intermediate images. Compare with the Qwen2.5-VL-7B base model and prior reasoning methods using the same backbone and evaluation questions. Figure 3 uses Mirage as the modality-specific reasoning baseline in both visual panels. <sup class="uni-cite"><a href="#ref-18">[18]</a></sup> Measure final-answer accuracy on seven vision-centric benchmarks and four visual math/logic benchmarks.
+- Robot control. Use a 3.3B mixture-of-transformers policy with two Janus-Pro-1.5B experts and an action head. Train on 100 demonstrations per task for ten RLBench tasks <sup class="uni-cite"><a href="#ref-7">[7]</a></sup>, and 500 demonstrations per suite for LIBERO's four ten-task suites. <sup class="uni-cite"><a href="#ref-6">[6]</a></sup> We train a separate policy for each LIBERO suite. Future images and robot states provide teacher steps during training; RLBench also supplies 3D point clouds. The RLBench comparison follows LaST₀'s backbone, demonstration, training, and evaluation protocol. Figure 3 also includes OpenVLA as a direct-policy baseline. <sup class="uni-cite"><a href="#ref-19">[19]</a></sup>
+
+At test time, both models generate their own thoughts from the task input, without teacher steps. Robot performance is task success: 20 rollouts per RLBench task and 50 per LIBERO task, for each of three seeds. Control frequency is measured on one RTX 4090 under the same timing protocol, without action chunking. <sup class="uni-cite"><a href="#ref-1">[1]</a></sup> (Tables 1–3; Appendix B.1.)
+
+{% include blog/uni-ladir-original/main-results.html %}
+
+**Results.** Across seven visual benchmarks, mean accuracy is 64.6% for the base model, 72.2% for Mirage, and 78.5% for Uni-LaDiR. On four visual math/logic benchmarks, the corresponding scores are 36.4%, 40.7%, and 49.0%. Uni-LaDiR also exceeds the strongest latent baseline in each group: Mull-Tokens at 74.9% and ILVR at 45.7%. <sup class="uni-cite"><a href="#ref-15">[15]</a></sup><sup class="uni-cite"><a href="#ref-9">[9]</a></sup><sup class="uni-cite"><a href="#ref-1">[1, Table 2]</a></sup>
+
+RLBench success rises from LaST₀'s 82% to 87%, with nine of ten tasks improved and the remaining task matched. <sup class="uni-cite"><a href="#ref-8">[8]</a></sup> Uni-LaDiR runs at 16.5 Hz, versus 15.4 Hz for LaST₀ and 1.1 Hz for CoT-VLA. <sup class="uni-cite"><a href="#ref-11">[11]</a></sup> Timing uses the same RTX 4090 without action chunking and excludes simulator stepping and rendering. LIBERO mean success is 99.2% across four suites. <sup class="uni-cite"><a href="#ref-1">[1]</a></sup>
+
+**Conclusion.** Uni-LaDiR improves average visual reasoning accuracy and robot task success over the compared baselines.
+
+### RQ2. Does unifying more modalities improve reasoning? {#rq2}
+
+**Setup.** Train Qwen2.5-VL-7B on Zebra-CoT for visual reasoning, and a 3.3B Janus-Pro robot policy on RLBench demonstrations. Keep every teacher modality available and progressively bring more of them into the shared space:
+
+- Visual reasoning: compare separate text and image encoders with one shared encoder.
+- RLBench: compare three separate encoders with pairwise sharing—image + 3D, image + robot state, or 3D + robot state—and finally one encoder shared by all three. In each pairwise variant, the remaining modality keeps its own encoder.
+
+Every variant uses the same backbone, training data, teacher supervision, continuation objective for predicting later steps, and thought budget: four 512-dimensional tokens per block. Each separate encoder has the same architecture as the shared encoder. We measure mean accuracy on V*, MMVP, MathVista, and EMMA, and task success on RLBench, averaged over three seeds. <sup class="uni-cite"><a href="#ref-1">[1]</a></sup> (Section 4.3; Appendix B.3.)
+
+{% include blog/uni-ladir-original/results.html %}
+
+**Results.** Sharing text and image increases mean accuracy on V* <sup class="uni-cite"><a href="#ref-12">[12]</a></sup>, MMVP <sup class="uni-cite"><a href="#ref-13">[13]</a></sup>, MathVista <sup class="uni-cite"><a href="#ref-10">[10]</a></sup>, and EMMA <sup class="uni-cite"><a href="#ref-14">[14]</a></sup> from 63.0% to 70.1%, an 11.3% relative gain. On RLBench, success rises from 82.0% with separate encoders to 83.5–84.5% when two modalities share an encoder, then to 87.0% when all three share it. <sup class="uni-cite"><a href="#ref-1">[1]</a></sup> (Paper Figure 3.)
+
+**Conclusion.** Unifying more modalities improves performance in these experiments; sharing all available modalities gives the best result.
+
+Sharing helps. Does the objective used to learn that shared space also matter?
+
+### RQ3. What makes the shared space work? {#rq3}
+
+Figure 5 tests two choices: whether modalities share an encoder, and whether a thought learns to reconstruct its source or predict what follows. We examine each choice separately.
+
+{% include blog/uni-ladir-original/objective.html %}
+
+#### RQ3.1. Does unified encoding outperform separate encoding? {#rq3-1}
+
+**Setup.** Compare one encoder shared across modalities with a separate encoder for each modality. Run this comparison under two objectives: reconstruction of the source teacher step, and continuation prediction of later teacher steps. Use Qwen2.5-VL-7B trained on Zebra-CoT for visual reasoning, and 3.3B Janus-Pro policies trained on LIBERO or RLBench demonstrations for control. Hold the data, training steps, teacher supervision, diffusion loss, final-output supervision, and four 512-dimensional tokens per block fixed. All encoders learn jointly with the reasoner.
+
+Measure accuracy on V*, MMVP, MathVista, and EMMA, and success on LIBERO and RLBench. Average over three seeds, giving each benchmark equal weight in the six-benchmark mean. In Figure 5, compare matching markers at Separate and Unified. <sup class="uni-cite"><a href="#ref-1">[1, §4.4; Appendix B.3]</a></sup>
+
+**Results.** Unified encoding improves the six-benchmark mean by 3.5 percentage points under reconstruction and 6.1 points under continuation. On RLBench, success rises from 73.0% to 77.3% under reconstruction, and from 82.0% to 87.0% under continuation. <sup class="uni-cite"><a href="#ref-1">[1]</a></sup>
+
+**Conclusion.** Unified encoding outperforms separate encoding under both learning objectives.
+
+#### RQ3.2. Should thoughts reconstruct their source or predict what follows? {#rq3-2}
+
+**Setup.** Compare two ways to train a thought block: reconstruct the teacher step it encodes, or predict later teacher steps. Test both objectives with separate encoders and with one unified encoder. Use Qwen2.5-VL-7B on Zebra-CoT and 3.3B Janus-Pro policies on LIBERO or RLBench. Keep the data, training steps, teacher supervision, four 512-dimensional tokens per block, diffusion loss, and final-output supervision fixed; train the encoder and reasoner jointly.
+
+Evaluate V*, MMVP, MathVista, EMMA, LIBERO, and RLBench, averaging three seeds and giving each benchmark equal weight. In Figure 5, compare circles (continuation) with squares (reconstruction) at the same encoder setting. <sup class="uni-cite"><a href="#ref-1">[1, §4.4; Appendix B.3]</a></sup>
+
+**Results.** Continuation prediction improves the six-benchmark mean by 6.6 percentage points with separate encoders and 9.2 points with unified encoding. <sup class="uni-cite"><a href="#ref-1">[1]</a></sup>
+
+**Conclusion.** Predicting what follows learns more useful thoughts than reconstructing the source, under both encoder designs.
+
+The encoder learns which thoughts would help; the generator must learn to produce them. Should they adapt together?
+
+### RQ4. Should the thought encoder and diffusion reasoner learn together? {#rq4}
+
+**Setup.** Compare two training schedules for Qwen2.5-VL-7B on Zebra-CoT and 3.3B Janus-Pro robot policies on their respective LIBERO or RLBench demonstrations. Both use a shared encoder trained to support later teacher steps and the final answer or action. Change when the encoder and generator learn:
+
+- Staged training: first learn the encoder with continuation and final-output supervision. Freeze it, then train the diffusion reasoner to generate its thought blocks.
+- Joint training: update the shared backbone with continuation, final-output, and diffusion losses during training, so the thought representation and its generator learn together.
+
+Both use the same unified architecture and teacher supervision. Evaluate answer accuracy on V*, MMVP, MathVista, and EMMA, and task success on LIBERO and RLBench, averaging three seeds and giving each of the six benchmarks equal weight. <sup class="uni-cite"><a href="#ref-1">[1]</a></sup> (Paper Figure 4; Appendix B.3.)
+
+{% include blog/uni-ladir-original/joint-training.html %}
+
+**Results.** Joint training improves the six-benchmark mean by 12.7% relative to staged training. The relative gains are 15.0% on RLBench and 8.8% on EMMA. <sup class="uni-cite"><a href="#ref-1">[1]</a></sup>
+
+**Conclusion.** Joint training outperforms learning the encoder first and freezing it before training the diffusion reasoner.
+
+This leaves a simpler alternative to diffusion: predict the next clean thought block in one pass.
+
+### RQ5. Does diffusion improve on direct thought prediction? {#rq5}
+
+**Setup.** Compare three thought generators in Qwen2.5-VL-7B trained on Zebra-CoT and 3.3B Janus-Pro robot policies trained on their respective LIBERO or RLBench demonstrations. All use a unified encoder and joint training, with the same supervision from later teacher steps and final outputs, and the same loss weights. Change the thought-prediction objective and its generation procedure:
+
+- L2 prediction: directly predict a clean block and minimize squared distance to the target.
+- Cosine prediction: directly predict a clean block and train its direction to align with the target.
+- Flow matching: learn the velocity along a noisy-to-clean path, then generate a block by integrating from Gaussian noise.
+
+All three receive the same task input and preceding thought blocks. Their predicted blocks feed the downstream answer or action prediction. Measure accuracy on V*, MMVP, MathVista, and EMMA, and success on LIBERO and RLBench, averaging three seeds and giving each of the six benchmarks equal weight. <sup class="uni-cite"><a href="#ref-1">[1]</a></sup> (Paper Figure 6; Appendix B.3.)
+
+{% include blog/uni-ladir-original/diffusion.html %}
+
+**Results.** Flow matching improves the six-benchmark mean by 16.3% relative to L2 prediction and 21.0% relative to cosine prediction. <sup class="uni-cite"><a href="#ref-1">[1]</a></sup>
+
+**Conclusion.** Diffusion produces thoughts that achieve higher average task performance than direct prediction with L2 or cosine loss.
+
+Finally, we test the generated chain directly by changing its contents while keeping the task input fixed.
+
+### RQ6. Does the final prediction actually use the generated thoughts? {#rq6}
+
+**Setup.** Use Uni-LaDiR with Qwen2.5-VL-7B trained on Zebra-CoT for V* visual questions, and a 3.3B Janus-Pro policy trained on RLBench demonstrations for robot tasks. Within each setting, keep the trained checkpoint fixed and generate its thought chain normally. Then compare four conditions, without retraining: keep the chain intact; zero its contents; shuffle whole blocks while preserving token order within each block; or replace it with another example's chain of the same shape.
+
+Keep the task input and sequence length fixed. Recompute the final prediction with fresh hidden states, so it uses the supplied chain. Pair decoding seeds for visual questions. For RLBench, apply the intervention at every reasoning update and pair runs by initial scene and rollout seed. Evaluate V* answer accuracy and RLBench task success. The comparison tests the contribution of the chain's contents, order, and connection to the current example. <sup class="uni-cite"><a href="#ref-1">[1]</a></sup> (Table 7; Appendix B.4.)
+
+{% include blog/uni-ladir-original/interventions.html %}
+
+**Results.** Removing the contents, changing their order, or supplying the wrong example's thoughts substantially reduces performance. Replacement lowers V* accuracy from 89.5% to 50.8% and RLBench success from 87.0% to 51.0%. <sup class="uni-cite"><a href="#ref-1">[1]</a></sup>
+
+**Conclusion.** Final predictions depend on the generated thoughts’ contents, order, and relevance to the current example.
+
+## Discussion: what should actually be shared across modalities? {#discussion}
+
+A shared latent space might sound like an attempt to make different modalities look alike. We think the more interesting goal is almost the opposite.
+
+**Different modalities are useful precisely because they capture different things.** Images are good at appearance and spatial context; 3D point clouds expose geometry; robot states provide proprioception; language expresses abstractions and relations. A multimodal reasoner should preserve these complementary strengths rather than collapse them into their common denominator.
+
+**What we unify is the reasoning interface, not the information itself.** Each modality can contribute different evidence while expressing that evidence in a form that the same downstream reasoner can consume. The latent space makes heterogeneous information composable, not necessarily similar.
+
+This is different from the Platonic Representation view. The Platonic Representation Hypothesis emphasizes the possibility that representations from different modalities converge toward shared structure in the world. <sup class="uni-cite"><a href="#ref-2">[2]</a></sup> Our goal is not primarily to discover what the modalities have in common. It is to let each modality contribute what it is uniquely good at to a common reasoning process.
+
+This distinction matters. If we only align modalities around what they share, we may discard exactly the information that makes one modality more useful than another.
+
+For reasoning, the ideal latent space may therefore contain **both shared concepts and modality-specific evidence**—as long as both can be manipulated through the same computational interface.
+
+This also explains why continuation prediction is important. The objective does not ask different modalities to resemble one another. It asks each of them a more functional question:
+
+**What information should this modality contribute so that reasoning can continue?**
+
+That is the kind of unification we care about.
+
+## Looking ahead {#conclusion}
+
+Uni-LaDiR suggests a simple view of multimodal reasoning: **unifying reasoning does not mean making modalities the same.**
+
+Different modalities should contribute different strengths: vision provides appearance and spatial context, 3D point clouds provide geometry, language provides abstraction, and interaction provides physical experience. The role of a shared latent space is not to erase these differences, but to make them **composable within a single reasoning process**.
+
+This points to an interesting possibility: knowledge acquired through one modality could improve reasoning in another. Geometry learned from 3D point clouds may improve spatial reasoning from RGB; physical interaction may teach visual models about affordances; language may provide abstractions that organize perceptual experience.
+
+If this scales, multimodal learning becomes more than simply processing many modalities. It becomes learning a common computational space where **each modality can contribute what it does best to the same reasoning process**.
+
+**Different modalities do not need to think alike. They need a common space in which they can think together.**
+
+## References
+
+<ol class="uni-references">
+  <li id="ref-1">Haoqiang Kang, Yizhe Zhang, Nikki Lijing Kuang, Jiatao Gu, Yian Ma, and Lianhui Qin. <a href="https://arxiv.org/abs/2609.19878"><em>Uni-LaDiR: Latent Diffusion Unifies Multimodal Reasoning</em></a>. arXiv:2609.19878, 2026. <a href="{{ '/assets/blog/uni-ladir-original/source/results.json' | relative_url }}">Chart data</a>.</li>
+  <li id="ref-2">Minyoung Huh, Brian Cheung, Tongzhou Wang, and Phillip Isola. <a href="https://proceedings.mlr.press/v235/huh24a.html">Position: The Platonic Representation Hypothesis</a>. ICML, 2024.</li>
+  <li id="ref-3">Yaron Lipman, Ricky T. Q. Chen, Heli Ben-Hamu, Maximilian Nickel, and Matt Le. <a href="https://arxiv.org/abs/2210.02747">Flow Matching for Generative Modeling</a>. ICLR, 2023.</li>
+  <li id="ref-4">Shuai Bai et al. <a href="https://arxiv.org/abs/2502.13923">Qwen2.5-VL Technical Report</a>. arXiv:2502.13923, 2025.</li>
+  <li id="ref-5">Ang Li et al. <a href="https://arxiv.org/abs/2507.16746">Zebra-CoT: A Dataset for Interleaved Vision Language Reasoning</a>. arXiv:2507.16746, 2025.</li>
+  <li id="ref-6">Bo Liu et al. <a href="https://arxiv.org/abs/2306.03310">LIBERO: Benchmarking Knowledge Transfer for Lifelong Robot Learning</a>. NeurIPS, 2023.</li>
+  <li id="ref-7">Stephen James, Zicong Ma, David Rovick Arrojo, and Andrew J. Davison. <a href="https://arxiv.org/abs/1909.12271">RLBench: The Robot Learning Benchmark &amp; Learning Environment</a>. IEEE Robotics and Automation Letters, 2020.</li>
+  <li id="ref-8">Zhuoyang Liu et al. <a href="https://arxiv.org/abs/2601.05248">LaST₀: Latent Spatio-Temporal Chain-of-Thought for Robotic Vision-Language-Action Model</a>. arXiv:2601.05248, 2026.</li>
+  <li id="ref-9">Shuai Dong, Siyuan Wang, Xingyu Liu, Chenglin Li, Haowen Hou, and Zhongyu Wei. <a href="https://aclanthology.org/2026.acl-long.1351/">Interleaved Latent Visual Reasoning with Selective Perceptual Modeling</a>. ACL, 2026.</li>
+  <li id="ref-10">Pan Lu et al. <a href="https://arxiv.org/abs/2310.02255">MathVista: Evaluating Mathematical Reasoning of Foundation Models in Visual Contexts</a>. ICLR, 2024.</li>
+  <li id="ref-11">Qingqing Zhao et al. <a href="https://arxiv.org/abs/2503.22020">CoT-VLA: Visual Chain-of-Thought Reasoning for Vision-Language-Action Models</a>. CVPR, 2025.</li>
+  <li id="ref-12">Penghao Wu and Saining Xie. <a href="https://arxiv.org/abs/2312.14135">V*: Guided Visual Search as a Core Mechanism in Multimodal LLMs</a>. CVPR, 2024.</li>
+  <li id="ref-13">Shengbang Tong et al. <a href="https://arxiv.org/abs/2401.06209">Eyes Wide Shut? Exploring the Visual Shortcomings of Multimodal LLMs</a>. CVPR, 2024. Introduces MMVP.</li>
+  <li id="ref-14">Yunzhuo Hao et al. <a href="https://arxiv.org/abs/2501.05444">Can MLLMs Reason in Multimodality? EMMA: An Enhanced MultiModal ReAsoning Benchmark</a>. arXiv:2501.05444, 2025.</li>
+  <li id="ref-15">Arijit Ray et al. <a href="https://arxiv.org/abs/2512.10941">Mull-Tokens: Modality-Agnostic Latent Thinking</a>. arXiv:2512.10941, 2025.</li>
+  <li id="ref-16">Matthew A. Lambon Ralph, Karen Sage, Roy W. Jones, and Emily J. Mayberry. <a href="https://doi.org/10.1073/pnas.0907307107">Coherent concepts are computed in the anterior temporal lobes</a>. <em>Proceedings of the National Academy of Sciences</em>, 107(6):2717–2722, 2010.</li>
+  <li id="ref-17">Matthew A. Lambon Ralph, Elizabeth Jefferies, Karalyn Patterson, and Timothy T. Rogers. <a href="https://doi.org/10.1038/nrn.2016.150">The neural and computational bases of semantic cognition</a>. <em>Nature Reviews Neuroscience</em>, 18:42–55, 2017.</li>
+  <li id="ref-18">Zeyuan Yang, Xueyang Yu, Delin Chen, Maohao Shen, and Chuang Gan. <a href="https://arxiv.org/abs/2506.17218">Machine Mental Imagery: Empower Multimodal Reasoning with Latent Visual Tokens</a>. arXiv:2506.17218, 2025.</li>
+  <li id="ref-19">Moo Jin Kim et al. <a href="https://arxiv.org/abs/2406.09246">OpenVLA: An Open-Source Vision-Language-Action Model</a>. CoRL, 2024.</li>
+</ol>
+
+## Citation {#citation}
+
+If you found this post helpful, please consider citing [our paper](https://arxiv.org/abs/2609.19878):
+
+{% include blog/uni-ladir-original/citation.html %}
+
+
+<script src="{{ '/assets/blog/uni-ladir-original/visuals.js' | relative_url }}?v=180d18198e39" defer></script>
+
+<script src="{{ '/assets/blog/uni-ladir-original/toc.js' | relative_url }}?v=0a649be86629" defer></script>

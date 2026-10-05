@@ -1,0 +1,158 @@
+{
+  "main": [
+    {
+      "title": "Visual reasoning",
+      "metric": "7-benchmark mean accuracy (%)",
+      "labels": [
+        "Qwen2.5-VL-7B",
+        "Mirage",
+        "Uni-LaDiR"
+      ],
+      "roles": [
+        "Base model",
+        "Modality-specific",
+        "Unified"
+      ],
+      "values": [
+        64.6,
+        72.2,
+        78.5
+      ]
+    },
+    {
+      "title": "Visual math & logic",
+      "metric": "4-benchmark mean accuracy (%)",
+      "labels": [
+        "Qwen2.5-VL-7B",
+        "Mirage",
+        "Uni-LaDiR"
+      ],
+      "roles": [
+        "Base model",
+        "Modality-specific",
+        "Unified"
+      ],
+      "values": [
+        36.4,
+        40.7,
+        49.0
+      ]
+    },
+    {
+      "title": "Robot manipulation",
+      "metric": "RLBench mean success (%)",
+      "labels": [
+        "OpenVLA (7B)",
+        "LaST₀ (3.3B)",
+        "Uni-LaDiR (3.3B)"
+      ],
+      "roles": [
+        "Direct policy",
+        "Modality-specific",
+        "Unified"
+      ],
+      "values": [
+        40.0,
+        82.0,
+        87.0
+      ]
+    }
+  ],
+  "sharing": [
+    {
+      "title": "Text + image teachers",
+      "metric": "4-benchmark mean accuracy (%)",
+      "labels": [
+        "Separate\nspaces",
+        "Text + image\nshared"
+      ],
+      "values": [
+        63.0,
+        70.1
+      ],
+      "gain": "+11.3% relative"
+    },
+    {
+      "title": "Visual + 3D + robot state teachers",
+      "metric": "RLBench mean success (%)",
+      "labels": [
+        "Separate",
+        "Visual\n+ 3D",
+        "Visual\n+ robot state",
+        "3D\n+ robot state",
+        "All three"
+      ],
+      "values": [
+        82,
+        83.5,
+        84.5,
+        84.5,
+        87
+      ],
+      "gain": "+6.1% relative"
+    }
+  ],
+  "source": {
+    "version": "arXiv:2609.19878v3",
+    "date": "2026-09-29",
+    "url": "https://arxiv.org/abs/2609.19878v3",
+    "main": "Tables 1–2: three named methods per panel. Mirage is the same modality-specific baseline in both VLM groups. OpenVLA is a direct-policy comparator, not an ablation of the Uni-LaDiR backbone. All numbers are reported table values.",
+    "sharing": "Figure 3 (rounded scores)",
+    "protocol": "Section 4.3 and Appendix B.3: fixed backbone, data, teacher supervision and thought-token dimensions; encoder parameter counts are not matched"
+  },
+  "paper_figures": {
+    "fig1": {
+      "source_file": "fig1-0912-motion-detail-v76.pdf",
+      "sha256": "15dddc7664553dde14e7ec6cc9e791e0ad9d85c50c33c16d1e66a486c8b7ab9b"
+    },
+    "fig2": {
+      "source_file": "method-overview-v45-reference.pdf",
+      "sha256": "f7a50eb424aaa723809a78fb179e88fd1270b1231c708c31873a77e442f938e1"
+    },
+    "paper-sharing": {
+      "source_file": "ablation-sharing-v4.pdf",
+      "sha256": "537b73f6963b5320eb1ed50e8525cc2f283e05195a45fa4608bfdcf415c7b29e"
+    },
+    "objective": {
+      "source_file": "ablation-objective-v9-clean-labels.pdf",
+      "sha256": "9d89f7438c322b5abb1974634615f9a401ce55a1969860ba65fee82fd021a336"
+    },
+    "joint-training": {
+      "source_file": "ablation-training-v4-staged-joint.pdf",
+      "sha256": "97e5744dd2ba49854c60fea310cf4b62b26ba26524f2e9d68b88b3709e0ac984"
+    },
+    "diffusion": {
+      "source_file": "ablation-diffusion.pdf",
+      "sha256": "07f7a4cb00bea04e05d42a7de1dc8c4b16b4db231b2f6ef16c44b78946fdca56"
+    }
+  },
+  "interventions": {
+    "source": "v3 Table 7",
+    "conditions": [
+      "Intact",
+      "Zeroed",
+      "Shuffled",
+      "Cross-example"
+    ],
+    "V*": [
+      89.5,
+      55.8,
+      65.8,
+      50.8
+    ],
+    "RLBench": [
+      87,
+      55,
+      65,
+      51
+    ]
+  },
+  "ablation_summary": {
+    "source": "v3 Section 4.4, Figures 4–6",
+    "continuation_vs_reconstruction_unified_mean_pp": 9.2,
+    "joint_vs_separate_stages_mean_relative_pct": 12.7,
+    "flow_matching_vs_L2_mean_relative_pct": 16.3,
+    "flow_matching_vs_cosine_mean_relative_pct": 21.0,
+    "note": "Reported aggregates use unrounded source scores; they are not reconstructed from plotted rounded values."
+  }
+}
