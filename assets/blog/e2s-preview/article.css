@@ -28,3 +28,11 @@
 #main.blog-article .e2s-summary {display:table;}
 #main.blog-article .sampler-key .e2s-key-title {font-size:19px;line-height:1.35;font-weight:600;color:#6356a5;margin-bottom:9px;letter-spacing:-.01em;}
 #main.blog-article .sampler-key-teal .e2s-key-title {color:#267873;}
+/* Full results are a clear disclosure, not a small caption. */
+#main.blog-article .sampler-benchmark-details {margin:24px 0;}
+#main.blog-article .sampler-benchmark-details > summary {font-size:18px;line-height:1.5;font-weight:600;color:#6356a5;padding:16px 18px;border:1px solid #ded7ec;border-radius:6px;background:#faf9fd;cursor:pointer;}
+#main.blog-article .sampler-benchmark-details > summary::marker {color:#6356a5;}
+#main.blog-article .sampler-benchmark-details > summary:hover {background:#f3f0f9;}
+#main.blog-article .sampler-benchmark-details > summary:focus-visible {outline:2px solid #6356a5;outline-offset:3px;}
+#main.blog-article .sampler-benchmark-details[open] > summary {margin-bottom:16px;}
+@media(max-width:600px) {#main.blog-article .sampler-benchmark-details > summary {font-size:17px;padding:15px;}}
