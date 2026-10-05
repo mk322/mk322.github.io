@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="576pt" height="316.8pt" viewBox="0 0 576 316.8" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <title>Offline scaling: author-confirmed values</title>
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:title>Offline scaling: author-confirmed values</dc:title>
+    <dc:date>2026-10-05T02:04:21.196206</dc:date>
+    <dc:description>Author-confirmed offline scaling: Math averages 55.0, 56.3 and 57.2 at 8230, 16460 and 32920 training responses. See source/scaling-data.json for confirmation and provenance.</dc:description>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.10.6, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 316.8
+L 576 316.8
+L 576 0
+L 0 0
+z
+" style="fill: #ffffff"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 63.36 231.264
+L 541.44 231.264
+L 541.44 85.536
+L 63.36 85.536
+z
+" style="fill: #ffffff"/>
+   </g>
+   <g id="matplotlib.axis_1">
+    <g id="xtick_1">
+     <g id="line2d_1"/>
+     <g id="text_1">
+      <text style="font-size: 11px; font-family: 'Helvetica Neue', 'Arial', 'DejaVu Sans', sans-serif; fill: #525a65" transform="translate(78.086322 246.118687)">1× per example</text>
+      <text style="font-size: 11px; font-family: 'Helvetica Neue', 'Arial', 'DejaVu Sans', sans-serif; fill: #525a65" transform="translate(75.774603 260.853531)">8,230 responses</text>
+     </g>
+    </g>
+    <g id="xtick_2">
+     <g id="line2d_2"/>
+     <g id="text_2">
+      <text style="font-size: 11px; font-family: 'Helvetica Neue', 'Arial', 'DejaVu Sans', sans-serif; fill: #525a65" transform="translate(263.454321 246.118687)">2× per example</text>
+      <text style="font-size: 11px; font-family: 'Helvetica Neue', 'Arial', 'DejaVu Sans', sans-serif; fill: #525a65" transform="translate(258.084946 260.853531)">16,460 responses</text>
+     </g>
+    </g>
+    <g id="xtick_3">
+     <g id="line2d_3"/>
+     <g id="text_3">
+      <text style="font-size: 11px; font-family: 'Helvetica Neue', 'Arial', 'DejaVu Sans', sans-serif; fill: #525a65" transform="translate(448.82232 246.118687)">4× per example</text>
+      <text style="font-size: 11px; font-family: 'Helvetica Neue', 'Arial', 'DejaVu Sans', sans-serif; fill: #525a65" transform="translate(443.452945 260.853531)">32,920 responses</text>
+     </g>
+    </g>
+   </g>
+   <g id="matplotlib.axis_2">
+    <g id="ytick_1">
+     <g id="line2d_4">
+      <path d="M 63.36 210.445714
+L 541.44 210.445714
+" clip-path="url(#pb9e64f7000)" style="fill: none; stroke: #edf0f4; stroke-width: 0.65; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_5"/>
+     <g id="text_4">
+      <text style="font-size: 10px; font-family: 'Helvetica Neue', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: end; fill: #525a65" x="56.36" y="214.016027" transform="rotate(-0 56.36 214.016027)">55</text>
+     </g>
+    </g>
+    <g id="ytick_2">
+     <g id="line2d_6">
+      <path d="M 63.36 168.809143
+L 541.44 168.809143
+" clip-path="url(#pb9e64f7000)" style="fill: none; stroke: #edf0f4; stroke-width: 0.65; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_7"/>
+     <g id="text_5">
+      <text style="font-size: 10px; font-family: 'Helvetica Neue', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: end; fill: #525a65" x="56.36" y="172.379455" transform="rotate(-0 56.36 172.379455)">56</text>
+     </g>
+    </g>
+    <g id="ytick_3">
+     <g id="line2d_8">
+      <path d="M 63.36 127.172571
+L 541.44 127.172571
+" clip-path="url(#pb9e64f7000)" style="fill: none; stroke: #edf0f4; stroke-width: 0.65; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_9"/>
+     <g id="text_6">
+      <text style="font-size: 10px; font-family: 'Helvetica Neue', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: end; fill: #525a65" x="56.36" y="130.742884" transform="rotate(-0 56.36 130.742884)">57</text>
+     </g>
+    </g>
+    <g id="ytick_4">
+     <g id="line2d_10">
+      <path d="M 63.36 85.536
+L 541.44 85.536
+" clip-path="url(#pb9e64f7000)" style="fill: none; stroke: #edf0f4; stroke-width: 0.65; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_11"/>
+     <g id="text_7">
+      <text style="font-size: 10px; font-family: 'Helvetica Neue', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: end; fill: #525a65" x="56.36" y="89.106312" transform="rotate(-0 56.36 89.106312)">58</text>
+     </g>
+    </g>
+    <g id="text_8">
+     <text style="font-size: 11px; font-family: 'Helvetica Neue', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #525a65" x="38.941562" y="158.4" transform="rotate(-90 38.941562 158.4)">Math avg. (%)</text>
+    </g>
+   </g>
+   <g id="line2d_12">
+    <path d="M 116.431634 210.445714
+L 301.799633 156.318171
+L 487.167633 118.845257
+" clip-path="url(#pb9e64f7000)" style="fill: none; stroke: #6356a5; stroke-width: 1.7; stroke-linecap: square"/>
+    <defs>
+     <path id="mb2511b2acf" d="M 0 2.5
+C 0.663008 2.5 1.29895 2.236584 1.767767 1.767767
+C 2.236584 1.29895 2.5 0.663008 2.5 0
+C 2.5 -0.663008 2.236584 -1.29895 1.767767 -1.767767
+C 1.29895 -2.236584 0.663008 -2.5 0 -2.5
+C -0.663008 -2.5 -1.29895 -2.236584 -1.767767 -1.767767
+C -2.236584 -1.29895 -2.5 -0.663008 -2.5 0
+C -2.5 0.663008 -2.236584 1.29895 -1.767767 1.767767
+C -1.29895 2.236584 -0.663008 2.5 0 2.5
+z
+" style="stroke: #6356a5; stroke-width: 1.7"/>
+    </defs>
+    <g clip-path="url(#pb9e64f7000)">
+     <use xlink:href="#mb2511b2acf" x="116.431634" y="210.445714" style="fill: #ffffff; stroke: #6356a5; stroke-width: 1.7"/>
+     <use xlink:href="#mb2511b2acf" x="301.799633" y="156.318171" style="fill: #ffffff; stroke: #6356a5; stroke-width: 1.7"/>
+     <use xlink:href="#mb2511b2acf" x="487.167633" y="118.845257" style="fill: #ffffff; stroke: #6356a5; stroke-width: 1.7"/>
+    </g>
+   </g>
+   <g id="patch_3">
+    <path d="M 63.36 231.264
+L 63.36 85.536
+" style="fill: none; stroke: #d7dce5; stroke-width: 0.65; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 63.36 231.264
+L 541.44 231.264
+" style="fill: none; stroke: #d7dce5; stroke-width: 0.65; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="text_9">
+    <text style="font-size: 11px; font-family: 'Helvetica Neue', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #6356a5" x="116.431634" y="199.445714" transform="rotate(-0 116.431634 199.445714)">55.0</text>
+   </g>
+   <g id="text_10">
+    <text style="font-size: 11px; font-family: 'Helvetica Neue', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #6356a5" x="301.799633" y="145.318171" transform="rotate(-0 301.799633 145.318171)">56.3</text>
+   </g>
+   <g id="text_11">
+    <text style="font-size: 11px; font-family: 'Helvetica Neue', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #6356a5" x="487.167633" y="107.845257" transform="rotate(-0 487.167633 107.845257)">57.2</text>
+   </g>
+  </g>
+  <g id="text_12">
+   <text style="font-weight: 500; font-size: 17px; font-family: 'Helvetica Neue', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: start; fill: #20252c" x="28.8" y="16.7904" transform="rotate(-0 28.8 16.7904)">One corpus, more useful draws</text>
+  </g>
+  <g id="text_13">
+   <text style="font-size: 12px; font-family: 'Helvetica Neue', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: start; fill: #525a65" x="28.8" y="42.4512" transform="rotate(-0 28.8 42.4512)">1 / 2 / 4 responses per expert example</text>
+  </g>
+  <g id="text_14">
+   <text style="font-size: 11px; font-family: 'Helvetica Neue', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: start; fill: #525a65" x="28.8" y="295.5744" transform="rotate(-0 28.8 295.5744)">E2S-Offline · 8,230 expert examples held fixed</text>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="pb9e64f7000">
+   <rect x="63.36" y="85.536" width="478.08" height="145.728"/>
+  </clipPath>
+ </defs>
+</svg>

@@ -1,0 +1,26 @@
+{
+  "status": "Author-confirmed values; raw experiment logs not inspected",
+  "confirmed_on": "2026-10-05",
+  "author_confirmation": "你的scaling的结果没问题 我check过了",
+  "history": "These values originated as illustrative estimates during blog editing. The author subsequently confirmed them and requested restoration of the diversity scaling section. Original estimate record is preserved unchanged.",
+  "expert_examples": 8230,
+  "schedule": "E2S-Offline; one frozen sampler and one fixed expert corpus",
+  "points": [
+    {
+      "samples_per_example": 1,
+      "training_responses": 8230,
+      "math_avg_pct": 55.0
+    },
+    {
+      "samples_per_example": 2,
+      "training_responses": 16460,
+      "math_avg_pct": 56.3
+    },
+    {
+      "samples_per_example": 4,
+      "training_responses": 32920,
+      "math_avg_pct": 57.2
+    }
+  ],
+  "scope": "Separate scaling sweep, not the 55.5% E2S-Offline row in the main comparison. No seed-level data, matched-compute controls, or direct mode-coverage measurements supplied."
+}

@@ -20,3 +20,5 @@ that plot and discusses repeated sampling briefly in Looking ahead.
 
 Validation: Jekyll build, numerical identity checks in the existing verify_math.py,
 MathJax rendering, anchor/reference resolution, and 320/390/768/1440 px layouts.
+
+Update: the author subsequently requested restoring Diversity scaling. The preview now includes a separate scaling section and source/scaling-data.json records both the original estimate history and the later author confirmation.

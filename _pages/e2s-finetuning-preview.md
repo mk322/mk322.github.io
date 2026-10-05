@@ -16,7 +16,7 @@ tldr: |
 <link rel="stylesheet" href="{{ '/assets/blog/learned-sampler/article.css' | relative_url }}">
 <link rel="stylesheet" href="{{ '/assets/blog/e2s-preview/article.css' | relative_url }}">
 
-<nav class="sampler-toc" aria-label="Article contents"><details><summary>On this page</summary><ol><li><a href="#sft-problem">Off-policy mismatch</a></li><li><a href="#amortization">Why amortize search?</a></li><li><a href="#target">The constrained target</a></li><li><a href="#gflownet">GFlowNet and group matching</a></li><li><a href="#versions">Offline and online</a></li><li><a href="#experiments">Experiments</a></li><li><a href="#comparison">RL, OPD, and MCMC</a></li><li><a href="#lookahead">Looking ahead</a></li><li><a href="#references">References</a></li><li><a href="#citation">Citation</a></li></ol></details></nav>
+<nav class="sampler-toc" aria-label="Article contents"><details><summary>On this page</summary><ol><li><a href="#sft-problem">Off-policy mismatch</a></li><li><a href="#amortization">Why amortize search?</a></li><li><a href="#target">The constrained target</a></li><li><a href="#gflownet">GFlowNet and group matching</a></li><li><a href="#versions">Offline and online</a></li><li><a href="#experiments">Experiments</a></li><li><a href="#scaling">Diversity scaling</a></li><li><a href="#comparison">RL, OPD, and MCMC</a></li><li><a href="#lookahead">Looking ahead</a></li><li><a href="#references">References</a></li><li><a href="#citation">Citation</a></li></ol></details></nav>
 <script defer src="{{ "/assets/blog/learned-sampler/navigation.js" | relative_url }}"></script>
 <script defer src="{{ "/assets/blog/e2s-preview/navigation.js" | relative_url }}"></script>
 
@@ -206,25 +206,74 @@ For a weight matrix \\(W_\theta\\), the sampler uses \\(W_\theta+sBA\\). Here \\
 </details>
 
 <details class="sampler-technical" markdown="1">
-<summary>Algorithms: offline and online</summary>
+<summary>Algorithms: sampler fitting, offline E2S, and online E2S</summary>
+
+Let D = {(x, τ)} be the expert corpus, θ the student parameters, and φ the sampler adapter parameters. Valid(x, τ, y) checks the expert constraint. SFT(θ, D*) minimizes the negative log probability of the generated responses given their original prompts, with the sampler adapters disabled.
+
+**Subroutine · FitSampler**
 
 ```text
-E2S-Offline
-  Freeze the starting student.
-  Fit the sampler across expert examples:
-    Draw a fresh group of K ≥ 2 valid responses.
-    Score with sampler (prompt + expert) and student (prompt).
-    Update sampler parameters using the group-relative loss.
-  Freeze the sampler; generate the fixed SFT dataset.
-  Disable adapters; fine-tune the student on that dataset.
+Input:  expert batch B, frozen student θ,
+        sampler φ, group size K ≥ 2,
+        update budget U, learning rate ηφ
+Output: updated sampler φ
 
-E2S-Online
-  Repeat:
-    Freeze the current student for sampler fitting.
-    Refit the sampler against this student using fresh groups.
-    Generate a new batch of valid responses.
-    Disable adapters; update the student with SFT on the batch.
+for u = 1, …, U do
+    Draw (x, τ) from B
+    Sample y₁, …, yK ∼ qφ(· | x, τ),
+        retaining only Valid(x, τ, yi) = true
+    for i = 1, …, K do
+        ai ← log qφ(yi | x, τ)
+              − log pθ(yi | x)
+    ā ← (1/K) Σi ai
+    L ← (1/K) Σi (ai − stopgrad(ā))²
+    φ ← φ − ηφ ∇φ L
+return φ
 ```
+
+Only φ is updated. The student scores and sampled responses are held fixed during each gradient step. Each update uses a fresh group; the validity check is applied during sampling.
+
+**Algorithm 1 · E2S-Offline**
+
+```text
+Input:  expert corpus D, student θ₀,
+        sampler initialization φ₀,
+        sampler budget U, samples per example m
+Output: fine-tuned student θ
+
+φ ← FitSampler(D, θ₀, φ₀, K, U, ηφ)
+D* ← ∅
+for each (x, τ) in D do
+    Draw m valid responses y ∼ qφ(· | x, τ)
+    Add each pair (x, y) to D*
+θ ← SFT(θ₀, D*)
+return θ
+```
+
+The student remains θ₀ throughout sampler fitting and data generation. D* is fixed before student training begins.
+
+**Algorithm 2 · E2S-Online**
+
+```text
+Input:  expert corpus D, student θ₀,
+        sampler initialization φ₀, rounds T,
+        per-round sampler budget U,
+        samples per example m
+Output: fine-tuned student θT
+
+θ ← θ₀; φ ← φ₀
+for t = 1, …, T do
+    Select expert batch Bt from D
+    φ ← FitSampler(Bt, θ, φ, K, U, ηφ)
+    Dt* ← ∅
+    for each (x, τ) in Bt do
+        Draw m valid responses y ∼ qφ(· | x, τ)
+        Add each pair (x, y) to Dt*
+    θ ← SFT(θ, Dt*)
+return θ
+```
+
+Each round freezes the current student while fitting the sampler and generating targets. SFT then updates θ; the next round fits against that updated student. K and ηφ are shared sampler hyperparameters in both algorithms.
 
 </details>
 
@@ -278,6 +327,27 @@ These results support stronger math learning with little change in the evaluated
 
 <div class="sampler-key sampler-key-teal"><div class="e2s-key-title">Key message</div><p>E2S improves math while keeping prior-task performance near the starting model.</p></div>
 
+## Diversity scaling: more responses from the same expert examples
+{: #scaling}
+
+**One expert example can teach the student through more than one response.** E2S learns a distribution of valid responses, so we can draw again from the same expert example rather than simply copy one answer. The question is whether those additional draws keep improving SFT.
+
+### Setup
+
+We keep the 8,230 expert problems and the fitted offline sampler fixed, then generate 1, 2, or 4 valid responses per problem. That gives 8,230, 16,460, or 32,920 SFT responses without adding new expert problems. We evaluate Math avg. on the same four math benchmarks. This is a separate scaling sweep from the main method comparison above.
+
+### Results
+
+Math avg. rises from 55.0% with one response per example to 56.3% with two and 57.2% with four—a 2.2-point gain from 1× to 4×. The expert corpus stays the same; the sampler supplies additional training responses.
+
+<figure id="offline-scaling-curve" class="sampler-chart"><picture><source media="(max-width: 600px)" srcset="{{ '/assets/blog/e2s-preview/e2s-offline-scaling-mobile.svg' | relative_url }}"><img src="{{ '/assets/blog/e2s-preview/e2s-offline-scaling.svg' | relative_url }}" width="800" height="440" loading="lazy" alt="Offline Math average increases from 55.0 to 56.3 to 57.2 percent with 1, 2 and 4 responses per expert example, yielding 8230, 16460 and 32920 SFT responses."></picture><figcaption>Offline scaling with a fixed expert corpus. Values confirmed by the author; <a href="{{ '/assets/blog/e2s-preview/source/scaling-data.json' | relative_url }}">result record</a>.</figcaption></figure>
+
+### Conclusion
+
+Additional samples improve math performance in this sweep. This is a useful scaling direction: we can expand the training responses without collecting more expert solutions. Separating the benefit of different responses from extra SFT compute requires a matched-compute duplication control; accuracy alone does not measure how many reasoning paths the sampler covers.
+
+<div class="sampler-key sampler-key-teal"><div class="e2s-key-title">Key message</div><p>Sampling more responses from the same expert examples continues to improve offline SFT.</p></div>
+
 ## How E2S differs from RL, OPD, and MCMC
 {: #comparison}
 
@@ -292,7 +362,7 @@ This distinction matters for diversity. A binary correctness reward alone does n
 ## Looking ahead
 {: #lookahead}
 
-**Offline E2S makes data preparation specific to the learner.** During mid-training or post-training, an expert corpus can be rewritten into valid trajectories that a particular student is more likely to produce. A learned sampler also makes each expert example reusable: drawing multiple valid solutions could provide additional useful supervision. Testing this at matched compute can separate useful diversity from simply doing more training.
+**Offline E2S makes data preparation specific to the learner.** During mid-training or post-training, an expert corpus can be rewritten into valid trajectories that a particular student is more likely to produce. A learned sampler also makes each expert example reusable: the scaling sweep shows gains from additional valid responses. A matched-compute study can test how much of that gain comes from useful diversity rather than additional training.
 
 **Online E2S makes data generation part of learning.** An expert-conditioned sampler can guide generation toward valid responses while tracking the student as it changes. The broader idea is to learn the data-generation policy itself: not only which information to teach, but how to express it for the model that will learn from it.
 
