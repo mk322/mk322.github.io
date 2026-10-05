@@ -412,12 +412,12 @@ Murray Kang. “E2S Finetuning: From Expert Demonstrations to On-Policy Learning
 {% raw %}
 ```bibtex
 @misc{kang2026onpolicysft,
-  author = {Kang, Murray},
+  author = {Kang, Haoqiang},
   title = {{E2S Finetuning: From Expert Demonstrations to On-Policy Learning}},
   year = {2026},
   month = oct,
   howpublished = {Research blog},
-  url = {https://mk322.github.io/blog/e2s-finetuning-preview/}
+  url = {https://mk322.github.io/blog/learned-on-policy-sampler/}
 }
 ```
 {% endraw %}
