@@ -292,6 +292,8 @@ The baseline scores come from that study; the E2S rows are our project results. 
 <table class="e2s-summary"><caption>Accuracy (%) on new math tasks and prior tasks</caption><thead><tr><th scope="col">Method</th><th scope="col">Math avg.</th><th scope="col">Prior avg.</th></tr></thead><tbody>
 <tr><th scope="row">Base</th><td>31.8</td><td>42.2</td></tr>
 <tr><th scope="row">Expert SFT</th><td>24.2</td><td>38.9</td></tr>
+<tr><th scope="row">OPSD</th><td>30.2</td><td>40.4</td></tr>
+<tr><th scope="row">GRPO</th><td>45.7</td><td>41.4</td></tr>
 <tr><th scope="row">MCMC + SFT</th><td>53.4</td><td>42.0</td></tr>
 <tr class="e2s-row"><th scope="row">E2S-Offline</th><td>55.5</td><td>42.1</td></tr>
 <tr class="e2s-row"><th scope="row">E2S-Online</th><td>59.4</td><td>42.2</td></tr>
