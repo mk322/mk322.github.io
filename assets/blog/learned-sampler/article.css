@@ -105,10 +105,9 @@
 .sampler-header-note { display: block; margin-top: 3px; font-size: 9px; font-weight: 400; }
 #main.blog-article .sampler-summary-table .sampler-average { font-size: 17px; font-weight: 600; }
 #main.blog-article .sampler-summary-table .sampler-math-gain { font-size: 13px; color: #667486; }
-#main.blog-article .sampler-results-table .sampler-estimate-row > * { background: #f4f1fa; color: #514382; border-top: 1px solid #d8cfe7; }
-#main.blog-article .sampler-estimate-row .sampler-method-name { font-weight: 600; }
-#main.blog-article .sampler-summary-table .sampler-estimate-row .sampler-math-gain { font-weight: 600; color: #6356a5; }
-.sampler-estimate-badge { display: inline-block; margin-left: 4px; padding: 0 5px; border: 1px solid #d9d0e9; border-radius: 4px; font-size: 8px; font-weight: 400; vertical-align: 1px; color: #796895; }
+#main.blog-article .sampler-results-table .sampler-result-row > * { background: #f4f1fa; color: #514382; border-top: 1px solid #d8cfe7; }
+#main.blog-article .sampler-result-row .sampler-method-name { font-weight: 600; }
+#main.blog-article .sampler-summary-table .sampler-result-row .sampler-math-gain { font-weight: 600; color: #6356a5; }
 .sampler-results-table sup { font-size: 9px; padding-left: 2px; }
 .sampler-benchmark-details { margin: 16px 0 28px; font-family: 'Helvetica Neue', Arial, sans-serif; }
 .sampler-benchmark-details summary { cursor: pointer; font-size: 12px; color: #697687; }
@@ -126,7 +125,6 @@
  .sampler-header-note { font-size: 8px; }
  #main.blog-article .sampler-summary-table .sampler-average { font-size: 14px; }
  #main.blog-article .sampler-summary-table .sampler-math-gain { font-size: 11px; }
- .sampler-estimate-badge { margin-left: 0; font-size: 7px; }
- #main.blog-article .sampler-results-table .sampler-estimate-row th { background: #f4f1fa; }
+ #main.blog-article .sampler-results-table .sampler-result-row th { background: #f4f1fa; }
  #main.blog-article .sampler-summary-table th[scope="col"] { white-space: normal; }
 }

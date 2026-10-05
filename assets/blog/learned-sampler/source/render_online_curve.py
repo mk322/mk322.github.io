@@ -28,6 +28,7 @@ metadata={'status':'Illustrative, not measured','seed':20261004,
  'x_axis':'Normalized training progress (%); no actual step counts or runtime',
  'y_axis':'Illustrative student Math avg. (%)',
  'construction':'Saturating trend plus correlated synthetic noise; no observations or estimated uncertainty',
+ 'endpoint_provenance':'Final table score confirmed by the author on 2026-10-04; intermediate points remain synthetic',
  'start':float(base),'end':float(end),
  'points':[{'progress_pct':float(a),'math_avg':float(b)} for a,b in zip(x,y)]}
 Path(__file__).with_name('online-curve-data.json').write_text(json.dumps(metadata,indent=2)+'\n')

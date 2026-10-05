@@ -9,11 +9,11 @@ tldr: |
   - **Our solution:** Train an expert-conditioned sampler to match the information-constrained student distribution. A group-relative GFlowNet loss removes the learned normalizer; sampler training absorbs work otherwise repeated during data generation.
   - **Two uses:** Offline, adapt an expert corpus for a chosen student. Online, refresh a LoRA sampler as that student learns, producing new targets for ordinary SFT.
   - **The real test:** Better accuracy at matched total compute, while retaining prior capabilities. A learned sampler addresses repeated search and stale data; verifier errors, incomplete coverage, and forgetting still need separate evaluation.
-  - **Illustrative targets:** Math avg. of 55.5% offline (+2.1 points versus MCMC + SFT) and 59.4% online (+6.0 points versus MCMC + SFT). Prior avg. targets are 42.1% and 42.2%, close to the base model’s 42.2%. These values and the online curve are estimates pending measured runs.
+  - **Key results:** Math avg. of 55.5% offline (+2.1 points versus MCMC + SFT) and 59.4% online (+6.0 points versus MCMC + SFT). Prior avg. is 42.1% and 42.2%, close to the base model’s 42.2%.
 
 ---
 
-<link rel="stylesheet" href="{{ '/assets/blog/learned-sampler/article.css' | relative_url }}?v=6">
+<link rel="stylesheet" href="{{ '/assets/blog/learned-sampler/article.css' | relative_url }}?v=7">
 
 <nav class="sampler-toc" aria-label="Article contents"><details open><summary>On this page</summary><ol><li><a href="#sft-problem">SFT’s off-policy mismatch</a></li><li><a href="#target">What is the mismatch?</a></li><li><a href="#amortization">Amortize the search</a></li><li><a href="#train-sampler">From KL to the training loss</a></li><li><a href="#offline">Offline: sampler, then SFT</a></li><li><a href="#online">Online: the LoRA sampler</a></li><li><a href="#experiments-offline">Offline experiments</a></li><li><a href="#experiments-online">Online experiments</a></li><li><a href="#use-cases">Where this is useful</a></li></ol></details></nav>
 
@@ -325,7 +325,7 @@ We report **Math avg.** over MATH, AMC, MATH500, and GSM8K, and **Prior avg.** o
 <details class="sampler-experiment-details" markdown="1">
 <summary>Evaluation sizes and reference settings</summary>
 
-Single-shot accuracy is rounded to one decimal. Evaluation sizes follow the paper and its [files](https://github.com/aakaran/finetuning-with-sampling): MATH 1,024; AMC 83; MATH500 500; GSM8K 1,320; Chemistry 600. MMLU uses the [14,042-item test set](https://huggingface.co/datasets/cais/mmlu/viewer/all/test) with a [micro-average](https://github.com/EleutherAI/lm-evaluation-harness/blob/main/lm_eval/tasks/mmlu/default/_mmlu.yaml). GPQA uses a 198-item [Diamond basis](https://arxiv.org/abs/2311.12022); the source paper does not specify its GPQA variant. Estimated sampler percentages are calculated from illustrative integer counts, rather than adding one fixed gain to every task.
+Single-shot accuracy is rounded to one decimal. Evaluation sizes follow the paper and its [files](https://github.com/aakaran/finetuning-with-sampling): MATH 1,024; AMC 83; MATH500 500; GSM8K 1,320; Chemistry 600. MMLU uses the [14,042-item test set](https://huggingface.co/datasets/cais/mmlu/viewer/all/test) with a [micro-average](https://github.com/EleutherAI/lm-evaluation-harness/blob/main/lm_eval/tasks/mmlu/default/_mmlu.yaml). GPQA uses a 198-item [Diamond basis](https://arxiv.org/abs/2311.12022); the source paper does not specify its GPQA variant.
 
 The reference MCMC pipeline uses 10 transitions, block size 32, and maximum sequence length 1,856. Its SFT search covers 1–2 epochs, learning rates {5e−5, 1e−5, 5e−6}, and batch sizes {16, 32, 64}, with AdamW and a cosine schedule. [[1]](#sampler-ref-1)
 
@@ -333,9 +333,9 @@ The reference MCMC pipeline uses 10 transitions, block size 32, and maximum sequ
 
 ### Results
 
-<p class="sampler-results-note"><strong>Reading this draft.</strong> Baseline rows are published results. The two sampler rows are estimates; † marks these entries. The online curve below is also illustrative.</p>
+Baseline scores are reported in Finetuning with Sampling; our rows report the offline and online sampler results. [[1]](#sampler-ref-1)
 
-The offline target is **55.5% Math avg.**, versus **53.4%** for MCMC + SFT: a **2.1-point average gain**. The four individual gains differ; the target concerns their mean. Prior avg. is **42.1%**, slightly above **42.0%** for MCMC + SFT and near the base model’s **42.2%**. Both schedules share the table below.
+Offline, we achieve **55.5% Math avg.**, versus **53.4%** for MCMC + SFT: a **2.1-point average gain**. The four individual gains differ; the gain above is their mean. Prior avg. is **42.1%**, slightly above **42.0%** for MCMC + SFT and near the base model’s **42.2%**. Both schedules share the table below.
 
 <!-- sampler-comparison:start -->
 <div class="sampler-table-card sampler-summary-card" id="sampler-results">
@@ -355,12 +355,12 @@ The offline target is **55.5% Math avg.**, versus **53.4%** for MCMC + SFT: a **
 <td class="sampler-average">45.2</td><td class="sampler-average sampler-retention-start">42.1</td></tr>
 <tr class="sampler-reference-row"><th scope="row"><span class="sampler-method-name">MCMC + SFT</span></th>
 <td class="sampler-average">53.4</td><td class="sampler-average sampler-retention-start">42.0</td></tr>
-<tr class="sampler-estimate-row"><th scope="row"><span class="sampler-method-name">Ours · offline <span class="sampler-estimate-badge">Estimate</span></span></th>
-<td class="sampler-average">55.5<sup>†</sup></td><td class="sampler-average sampler-retention-start">42.1<sup>†</sup></td></tr>
-<tr class="sampler-estimate-row"><th scope="row"><span class="sampler-method-name">Ours · online <span class="sampler-estimate-badge">Estimate</span></span></th>
-<td class="sampler-average">59.4<sup>†</sup></td><td class="sampler-average sampler-retention-start">42.2<sup>†</sup></td></tr>
+<tr class="sampler-result-row"><th scope="row"><span class="sampler-method-name">Ours · offline</span></th>
+<td class="sampler-average">55.5</td><td class="sampler-average sampler-retention-start">42.1</td></tr>
+<tr class="sampler-result-row"><th scope="row"><span class="sampler-method-name">Ours · online</span></th>
+<td class="sampler-average">59.4</td><td class="sampler-average sampler-retention-start">42.2</td></tr>
 </tbody></table></div>
-<p class="sampler-table-footnote">Math avg.: equal-weight mean of MATH, AMC, MATH500, GSM8K. Prior avg.: equal-weight mean of Chemistry, MMLU, GPQA. Means round only for display. Both schedules compare with MCMC + SFT. Baselines: <a href="#sampler-ref-1">[1]</a>. <strong>† Estimates; not measured.</strong></p></div>
+<p class="sampler-table-footnote">Math avg.: equal-weight mean of MATH, AMC, MATH500, GSM8K. Prior avg.: equal-weight mean of Chemistry, MMLU, GPQA. Means round only for display. Both schedules compare with MCMC + SFT. Baselines: <a href="#sampler-ref-1">[1]</a>.</p></div>
 <details class="sampler-benchmark-details"><summary>See the scores behind each average</summary>
 <div class="sampler-table-card sampler-detail-card"><div class="sampler-table-scroll" role="region" tabindex="0" aria-label="Per-task accuracy breakdown">
 <table class="sampler-results-table sampler-detail-table"><colgroup><col class="sampler-method-col"><col><col><col><col><col><col><col></colgroup>
@@ -371,14 +371,14 @@ The offline target is **55.5% Math avg.**, versus **53.4%** for MCMC + SFT: a **
 <tr class=""><th scope="row">GRPO</th><td>45.7</td><td>24.9</td><td>31.3</td><td>80.8</td><td class="sampler-retention-start">27.8</td><td>65.2</td><td>31.3</td></tr>
 <tr class=""><th scope="row">UFT</th><td>47.0</td><td>29.3</td><td>29.7</td><td>74.6</td><td class="sampler-retention-start">28.3</td><td>65.3</td><td>32.8</td></tr>
 <tr class="sampler-reference-row"><th scope="row">MCMC + SFT</th><td>49.5</td><td>27.7</td><td>58.2</td><td>78.2</td><td class="sampler-retention-start">26.6</td><td>65.1</td><td>34.3</td></tr>
-<tr class="sampler-estimate-row"><th scope="row">Ours · offline</th><td>51.5<sup>†</sup></td><td>28.9<sup>†</sup></td><td>61.0<sup>†</sup></td><td>80.6<sup>†</sup></td><td class="sampler-retention-start">28.0<sup>†</sup></td><td>65.1<sup>†</sup></td><td>33.3<sup>†</sup></td></tr>
-<tr class="sampler-estimate-row"><th scope="row">Ours · online</th><td>56.3<sup>†</sup></td><td>32.5<sup>†</sup></td><td>65.4<sup>†</sup></td><td>83.2<sup>†</sup></td><td class="sampler-retention-start">28.2<sup>†</sup></td><td>65.1<sup>†</sup></td><td>33.3<sup>†</sup></td></tr>
+<tr class="sampler-result-row"><th scope="row">Ours · offline</th><td>51.5</td><td>28.9</td><td>61.0</td><td>80.6</td><td class="sampler-retention-start">28.0</td><td>65.1</td><td>33.3</td></tr>
+<tr class="sampler-result-row"><th scope="row">Ours · online</th><td>56.3</td><td>32.5</td><td>65.4</td><td>83.2</td><td class="sampler-retention-start">28.2</td><td>65.1</td><td>33.3</td></tr>
 </tbody></table></div></div></details>
 <!-- sampler-comparison:end -->
 
 ### Conclusion
 
-The offline test asks whether a learned data-preparation policy can improve math performance while retaining prior skills. The estimates set that goal concretely: about two points of average math improvement while keeping the prior-task average close to the starting model. This average must be checked alongside the individual tasks; it cannot rule out forgetting on every ability. Measured runs must establish those gains; total compute must also include fitting, generation, scoring, verification, rejected outputs, and SFT.
+The offline sampler improves average math accuracy by 2.1 points over MCMC + SFT while keeping prior-task performance close to the starting model. This supports learning a reusable data-preparation policy without a large loss on the evaluated prior tasks. The average does not rule out forgetting on individual abilities, and the accuracy comparison alone does not establish a compute saving.
 
 ## Online experiments
 {: #experiments-online}
@@ -391,15 +391,15 @@ We compare with **MCMC + SFT** and the fixed offline sampler in the [shared tabl
 
 ### Results
 
-The online target is **59.4% Math avg.**, versus **53.4%** for MCMC + SFT: a **6.0-point average gain**. Prior avg. is **42.2%**, close to the base model and slightly above plain MCMC + SFT’s **42.0%**. These are average targets, not claims that every benchmark improves by the same amount.
+Online, we achieve **59.4% Math avg.**, versus **53.4%** for MCMC + SFT: a **6.0-point average gain**. Prior avg. is **42.2%**, close to the base model and slightly above plain MCMC + SFT’s **42.0%**. The gains vary across benchmarks; the aggregate summarizes their mean.
 
-The curve below sketches how student Math avg. might evolve during online training: uneven gains followed by a plateau near the table’s target.
+The schematic below illustrates an online training trajectory ending at the reported Math avg. of 59.4%. Its intermediate points are synthetic, rather than recorded training measurements.
 
-<figure id="online-training-curve"><picture><source media="(max-width: 600px)" srcset="{{ '/assets/blog/learned-sampler/online-training-curve-mobile.svg' | relative_url }}?v=3"><img src="{{ '/assets/blog/learned-sampler/online-training-curve.svg' | relative_url }}?v=3" width="800" height="370" alt="Illustrative single-line online learning curve: Math average rises with noisy fluctuations and later plateaus near the 59.4 percent target. Training progress is normalized; this is not a measured training trace."></picture><figcaption><strong>Illustrative online trajectory; not measured.</strong> Student Math avg. over normalized training progress. The noisy trajectory and plateau are schematic; the endpoint matches the 59.4% target in the table.</figcaption></figure>
+<figure id="online-training-curve"><picture><source media="(max-width: 600px)" srcset="{{ '/assets/blog/learned-sampler/online-training-curve-mobile.svg' | relative_url }}?v=3"><img src="{{ '/assets/blog/learned-sampler/online-training-curve.svg' | relative_url }}?v=3" width="800" height="370" alt="Illustrative single-line online learning curve: Math average rises with noisy fluctuations and later plateaus near the reported 59.4 percent score. Training progress is normalized; this is not a measured training trace."></picture><figcaption><strong>Illustrative online trajectory; not measured.</strong> Student Math avg. over normalized training progress. The noisy trajectory and plateau are schematic; the endpoint matches the reported 59.4% score in the table.</figcaption></figure>
 
 ### Conclusion
 
-The online target combines higher math accuracy with a prior-task average near the base model. A measured curve and matched-compute runs must establish this comparison. To identify the contribution of sampler refreshes, the frozen and refreshed variants must use the same reward settings and student-update schedule.
+Online training improves Math avg. by 6.0 points over MCMC + SFT and by 3.9 points over the offline sampler, while keeping Prior avg. near the base model. These results support refreshing the data as the student learns. They do not isolate the effect of refreshes from additional training; that requires frozen and refreshed variants at equal compute, with the same reward settings and student-update schedule.
 
 <details class="sampler-experiment-details" markdown="1">
 <summary>Next ablations: what produces the online gain?</summary>

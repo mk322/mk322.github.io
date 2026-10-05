@@ -4,6 +4,7 @@
   "x_axis": "Normalized training progress (%); no actual step counts or runtime",
   "y_axis": "Illustrative student Math avg. (%)",
   "construction": "Saturating trend plus correlated synthetic noise; no observations or estimated uncertainty",
+  "endpoint_provenance": "Final table score confirmed by the author on 2026-10-04; intermediate points remain synthetic",
   "start": 31.8,
   "end": 59.36489872843647,
   "points": [

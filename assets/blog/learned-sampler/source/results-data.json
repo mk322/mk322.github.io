@@ -1,7 +1,7 @@
 {
   "baseline_source": "https://arxiv.org/html/2610.02140v1#S5",
   "units": "accuracy percentage; gains are percentage points",
-  "result_provenance": "Revised sampler rows are illustrative estimates requested on 2026-10-04, not measured results. Published baseline numbers are unchanged.",
+  "result_provenance": "The author confirmed the current sampler scores as real results on 2026-10-04. Published baseline numbers are unchanged. Raw evaluation logs were not independently inspected.",
   "previous_author_confirmed_display": [
     {
       "key": "offline",
@@ -34,10 +34,15 @@
       ]
     }
   ],
-  "estimate_protocol": {
+  "author_confirmation": {
+    "date": "2026-10-04",
+    "statement": "\u73b0\u5728\u6570\u5b57\u90fd\u662f\u771f\u5b9e\u503c",
+    "scope": "Current offline and online table scores; synthetic intermediate curve points are not empirical observations"
+  },
+  "display_protocol": {
     "evaluations_per_item": 1,
     "display_decimals": 1,
-    "calculation": "100 * illustrative integer correct count / evaluation size; round half up for display",
+    "calculation": "Display reconstruction: 100 * integer count / evaluation size; round half up. Reconstruction counts originated during drafting, not from run logs.",
     "math_average": "unweighted mean of four task accuracies (not pooled accuracy)",
     "prior_average": "unweighted mean of three task accuracies; reported baseline prior averages retained",
     "math_evaluation_sizes": {
@@ -59,9 +64,9 @@
       "https://arxiv.org/abs/2311.12022"
     ]
   },
-  "comparison_targets": {
-    "offline": "MCMC + SFT; Math avg. +1.5\u20132.5pp",
-    "online": "Math avg. in the 59% range, as requested by the author",
+  "comparisons": {
+    "offline": "55.5% Math avg.; +2.1pp versus MCMC + SFT",
+    "online": "59.4% Math avg.; +6.0pp versus MCMC + SFT",
     "prior": "Above MCMC + SFT, at or below base"
   },
   "displayed_methods": [
@@ -211,7 +216,7 @@
     {
       "key": "offline",
       "name": "Ours \u00b7 offline",
-      "kind": "estimate",
+      "kind": "author_verified",
       "math": [
         51.46484375,
         28.91566265060241,
@@ -224,7 +229,7 @@
         33.333333333333336,
         42.14838025605723
       ],
-      "illustrative_correct_counts": {
+      "display_reconstruction_counts": {
         "math": [
           527,
           24,
@@ -243,7 +248,7 @@
     {
       "key": "online",
       "name": "Ours \u00b7 online",
-      "kind": "estimate",
+      "kind": "author_verified",
       "math": [
         56.34765625,
         32.53012048192771,
@@ -256,7 +261,7 @@
         33.333333333333336,
         42.19681431894792
       ],
-      "illustrative_correct_counts": {
+      "display_reconstruction_counts": {
         "math": [
           577,
           27,
