@@ -1,7 +1,7 @@
 ---
 layout: blog-post
 title: "E2S Finetuning: From Expert Demonstrations to On-Policy Learning"
-subtitle: "Make SFT great again! Turn off-policy expert data into more on-policy training data."
+subtitle: "Make SFT great again! Turn off-policy expert demonstrations into more on-policy training data."
 permalink: /blog/e2s-finetuning-preview/
 date: 2026-10-05
 sitemap: false
