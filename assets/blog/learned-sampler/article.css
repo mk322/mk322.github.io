@@ -133,3 +133,58 @@
 .sampler-reference-image { display: block; }
 .blog-content .sampler-reference-image img { display: block; width: 100%; max-width: 100%; height: auto; }
 .sampler-fullsize-link { display: inline-block; margin-left: 6px; font-size: .9em; white-space: nowrap; }
+
+/* E2S educational edition: restrained typography, readable emphasis. */
+#main.blog-article { --e2s-ink: #20252c; --e2s-muted: #525a65; --e2s-purple: #6356a5; }
+#main.blog-article .blog-content { font-family: Inter, 'Helvetica Neue', Arial, sans-serif; color: var(--e2s-ink); font-size: 17px; line-height: 1.82; }
+#main.blog-article .blog-header h1 { font-size: clamp(32px, 4vw, 49px); line-height: 1.13; letter-spacing: -.035em; font-weight: 600; }
+#main.blog-article .blog-header .blog-subtitle { font-size: 20px; line-height: 1.5; }
+#main.blog-article .blog-content h2 { margin: 70px 0 22px; font-size: 29px; font-weight: 600; line-height: 1.25; letter-spacing: -.025em; padding-top: 20px; border-top: 1px solid #e3e6ed; }
+#main.blog-article .blog-content h3 { font-size: 21px; font-weight: 600; line-height: 1.4; letter-spacing: -.012em; margin: 34px 0 16px; }
+#main.blog-article .blog-content strong { font-weight: 600; }
+#main.blog-article .blog-content p { margin-bottom: 21px; }
+#main.blog-article .blog-content li { margin-bottom: 10px; }
+#main.blog-article .blog-content figure { margin: 30px 0 34px; max-width: 100%; }
+#main.blog-article .blog-content figure img { border-radius: 8px; }
+#main.blog-article .blog-content figcaption { font-family: inherit; font-size: 13px; line-height: 1.65; text-align: left; color: #637080; padding: 14px 0 0; }
+#main.blog-article .blog-content .sampler-key { margin: 30px 0; padding: 20px 24px; border: 1px solid #e0daed; border-left: 3px solid #81739e; border-radius: 4px 12px 12px 4px; background: #f6f4fa; }
+#main.blog-article .sampler-key-label { display: block; margin-bottom: 9px; font-size: 10px; line-height: 1.3; font-weight: 600; letter-spacing: .13em; text-transform: uppercase; color: #6356a5; }
+#main.blog-article .blog-content .sampler-key p { font-size: 17px; line-height: 1.65; margin: 0; }
+#main.blog-article .blog-content .sampler-key-teal { background: #f1f8f7; border-color: #d3e6e2; border-left-color: #2b8b88; }
+#main.blog-article .sampler-key-teal .sampler-key-label { color: #267873; }
+#main.blog-article .blog-content .sampler-key-gold { background: #fbf7ef; border-color: #e8dbc6; border-left-color: #ba8b51; }
+#main.blog-article .sampler-key-gold .sampler-key-label { color: #89632f; }
+#main.blog-article .blog-content .sampler-key-final { background: #f0edf7; border-color: #d8d0e8; padding: 26px; }
+#main.blog-article .blog-content .sampler-key-final p { font-size: 20px; letter-spacing: -.015em; }
+#main.blog-article .sampler-math { border: 1px solid #e0e3ea; border-radius: 10px; background: #fcfcfe; padding: 16px 18px; font-size: 15px; }
+#main.blog-article .sampler-math-label { display: block; font: 500 10px/1.4 Inter, 'Helvetica Neue', Arial, sans-serif; text-transform: uppercase; letter-spacing: .12em; color: #7b7392; margin: 0 0 10px; }
+#main.blog-article .sampler-technical { border: 1px solid #e0e3ea; background: #fcfcfd; border-radius: 10px; padding: 0 18px; margin: 26px 0; color: #525a65; font-size: 14px; line-height: 1.8; }
+#main.blog-article .sampler-technical summary { cursor: pointer; padding: 16px 0; font-size: 13px; line-height: 1.5; font-weight: 500; color: #525a65; }
+#main.blog-article .sampler-technical[open] summary { margin-bottom: 8px; border-bottom: 1px solid #e6e8ee; }
+#main.blog-article .sampler-technical pre { background: #f4f3f8; white-space: pre-wrap; overflow-wrap: anywhere; padding: 16px; font-size: 12px; }
+#main.blog-article .sampler-technical pre code { white-space: inherit; }
+#main.blog-article .sampler-toc { font-family: Inter, 'Helvetica Neue', Arial, sans-serif; }
+#main.blog-article .sampler-toc ol { list-style: none; padding-left: 0; }
+#main.blog-article .sampler-toc ol ol { padding-left: 12px; margin: 5px 0 2px; border-left: 1px solid #e1dbea; font-size: .92em; }
+#main.blog-article .sampler-toc li { margin: 0; padding: 4px 0; line-height: 1.5; }
+#main.blog-article .sampler-toc a[aria-current="location"] { color: #6356a5; font-weight: 600; }
+#main.blog-article .blog-content [id] { scroll-margin-top: 26px; }
+#main.blog-article .blog-content .sampler-chart { padding: 12px 12px 0; border: 1px solid #e4e6ed; border-radius: 12px; background: white; }
+#main.blog-article .sampler-chart figcaption { border-top: 1px solid #edf0f4; padding: 14px 4px 14px; }
+#main.blog-article .sampler-benchmark-details summary { font-size: 13px; }
+@media(max-width:600px) {
+ #main.blog-article .blog-content { font-size: 16px; line-height: 1.8; }
+ #main.blog-article .blog-header .blog-subtitle { font-size: 18px; }
+ #main.blog-article .blog-content h2 { font-size: 25px; margin-top: 52px; }
+ #main.blog-article .blog-content h3 { font-size: 20px; }
+ #main.blog-article .blog-content .sampler-key { padding: 18px; }
+ #main.blog-article .blog-content .sampler-key p { font-size: 16px; }
+ #main.blog-article .blog-content .sampler-key-final p { font-size: 18px; }
+ #main.blog-article .sampler-math { padding: 12px 8px; font-size: 13px; }
+ #main.blog-article .sampler-technical { padding: 0 13px; }
+ #main.blog-article .blog-content .sampler-chart { padding: 5px 3px 0; }
+ #main.blog-article .sampler-chart figcaption { padding: 12px; }
+ #main.blog-article .blog-content figcaption { font-size: 12px; }
+}
+@media(prefers-reduced-motion:reduce) { html { scroll-behavior: auto; } }
+#main.blog-article .blog-header h1 { text-wrap: balance; }

@@ -1,0 +1,15 @@
+{
+  "status": "Illustrative estimates — not experimental results",
+  "purpose": "Explain a proposed offline scaling study requested by the author; do not use as empirical evidence.",
+  "expert_examples": 8230,
+  "expert_examples_source": "Finetuning with Sampling, arXiv:2610.02140v1, section 5.1, Math setting",
+  "schedule": "E2S-Offline; one frozen sampler and one fixed expert corpus",
+  "points": [
+    {"samples_per_example": 1, "training_responses": 8230, "estimated_math_avg_pct": 55.0},
+    {"samples_per_example": 2, "training_responses": 16460, "estimated_math_avg_pct": 56.3},
+    {"samples_per_example": 4, "training_responses": 32920, "estimated_math_avg_pct": 57.2}
+  ],
+  "accuracy_provenance": "Hypothetical illustrative values chosen during blog editing. No point is measured or inferred from the experimental result record.",
+  "interpretation": "A proposed increasing, saturating trend; does not establish useful diversity, causal gains, or absence of mode collapse.",
+  "required_control": "Compare extra independent draws with duplication of the 1x dataset at a matched SFT token budget; measure distinct accepted reasoning paths and their frequencies."
+}

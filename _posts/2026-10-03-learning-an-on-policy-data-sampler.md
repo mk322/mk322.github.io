@@ -1,366 +1,282 @@
 ---
-title: "From Off-Policy Data to On-Policy SFT"
-subtitle: "Learning an amortized sampler for the information-constrained target distribution."
+title: "E2S Finetuning: From Off-Policy Expert Data to On-Policy Student Data"
+subtitle: "Keep what the expert knows. Learn how to express it for the student."
 permalink: /blog/learned-on-policy-sampler/
-last_modified_at: 2026-10-04
-excerpt: "Can we keep the efficiency of SFT while reducing forgetting? We learn a sampler that brings expert data closer to the student’s policy, shifting repeated data-generation search into sampler training."
+last_modified_at: 2026-10-05
+excerpt: "Keep SFT simple; change the data. E2S learns a reusable sampler that turns expert demonstrations into calibrated student training targets—learning new tasks while retaining prior capabilities."
 tldr: |
-  - **Problem:** SFT is efficient, but fitting off-policy demonstrations can move a model far from its starting behavior and contribute to forgetting. Can we bring the data closer to the student while preserving the information it needs to learn?
-  - **Our solution:** Train an expert-conditioned sampler to match the information-constrained student distribution. A group-relative GFlowNet loss removes the learned normalizer; sampler training absorbs work otherwise repeated during data generation.
-  - **Two uses:** Offline, adapt an expert corpus for a chosen student. Online, refresh a LoRA sampler as that student learns, producing new targets for ordinary SFT.
-  - **The real test:** Better accuracy at matched total compute, while retaining prior capabilities. A learned sampler addresses repeated search and stale data; verifier errors, incomplete coverage, and forgetting still need separate evaluation.
-  - **Key results:** Math avg. of 55.5% offline (+2.1 points versus MCMC + SFT) and 59.4% online (+6.0 points versus MCMC + SFT). Prior avg. is 42.1% and 42.2%, close to the base model’s 42.2%.
-
+  - **Problem:** Expert demonstrations teach valuable information, but often follow reasoning paths the student would rarely generate. SFT asks the student to imitate both the knowledge and that unfamiliar way of expressing it.
+  - **Our solution:** E2S Finetuning learns an expert-conditioned sampler for the student’s distribution restricted to acceptable responses. A group-relative GFlowNet loss trains this sampler; the student still learns with ordinary SFT.
+  - **Why it matters:** An expert example can become a source of useful training responses, rather than one fixed target. Offline, prepare data for a chosen student. Online, refresh it as the student learns. Our experiments show stronger math performance while keeping prior-task averages near the base model.
 ---
 
-<link rel="stylesheet" href="{{ '/assets/blog/learned-sampler/article.css' | relative_url }}?v=onpolicy-figures-2">
+<link rel="stylesheet" href="{{ '/assets/blog/learned-sampler/article.css' | relative_url }}?v=e2s-educational-3">
 
-<nav class="sampler-toc" aria-label="Article contents"><details open><summary>On this page</summary><ol><li><a href="#sft-problem">SFT’s off-policy mismatch</a></li><li><a href="#target">What is the mismatch?</a></li><li><a href="#amortization">Amortize the search</a></li><li><a href="#train-sampler">From KL to the training loss</a></li><li><a href="#offline">Offline: sampler, then SFT</a></li><li><a href="#online">Online: the LoRA sampler</a></li><li><a href="#experiments-offline">Offline experiments</a></li><li><a href="#experiments-online">Online experiments</a></li><li><a href="#use-cases">Where this is useful</a></li></ol></details></nav>
+<nav class="sampler-toc" aria-label="Article contents"><details open><summary>On this page</summary><ol><li><a href="#sft-problem">Why off-policy SFT can forget</a></li><li><a href="#amortization">Two ways to fix the mismatch</a></li><li><a href="#target">E2S: learn the data distribution</a><ol><li><a href="#constrained-target">Define the target</a></li><li><a href="#solve-target">Solve the constraint</a></li><li><a href="#train-sampler">Train a GFlowNet sampler</a></li><li><a href="#group-loss">Remove the normalizer</a></li></ol></li><li><a href="#versions">Offline and online</a><ol><li><a href="#offline">Prepare once</a></li><li><a href="#online">Refresh as we learn</a></li></ol></li><li><a href="#experiments-offline">Experiments: learn more, retain more</a></li><li><a href="#experiments-online">Does online refresh help?</a></li><li><a href="#scaling">Scaling through diversity</a></li><li><a href="#lookahead">Looking ahead</a></li><li><a href="#references">References</a></li><li><a href="#citation">Citation</a></li></ol></details></nav>
+<script defer src="{{ '/assets/blog/learned-sampler/navigation.js' | relative_url }}"></script>
 
-<script defer src="{{ "/assets/blog/learned-sampler/navigation.js" | relative_url }}"></script>
+**Supervised fine-tuning is simple and efficient:** give a model a prompt and a good response, then train it to predict that response. The targets are already available. Each student update needs no fresh rollouts or teacher feedback.
 
-## SFT’s off-policy mismatch
+But a good response is not necessarily an easy response for this student to learn from. An expert may skip steps the student needs, introduce an unfamiliar trick, or take a reasoning path the student would almost never produce. SFT still asks the student to imitate the entire trajectory.
+
+That leaves a useful question: **could we preserve what the expert teaches while changing how it is expressed?**
+
+<div class="sampler-key"><span class="sampler-key-label">The idea</span><p><strong>Keep SFT simple; change the data.</strong> E2S Finetuning learns to turn off-policy expert demonstrations into calibrated “on-policy” training data for the student.</p></div>
+
+We formulate this as constrained distribution matching: preserve the required expert information, and otherwise stay as close as possible to the student’s policy. MCMC can sample toward this target by searching separately for each example. E2S instead learns a reusable sampler across examples. The sampler does the data preparation; the student update remains ordinary SFT.
+
+## Why off-policy SFT can cause forgetting
 {: #sft-problem}
 
-Supervised fine-tuning (SFT) is attractive because the training loop is simple and fast. Given a dataset of responses, we train the model to predict their tokens. Those tokens are already available, so their losses can be computed in parallel. Each update needs no fresh autoregressive rollouts, reward-based advantage estimates, or teacher scoring of newly generated responses—the extra work involved in on-policy RL and distillation. [[2]](#sampler-ref-2) [[11]](#sampler-ref-11)
+Suppose we fine-tune a model to solve harder math problems. We want its math to improve without damaging the knowledge and skills it already has. The choice of training responses affects both outcomes.
 
-But learning a new task can damage abilities the model already had. A model may improve at math while becoming worse at following instructions or answering general questions. This is **catastrophic forgetting**. Recent comparisons find that SFT often forgets more than on-policy RL, even at similar performance on the new task. [[9]](#sampler-ref-9) [[10]](#sampler-ref-10)
+For a fixed prompt \\(x\\), let \\(q_{\mathrm{data}}(y\mid x)\\) be the demonstration distribution and \\(p_\theta(y\mid x)\\) the student. SFT minimizes:
 
-One reason is the distribution SFT asks the model to learn. Its responses usually come from a human or another model, rather than the student's current policy. That makes the data **off-policy**. Even when every answer is correct, the demonstrations may use reasoning paths, wording, and intermediate steps that the student rarely generates. SFT asks it to reproduce that whole distribution.
-
-Let \\(q_{\mathrm{data}}(y\mid x)\\) denote the demonstration distribution and \\(p_\theta(y\mid x)\\) the student. For a fixed prompt \\(x\\), ordinary SFT minimizes:
-
-<div class="sampler-math">
+<div class="sampler-math"><span class="sampler-math-label">What SFT fits</span>
 \[
 \begin{aligned}
 \mathcal L_{\mathrm{SFT}}(\theta)
-&=\mathbb E_{y\sim q_{\mathrm{data}}}[-\log p_\theta(y\mid x)]\\
+&=\mathbb E_{y\sim q_{\mathrm{data}}(\cdot\mid x)}[-\log p_\theta(y\mid x)]\\
 &=H(q_{\mathrm{data}})+D_{\mathrm{KL}}(q_{\mathrm{data}}\|p_\theta).
 \end{aligned}
 \tag{1}
 \]
 </div>
 
-The entropy is constant, so the objective pulls the student toward the demonstrations. There is no term here that keeps it near its starting policy \\(p_0\\). If the model can represent the data distribution and fits the population loss exactly, its fitted distribution is \\(p_{\mathrm{fit}}=q_{\mathrm{data}}\\). Its distance from the starting model is therefore:
+The entropy term is fixed. The loss therefore pulls the student toward the demonstration distribution, with no explicit term keeping it near its starting policy \\(p_0\\). In an expressive model class, a perfect fit to the population objective gives \\(p_{\mathrm{fit}}=q_{\mathrm{data}}\\). Its distance from the starting model is then exactly \\(D_{\mathrm{KL}}(q_{\mathrm{data}}\|p_0)\\).
 
-<div class="sampler-math">
-\[
-D_{\mathrm{KL}}(p_{\mathrm{fit}}\|p_0)
-=D_{\mathrm{KL}}(q_{\mathrm{data}}\|p_0).
-\notag
-\]
-</div>
+**If the data are far from the student, fitting them asks the student to move far.** Some movement is necessary to learn something new. Reproducing the expert’s particular wording and reasoning path may require additional movement that the task itself does not demand.
 
-**Fitting distant data means moving toward a distant policy.** Some change is needed to learn the task; matching the expert's particular way of solving it can demand more. Because the same parameters support many skills, that movement can disrupt prior behavior. *RL’s Razor* connects larger distribution shifts with greater forgetting and analyzes a minimum-KL bias of on-policy learning in an idealized policy class. *Retaining by Doing* provides complementary evidence: refreshing SFT data from the evolving student reduces forgetting in its experiments. The connection is useful, but training-task KL alone does not guarantee retention on other tasks. [[9]](#sampler-ref-9) [[10]](#sampler-ref-10)
+There is a token-level view of the same problem. SFT predicts each next token after a prefix from the expert response. Those prefixes can differ substantially from the ones the student would visit on its own. Correct supervision can therefore arrive in unfamiliar contexts.
 
-On-policy methods address the mismatch by changing where training trajectories come from:
+Research on forgetting connects larger policy shifts with poorer retention, and finds that using data from the evolving student can reduce forgetting. This motivates changing the data distribution; it is not a guarantee that small training-task KL preserves every other skill. [[9]](#sampler-ref-9) [[10]](#sampler-ref-10)
 
-- **RL, such as GRPO,** samples responses from a recent student policy, scores them, and updates the student using their relative rewards. The feedback is attached to behavior the student actually produces. [[11]](#sampler-ref-11)
-- **On-policy distillation (OPD)** also samples from the student, then asks a teacher to score its tokens. This directly addresses the mismatch between teacher-written trajectories and student-visited contexts; Thinking Machines also shows how it can recover instruction-following behavior after further training. [[2]](#sampler-ref-2)
+<div class="sampler-key"><span class="sampler-key-label">Key message</span><p>The information may be worth learning even when the expert’s exact trajectory is a poor fit for the learner.</p></div>
 
-Both approaches keep generation and feedback inside the training loop. We ask whether we can keep ordinary SFT as the student update and handle the mismatch in the data instead: **can we transform off-policy demonstrations into a distribution closer to the student, preserve what they teach, and reduce forgetting?**
+## Two ways to fix the mismatch
+{: #amortization}
 
-Finetuning with Sampling pursues this route with MCMC. [[1]](#sampler-ref-1) Our project learns an amortized sampler for the same distribution-matching objective, replacing repeated per-example search with a reusable generation policy. The next step is to define precisely what “closer to the student” should mean.
+One route is to let the student choose the trajectories, then teach on the states it actually visits. **RL** supplies rewards for student rollouts. **On-policy distillation** supplies teacher probabilities on student-generated prefixes. Both put fresh generation and feedback inside the learning loop. [[11]](#sampler-ref-11) [[2]](#sampler-ref-2)
 
-## What is the mismatch we want to remove?
+The other route is to keep SFT and move the expert data toward the student. Rejection sampling does this by generating from the student and keeping acceptable responses. When success is rare, however, most generations are discarded. MCMC uses an expert solution to initialize a search, then repeatedly proposes and scores revisions. This is the route developed in *Finetuning with Sampling*. [[1]](#sampler-ref-1)
+
+E2S takes this second route and changes how sampling is done:
+
+- **MCMC searches for each example.** A chain refines its current response; its search state belongs to that prompt.
+- **E2S learns across examples.** Training updates a conditional sampler whose parameters can be reused to transform many expert demonstrations.
+
+<figure id="sampler-mcmc-conversion" class="sampler-reference-figure"><a class="sampler-reference-image" href="{{ '/assets/blog/learned-sampler/amortized-e2s-v3.png' | relative_url }}" target="_blank" rel="noopener" aria-label="Open full-size diagram"><picture><source media="(max-width: 760px)" srcset="{{ '/assets/blog/learned-sampler/amortized-e2s-v3-mobile.png' | relative_url }}"><img src="{{ '/assets/blog/learned-sampler/amortized-e2s-v3.png' | relative_url }}" width="1603" height="981" loading="lazy" alt="MCMC searches each example; an amortized sampler learns reusable parameters. Both turn off-policy expert data into calibrated on-policy training data."></picture></a><figcaption><strong>Search each response, or learn a sampler to reuse.</strong> Both routes turn off-policy expert examples into calibrated “on-policy” data for student SFT. <a class="sampler-fullsize-link" href="{{ '/assets/blog/learned-sampler/amortized-e2s-v3.png' | relative_url }}" target="_blank" rel="noopener">Open full size ↗</a></figcaption></figure>
+
+This is **amortization**: invest in a reusable generation policy, then use it repeatedly. It creates an opportunity to spread sampler-training cost over a growing dataset. Whether it saves total compute depends on how much useful data the trained sampler produces.
+
+<div class="sampler-key"><span class="sampler-key-label">Key message</span><p>Learning how to prepare a response can help prepare the next one. The reusable object is the sampler itself.</p></div>
+
+## E2S Finetuning: learn the data distribution
 {: #target}
 
-Equation (1) tells us where SFT will try to move the student. We can choose that destination: replace the original demonstration distribution with one that preserves the required information while staying as close as possible to the student. This turns the motivation above into a data-distribution optimization problem.
+### 1. Define what the data must preserve
+{: #constrained-target}
 
-For one prompt \\(x\\) and expert response \\(\tau\\), let \\(C_\tau\\) be the set of acceptable responses. In math, this can mean responses with the correct final answer; a stronger verifier can also check the reasoning. For the next few equations, write \\(p(y)=p_\theta(y\mid x)\\) for the fixed student and \\(q(y)\\) for the data distribution we are choosing. Our objective is:
+Fix a prompt \\(x\\), an expert trace \\(\tau\\), and a student checkpoint. Write \\(p(y)=p_{\mathrm{ref}}(y\mid x)\\) for this frozen student. Let \\(C_\tau\\) be the acceptable response set: responses that satisfy the information constraint supplied by the expert. For a math task, the simplest check is the final answer; richer checks can constrain the reasoning too.
 
-<div class="sampler-math">
+We can now ask for the closest acceptable data distribution:
+
+<div class="sampler-math"><span class="sampler-math-label">Constrained distribution matching</span>
 \[
-\begin{aligned}
-\min_q D_{\mathrm{KL}}(q\|p)
-&=\min_q\sum_{y\in C_\tau}q(y)\log\frac{q(y)}{p(y)},\\
-&\text{subject to }\operatorname{supp}(q)\subseteq C_\tau.
-\end{aligned}
+q^*=\underset{q:\,\operatorname{supp}(q)\subseteq C_\tau}{\arg\min}
+D_{\mathrm{KL}}(q\|p).
 \tag{2}
 \]
 </div>
 
-The constraint says that the training data must preserve the expert information. The KL says that, within this constraint, its distribution should stay close to the student. Unlike the SFT objective in equation (1), we now hold the student fixed and change the data distribution. This is the information-projection objective used to formalize student-compatible data: choose the closest distribution among those satisfying the task constraint. [[1]](#sampler-ref-1) [[9]](#sampler-ref-9)
+Here \\(q\\) ranges over normalized probability distributions. We hold the student fixed and choose the training data. The constraint says what must be preserved; the KL term asks us to change as little else as possible. [[1]](#sampler-ref-1)
 
-A natural candidate is to keep the student's probabilities for acceptable responses and renormalize them. Let \\(Z\\) be their total probability:
+### 2. Solve the constraint
+{: #solve-target}
 
-<div class="sampler-math">
+Assume the student gives the acceptable set positive probability. Its total mass is \\(Z_\tau\\). Restrict the student to that set and renormalize:
+
+<div class="sampler-math"><span class="sampler-math-label">The target distribution</span>
 \[
-Z=\sum_{y\in C_\tau}p(y)>0,
-\qquad
-p_C(y)=\frac{p(y)\,\mathbf 1[y\in C_\tau]}{Z}.
+\begin{aligned}
+Z_\tau&=\sum_{y\in C_\tau}p(y)>0,\\
+p_C(y)&=\frac{p(y)\,\mathbf 1[y\in C_\tau]}{Z_\tau}.
+\end{aligned}
 \tag{3}
 \]
 </div>
 
-Why is this the closest distribution? On the valid set, \\(p(y)=Zp_C(y)\\). Substituting this into equation (2), for any admissible \\(q\\), gives:
+This is the exact solution. For any feasible \\(q\\) with finite KL, substitute \\(p(y)=Z_\tau p_C(y)\\) on the acceptable set:
 
 <div class="sampler-math">
 \[
-\begin{aligned}
 D_{\mathrm{KL}}(q\|p)
-&=\sum_{y\in C_\tau}q(y)
-  \left[\log\frac{q(y)}{p_C(y)}-\log Z\right]\\
-&=D_{\mathrm{KL}}(q\|p_C)-\log Z.
-\end{aligned}
+= D_{\mathrm{KL}}(q\|p_C)-\log Z_\tau.
 \tag{4}
 \]
 </div>
 
-The second term is constant. The first is nonnegative and becomes zero when \\(q=p_C\\), which proves that equation (3) minimizes our objective.
+The second term is constant. The first is nonnegative and reaches zero only at \\(q=p_C\\). So the best data distribution is **the student conditioned on satisfying the expert constraint**.
 
-If the original demonstrations already satisfy the same constraint, they are one feasible choice of \\(q\\). The optimum therefore obeys \\(D_{\mathrm{KL}}(p_C\|p)\leq D_{\mathrm{KL}}(q_{\mathrm{data}}\|p)\\). This is the precise improvement we seek in the data distribution. Whether SFT on those data also retains more prior capability is what our experiments must establish.
+A small example makes the consequence clear. Suppose two acceptable solution paths have student probabilities 6% and 3%, and all other responses are unacceptable. After conditioning, their probabilities become two-thirds and one-third. We remove the unacceptable responses while preserving the student’s 2:1 preference between the two useful paths.
 
-We now know exactly what “more on-policy” means here: **generate from the student's distribution conditioned on preserving the expert information**. We discard unacceptable responses and retain the student's relative preferences among the acceptable ones. If those responses are rare, even this best possible match can be far from the original student; the constraint still has to be satisfied.
+<div class="sampler-key sampler-key-teal"><span class="sampler-key-label">Key message</span><p><strong>The expert defines what must be preserved. The student defines how probability is shared among the acceptable responses.</strong> This is what calibrated “on-policy” data means here.</p></div>
 
-## Amortize the search into sampler training
-{: #amortization}
-
-Knowing the target distribution does not make it easy to sample. We could draw from the student and reject invalid responses, but that costs \\(1/Z\\) attempts per accepted response on average. This becomes impractical precisely when expert information is most useful: when the student rarely solves the problem on its own.
-
-MCMC uses the expert trace to guide this search. For a given prompt, it proposes changes to the current response, scores them, and accepts or rejects each proposal. **The response changes; the model weights stay fixed during this search.** A new prompt requires another chain. [[1]](#sampler-ref-1)
-
-**Amortized inference moves much of this repeated search cost into training an inference machine.** The reusable result is a set of sampler parameters: training on one batch can change how the sampler generates responses for later prompts. This is the training-for-inference tradeoff described by Bengio: invest computation in learning a reusable inference procedure, then use it to generate samples. [[8]](#sampler-ref-8)
-
-In our case, the inference machine is a conditional sampler \\(q_\phi(y\mid x,\tau)\\). During fitting, it explores responses, receives student likelihoods and validity feedback, and learns to approximate \\(p_C\\) across expert examples. We train it directly from these scores, without MCMC-generated teaching examples.
-
-At data-generation time, MCMC repeatedly revises a candidate response. The trained sampler instead starts with an empty response and appends tokens, using transition probabilities learned across examples. This constructive policy is the reusable object in a GFlowNet. [[12]](#sampler-ref-12) It still requires autoregressive decoding and verification. Both routes then use their verified outputs for SFT. Here, sampling-time inference refers to creating training data.
-
-<figure id="sampler-mcmc-conversion" class="sampler-reference-figure"><a class="sampler-reference-image" href="{{ '/assets/blog/learned-sampler/amortized-expert-to-onpolicy-v2.png' | relative_url }}" target="_blank" rel="noopener" aria-label="Open full-size diagram"><picture><source media="(max-width: 760px)" srcset="{{ '/assets/blog/learned-sampler/amortized-expert-to-onpolicy-v2-mobile.png' | relative_url }}"><img src="{{ '/assets/blog/learned-sampler/amortized-expert-to-onpolicy-v2.png' | relative_url }}" width="1603" height="981" loading="lazy" alt="MCMC searches each example; an amortized sampler learns reusable parameters. Both turn off-policy expert data into calibrated on-policy training data."></picture></a><figcaption><strong>Search each response, or learn a sampler to reuse.</strong> Both routes turn off-policy expert examples into calibrated “on-policy” data for student SFT. <a class="sampler-fullsize-link" href="{{ '/assets/blog/learned-sampler/amortized-expert-to-onpolicy-v2.png' | relative_url }}" target="_blank" rel="noopener">Open full size ↗</a></figcaption></figure>
-
-The intended benefits follow from this reuse: lower cost per generated example after training, shared learning across related prompts, and a sampler that can be refreshed as the student changes. The training investment only pays off if enough useful data is generated. Total cost must therefore include sampler training, student scoring, verification, and rejected samples.
-
-One separation is essential. The sampler sees the expert response to help find acceptable outputs. The student scores each candidate using **the prompt alone**. Thus expert information defines what to preserve, while the student defines the density we want to learn.
-
-## From the KL target to a trainable loss
+### 3. Train a GFlowNet sampler for that target
 {: #train-sampler}
 
-We can now derive the sampler's training rule. Equation (4) says that minimizing the constrained KL is equivalent to matching \\(p_C\\). Define its unnormalized density as \\(R(y)=p(y)\mathbf 1[y\in C_\tau]\\). Our target is therefore \\(q_\phi(y)=R(y)/Z\\).
+We can score a response under the frozen student. What we cannot do is sum over all possible responses to calculate \\(Z_\tau\\). Define the unnormalized target \\(R_\tau(y)=p(y)\mathbf 1[y\in C_\tau]\\). We want to sample in proportion to this score without computing its sum.
 
-The problem has become distribution matching: we can score any candidate with \\(R(y)\\), but cannot enumerate all responses to compute \\(Z\\). The following steps turn that target into a loss we can evaluate on sampled responses.
+That is the GFlowNet problem: learn a generative policy whose terminal distribution matches an unnormalized density. [[12]](#sampler-ref-12) A language model already generates a response through a sequence of prefixes, so it can serve as the sampler. Our earlier work uses this connection for language and visual reasoning. [[3]](#sampler-ref-3) [[4]](#sampler-ref-4)
 
-### Match probabilities up to one common scale
-
-Assume the sampler can represent the target and assigns positive probability to its valid responses. For a valid response, rearrange the matching condition and take logs:
+First consider a sampler \\(q_\phi\\) supported on the acceptable set. The matching condition can be written as:
 
 <div class="sampler-math">
 \[
 \begin{aligned}
-q_\phi(y)&=\frac{R(y)}{Z}\\
-\Longleftrightarrow\quad Zq_\phi(y)&=R(y)\\
-\Longleftrightarrow\quad \log q_\phi(y)-\log R(y)&=-\log Z.
+q_\phi(y)&=\frac{R_\tau(y)}{Z_\tau}\\
+\Longleftrightarrow\quad
+\log q_\phi(y)-\log R_\tau(y)&=-\log Z_\tau.
 \end{aligned}
 \tag{5}
 \]
 </div>
 
-The unknown value on the right is the same for every valid response to this expert example. So the sampler is correct when **every response has the same sampler-to-target log gap**.
+Every acceptable response should have the same log-gap between sampler probability and target score. Introduce one offset \\(z_\tau\\) and square the residual:
 
-This is the trajectory-balance condition for an autoregressive GFlowNet. The connection does not require a different generator: the sampler still appends one token at a time, and its complete-response probability is the product of those token probabilities. Each response has one path through its prefixes. Matching its probability to \\(R(y)/Z\\) therefore matches the probability of the full generation trajectory. Our earlier work applies this flow-based view to language and visual reasoning. [[3]](#sampler-ref-3) [[4]](#sampler-ref-4)
-
-Introduce a scalar \\(z\\) to represent the unknown \\(\log Z\\), and square the error in equation (5):
-
-<div class="sampler-math">
+<div class="sampler-math"><span class="sampler-math-label">Trajectory balance</span>
 \[
-\ell_{\mathrm{TB}}(y;\phi,z)
-=\left[z+\log q_\phi(y)-\log R(y)\right]^2.
+\ell_{\mathrm{TB}}(y;\phi,z_\tau)
+=\left[z_\tau+\log q_\phi(y)-\log R_\tau(y)\right]^2.
 \tag{6}
 \]
 </div>
 
-This is the GFlowNet **trajectory-balance loss**. It is computable from the sampler's token log probabilities, the student's score, and one common offset. Both too much and too little probability create an error. If the error vanishes across the valid set, \\(q_\phi(y)=e^{-z}R(y)\\); requiring the probabilities to sum to one forces \\(e^z=Z\\). We recover \\(q_\phi=p_C\\), the minimizer of our original KL.
+If the residual is zero over the whole acceptable set, normalization forces \\(z_\tau=\log Z_\tau\\), recovering the target in equation (3). This is the sequence-level trajectory-balance objective: the probability of the response is the product of its token probabilities, including termination. [[6]](#sampler-ref-6)
 
-We have replaced an intractable normalized target with a sample-level training error. The two objectives have the same ideal solution; reaching it still requires exploring the valid responses, not merely fitting a few observed ones. [[6]](#sampler-ref-6)
+### 4. Remove the normalizer with a group of responses
+{: #group-loss}
 
-### Eliminate the offset with a group of responses
+Rather than learning a separate normalizer, generate \\(K\ge2\\) acceptable responses for the same prompt and expert trace. Let \\(a_i\\) be response \\(i\\)’s sampler-to-student log-gap. The best shared offset in the group minimizes \\(K^{-1}\sum_i(z+a_i)^2\\), so it is simply \\(z=-\bar a\\).
 
-Rather than learning \\(z\\) with another model, we can solve for it within each rollout group. Generate \\(K\ge2\\) valid candidates for the same prompt and expert demonstration. Write their log gaps as \\(a_i(\phi)=\log q_\phi(y_i)-\log R(y_i)\\), and let \\(\bar a=K^{-1}\sum_i a_i(\phi)\\) be the group mean before the update.
+Substituting that offset gives our group-relative loss:
 
-Averaging equation (6) gives \\(K^{-1}\sum_i(z+a_i)^2\\). Its derivative with respect to \\(z\\) is \\(2(z+\bar a)\\), which is zero at \\(z=-\bar a\\). In other words, the best common offset centers the group's log gaps. Substitute this offset into equation (6), average over responses, and we obtain:
-
-<div class="sampler-math">
+<div class="sampler-math"><span class="sampler-math-label">Learn relative probabilities</span>
 \[
 \begin{aligned}
-a_i(\phi)&=\log q_\phi(y_i)-\log R(y_i),\\
+a_i(\phi)&=\log q_\phi(y_i\mid x,\tau)\\
+&\quad-\log p_{\mathrm{ref}}(y_i\mid x),\\
+\bar a&=\frac1K\sum_{i=1}^{K}a_i,\\
 \mathcal L_{\mathrm{sampler}}(\phi)
-&=\frac1K\sum_{i=1}^{K}
-\left[a_i(\phi)-\operatorname{sg}(\bar a)\right]^2.
+&=\frac1K\sum_{i=1}^{K}\left[a_i(\phi)-\operatorname{sg}(\bar a)\right]^2.
 \end{aligned}
 \tag{7}
 \]
 </div>
 
-This is the **group-relative matching loss**: make the sampler-to-target log gap agree across responses. The operator \\(\operatorname{sg}\\) means that the measured group mean is held fixed during backpropagation. An above-average gap means a response is overrepresented relative to the group, so the loss calls for lowering its log probability. A below-average gap calls for the opposite adjustment. We learn the relative probabilities without learning the normalizer. [[3]](#sampler-ref-3) [[4]](#sampler-ref-4) [[5]](#sampler-ref-5)
+The student score is fixed. The operator \\(\operatorname{sg}\\) holds the group mean fixed during backpropagation. An above-average gap asks the sampler to lower that response’s log probability relative to the group; a below-average gap asks for the opposite. No partition-function network is needed. Group-relative matching objectives also appear in recent GFlowNet reasoning methods. [[5]](#sampler-ref-5) [[6]](#sampler-ref-6)
 
-Each expert example gets its own group mean because it has its own \\(Z\\). This mean is a batch offset, not an exact log-normalizer estimate before convergence. Equation (7) uses one update per fresh rollout group. Reusing samples for multiple updates additionally requires accounting for the changed sampling policy, for example with importance weighting. [[6]](#sampler-ref-6)
+<div class="sampler-key"><span class="sampler-key-label">Key message</span><p><strong>Learn how probability should be distributed across useful responses.</strong> A response being correct is not enough; its sampling frequency should also agree with the target.</p></div>
 
-For a valid candidate, \\(\log R(y_i)=\log p_\theta(y_i\mid x)\\). Training therefore needs only sampler and student log probabilities: compute their difference, subtract the group mean, and minimize the squared residual. Use complete sequence log probabilities, including termination; length-normalized scores would define a different matching problem.
+<details class="sampler-technical" markdown="1">
+<summary>Implementation details: acceptance, gradients, and sequence scores</summary>
 
-The derivation assumes a distribution supported on acceptable responses. In practice, the generator can produce invalid outputs, so we match its **accepted-output distribution**. Conditioning on acceptance subtracts the same log acceptance probability from every valid output's log probability. That constant cancels in the group-centered residual, making equation (7) computable with the raw sampler probabilities.
+A raw generator can produce unacceptable outputs. In practice, equation (7) matches its **accepted-output distribution**. If its acceptance probability is \\(A_\phi>0\\), then for acceptable responses \\(q_\phi^+(y)=q_\phi(y)/A_\phi\\). Replacing raw log probabilities by accepted-output log probabilities subtracts the same \\(\log A_\phi\\) from every gap. Group-centering cancels this term, so the residual can be computed from raw sampler scores. This does not itself remove invalid mass; the acceptance check determines which responses enter SFT.
 
-This cancellation does not train away invalid mass. Verification determines what enters SFT, while acceptance rate and coverage must be evaluated separately. The sampling policy must also agree with the probabilities in the loss; changing temperature or truncating the rollout distribution requires corresponding correction.
+For a fixed batch, differentiating the centered squared loss gives the same gradient whether the mean is detached or differentiated: the residuals sum to zero. The displayed algorithm treats sampled responses as fixed and takes one update per fresh group. It does not differentiate through sampling. Reusing old rollouts requires a suitable off-policy correction.
 
-We have arrived at a trainable sampler without changing the student's SFT objective. Next, we can either fit that sampler once before SFT, or keep fitting it as the student evolves.
+Use full sequence log probabilities, including EOS, under the same sampling distribution used to draw the responses. Length normalization, altered sampling temperature, or top-p truncation changes that distribution and must be handled explicitly. The empirical group offset is not an exact estimate of \\(\log Z_\tau\\) before convergence. Finally, matching a sampled group does not establish coverage of every acceptable reasoning path.
 
-## Offline: train the sampler, then run SFT
+</details>
+
+## One sampler, two training schedules
+{: #versions}
+
+The sampler may see the expert trace. The student sees the original prompt. This distinction is essential: the expert supplies privileged information for data preparation, not an extra input the student can rely on at evaluation time.
+
+<figure id="sampler-lora-conversion" class="sampler-reference-figure"><a class="sampler-reference-image" href="{{ '/assets/blog/learned-sampler/lora-sampler-e2s-v3.png' | relative_url }}" target="_blank" rel="noopener" aria-label="Open full-size diagram"><picture><source media="(max-width: 760px)" srcset="{{ '/assets/blog/learned-sampler/lora-sampler-e2s-v3-mobile.png' | relative_url }}"><img src="{{ '/assets/blog/learned-sampler/lora-sampler-e2s-v3.png' | relative_url }}" width="1603" height="981" loading="lazy" alt="LoRA enabled: calibrate off-policy expert data. LoRA disabled: score responses and run SFT using the same backbone."></picture></a><figcaption><strong>One backbone, two modes.</strong> LoRA produces calibrated “on-policy” data; disabling it restores student scoring and SFT. <a class="sampler-fullsize-link" href="{{ '/assets/blog/learned-sampler/lora-sampler-e2s-v3.png' | relative_url }}" target="_blank" rel="noopener">Open full size ↗</a></figcaption></figure>
+
+We implement the sampler with LoRA on the student backbone. For an adapted weight matrix, \\(W_{\mathrm{sampler}}=W_\theta+sBA\\), where \\(B\in\mathbb R^{d_{\mathrm{out}}\times r}\\), \\(A\in\mathbb R^{r\times d_{\mathrm{in}}}\\), and \\(s\\) is the adapter scale. The update has rank at most \\(r\\). With the adapter enabled, the model samples from expert-conditioned prompts; with it disabled, the backbone scores responses or receives ordinary SFT updates. [[7]](#sampler-ref-7)
+
+### E2S-Offline: prepare once, then fine-tune
 {: #offline}
 
-The offline recipe has three stages: fit the sampler, turn expert traces into more on-policy training data, and run SFT. **The student stays fixed during the first two stages.**
+Freeze the starting student \\(p_0\\). Fit the sampler against its constrained distribution, then use that sampler to transform the expert corpus into calibrated “on-policy” training data. Freeze the generated dataset and run SFT.
 
-<figure id="sampler-offline-conversion" class="sampler-reference-figure"><a class="sampler-reference-image" href="{{ '/assets/blog/learned-sampler/offline-expert-to-onpolicy-v2.png' | relative_url }}" target="_blank" rel="noopener" aria-label="Open full-size diagram"><picture><source media="(max-width: 760px)" srcset="{{ '/assets/blog/learned-sampler/offline-expert-to-onpolicy-v2-mobile.png' | relative_url }}"><img src="{{ '/assets/blog/learned-sampler/offline-expert-to-onpolicy-v2.png' | relative_url }}" width="1602" height="981" loading="lazy" alt="Freeze the student, fit a sampler, calibrate expert data, then train the student with SFT on the fixed dataset."></picture></a><figcaption><strong>Fit once, calibrate the data, then run SFT.</strong> The target is the frozen student’s constrained distribution; SFT uses the resulting fixed dataset. <a class="sampler-fullsize-link" href="{{ '/assets/blog/learned-sampler/offline-expert-to-onpolicy-v2.png' | relative_url }}" target="_blank" rel="noopener">Open full size ↗</a></figcaption></figure>
+<figure id="sampler-offline-conversion" class="sampler-reference-figure"><a class="sampler-reference-image" href="{{ '/assets/blog/learned-sampler/offline-e2s-v3.png' | relative_url }}" target="_blank" rel="noopener" aria-label="Open full-size diagram"><picture><source media="(max-width: 760px)" srcset="{{ '/assets/blog/learned-sampler/offline-e2s-v3-mobile.png' | relative_url }}"><img src="{{ '/assets/blog/learned-sampler/offline-e2s-v3.png' | relative_url }}" width="1602" height="982" loading="lazy" alt="Freeze the student, fit a sampler, calibrate expert data, then train the student with SFT on the fixed dataset."></picture></a><figcaption><strong>Fit once, calibrate the data, then run SFT.</strong> The target is the frozen student’s constrained distribution; SFT uses the resulting fixed dataset. <a class="sampler-fullsize-link" href="{{ '/assets/blog/learned-sampler/offline-e2s-v3.png' | relative_url }}" target="_blank" rel="noopener">Open full size ↗</a></figcaption></figure>
 
-<div class="sampler-algorithm" markdown="1">
-<p class="sampler-algorithm-label">Algorithm 1 · Offline sampler training and SFT</p>
+<details class="sampler-technical" markdown="1">
+<summary>Algorithm: offline preparation and SFT</summary>
 
 ```text
-Input: expert examples D, student θ₀,
-       sampler φ, group size K ≥ 2
-Output: fine-tuned student θ
-
-θ_ref ← frozen copy of θ₀
-for each sampler-training step:
-    (x, τ) ← sample an expert example from D
-    Y ← K verified responses from q_φ(· | x, τ)
-    a_i ← log q_φ(y_i | x, τ) − log p_θ_ref(y_i | x)
-    L ← mean_i (a_i − stop_gradient(mean_j a_j))²
-    φ ← φ − η_φ ∇_φ L  # Eq. 7
-
-Freeze φ
-D_SFT ← verified responses generated from D using q_φ
-θ ← SFT(θ₀, D_SFT)  # Eq. 1
-Return θ
+Freeze the starting student p₀.
+For each sampler update:
+    Choose an expert example (x, τ).
+    Draw a fresh group of K ≥ 2 acceptable responses.
+    Score them with the sampler and frozen student.
+    Update only sampler parameters using equation (7).
+Freeze the sampler and prepare the calibrated dataset D*.
+Disable the sampler adapter; fine-tune the student on D*.
 ```
 
-</div>
+</details>
 
-Each group contains verified responses for one prompt and expert demonstration. We draw fresh groups for each update, using the same rollout policy whose sequence probabilities enter the loss. If fewer than two responses pass verification, we collect more candidates or skip that update. The final dataset contains prompt–response pairs; the expert demonstration is not an extra student input.
+Work spent fitting the sampler can be reused across the corpus. The student stays fixed throughout preparation, so all generated targets are calibrated to the same reference checkpoint.
 
-This version replaces per-example MCMC data creation with a trained, reusable generator. It pays an up-front sampler-training cost, then shares that work across examples. Whether the reuse saves compute is an experimental question: training, student scoring, verification, and failed generations all belong in the cost.
-
-The sampler continues to target the **starting checkpoint**, even after SFT changes the student. That is a deliberate property of this offline recipe.
-
-## Online: a LoRA sampler on the evolving student
+### E2S-Online: refresh as the student learns
 {: #online}
 
-The offline sampler targets the starting checkpoint. Online training instead refreshes the data distribution after the student changes. We implement the sampler as a **LoRA adapter on the current student backbone**, rather than maintaining a separate full-size sampler model. [[7]](#sampler-ref-7)
-
-For an adapted weight matrix, the sampler uses a low-rank update:
+After SFT changes the student, the closest acceptable distribution changes too. At round \\(t\\), the target becomes:
 
 <div class="sampler-math">
 \[
-W_{\mathrm{sampler},t}=W_{\theta_t}+B_{\phi_t}A_{\phi_t},
-\qquad \operatorname{rank}(B_{\phi_t}A_{\phi_t})\le r.
+\begin{aligned}
+p_{C,t}(y\mid x,\tau)
+&=\frac{p_{\theta_t}(y\mid x)\,\mathbf 1[y\in C_\tau]}{Z_{\tau,t}},\\
+Z_{\tau,t}&=\sum_{y\in C_\tau}p_{\theta_t}(y\mid x).
+\end{aligned}
 \tag{8}
 \]
 </div>
 
-The same backbone has two roles. **Adapter enabled:** turn off-policy expert traces into calibrated “on-policy” training data. **Adapter disabled:** score candidates using only the prompt, or train the student with ordinary SFT. The sampler approximates the expert-constrained student policy in equation (9).
+E2S-Online alternates between fitting the LoRA sampler to the current student, generating a new training batch, and updating the student with SFT. The adapter is retained between rounds and refitted against the updated backbone.
 
-<figure id="sampler-lora-conversion" class="sampler-reference-figure"><a class="sampler-reference-image" href="{{ '/assets/blog/learned-sampler/lora-sampler-expert-to-onpolicy-v2.png' | relative_url }}" target="_blank" rel="noopener" aria-label="Open full-size diagram"><picture><source media="(max-width: 760px)" srcset="{{ '/assets/blog/learned-sampler/lora-sampler-expert-to-onpolicy-v2-mobile.png' | relative_url }}"><img src="{{ '/assets/blog/learned-sampler/lora-sampler-expert-to-onpolicy-v2.png' | relative_url }}" width="1603" height="981" loading="lazy" alt="LoRA enabled: calibrate off-policy expert data. LoRA disabled: score responses and run SFT using the same backbone."></picture></a><figcaption><strong>One backbone, two modes.</strong> LoRA produces calibrated “on-policy” data; disabling it restores student scoring and SFT. <a class="sampler-fullsize-link" href="{{ '/assets/blog/learned-sampler/lora-sampler-expert-to-onpolicy-v2.png' | relative_url }}" target="_blank" rel="noopener">Open full size ↗</a></figcaption></figure>
+<figure id="sampler-online-conversion" class="sampler-reference-figure"><a class="sampler-reference-image" href="{{ '/assets/blog/learned-sampler/online-e2s-v3.png' | relative_url }}" target="_blank" rel="noopener" aria-label="Open full-size diagram"><picture><source media="(max-width: 760px)" srcset="{{ '/assets/blog/learned-sampler/online-e2s-v3-mobile.png' | relative_url }}"><img src="{{ '/assets/blog/learned-sampler/online-e2s-v3.png' | relative_url }}" width="1602" height="982" loading="lazy" alt="Expert data feed the sampler; calibrated on-policy data train the student. The updated student feeds back into sampler fitting."></picture></a><figcaption><strong>Calibrate as the student changes.</strong> Refit the sampler against the updated student, refresh the training data, and repeat SFT. <a class="sampler-fullsize-link" href="{{ '/assets/blog/learned-sampler/online-e2s-v3.png' | relative_url }}" target="_blank" rel="noopener">Open full size ↗</a></figcaption></figure>
 
-This design has three practical advantages. The sampler update trains a small set of parameters, reducing its additional parameter and optimizer-state storage. It starts from the student's existing language and reasoning capabilities instead of learning a generator from scratch. And as SFT improves the shared backbone, that improvement is immediately available to the sampler. These are architectural reasons for LoRA; whether they reduce end-to-end compute or improve accuracy is measured separately.
-
-Sharing the backbone also creates a dependency. Even with fixed adapter weights, updating \\(\theta_t\\) changes the sampler's distribution. We therefore refit the adapter against the current constrained target:
-
-<div class="sampler-math">
-\[
-p_{C,t}(y\mid x,\tau)
-=\frac{p_{\theta_t}(y\mid x)\,\mathbf 1[y\in C_\tau]}{Z_t(x,\tau)}.
-\tag{9}
-\]
-</div>
-
-<figure id="sampler-online-conversion" class="sampler-reference-figure"><a class="sampler-reference-image" href="{{ '/assets/blog/learned-sampler/online-expert-to-onpolicy-v2.png' | relative_url }}" target="_blank" rel="noopener" aria-label="Open full-size diagram"><picture><source media="(max-width: 760px)" srcset="{{ '/assets/blog/learned-sampler/online-expert-to-onpolicy-v2-mobile.png' | relative_url }}"><img src="{{ '/assets/blog/learned-sampler/online-expert-to-onpolicy-v2.png' | relative_url }}" width="1602" height="981" loading="lazy" alt="Expert data feed the sampler; calibrated on-policy data train the student. The updated student feeds back into sampler fitting."></picture></a><figcaption><strong>Calibrate as the student changes.</strong> Refit the sampler against the updated student, refresh the training data, and repeat SFT. <a class="sampler-fullsize-link" href="{{ '/assets/blog/learned-sampler/online-expert-to-onpolicy-v2.png' | relative_url }}" target="_blank" rel="noopener">Open full size ↗</a></figcaption></figure>
-
-<div class="sampler-algorithm" markdown="1">
-<p class="sampler-algorithm-label">Algorithm 2 · Online sampler training and SFT</p>
+<details class="sampler-technical" markdown="1">
+<summary>Algorithm: online refresh and SFT</summary>
 
 ```text
-Input: expert examples D, student θ₀, LoRA parameters φ,
-       group size K ≥ 2, number of rounds T
-Output: fine-tuned student θ_T
-
-for round t = 0, …, T − 1:
-    Freeze backbone θ_t; enable sampler LoRA φ
-    for each adapter-training step:
-        (x, τ) ← sample an expert example from D
-        Y ← K verified responses from q_(θ_t,φ)(· | x, τ)
-        a_i ← log q_(θ_t,φ)(y_i | x, τ) − log p_θ_t(y_i | x)
-        L ← mean_i (a_i − stop_gradient(mean_j a_j))²
-        φ ← φ − η_φ ∇_φ L  # Eq. 7
-
-    Freeze φ; generate verified SFT batch D_t
-    Disable LoRA; unfreeze backbone θ_t
-    θ_(t+1) ← SFT(θ_t, D_t)  # Eq. 1
-Return θ_T with sampler LoRA disabled
+For each round t:
+    Freeze student θₜ; enable sampler LoRA φ.
+    Fit φ against pθₜ with fresh groups and equation (7).
+    Generate the next calibrated training batch Dₜ.
+    Disable LoRA; unfreeze the student backbone.
+    θₜ₊₁ ← SFT(θₜ, Dₜ).
+Return the student with the sampler adapter disabled.
 ```
 
-</div>
+</details>
 
-During adapter fitting, sampler log probabilities use LoRA and expert conditioning; student log probabilities use neither. Only the adapter receives the matching-loss gradient. The SFT phase updates the backbone with the adapter disabled. We retain the adapter parameters between rounds and refit them against the updated backbone. As offline, each update uses a fresh group with at least two verified responses.
+<div class="sampler-key sampler-key-teal"><span class="sampler-key-label">Key message</span><p><strong>Offline adapts the data to one student. Online keeps adapting it as that student changes.</strong> Both use the same distribution-matching idea and the same SFT student update.</p></div>
 
-The sampler already has a GFlowNet reward: the student probability of a response, masked by verification. This is the unnormalized density in equation (9), and equation (7) learns its relative probabilities. The reward trains the sampler; the student update is SFT. This is why the two parameter updates are separate in Algorithm 2.
-
-The expert demonstrations remain fixed; the generated SFT targets can evolve. Refreshing the adapter helps address stale data, but the refresh frequency has a cost. Small adapter updates also have limited capacity. Both the update schedule and LoRA rank therefore belong in the online ablation, rather than being treated as automatic improvements.
-
-This differs from on-policy distillation, which samples student trajectories and uses teacher probabilities as feedback. [[2]](#sampler-ref-2) Our expert-conditioned adapter generates data for the student's constrained distribution; the student receives ordinary SFT.
-
-## Offline experiments
+## Experiments: learn new tasks, retain prior skills
 {: #experiments-offline}
 
 ### Setup
 
-Both schedules use **Qwen2.5-3B** and MATH levels 3–5: 8,230 training problems and 1,024 test problems. Offline, we fit the sampler against the starting checkpoint, freeze it, and generate verified data for SFT. The baseline scores below come from the math setting of Finetuning with Sampling. [[1]](#sampler-ref-1)
+We use **Qwen2.5-3B** and the math setting of *Finetuning with Sampling*: MATH levels 3–5, with 8,230 training problems and 1,024 held-out MATH problems. Math avg. is the equal-weight mean across MATH, AMC, MATH500, and GSM8K. Prior avg. averages Chemistry, MMLU, and GPQA. All scores are accuracy percentages. [[1]](#sampler-ref-1)
 
-The baselines use the expert data in different ways:
-
-- **Expert-data SFT** trains directly on fixed demonstrations.
-- **OPSD (on-policy self-distillation)** generates student rollouts, then learns from the same model acting as a teacher with the expert solution in its context. [[13]](#sampler-ref-13)
-- **GRPO (Group Relative Policy Optimization)** learns from rewards on student rollouts. [[11]](#sampler-ref-11)
-- **UFT (Unified Fine-Tuning)** combines RL with supervised learning, using expert-solution hints that gradually shorten during training. [[14]](#sampler-ref-14)
-- **MCMC + SFT** searches for student-compatible responses before SFT. [[1]](#sampler-ref-1)
-
-We report **Math avg.** over MATH, AMC, MATH500, and GSM8K, and **Prior avg.** over Chemistry, MMLU, and GPQA. Each task has equal weight; larger datasets do not dominate either average. The base row is the checkpoint before task-specific training.
-
-<details class="sampler-experiment-details" markdown="1">
-<summary>Evaluation sizes and reference settings</summary>
-
-Single-shot accuracy is rounded to one decimal. Evaluation sizes follow the paper and its [files](https://github.com/aakaran/finetuning-with-sampling): MATH 1,024; AMC 83; MATH500 500; GSM8K 1,320; Chemistry 600. MMLU uses the [14,042-item test set](https://huggingface.co/datasets/cais/mmlu/viewer/all/test) with a [micro-average](https://github.com/EleutherAI/lm-evaluation-harness/blob/main/lm_eval/tasks/mmlu/default/_mmlu.yaml). GPQA uses a 198-item [Diamond basis](https://arxiv.org/abs/2311.12022); the source paper does not specify its GPQA variant.
-
-The reference MCMC pipeline uses 10 transitions, block size 32, and maximum sequence length 1,856. Its SFT search covers 1–2 epochs, learning rates {5e−5, 1e−5, 5e−6}, and batch sizes {16, 32, 64}, with AdamW and a cosine schedule. [[1]](#sampler-ref-1)
-
-</details>
+Offline, the starting student is frozen while we fit the sampler and prepare the SFT dataset. We compare with the published base model, expert-data SFT, OPSD, GRPO, UFT, and MCMC + SFT scores in that math setting. OPSD uses expert information for self-distillation; GRPO and UFT use RL; MCMC + SFT searches for transformed targets before SFT. [[13]](#sampler-ref-13) [[14]](#sampler-ref-14) The E2S rows are our project results. This is an accuracy and retention comparison, not a matched-compute speed benchmark.
 
 ### Results
 
-Baseline scores are reported in Finetuning with Sampling; our rows report the offline and online sampler results. [[1]](#sampler-ref-1)
+E2S-Offline reaches 55.5% Math avg., compared with 53.4% for MCMC + SFT and 24.2% for expert-data SFT. Its Prior avg. is 42.1%, close to the base model’s 42.2%; expert-data SFT reaches 38.9%.
 
-Offline, we achieve **55.5% Math avg.**, versus **53.4%** for MCMC + SFT: a **2.1-point average gain**. The four individual gains differ; the gain above is their mean. Prior avg. is **42.1%**, slightly above **42.0%** for MCMC + SFT and near the base model’s **42.2%**. Both schedules share the table below.
+The two panels below keep both questions visible: **how much did the model learn, and how much did it retain?** The online result is included for comparison and examined next.
 
-<!-- sampler-comparison:start -->
-<div class="sampler-table-card sampler-summary-card" id="sampler-results">
-<div class="sampler-table-heading" id="sampler-results-title"><strong>Offline &amp; online · shared evaluation</strong><span>Accuracy (%) ↑</span></div>
-<div class="sampler-table-scroll" role="region" tabindex="0" aria-labelledby="sampler-results-title">
-<table class="sampler-results-table sampler-summary-table"><colgroup><col class="sampler-method-col"><col><col></colgroup>
-<thead><tr><th scope="col">Method</th><th scope="col">Math avg.<span class="sampler-header-note">Task learning</span></th><th scope="col" class="sampler-retention-start">Prior avg.<span class="sampler-header-note">Capability retention</span></th></tr></thead><tbody>
-<tr class="sampler-base-row"><th scope="row"><span class="sampler-method-name">Base model</span></th>
-<td class="sampler-average">31.8</td><td class="sampler-average sampler-retention-start">42.2</td></tr>
-<tr class=""><th scope="row"><span class="sampler-method-name">Expert-data SFT</span></th>
-<td class="sampler-average">24.2</td><td class="sampler-average sampler-retention-start">38.9</td></tr>
-<tr class=""><th scope="row"><span class="sampler-method-name">OPSD</span></th>
-<td class="sampler-average">30.2</td><td class="sampler-average sampler-retention-start">40.4</td></tr>
-<tr class=""><th scope="row"><span class="sampler-method-name">GRPO</span></th>
-<td class="sampler-average">45.7</td><td class="sampler-average sampler-retention-start">41.4</td></tr>
-<tr class=""><th scope="row"><span class="sampler-method-name">UFT</span></th>
-<td class="sampler-average">45.2</td><td class="sampler-average sampler-retention-start">42.1</td></tr>
-<tr class="sampler-reference-row"><th scope="row"><span class="sampler-method-name">MCMC + SFT</span></th>
-<td class="sampler-average">53.4</td><td class="sampler-average sampler-retention-start">42.0</td></tr>
-<tr class="sampler-result-row"><th scope="row"><span class="sampler-method-name">Ours · offline</span></th>
-<td class="sampler-average">55.5</td><td class="sampler-average sampler-retention-start">42.1</td></tr>
-<tr class="sampler-result-row"><th scope="row"><span class="sampler-method-name">Ours · online</span></th>
-<td class="sampler-average">59.4</td><td class="sampler-average sampler-retention-start">42.2</td></tr>
-</tbody></table></div>
-<p class="sampler-table-footnote">Math avg.: equal-weight mean of MATH, AMC, MATH500, GSM8K. Prior avg.: equal-weight mean of Chemistry, MMLU, GPQA. Means round only for display. Both schedules compare with MCMC + SFT. Baselines: <a href="#sampler-ref-1">[1]</a>.</p></div>
+<figure id="sampler-results" class="sampler-chart"><picture><source media="(max-width: 600px)" srcset="{{ '/assets/blog/learned-sampler/e2s-results-mobile.svg' | relative_url }}"><img src="{{ '/assets/blog/learned-sampler/e2s-results.svg' | relative_url }}" width="800" height="470" loading="lazy" alt="Paired bar charts: Math averages range from 24.2 for expert SFT to 59.4 for E2S-Online. Prior averages are 38.9 for expert SFT, 42.1 for E2S-Offline, and 42.2 for both base and E2S-Online."></picture><figcaption><strong>Learn more while retaining prior capabilities.</strong> Accuracy (%) on new and prior tasks. The dashed line marks the base model’s Prior avg. Baselines: <a href="#sampler-ref-1">[1]</a>; E2S values from our <a href="/assets/blog/learned-sampler/source/results-data.json">result record</a>.</figcaption></figure>
+
 <details class="sampler-benchmark-details"><summary>See the scores behind each average</summary>
 <div class="sampler-table-card sampler-detail-card"><div class="sampler-table-scroll" role="region" tabindex="0" aria-label="Per-task accuracy breakdown">
 <table class="sampler-results-table sampler-detail-table"><colgroup><col class="sampler-method-col"><col><col><col><col><col><col><col></colgroup>
@@ -371,61 +287,81 @@ Offline, we achieve **55.5% Math avg.**, versus **53.4%** for MCMC + SFT: a **2.
 <tr class=""><th scope="row">GRPO</th><td>45.7</td><td>24.9</td><td>31.3</td><td>80.8</td><td class="sampler-retention-start">27.8</td><td>65.2</td><td>31.3</td></tr>
 <tr class=""><th scope="row">UFT</th><td>47.0</td><td>29.3</td><td>29.7</td><td>74.6</td><td class="sampler-retention-start">28.3</td><td>65.3</td><td>32.8</td></tr>
 <tr class="sampler-reference-row"><th scope="row">MCMC + SFT</th><td>49.5</td><td>27.7</td><td>58.2</td><td>78.2</td><td class="sampler-retention-start">26.6</td><td>65.1</td><td>34.3</td></tr>
-<tr class="sampler-result-row"><th scope="row">Ours · offline</th><td>51.5</td><td>28.9</td><td>61.0</td><td>80.6</td><td class="sampler-retention-start">28.0</td><td>65.1</td><td>33.3</td></tr>
-<tr class="sampler-result-row"><th scope="row">Ours · online</th><td>56.3</td><td>32.5</td><td>65.4</td><td>83.2</td><td class="sampler-retention-start">28.2</td><td>65.1</td><td>33.3</td></tr>
+<tr class="sampler-result-row"><th scope="row">E2S-Offline</th><td>51.5</td><td>28.9</td><td>61.0</td><td>80.6</td><td class="sampler-retention-start">28.0</td><td>65.1</td><td>33.3</td></tr>
+<tr class="sampler-result-row"><th scope="row">E2S-Online</th><td>56.3</td><td>32.5</td><td>65.4</td><td>83.2</td><td class="sampler-retention-start">28.2</td><td>65.1</td><td>33.3</td></tr>
 </tbody></table></div></div></details>
-<!-- sampler-comparison:end -->
 
 ### Conclusion
 
-The offline sampler improves average math accuracy by 2.1 points over MCMC + SFT while keeping prior-task performance close to the starting model. This supports learning a reusable data-preparation policy without a large loss on the evaluated prior tasks. The average does not rule out forgetting on individual abilities, and the accuracy comparison alone does not establish a compute saving.
+<div class="sampler-key sampler-key-teal"><span class="sampler-key-label">Conclusion</span><p>E2S-Offline learns the new math tasks better than expert-data SFT and MCMC + SFT, while keeping the evaluated prior-task average close to the base model.</p></div>
 
-## Online experiments
+## Does refreshing the data improve learning?
 {: #experiments-online}
 
 ### Setup
 
-The data split, starting checkpoint, and evaluation suite stay the same. The sampler is a **LoRA adapter on the current student**. Each round fits the adapter against the frozen student, generates verified responses, and updates the student with SFT while the adapter is disabled. The next round refreshes the sampler against that updated student.
-
-We compare with **MCMC + SFT** and the fixed offline sampler in the [shared table](#sampler-results). Our online sampler uses the GFlowNet reward—student probability masked by verification—and supplies refreshed data for SFT. The student-update objective remains the same; the data-generation method and refresh schedule change. Matched-compute runs must include sampler fitting, verification, student scoring, and SFT.
+We use the same Qwen2.5-3B starting checkpoint, 8,230 training examples, held-out split, and seven-benchmark evaluation suite. Each online round fits the LoRA sampler against the frozen current student, generates new training targets, then updates the backbone with LoRA disabled. We compare the resulting student with both the fixed offline sampler and MCMC + SFT.
 
 ### Results
 
-Online, we achieve **59.4% Math avg.**, versus **53.4%** for MCMC + SFT: a **6.0-point average gain**. Prior avg. is **42.2%**, close to the base model and slightly above plain MCMC + SFT’s **42.0%**. The gains vary across benchmarks; the aggregate summarizes their mean.
+E2S-Online reaches 59.4% Math avg.: 6.0 points above MCMC + SFT and 3.9 points above E2S-Offline. Prior avg. is 42.2%, matching the base model’s displayed average. The stored training trajectory below shows how Math avg. develops; the horizontal lines mark the two methods’ final scores.
 
-The curve below shows student Math avg. over normalized online training progress, ending at 59.4%.
-
-<figure id="online-training-curve"><picture><source media="(max-width: 600px)" srcset="{{ '/assets/blog/learned-sampler/online-training-curve-mobile.svg' | relative_url }}?v=4"><img src="{{ '/assets/blog/learned-sampler/online-training-curve.svg' | relative_url }}?v=4" width="800" height="370" alt="Online learning curve: Math average rises with noisy fluctuations and later plateaus near the reported 59.4 percent score. Training progress is normalized."></picture><figcaption><strong>Online training trajectory.</strong> Student Math avg. over normalized training progress, ending at 59.4%. Values confirmed by the author.</figcaption></figure>
+<figure id="online-training-curve" class="sampler-chart"><picture><source media="(max-width: 600px)" srcset="{{ '/assets/blog/learned-sampler/e2s-online-progress-mobile.svg' | relative_url }}"><img src="{{ '/assets/blog/learned-sampler/e2s-online-progress.svg' | relative_url }}" width="800" height="410" loading="lazy" alt="Online Math average reaches 59.4 percent. Horizontal reference lines mark MCMC plus SFT at 53.4 and E2S-Offline at 55.5 percent."></picture><figcaption><strong>Online learning, with final-score references.</strong> Horizontal lines show MCMC + SFT (53.4%) and E2S-Offline (55.5%), not their training trajectories. Online progress is normalized within its own run and does not align compute across methods. <a href="/assets/blog/learned-sampler/source/online-curve-data.json">Stored trajectory</a>.</figcaption></figure>
 
 ### Conclusion
 
-Online training improves Math avg. by 6.0 points over MCMC + SFT and by 3.9 points over the offline sampler, while keeping Prior avg. near the base model. These results support refreshing the data as the student learns. They do not isolate the effect of refreshes from additional training; that requires frozen and refreshed variants at equal compute, with the same reward settings and student-update schedule.
+<div class="sampler-key sampler-key-teal"><span class="sampler-key-label">Conclusion</span><p>E2S-Online achieves the strongest math result in this comparison and retains the base model’s prior-task average.</p></div>
 
-<details class="sampler-experiment-details" markdown="1">
-<summary>Next ablations: what produces the online gain?</summary>
+<details class="sampler-technical" markdown="1">
+<summary>What this comparison establishes</summary>
 
-- **Tracking the student.** Compare a sampler fitted to the initial student, a frozen adapter on the changing backbone, and a refreshed adapter at equal compute and with the same student SFT schedule. Measure accuracy, validity, and accepted-output log-gap dispersion.
-- **Reusing the adapter.** Compare retained and reset LoRA weights against the same backbone; record the fitting work needed to reach comparable sampling quality.
-- **Refresh frequency.** Sweep the interval under a fixed total budget, tracking math accuracy and prior-task retention.
+The results compare complete training schedules. Isolating the effect of refreshing alone requires frozen and refreshed samplers under equal total compute. Likewise, an exact offline sampler and converged MCMC target the same distribution; finite-run differences can come from approximation quality, coverage, or compute allocation. The measured outcome here is stronger new-task accuracy with prior-task averages near the starting model.
 
 </details>
 
-## Where this is useful
-{: #use-cases}
+## Scaling through diversity: one expert example, many useful responses
+{: #scaling}
 
-**Offline, this is student-aware data preparation.** An existing expert corpus can be rewritten into verified responses that better match a chosen model before SFT begins. The useful operation is more specific than removing bad examples: preserve what makes an example worth learning, while changing how that information is expressed for the learner. A fitted sampler can then process more examples from the same domain. Moving to a different student or a substantially different domain may require refitting.
+A fixed demonstration gives SFT one trajectory to imitate. A learned distribution can offer several ways to express the same information. That creates another way to spend generation compute: **sample again from the same expert example, and teach the student a different acceptable path.**
 
-**Online, the same mechanism becomes a post-training method.** A LoRA sampler keeps generating expert-informed supervision as the student evolves. This is useful when a fixed synthetic dataset becomes stale, or when on-policy exploration rarely discovers successful responses without expert help. The data distribution adapts; the student's update remains ordinary SFT.
+The distinction between reward maximization and distribution matching matters here. An expected correctness reward can be maximized by concentrating on one correct path. At exact matching, E2S must instead allocate probability across all paths with mass under its constrained target. In our earlier 2:1 example, always returning the first path would be a mismatch even though every answer was correct. This is the diversity we want to preserve—not variety added for its own sake. [[3]](#sampler-ref-3) [[6]](#sampler-ref-6)
 
-### What does learning the sampler actually fix?
+<div class="sampler-key"><span class="sampler-key-label">Scaling hypothesis</span><p><strong>The unit of supervision can be a distribution, not a single response.</strong> Once a sampler is fitted, additional draws can expose the student to more useful ways of solving the same problem.</p></div>
 
-Our central argument concerns two costs: searching again for every example, and rebuilding data when the learner changes. Amortization can reduce the first through reuse; the online schedule addresses the second through refreshes. The paper's repeated MCMC transitions and fixed-reference preprocessing motivate these questions. [[1]](#sampler-ref-1) Our assessment is that the project should be judged on those operational benefits, not merely on replacing one sampling algorithm with another.
+### Setup: scale the responses, keep the expert corpus fixed
 
-There are three boundaries to that argument. First, **at exact matching, MCMC and our offline sampler produce the same target distribution**. An offline accuracy gain must therefore come from better approximation, coverage, or compute allocation in a finite-budget run. Second, a correct final answer does not establish that every reasoning step is sound; a learned sampler inherits the limitations of its verifier. Third, matching responses on the training prompts places no direct constraint on unrelated evaluation tasks. Preserving prior capabilities remains an empirical requirement.
+For an offline scaling study, freeze one fitted sampler and keep all 8,230 expert examples. Draw 1, 2, or 4 accepted responses per example. The resulting SFT datasets contain **8,230, 16,460, or 32,920 responses**, respectively. No additional expert problems are introduced. Each new draw is generated separately; these are not copies of the original response.
 
-This suggests a useful role for the project in the post-training stack: **learn how to prepare data for the model, and reuse that preparation as the model learns.** Offline, the output is a student-adapted training corpus. Online, it is a continually refreshed source of SFT targets. The value comes from making expert information economical to reuse without sacrificing its content or the student's existing abilities.
+To distinguish useful diversity from simply doing more optimization, compare against repeated copies of the 1× dataset at the same SFT token budget. Keep the student initialization and evaluation suite fixed, and track the number of distinct reasoning paths as well as accuracy.
+
+### Expected trend: more useful draws, more learning
+
+The curve below uses illustrative estimates to show the scaling hypothesis. **It is not a measured ablation.** Every point—including the 1× point—is an estimate, separate from the experimental scores above.
+
+<figure id="offline-scaling-curve" class="sampler-chart"><picture><source media="(max-width: 600px)" srcset="{{ '/assets/blog/learned-sampler/e2s-offline-scaling-mobile.svg' | relative_url }}"><img src="{{ '/assets/blog/learned-sampler/e2s-offline-scaling.svg' | relative_url }}" width="800" height="440" loading="lazy" alt="Illustrative estimates, not measured: offline Math average of 55.0, 56.3, and 57.2 percent at 1, 2, and 4 responses per expert example, totaling 8230, 16460, and 32920 training responses."></picture><figcaption><strong>Illustrative estimates—not experimental results.</strong> A proposed offline sweep over 1 / 2 / 4 accepted responses per expert example. The 8,230-example corpus follows the math setup in <a href="#sampler-ref-1">[1]</a>. All accuracy values are hypothetical; <a href="/assets/blog/learned-sampler/source/scaling-illustration-data.json">estimate record</a>.</figcaption></figure>
+
+If additional samples improve held-out performance beyond a compute-matched duplication control, they are contributing useful training information. Measuring distinct valid paths and their frequencies would then test whether the sampler preserves diversity. An upward accuracy curve alone cannot establish that mode collapse is absent.
+
+### Conclusion
+
+<div class="sampler-key sampler-key-gold"><span class="sampler-key-label">Potential</span><p>E2S can turn a fixed expert corpus into a growing source of student-calibrated supervision. The next test is whether additional draws keep adding useful reasoning paths and measurable gains.</p></div>
+
+## Looking ahead
+{: #lookahead}
+
+Much of data preparation asks whether an example is good: is it correct, clear, and relevant? E2S adds a second question: **is this a good way to teach this particular student?** The same expert information can be expressed through different trajectories, and the most useful choice can change as the learner develops.
+
+Offline, this makes data preparation model-specific. Online, it makes data preparation part of the training process. The student supplies a changing notion of what is natural; the expert supplies the information that must survive; the sampler learns to satisfy both.
+
+The longer-term opportunity is to make an expert corpus reusable in a deeper sense. Instead of storing one response and replaying it, we could learn a conditional source of supervision: many acceptable paths for a given problem, calibrated to the model that will learn from them. Distribution matching gives this idea a concrete target, and amortization gives us a mechanism for generating from it repeatedly.
+
+Our present results support the first step: stronger math learning with prior-task averages close to the starting model. The scaling question is whether a learned sampler can keep finding useful variation as we spend more compute. If it can, improvements in data generation and improvements in the student can become a productive feedback loop.
+
+<div class="sampler-key sampler-key-final"><span class="sampler-key-label">Takeaway</span><p>Expert knowledge need not arrive in one fixed form. We can learn how to express it for the model—and keep adapting that expression as the model learns.</p></div>
 
 ## References
+{: #references}
+
 
 <p id="sampler-ref-1"><strong>[1]</strong> Aayush Karan, Sitan Chen, and Yilun Du. <a href="https://arxiv.org/abs/2610.02140v1">Finetuning with Sampling: SFT Learns Better Than You Think</a>. arXiv:2610.02140v1, 2026.</p>
 
@@ -440,8 +376,6 @@ This suggests a useful role for the project in the post-training stack: **learn 
 <p id="sampler-ref-6"><strong>[6]</strong> Xuekai Zhu et al. <a href="https://arxiv.org/abs/2509.15207v3">FlowRL: Matching Reward Distributions for LLM Reasoning</a>. arXiv:2509.15207v3, 2025.</p>
 
 <p id="sampler-ref-7"><strong>[7]</strong> Edward J. Hu et al. <a href="https://arxiv.org/abs/2106.09685">LoRA: Low-Rank Adaptation of Large Language Models</a>. ICLR, 2022.</p>
-
-<p id="sampler-ref-8"><strong>[8]</strong> Yoshua Bengio, with Edward J. Hu. <a href="https://yoshuabengio.org/en/blog/scaling-service-reasoning-model-based-ml">Scaling in the service of reasoning &amp; model-based ML</a>. 2023.</p>
 
 <p id="sampler-ref-9"><strong>[9]</strong> Idan Shenfeld, Jyothish Pari, and Pulkit Agrawal. <a href="https://arxiv.org/abs/2509.04259v1">RL’s Razor: Why Online Reinforcement Learning Forgets Less</a>. arXiv:2509.04259v1, 2025. See §4–5 and Appendix A for the KL analysis and its assumptions.</p>
 
@@ -458,15 +392,15 @@ This suggests a useful role for the project in the post-training stack: **learn 
 ## Citation
 {: #citation}
 
-Please cite this post as:
+If you found this post useful, please cite it as:
 
-Murray Kang. “From Off-Policy Data to On-Policy SFT.” October 2026.
+Murray Kang. “E2S Finetuning: From Off-Policy Expert Data to On-Policy Student Data.” October 2026.
 
 {% raw %}
 ```bibtex
 @misc{kang2026onpolicysft,
   author = {Kang, Murray},
-  title = {{From Off-Policy Data to On-Policy SFT}},
+  title = {{E2S Finetuning: From Off-Policy Expert Data to On-Policy Student Data}},
   year = {2026},
   month = oct,
   howpublished = {Research blog},

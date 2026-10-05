@@ -108,3 +108,23 @@ Calibrated “on-policy” data, without output y or verified subtitles. Inter-s
 regular/medium labels and restrained semibold titles match the blog typography;
 muted blue/orange/teal panels retain the original technical flows. Exact edit
 prompts and final asset names: reference-image-refinement-prompts.json.
+
+E2S educational edition (2026-10-05):
+- Narrative adapted from the author's e2s_finetuning_educational_blog.html; the
+  existing measured experiment setup, results and data records are preserved.
+- Eight *-e2s-v3 PNGs refine the existing four figure compositions using the
+  Uni-LaDiR paper Fig. 1 style. Built-in imagegen prompts and targeted arrow/color
+  corrections are recorded in e2s-figure-prompts.json. Original versions remain.
+- render_e2s_charts.py reads results-data.json and online-curve-data.json directly.
+  It writes paired result bars and the online curve, with MCMC + SFT / offline
+  final-score reference lines. It does not regenerate training observations.
+- scaling-illustration-data.json is SEPARATE: all accuracy values are hypothetical
+  estimates requested for an explanatory scaling sketch, not observations.
+  Every display (including exported SVG metadata) labels that status.
+  8,230 expert examples is verified against Finetuning with Sampling §5.1;
+  1 / 2 / 4 draws yield 8,230 / 16,460 / 32,920 accepted response records.
+- verify_math.py checks the KL decomposition, target normalization, centered-loss
+  gradients and acceptance-conditioning cancellation. The prose distinguishes
+  an ideal supported sampler from the raw sampler's accepted-output law.
+- Total-compute equivalence, measured sample-diversity gains and absence of mode
+  collapse are not claimed by the illustrative scaling curve.
