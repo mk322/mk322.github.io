@@ -7,7 +7,7 @@ redirect_from:
   - /about/
   - /about.html
 ---
-Hello! I am a Ph.D. candidate advised by [Lianhui Qin](https://lianhui.ucsd.edu/) at the University of California San Diego (UCSD). I am currently a Student Researcher at Google DeepMind, working on embodied foundation models in collaboration with the Gemini Robotics team.
+Hello! I am a Ph.D. candidate advised by [Lianhui Qin](https://lianhui.ucsd.edu/) at the University of California San Diego (UCSD). I previously worked as a Student Researcher at Google DeepMind on embodied foundation models in collaboration with the Gemini Robotics team.
 
 Previously, I was a Student Researcher on Google DeepMind's GenAI Team during summer 2025. Before joining UCSD, I completed my undergraduate degree in computer science at the University of Washington (UW), where I worked with [Luke Zettlemoyer](https://www.cs.washington.edu/people/faculty/lsz) and [Terra Blevins](https://blvns.github.io/).
 
