@@ -313,7 +313,7 @@ z
    </g>
   </g>
   <g id="text_15">
-   <text style="font-weight: 500; font-size: 14px; font-family: 'Helvetica Neue', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: start; fill: #20252c" x="16.848" y="16.416" transform="rotate(-0 16.848 16.416)">Learning with refreshed data</text>
+   <text style="font-weight: 500; font-size: 14px; font-family: 'Helvetica Neue', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: start; fill: #20252c" x="16.848" y="16.416" transform="rotate(-0 16.848 16.416)">Online training curve</text>
   </g>
   <g id="text_16">
    <text style="font-size: 8.8px; font-family: 'Helvetica Neue', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: start; fill: #525a65" x="16.848" y="34.2" transform="rotate(-0 16.848 34.2)">Dashed lines: final scores of comparison methods</text>

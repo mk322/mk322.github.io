@@ -69,7 +69,7 @@ def online(mobile=False):
  ax.set_xlabel('Training progress (%)',labelpad=10,fontsize=10 if mobile else 11)
  ax.set_ylabel('Math avg. (%)',fontsize=10 if mobile else 11)
  ax.tick_params(labelsize=9 if mobile else 10);ax.grid(axis='y',color='#edf0f4',lw=.65)
- fig.text(.06 if mobile else .10,.94,'Learning with refreshed data',fontsize=14 if mobile else 17,fontweight='medium')
+ fig.text(.06 if mobile else .10,.94,'Online training curve',fontsize=14 if mobile else 17,fontweight='medium')
  fig.text(.06 if mobile else .10,.875,'Dashed lines: final scores of comparison methods',fontsize=8.8 if mobile else 11,color=MUTED)
  save(fig,'e2s-online-progress'+('-mobile' if mobile else ''),'Online learning with MCMC and offline references','Stored author-confirmed trajectory; horizontal lines are final scores, not matched-compute learning curves.')
 
