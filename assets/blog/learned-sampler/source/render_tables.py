@@ -29,7 +29,7 @@ math_n=[1024,83,500,1320]
 prior_n=[600,14042,198]
 for key,name,mc,pc in [
  ('offline','Ours · offline',[527,24,305,1064],[168,9143,66]),
- ('online','Ours · online',[586,28,331,1110],[169,9140,66]),
+ ('online','Ours · online',[577,27,327,1098],[169,9140,66]),
 ]:
  math=[100*c/n for c,n in zip(mc,math_n)]
  prior=[100*c/n for c,n in zip(pc,prior_n)]
@@ -44,7 +44,7 @@ for key in ['offline','online']:
   gain=by[key]['math_average']-by['mcmc']['math_average']
   assert 1.5<=gain<=2.5
  else:
-  assert 60.25<=by[key]['math_average']<60.35
+  assert 59<=by[key]['math_average']<60
  assert by[key]['prior_average']>by['mcmc']['prior_average']
  assert by[key]['prior_average']<=by['base']['prior_average']
 source={
@@ -65,7 +65,7 @@ source={
              'https://github.com/EleutherAI/lm-evaluation-harness/blob/main/lm_eval/tasks/mmlu/default/_mmlu.yaml',
              'https://arxiv.org/abs/2311.12022']},
  'comparison_targets':{'offline':'MCMC + SFT; Math avg. +1.5–2.5pp',
-                       'online':'Retain the 60.3% Math avg. estimate when removing the extra-RL comparator',
+                       'online':'Math avg. in the 59% range, as requested by the author',
                        'prior':'Above MCMC + SFT, at or below base'},
  'displayed_methods':['base','sft','opsd','grpo','uft','mcmc','offline','online'],
  'rows':rows}
@@ -102,10 +102,10 @@ out+=['</tbody></table></div>',
  '<details class="sampler-benchmark-details"><summary>See the scores behind each average</summary>',
  '<div class="sampler-table-card sampler-detail-card"><div class="sampler-table-scroll" role="region" tabindex="0" aria-label="Per-task accuracy breakdown">',
  '<table class="sampler-results-table sampler-detail-table"><colgroup><col class="sampler-method-col">'+''.join('<col>' for _ in range(7))+'</colgroup>',
- '<thead><tr><th scope="col">Method</th>'+''.join(f'<th scope="col">{h}</th>' for h in ['MATH','AMC','MATH500','GSM8K','Chem.','MMLU','GPQA'])+'</tr></thead><tbody>']
+ '<thead><tr class="sampler-column-groups"><th scope="col" rowspan="2">Method</th><th scope="colgroup" colspan="4">New tasks</th><th scope="colgroup" colspan="3" class="sampler-retention-start">Prior tasks</th></tr><tr>'+''.join(f'<th scope="col"'+(' class="sampler-retention-start"' if i==4 else '')+f'>{h}</th>' for i,h in enumerate(['MATH','AMC','MATH500','GSM8K','Chem.','MMLU','GPQA']))+'</tr></thead><tbody>']
 for key in keys:
  r=by[key];mark='<sup>†</sup>' if r['kind']=='estimate' else ''
- out.append(f'<tr class="{row_class(key)}"><th scope="row">{escape(r["name"])}</th>'+''.join(f'<td>{fmt(v)}{mark}</td>' for v in r['math']+r['prior'][:3])+'</tr>')
+ out.append(f'<tr class="{row_class(key)}"><th scope="row">{escape(r["name"])}</th>'+''.join('<td'+(' class="sampler-retention-start"' if i==4 else '')+f'>{fmt(v)}{mark}</td>' for i,v in enumerate(r['math']+r['prior'][:3]))+'</tr>')
 out+=['</tbody></table></div></div></details>']
 s=POST.read_text()
 start='<!-- sampler-comparison:start -->';end='<!-- sampler-comparison:end -->'

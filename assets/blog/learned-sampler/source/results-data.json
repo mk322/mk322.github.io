@@ -61,7 +61,7 @@
   },
   "comparison_targets": {
     "offline": "MCMC + SFT; Math avg. +1.5\u20132.5pp",
-    "online": "Retain the 60.3% Math avg. estimate when removing the extra-RL comparator",
+    "online": "Math avg. in the 59% range, as requested by the author",
     "prior": "Above MCMC + SFT, at or below base"
   },
   "displayed_methods": [
@@ -245,10 +245,10 @@
       "name": "Ours \u00b7 online",
       "kind": "estimate",
       "math": [
-        57.2265625,
-        33.734939759036145,
-        66.2,
-        84.0909090909091
+        56.34765625,
+        32.53012048192771,
+        65.4,
+        83.18181818181819
       ],
       "prior": [
         28.166666666666668,
@@ -258,10 +258,10 @@
       ],
       "illustrative_correct_counts": {
         "math": [
-          586,
-          28,
-          331,
-          1110
+          577,
+          27,
+          327,
+          1098
         ],
         "prior": [
           169,
@@ -269,7 +269,7 @@
           66
         ]
       },
-      "math_average": 60.31310283748631,
+      "math_average": 59.36489872843647,
       "prior_average": 42.19681431894792
     }
   ]

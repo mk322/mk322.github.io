@@ -20,7 +20,7 @@ Published baseline scores come from Finetuning with Sampling, arXiv:2610.02140v1
 Table 1 math panel. Sampler values were revised again at the author's request on
 2026-10-04. The new rows are estimates, not the previously author-confirmed scores.
 Offline targets a 1.5–2.5pp equal-weight Math average gain over MCMC + SFT;
-online retains the requested 60.3% estimate after the extra-RL comparator was removed. Prior-task estimates are slightly
+online now targets an estimated Math avg. of 59.4%, following the latest revision. Prior-task estimates are slightly
 above plain MCMC + SFT, at or below the base model, without claiming improvement over a hidden extra-RL pipeline.
 Integer planning counts define sample-compatible decimals; they are not observed
 outcomes. results-data.json records the earlier confirmation separately from the
@@ -68,7 +68,7 @@ satisfy the same validity constraint. Neither proves retention on unseen tasks.
 
 Table layout (2026-10-04): one shared comparison for offline and online. The main
 view shows Math avg. and Prior avg. Explicit comparisons are in the results prose. A disclosure preserves
-all seven task scores. OPSD, GRPO, and UFT are retained and explained in Setup.
+all seven task scores, with New tasks and Prior tasks grouped and separated by a dashed rule. OPSD, GRPO, and UFT are retained and explained in Setup.
 New sources: OPSD (arXiv:2601.18734) and UFT (arXiv:2505.16984, §3).
 
 Regenerate the illustrative online curve (requires numpy and matplotlib):
