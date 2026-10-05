@@ -81,3 +81,20 @@ The plot is labeled illustrative, with normalized progress rather than fabricate
 step counts. online-curve-data.json records construction, seed, and points. Its
 endpoint matches the author-confirmed online Math average. There are no measured
 rollout logs, variance estimates, speedups, or convergence claims in this curve.
+
+
+Reference-image replacements (2026-10-04):
+Four figures now use built-in imagegen edits of the author's supplied reference PNGs:
+- amortized-expert-to-onpolicy.png: repeated MCMC response search vs learned sampler reuse;
+- offline-expert-to-onpolicy.png: freeze student, fit sampler, transform expert data, SFT;
+- lora-sampler-expert-to-onpolicy.png: shared backbone with adapter enabled / disabled;
+- online-expert-to-onpolicy.png: fixed expert input and updated-student feedback loop.
+Each has a dedicated -mobile.png portrait composition selected below 760px.
+Exact source filenames and all editing prompts are in reference-image-edit-prompts.json.
+The older SVGs remain as source explorations; their renderers do not update these PNGs.
+The figures emphasize off-policy expert traces → student-aligned training data.
+Outputs approximate the verified, expert-constrained student target; "on-policy"
+does not claim exact sampling from the unconstrained student. Offline alignment is
+with the frozen reference student; online refits the adapter as the student evolves.
+The comparison separates response updates in MCMC from parameter learning in the
+sampler, and claims no measured speedup. Both data sources are expert-guided.
