@@ -129,3 +129,36 @@
 
 /* Wide table contents scroll inside the reading column. */
 .blog-content table{display:block;width:100%;max-width:100%;box-sizing:border-box;overflow-x:auto}
+
+/* Readable conceptual diagrams: real text scales and wraps with the page. */
+.blog-content .uni-reading-flow,.blog-content .uni-reading-pair,.blog-content .uni-reading-hub,.blog-content .uni-reading-comparison,.blog-content .uni-reading-sequence{margin:28px 0;font-family:Inter,"Helvetica Neue",Arial,sans-serif;font-size:18px;line-height:1.55;color:#20252c;box-sizing:border-box}
+.uni-reading-flow{display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;padding:22px;background:#f7f5fa;border:1px solid #ded7eb;border-radius:14px}
+.uni-reading-step{padding:10px 14px;background:#fff;border:1px solid #ded7eb;border-radius:9px;font-weight:600;text-align:center;max-width:100%;box-sizing:border-box}
+.uni-reading-arrow,.uni-reading-down,.uni-reading-plus{color:#6356a5;font-size:26px;font-weight:600;flex-shrink:0;text-align:center}
+.uni-reading-pair{display:grid;grid-template-columns:minmax(0,1fr) 28px minmax(0,1fr);align-items:center;gap:14px}
+.uni-reading-card{padding:24px;background:#f7f5fa;border:1px solid #ded7eb;border-radius:14px}
+.uni-reading-card strong{display:block;font-size:20px;line-height:1.45;color:#493b80}
+.uni-reading-card span{display:block;margin-top:12px;color:#525a65}
+.uni-reading-hub{padding:24px;background:#f7f5fa;border:1px solid #ded7eb;border-radius:14px;text-align:center}
+.uni-reading-modalities{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.uni-reading-modalities span{padding:12px 8px;background:#fff;border:1px solid #ded7eb;border-radius:9px;font-weight:600}
+.uni-reading-down{display:block;padding:9px}
+.uni-reading-core{padding:17px;background:#e6e1f1;border:1px solid #b9acd2;border-radius:10px;font-size:22px;font-weight:700;color:#493b80}
+.uni-reading-output{font-weight:700;font-size:20px}
+.uni-reading-comparison{display:grid;gap:16px}
+.uni-reading-comparison>div{padding:20px;border:1px solid #ded7eb;border-radius:14px;background:#faf9fc}
+.uni-reading-label{display:block;color:#493b80;font-size:20px}
+.blog-content .uni-reading-comparison .uni-reading-flow{margin:12px 0 0;padding:0;border:0;background:transparent;justify-content:flex-start}
+.uni-reading-sequence{padding:24px;background:#f7f5fa;border:1px solid #ded7eb;border-radius:14px}
+.uni-reading-sequence>div{display:flex;gap:14px;align-items:center;padding:10px 0}
+.uni-reading-number{display:flex;align-items:center;justify-content:center;flex:0 0 34px;height:34px;border-radius:50%;background:#e6e1f1;color:#493b80;font-weight:700}
+.blog-content .uni-reading-repeat{margin:10px 0 10px 48px;font-size:18px;color:#6356a5}
+@media(max-width:600px){
+ .blog-content .uni-reading-flow,.blog-content .uni-reading-pair,.blog-content .uni-reading-hub,.blog-content .uni-reading-comparison,.blog-content .uni-reading-sequence{font-size:18px}
+ .uni-reading-pair{grid-template-columns:1fr;gap:8px}
+ .uni-reading-card{padding:20px}
+ .uni-reading-modalities{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .uni-reading-flow{flex-direction:column;align-items:stretch;padding:18px;gap:8px}
+ .uni-reading-arrow{transform:rotate(90deg);line-height:1.1;align-self:center}
+ .uni-reading-comparison>div{padding:18px}
+}
