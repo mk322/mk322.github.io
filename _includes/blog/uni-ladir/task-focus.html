@@ -1,0 +1,62 @@
+<figure class="uni-paper-figure uni-task-focus" data-task-focus data-task="grasp">
+  <div class="uni-task-header"><strong>Same scene. Different information to keep.</strong><span>Choose the next task.</span></div>
+  <div class="uni-task-controls" role="group" aria-label="Choose an illustrative reasoning task" hidden>
+    <button type="button" data-task-choice="grasp" aria-pressed="true">Grasp the mug</button>
+    <button type="button" data-task-choice="sort" aria-pressed="false">Sort by color</button>
+    <button type="button" data-task-choice="count" aria-pressed="false">Count the mugs</button>
+  </div>
+  <svg class="uni-task-scene" viewBox="0 0 620 320" role="img" aria-labelledby="uni-task-scene-title uni-task-scene-desc">
+    <title id="uni-task-scene-title">Two mugs on a shelf, with task-relevant features highlighted</title>
+    <desc id="uni-task-scene-desc">A red mug and a blue mug remain in the same scene. Grasping highlights the red handle, nearby clearance and the gripper. Sorting highlights color. Counting highlights two distinct objects.</desc>
+    <defs>
+      <pattern id="uni-task-wall" width="42" height="32" patternUnits="userSpaceOnUse"><path d="M0 31H42M21 0V31" stroke="#e9e6e1" stroke-width="1"/></pattern>
+      <linearGradient id="uni-task-red" x1="0" x2="1"><stop stop-color="#ac565d"/><stop offset=".5" stop-color="#c4757a"/><stop offset="1" stop-color="#b76067"/></linearGradient>
+      <linearGradient id="uni-task-blue" x1="0" x2="1"><stop stop-color="#376996"/><stop offset=".5" stop-color="#618eb4"/><stop offset="1" stop-color="#3e73a8"/></linearGradient>
+    </defs>
+    <rect width="620" height="320" fill="#fcfcfb"/>
+    <rect x="25" y="22" width="570" height="221" fill="url(#uni-task-wall)" opacity=".6"/>
+    <path d="M34 245H568L597 273H13Z" fill="#eee7dc" stroke="#c5b59e" stroke-width="1.5"/>
+    <path d="M13 273H597V286H13Z" fill="#e3d7c4"/>
+    <ellipse cx="177" cy="243" rx="66" ry="9" fill="#cbbfae" opacity=".35"/>
+    <ellipse cx="387" cy="243" rx="65" ry="9" fill="#cbbfae" opacity=".35"/>
+    <g class="uni-task-mug" data-mug="red">
+      <path d="M220 140C281 127 285 218 220 206" fill="none" stroke="#b76067" stroke-width="17"/>
+      <path d="M117 116H224L216 231Q170 256 126 231Z" fill="url(#uni-task-red)" stroke="#9f555b" stroke-width="1.5"/>
+      <ellipse cx="170.5" cy="116" rx="53.5" ry="15" fill="#f2dfdb" stroke="#ac565d" stroke-width="4"/>
+      <ellipse cx="170.5" cy="117" rx="42" ry="9" fill="#b9847e" opacity=".45"/>
+      <path d="M138 141L143 219" stroke="#e9bcc0" stroke-width="4" opacity=".5"/>
+    </g>
+    <g class="uni-task-mug" data-mug="blue">
+      <path d="M432 147C488 138 488 223 432 211" fill="none" stroke="#3e73a8" stroke-width="17"/>
+      <path d="M331 123H438L430 231Q383 256 339 231Z" fill="url(#uni-task-blue)" stroke="#376996" stroke-width="1.5"/>
+      <ellipse cx="384.5" cy="123" rx="53.5" ry="15" fill="#e1eaf0" stroke="#3e73a8" stroke-width="4"/>
+      <ellipse cx="384.5" cy="124" rx="42" ry="9" fill="#7091ad" opacity=".5"/>
+      <path d="M352 148L357 219" stroke="#b9d2e5" stroke-width="4" opacity=".5"/>
+    </g>
+    <g class="uni-task-gripper" stroke="#7b8491" fill="#eef0f3" stroke-width="2">
+      <path d="M278 294V229L271 206H286L294 228V294Z"/><path d="M303 294V229L310 206H325L318 229V294Z"/>
+      <rect x="273" y="281" width="50" height="26" rx="4" fill="#d6dce4"/>
+    </g>
+    <g class="uni-task-overlay uni-task-grasp" fill="none" stroke="#3498db" stroke-width="3">
+      <ellipse cx="246" cy="174" rx="32" ry="47"/>
+      <path d="M282 119H313V190H282" stroke-dasharray="5 5"/>
+      <rect x="266" y="200" width="64" height="110" rx="8" stroke-dasharray="5 5"/>
+    </g>
+    <g class="uni-task-overlay uni-task-sort" fill="none" stroke-width="3">
+      <path d="M111 112H230L222 236Q170 266 120 236Z" stroke="#bf656a"/>
+      <path d="M325 119H444L436 236Q384 266 333 236Z" stroke="#3e73a8"/>
+      <circle cx="171" cy="179" r="25" fill="#bf656a" stroke="#fff"/><circle cx="385" cy="183" r="25" fill="#3e73a8" stroke="#fff"/>
+    </g>
+    <g class="uni-task-overlay uni-task-count" fill="none" stroke="#3498db" stroke-width="2.5">
+      <rect x="106" y="93" width="169" height="161" rx="12"/><rect x="320" y="101" width="163" height="153" rx="12"/>
+      <circle cx="123" cy="93" r="22" fill="#fff"/><circle cx="337" cy="101" r="22" fill="#fff"/>
+      <g fill="#2475a7" stroke="none" font-family="Helvetica Neue,Arial,sans-serif" font-size="28" font-weight="700" text-anchor="middle"><text x="123" y="103">1</text><text x="337" y="111">2</text></g>
+    </g>
+  </svg>
+  <div class="uni-task-response" aria-live="polite" aria-atomic="true">
+    <div><span class="uni-task-label">Keep for the next step</span><strong data-task-retain>Handle position, nearby clearance, hand configuration</strong></div>
+    <div><span class="uni-task-label">Use it to</span><span data-task-next>Plan an approach to the red mug.</span></div>
+  </div>
+  <figcaption><strong>Same observation, different future needs.</strong> Conceptual task requirements, not decoded thoughts. Teacher steps are encoded locally; continuation supervision shapes the learned space, and generated thoughts are task-conditioned. <a href="#ref-1">[1, §3]</a></figcaption>
+</figure>
+<script src="{{ '/assets/blog/uni-ladir/task-focus.js' | relative_url }}?v=1" defer></script>
