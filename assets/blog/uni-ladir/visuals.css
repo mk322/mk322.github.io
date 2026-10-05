@@ -154,3 +154,10 @@
  .blog-article .blog-content table{font-size:16px}
  .uni-toc a,.uni-toc-method a{font-size:14px;padding:7px 8px}
 }
+
+/* Key messages restore the original blue emphasis and mark the argument's steps. */
+.blog-content .uni-key-message{margin:28px 0;padding:18px 22px;border-left:3px solid #3498db;background:#f7f9fb;color:#20252c;font-size:18px;line-height:1.7}
+.blog-content .uni-key-message p{margin:0}
+.blog-content .uni-key-message p:first-child{margin-bottom:8px;color:#2475a7;font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+.blog-content .uni-key-message p:first-child strong{font-weight:700}
+@media(max-width:600px){.blog-content .uni-key-message{padding:16px 18px;font-size:18px}}
