@@ -12,7 +12,7 @@ author_profile: true
   <div>
     <strong>Uni-LaDiR: Latent Diffusion Unifies Multimodal Reasoning</strong><br>
     <u>Haoqiang Kang</u>, Yizhe Zhang, Nikki Lijing Kuang, Yian Ma, and Lianhui Qin<br>
-    <em>Under review at ICLR 2027.</em><br>
+    <em>Under review.</em><br>
     <a href="https://arxiv.org/abs/2609.19878">[paper]</a>
   </div>
 </div>
@@ -22,7 +22,7 @@ author_profile: true
   <div>
     <strong>DeliveryGym: An RL Environment for Long-Horizon Embodied Agent Planning with Adaptive Curriculum</strong><br>
     <u>Haoqiang Kang</u>, Yiming Zhang, Yiyang Guo, Chuying Li, Jianzhi Shen, Tianruo Rose Xu, Xiaokang Ye, and Lianhui Qin<br>
-    <em>Under review at ICLR 2027.</em><br>
+    <em>Under review.</em><br>
     <a href="https://arxiv.org/abs/2609.19801">[paper]</a>
   </div>
 </div>
@@ -32,7 +32,7 @@ author_profile: true
   <div>
     <strong>Scaffolding Minds: Optimizing Latent Visual Target Representations for Multimodal Reasoning</strong><br>
     <u>Haoqiang Kang</u>, Yinpeng Chen, Luyang Liu, Jesper Sparre Andersen, Abhijit Ogale, Baochen Sun, Lichan Hong, and Ed H. Chi<br>
-    <em>Under review at ICLR 2027.</em><br>
+    <em>Under review.</em><br>
     <a href="https://arxiv.org/abs/2608.19669">[paper]</a>
   </div>
 </div>
@@ -42,7 +42,7 @@ author_profile: true
   <div>
     <strong>Latent Reasoning with Normalizing Flows</strong><br>
     Guancheng Tu<sup>*</sup>, Xiangjun Fu<sup>*</sup>, Suhao Yu, Yao Tang, <u>Haoqiang Kang</u>, Lianhui Qin, Yizhe Zhang, and Jiatao Gu<br>
-    <em>Under review at ICLR 2027.</em><br>
+    <em>Under review.</em><br>
     <a href="https://arxiv.org/abs/2606.06447">[paper]</a>
   </div>
 </div>
@@ -62,7 +62,7 @@ author_profile: true
   <div>
     <strong>Beyond Mode Elicitation: Diversity-Preserving Reinforcement Learning via Latent Diffusion Reasoner</strong><br>
     <u>Haoqiang Kang</u>, Yizhe Zhang, Nikki Lijing Kuang, Yi-An Ma, and Lianhui Qin<br>
-    <em>Under review at ICLR 2027.</em><br>
+    <em>Under review.</em><br>
     <a href="https://arxiv.org/abs/2602.01705">[paper]</a>
   </div>
 </div>

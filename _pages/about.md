@@ -18,10 +18,10 @@ Research Topics
 
 My research goal is to build agentic AI systems that reason, act, and learn through interaction, using experience to develop better intuition and continually improve.
 
-- **{{ site.data.blog_topics[0] }}:** [LaDiR](https://arxiv.org/abs/2510.04573) (ICLR 2026), [LaDi-RL](https://arxiv.org/abs/2602.01705) (under review at ICLR 2027), [NF-CoT](https://arxiv.org/abs/2606.06447) (under review at ICLR 2027), [Scaffolding Minds](https://arxiv.org/abs/2608.19669) (under review at ICLR 2027), and [Uni-LaDiR](https://arxiv.org/abs/2609.19878) (under review at ICLR 2027).
-- **{{ site.data.blog_topics[1] }}:** [Flow of Reasoning](https://arxiv.org/abs/2406.05673) (ICML 2025), [GFlowVLM](https://arxiv.org/abs/2503.06514) (CVPR 2025), [LaDi-RL](https://arxiv.org/abs/2602.01705) (under review at ICLR 2027), and [DeliveryGym](https://arxiv.org/abs/2609.19801) (under review at ICLR 2027).
-- **{{ site.data.blog_topics[2] }}:** [PAN World Model](https://arxiv.org/abs/2511.09057) (Technical Report, 2025), [AgentSpec](https://arxiv.org/abs/2606.14674) (under review at ICLR 2027), [SimWorld Studio](https://arxiv.org/abs/2605.09423) (NeurIPS 2026), [DeliveryGym](https://arxiv.org/abs/2609.19801) (under review at ICLR 2027), and Google DeepMind 2026 project with Gemini Robotics (internal).
-- **{{ site.data.blog_topics[3] }}:** [SimWorld Studio](https://arxiv.org/abs/2605.09423) (NeurIPS 2026) and [DeliveryGym](https://arxiv.org/abs/2609.19801) (under review at ICLR 2027).
+- **{{ site.data.blog_topics[0] }}:** [LaDiR](https://arxiv.org/abs/2510.04573) (ICLR 2026), [LaDi-RL](https://arxiv.org/abs/2602.01705) (under review), [NF-CoT](https://arxiv.org/abs/2606.06447) (under review), [Scaffolding Minds](https://arxiv.org/abs/2608.19669) (under review), and [Uni-LaDiR](https://arxiv.org/abs/2609.19878) (under review).
+- **{{ site.data.blog_topics[1] }}:** [Flow of Reasoning](https://arxiv.org/abs/2406.05673) (ICML 2025), [GFlowVLM](https://arxiv.org/abs/2503.06514) (CVPR 2025), [LaDi-RL](https://arxiv.org/abs/2602.01705) (under review), and [DeliveryGym](https://arxiv.org/abs/2609.19801) (under review).
+- **{{ site.data.blog_topics[2] }}:** [PAN World Model](https://arxiv.org/abs/2511.09057) (Technical Report, 2025), [AgentSpec](https://arxiv.org/abs/2606.14674) (under review), [SimWorld Studio](https://arxiv.org/abs/2605.09423) (NeurIPS 2026), [DeliveryGym](https://arxiv.org/abs/2609.19801) (under review), and Google DeepMind 2026 project with Gemini Robotics (internal).
+- **{{ site.data.blog_topics[3] }}:** [SimWorld Studio](https://arxiv.org/abs/2605.09423) (NeurIPS 2026) and [DeliveryGym](https://arxiv.org/abs/2609.19801) (under review).
 {: .research-topics}
 
 News
